@@ -1,0 +1,193 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ams</groupId>
+	<artifactId>ams</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<properties>
+		<org.springframework-version>4.3.3.RELEASE</org.springframework-version>
+
+		<!-- Jenkins -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- /Jenkins -->
+
+	</properties>
+
+	<dependencies>
+
+		<!-- spring container(core) -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- Spring Web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- Spring MVC -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- jstl -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- Oracle JDBC -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>12.1.0.2</version>
+		</dependency>
+
+		<!-- spring jdbc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- MyBatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+
+		<!-- jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.9</version>
+		</dependency>
+
+		<!-- common fileupload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk -->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.11.163</version>
+		</dependency>
+
+	</dependencies>
+
+	<!-- Oracle JDBC repository -->
+	<repositories>
+		<repository>
+			<id>oracle</id>
+			<name>ORACLE JDBC Repository</name>
+			<url>http://maven.jahia.org/maven2</url>
+		</repository>
+	</repositories>
+
+	<!-- Jenkins -->
+	<profiles>
+		<profile>
+			<id>production</id>
+			<build>
+
+				<resources>
+					<resource>
+						<directory>${project.basedir}/src/main/resources</directory>
+						<excludes>
+							<exclude>**/*.java</exclude>
+						</excludes>
+					</resource>
+				</resources>
+
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>2.7</version>
+						<configuration>
+							<encoding>UTF-8</encoding>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+
+			<dependencies>
+				<!-- Servlet -->
+				<dependency>
+					<groupId>javax.servlet</groupId>
+					<artifactId>javax.servlet-api</artifactId>
+					<version>3.0.1</version>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>javax.servlet.jsp</groupId>
+					<artifactId>jsp-api</artifactId>
+					<version>2.0</version>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+	<!-- /Jenkins -->
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.2.1</version>
+				<configuration>
+					<warSourceDirectory>webapp</warSourceDirectory>
+				</configuration>
+			</plugin>
+
+			<!-- Jenkins -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<version>1.1</version>
+				<configuration>
+					<url>http://localhost:8080/manager/text</url>
+					<path>/ams</path>
+					<username>admin</username>
+					<password>manager</password>
+				</configuration>
+			</plugin>
+			<!-- /Jenkins -->
+
+		</plugins>
+	</build>
+</project>

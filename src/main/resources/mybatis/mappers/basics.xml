@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="basics">
+	
+	<!-- 쿼리문 작성 -->
+	
+	<!-- select 예제 -->
+	<select id="select" parameterType="int" resultType="Vo">
+		<![CDATA[
+			SELECT   title, 
+					 content, 
+					 user_no, 
+					 no 
+			FROM     board 
+			WHERE    no = #{no}
+		]]>
+	</select>
+	
+</mapper>
