@@ -90,6 +90,7 @@
 						<p>Sign In to your account</p>
 					</div>
 					<form action="login">
+						<input type="hidden" name="coursePath" value="${param.coursePath }">
 						<div class="form-group">
 							<input type="text" name="email" class="form-control" placeholder="email" autofocus>
 						</div>

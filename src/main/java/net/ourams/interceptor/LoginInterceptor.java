@@ -22,16 +22,17 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String coursePath = request.getParameter("coursePath");
 		
 		UserVo userVo = userService.login(email, password);
 		
 		if(userVo == null) {
-			response.sendRedirect(request.getContextPath() + "/user/loginform?result=fail");
+			response.sendRedirect(request.getContextPath() + "/user/loginform?result=fail&coursePath=" + coursePath);
 			return false;
 		}
 		HttpSession session = request.getSession();
 		session.setAttribute("authUser", userVo);
-		response.sendRedirect(request.getContextPath() + "/course/main");
+		response.sendRedirect(request.getContextPath() + "/" + coursePath + "/main");
 		
 		return false;
 	}

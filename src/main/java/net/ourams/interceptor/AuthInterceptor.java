@@ -31,16 +31,23 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         //3. @Auth 가 있으면  session 있는지 체크
 		HttpSession session = request.getSession();
 		if(session == null) {
+			String oldUrl = request.getRequestURL().toString();
+
+			
 			//세션이 없으면 로그인 폼으로 리다이렉트, @Auth있고 세션 없는 경우 
-			response.sendRedirect(request.getContextPath() + "/user/loginform");
+			//ams가 앞에 붙으면 4번 없으면 3번을 쓰면 됨
+			response.sendRedirect(request.getContextPath() + "/user/loginform?coursePath=" + oldUrl.split("/")[4]);
 			return false;
 		}
 		
         //4. @Auth 가 있고 session 이 있고 session에 정보가 있는지?
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		if(authUser == null) {
+			String oldUrl = request.getRequestURL().toString();
+
 			//세션은 있는데 autUser가 없는 경우
-			response.sendRedirect(request.getContextPath() + "/user/loginform");
+			//ams가 앞에 붙으면 4번 없으면 3번을 쓰면 됨
+			response.sendRedirect(request.getContextPath() + "/user/loginform?coursePath=" + oldUrl.split("/")[4]);
 			return false;
 		}
 		

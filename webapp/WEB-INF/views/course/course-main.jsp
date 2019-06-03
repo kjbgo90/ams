@@ -35,6 +35,9 @@
 <!--Animate.css [ OPTIONAL ]-->
 <link href="${pageContext.request.contextPath }/assets/css/animate.css" rel="stylesheet">
 
+<!--Nifty Premium Icon [ DEMONSTRATION ]-->
+<link href="${pageContext.request.contextPath }/assets/css/demo/nifty-demo-icons.css" rel="stylesheet">
+
 <!--=================================================-->
 
 
