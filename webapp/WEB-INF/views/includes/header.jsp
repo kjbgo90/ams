@@ -11,7 +11,7 @@
 		<!--Brand logo & name-->
 		<!--================================-->
 		<div class="navbar-header">
-			<a href="/ams/course/main" class="navbar-brand text-center"> <img src="${pageContext.request.contextPath }/assets/img/logo.png" alt="Nifty Logo" class="brand-icon"></a>
+			<a href="${pageContext.request.contextPath }/course/main" class="navbar-brand text-center"> <img src="${pageContext.request.contextPath }/assets/img/logo.png" alt="Nifty Logo" class="brand-icon"></a>
 		</div>
 		<!--================================-->
 		<!--End brand logo & name-->
@@ -270,7 +270,7 @@
 							<li><a href="#"><span class="badge badge-danger pull-right">9</span><i class="pli-mail icon-lg icon-fw"></i> Messages</a></li>
 							<li><a href="#"><span class="label label-success pull-right">New</span><i class="pli-gear icon-lg icon-fw"></i> Settings</a></li>
 							<li><a href="#"><i class="pli-computer-secure icon-lg icon-fw"></i> Lock screen</a></li>
-							<li><a href="#"><i class="pli-unlock icon-lg icon-fw"></i> Logout</a></li>
+							<li><a href="${pageContext.request.contextPath }/user/logout"><i class="pli-unlock icon-lg icon-fw"></i> Logout</a></li>
 						</ul>
 					</div></li>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

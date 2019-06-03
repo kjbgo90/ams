@@ -6245,7 +6245,7 @@ button.list-group-item-dark:focus {
 /* TOOLTIP */
 /*======================================*/
 .tooltip {
-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Nanum Gothic', sans-serif;
   font-size: 13px;
   z-index: 999999;
 }
@@ -6786,7 +6786,7 @@ blockquote {
 .bq-open:before,
 .bq-close:after {
   content: '\201C';
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Nanum Gothic', sans-serif;
   font-size: 3.5em;
 }
 .bq-open:before {

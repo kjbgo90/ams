@@ -32,7 +32,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		if(session == null) {
 			//세션이 없으면 로그인 폼으로 리다이렉트, @Auth있고 세션 없는 경우 
-			response.sendRedirect(request.getContextPath() + "/users/loginform");
+			response.sendRedirect(request.getContextPath() + "/user/loginform");
 			return false;
 		}
 		
@@ -40,7 +40,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		if(authUser == null) {
 			//세션은 있는데 autUser가 없는 경우
-			response.sendRedirect(request.getContextPath() + "/users/loginform");
+			response.sendRedirect(request.getContextPath() + "/user/loginform");
 			return false;
 		}
 		

@@ -26,12 +26,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		UserVo userVo = userService.login(email, password);
 		
 		if(userVo == null) {
-			response.sendRedirect(request.getContextPath() + "/users/loginForm?result=fail");
+			response.sendRedirect(request.getContextPath() + "/user/loginform?result=fail");
 			return false;
 		}
 		HttpSession session = request.getSession();
 		session.setAttribute("authUser", userVo);
-		response.sendRedirect(request.getContextPath() + "/");
+		response.sendRedirect(request.getContextPath() + "/course/main");
 		
 		return false;
 	}

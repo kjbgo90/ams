@@ -18,7 +18,7 @@ public class LogoutInterceptor extends HandlerInterceptorAdapter {
 		session.removeAttribute("authUser");
 		session.invalidate();
 		
-		response.sendRedirect(request.getContextPath() + "/");
+		response.sendRedirect(request.getContextPath() + "/user/loginform");
 		return false;
 	}
 

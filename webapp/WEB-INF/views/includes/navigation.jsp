@@ -15,7 +15,7 @@
 		<!--It will only appear on small screen devices.-->
 		
                     <div class="mainnav-brand">
-                        <a href="index.jsp" class="brand">
+                        <a href="${pageContext.request.contextPath }/course/main" class="brand">
                             <img src="${pageContext.request.contextPath }/assets/img/logo.png" alt="Nifty Logo" class="brand-icon">
                             <span class="brand-text">Nifty</span>
                         </a>
@@ -36,18 +36,18 @@
 					<div id="mainnav-profile" class="mainnav-profile">
 						<div class="profile-wrap text-center">
 							<div class="pad-btm">
-								<img class="img-circle img-md" src="${pageContext.request.contextPath }/assets/img/profile-photos/1.png" alt="Profile Picture">
+								<img class="img-circle img-md" src="${pageContext.request.contextPath }${authUser.logoPath }" alt="Profile Picture">
 							</div>
 							<a href="#profile-nav" class="box-block" data-toggle="collapse" aria-expanded="false"> <span class="pull-right dropdown-toggle"> <i class="dropdown-caret"></i>
 							</span>
-								<p class="mnp-name">Aaron Chavez</p> <span class="mnp-desc">aaron.cha@themeon.net</span>
+								<p class="mnp-name">${authUser.userName }</p> <span class="mnp-desc">${authUser.email }</span>
 							</a>
 						</div>
 						<div id="profile-nav" class="collapse list-group bg-trans">
 							<a href="#" class="list-group-item"> <i class="pli-male icon-lg icon-fw"></i> View Profile
 							</a> <a href="#" class="list-group-item"> <i class="pli-gear icon-lg icon-fw"></i> Settings
 							</a> <a href="#" class="list-group-item"> <i class="pli-information icon-lg icon-fw"></i> Help
-							</a> <a href="#" class="list-group-item"> <i class="pli-unlock icon-lg icon-fw"></i> Logout
+							</a> <a href="${pageContext.request.contextPath }/user/logout" class="list-group-item"> <i class="pli-unlock icon-lg icon-fw"></i> Logout
 							</a>
 						</div>
 					</div>

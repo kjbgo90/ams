@@ -4,9 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.ourams.interceptor.Auth;
+
 @Controller
 public class PageTestController {
 	
+	@Auth
 	@RequestMapping(value = "/course/main", method = RequestMethod.GET)
 	public String courseMain() {
 		return "course/course-main";
