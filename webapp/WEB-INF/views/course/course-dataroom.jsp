@@ -30,7 +30,7 @@
 
 <!--Nifty Premium Icon [ DEMONSTRATION ]-->
 <link href="${pageContext.request.contextPath }/assets/css/demo/nifty-demo-icons.css" rel="stylesheet">
-
+<link href="${pageContext.request.contextPath }/assets/css/premium/icon-sets/icons/line-icons/premium-line-icons.min.css" rel="stylesheet">
 <!--=================================================-->
 
 

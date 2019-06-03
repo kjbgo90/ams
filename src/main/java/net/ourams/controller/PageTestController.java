@@ -51,4 +51,14 @@ public class PageTestController {
 	public String courseDataRoom() {
 		return "course/course-dataroom";
 	}
+	
+	@RequestMapping(value = "/course/assignment/list", method = RequestMethod.GET)
+	public String courseAssignmentList() {
+		return "course/assignment/assignment-list";
+	}
+	
+	@RequestMapping(value = "/course/assignment/enroll", method = RequestMethod.GET)
+	public String courseAssignmentEnroll() {
+		return "course/assignment/assignment-enroll";
+	}
 }
