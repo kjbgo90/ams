@@ -1,13 +1,13 @@
 package net.ourams.vo;
 
 public class UserVo {
-	int userNo;
-	String email;
-	String password;
-	String userName;
-	int userType;
-	String logoPath;
-	String phoneNumber;
+	private int userNo;
+	private String email;
+	private String password;
+	private String userName;
+	private int userType;
+	private String logoPath;
+	private String phoneNumber;
 
 	public UserVo() {
 	}

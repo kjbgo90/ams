@@ -4,9 +4,14 @@
 <configuration>
     <typeAliases>
     	<typeAlias alias="UserVo" type="net.ourams.vo.UserVo" />
+    	<typeAlias alias="CourseVo" type="net.ourams.vo.CourseVo" />
+    	<typeAlias alias="CourseRegistVo" type="net.ourams.vo.CourseRegistVo" />
+    	<typeAlias alias="AssignmentVo" type="net.ourams.vo.AssignmentVo" />
     </typeAliases>
 
     <mappers>
         <mapper resource="mybatis/mappers/user.xml" />
+        <mapper resource="mybatis/mappers/course.xml" />
+        <mapper resource="mybatis/mappers/assignment.xml" />
     </mappers>
 </configuration>

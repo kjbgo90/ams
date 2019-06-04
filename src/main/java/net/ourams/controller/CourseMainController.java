@@ -20,4 +20,9 @@ public class CourseMainController {
 		
 		return "course/course-main";
 	}
+	
+	@RequestMapping(value = "/404page", method = RequestMethod.GET)
+	public String courseError() {
+		return "course/page-404";
+	}
 }

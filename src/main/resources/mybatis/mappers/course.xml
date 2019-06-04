@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="course">
+	
+	<!-- 쿼리문 작성 -->
+	
+	<!-- select 예제 -->
+	<select id="selectCourseByPath" parameterType="String" resultType="CourseVo">
+		<![CDATA[
+			SELECT   courseNo, 
+					 courseName, 
+					 lecRoomNo, 
+					 TO_CHAR(startDate, 'yyyy/mm/dd') as startDate,
+					 TO_CHAR(endDate, 'yyyy/mm/dd') as endDate,
+					 teacherNo,
+					 managerNo,
+					 coursePath
+			FROM     course 
+			WHERE    coursePath = #{coursePath}
+		]]>
+	</select>
+	
+	<select id="selectCourseRegist" parameterType="map" resultType="CourseRegistVo">
+		<![CDATA[
+			SELECT   registNo, 
+					 userNo, 
+					 courseNo, 
+					 seatNo
+			FROM     courseregist
+			WHERE    userNo = #{userNo}
+				AND	 courseNo = #{courseNo}
+		]]>
+	</select>
+</mapper>
