@@ -148,27 +148,15 @@
 																<li class="jstree-open">basic
 																	<ul>
 																		<li>index</li>
-																		<li data-jstree='{"type":"file"}'>root.json</li>
 																	</ul>
 																</li>
-																<li data-jstree='{"type":"file"}'>Readme.md</li>
 															</ul>
 														</li>
 														<li>강의자료
 															<ul>
 																<li class="jstree-open">java</li>
-																<li>oracle</li>
-																<li>servlet_jsp</li>
-																<li>github</li>
-																<li>Spring_mybatis</li>
-																<li>Linux_system_Admin</li>
-																<li>aws</li>
-																<li>html_css_js</li>
-																<li>부트스트랩</li>
-																<li>프로젝트</li>
 															</ul>
 														</li>
-														<li data-jstree='{"type":"zip"}'>package.zip</li>
 													</ul>
 												</li>
 											</ul>
@@ -458,7 +446,8 @@
 							<div class="panel-body">
 								<p class="text-main text-bold mar-no">Drag’n’drop file uploads</p>
 								<p>DropzoneJs provides drag’n’drop file uploads with image previews.</p>
-								<!-- Multiple Select Choosen -->
+								<!-- Multiple Select Choosen
+							 		태크, 코스, 파일 개별적으로 저장 -->
 								<!--===================================================-->
 								<select id="demo-cs-multiselect" data-placeholder="Choose a Course..." multiple tabindex="4">
 									<option value="United States">Java</option>
@@ -486,6 +475,9 @@
 									</div>
 									<div class="fallback">
 										<input name="file" type="file" multiple>
+									</div>
+									<div class="bord-btm pad-btm">
+										<button data-target="#demo-lg-modal" data-toggle="modal" class="btn tbn-default">UPLOAD</button>
 									</div>
 								</form>
 								<!--===================================================-->
@@ -568,10 +560,7 @@
 
 
 	<script type="text/javascript">
-		$(document)
-				.on(
-						'nifty.ready',
-						function() {
+		$(document).on('nifty.ready',function() {
 
 							// CHOSEN
 							// =================================================================
@@ -579,9 +568,7 @@
 							// http://harvesthq.github.io/chosen/
 							// =================================================================
 							$('#demo-chosen-select').chosen();
-							$('#demo-cs-multiselect').chosen({
-								width : '100%'
-							});
+							$('#demo-cs-multiselect').chosen({width : '100%'});
 
 							// DROPZONE.JS
 							// =================================================================
@@ -616,8 +603,7 @@
 							// http://www.dropzonejs.com/
 							// =================================================================
 							// Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-							var previewNode = document
-									.querySelector("#dz-template");
+							var previewNode = document.querySelector("#dz-template");
 							previewNode.id = "";
 							var previewTemplate = previewNode.parentNode.innerHTML;
 							previewNode.parentNode.removeChild(previewNode);
@@ -649,22 +635,18 @@
 								});
 							});
 
-							myDropzone
-									.on(
+							myDropzone.on(
 											"sending",
 											function(file) {
 												// Show the total progress bar when upload starts
-												document
-														.querySelector("#dz-total-progress").style.opacity = "1";
+												document.querySelector("#dz-total-progress").style.opacity = "1";
 											});
 
 							// Hide the total progress bar when nothing's uploading anymore
-							myDropzone
-									.on(
+							myDropzone.on(
 											"queuecomplete",
 											function(progress) {
-												document
-														.querySelector("#dz-total-progress").style.opacity = "0";
+												document.querySelector("#dz-total-progress").style.opacity = "0";
 											});
 
 							// Setup the buttons for all transfers
