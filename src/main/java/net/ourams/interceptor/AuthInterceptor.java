@@ -51,7 +51,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		if (authUser == null) {
 
 			// 세션은 있는데 autUser가 없는 경우
-			// ams가 앞에 붙으면 4번 없으면 3번을 쓰면 됨
+			// ams가 앞에 붙으면 4번 없으면 3번을 쓰면 됨니다.
 			response.sendRedirect(request.getContextPath() + "/user/loginform?coursePath=" + coursePath);
 			return false;
 		}
