@@ -32,4 +32,16 @@
 				AND	 courseNo = #{courseNo}
 		]]>
 	</select>
+	
+	<select id="selectSubjectListByCourseNo" parameterType="int" resultType="SubjectVo">
+		<![CDATA[
+			SELECT   subjectNo,
+					 subjectTitle,
+					 courseNo,
+					 scheduleNo
+			FROM	 subject
+			WHERE	 courseNo = #{courseNo}
+			ORDER BY subjectNo ASC
+		]]>
+	</select>
 </mapper>

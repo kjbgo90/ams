@@ -9,6 +9,7 @@
 		<typeAlias alias="AssignmentVo" type="net.ourams.vo.AssignmentVo" />
 		<typeAlias alias="PostVo" type="net.ourams.vo.PostVo" />
 		<typeAlias alias="ReplyVo" type="net.ourams.vo.ReplyVo" />
+		<typeAlias alias="SubjectVo" type="net.ourams.vo.SubjectVo" />
 	</typeAliases>
 
 	<mappers>
