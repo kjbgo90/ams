@@ -14,11 +14,12 @@ public class LogoutInterceptor extends HandlerInterceptorAdapter {
 		System.out.println("LogoutInterceptor()");
 		
 		HttpSession session = request.getSession();
+		String coursePath = request.getParameter("coursePath");
 		
 		session.removeAttribute("authUser");
 		session.invalidate();
 		
-		response.sendRedirect(request.getContextPath() + "/user/loginform");
+		response.sendRedirect(request.getContextPath() + "/user/loginform?coursePath=" + coursePath);
 		return false;
 	}
 

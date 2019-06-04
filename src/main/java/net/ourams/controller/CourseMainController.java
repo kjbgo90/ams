@@ -1,6 +1,7 @@
 package net.ourams.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,8 +13,10 @@ import net.ourams.interceptor.Auth;
 public class CourseMainController {
 
 	@Auth
-	@RequestMapping(value = {"/main"}, method = RequestMethod.GET)
-	public String courseMain(@PathVariable("coursePath") String coursePath) {
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public String courseMain(@PathVariable("coursePath") String coursePath,
+							 Model model) {
+		model.addAttribute("coursePath", coursePath);
 		
 		return "course/course-main";
 	}
