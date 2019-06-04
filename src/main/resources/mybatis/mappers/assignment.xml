@@ -3,8 +3,7 @@
 
 <mapper namespace="assignment">
 	
-	<!-- 쿼리문 작성 -->
-	
+	<!-- 전체 과제 리스트 -->
 	<select id="selectList" parameterType="int" resultType="AssignmentVo">
 		<![CDATA[
 			select assignmentNo,
@@ -58,6 +57,7 @@
 			                   userName,
 			                   logoPath
 			            from schedule s join users u on s.userNo = u.userNo) su on acsc.scheduleNo = su.scheduleNo
+			 order by assignmentNo desc
 		]]>
 	</select>
 	

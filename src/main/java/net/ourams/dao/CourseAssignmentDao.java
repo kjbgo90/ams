@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import net.ourams.vo.AssignmentVo;
+import net.ourams.vo.SubjectVo;
 
 @Repository
 public class CourseAssignmentDao {
@@ -14,8 +15,13 @@ public class CourseAssignmentDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	/* 전체 과제 리스트 */
 	public List<AssignmentVo> selectList(int courseNo) {
 		return sqlSession.selectList("assignment.selectList", courseNo);
+	}
+
+	public List<SubjectVo> selectSubList(int courseNo) {
+		return sqlSession.selectList("course.selectSubjectListByCourseNo", courseNo);
 	}
 
 }
