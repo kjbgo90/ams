@@ -122,7 +122,7 @@
 
 								
 								 <div class="mar-btm pad-btm bord-btm">
-					                        <h1 class="page-header text-overflow">
+					                        <h1 class="page-header" style="">
 					                            <span class="label label-normal label-info">자바고급과정</span>궁금합니다
 					                        </h1>
 					                    </div>

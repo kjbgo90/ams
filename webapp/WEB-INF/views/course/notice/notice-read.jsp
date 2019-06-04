@@ -119,17 +119,15 @@
 						<div class="panel-body">
 							<div class="blog-title media-block">
 
-								
 
-								
-								 <div class="mar-btm pad-btm bord-btm">
-					                        <h1 class="page-header text-overflow">
-					                            <span class="label label-normal label-info">공지</span>에어컨 가동
-					                        </h1>
-					                    </div>
-					
+								<div class="mar-btm pad-btm bord-btm">
+									<h1 class="page-header"  style="font-size: 25px;">
+										<span class="label label-normal label-info">공지</span>에어컨 가동
+									</h1>
+								</div>
+
 								<div class="row">
-									 <div class="col-sm-7 toolbar-left">
+									<div class="col-sm-7 toolbar-left">
 										<div class="media pad-ver">
 											<div class="media-left">
 												<a href="#" class="box-inline"><img alt="Profile Picture" class="img-md img-circle" src="${pageContext.request.contextPath }/assets/img/profile-photos/9.png"></a>
@@ -142,17 +140,17 @@
 										</div>
 									</div>
 									<div class="col-sm-5 toolbar-right">
-					                            <!--Details Information-->
-					                            <p class="mar-no"><small class="text-muted">Monday 12, May 2016</small></p>
-					                            <a href="#">
-					                                <strong>Holiday.zip</strong>
-					                                <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-					                            </a>
-					                        </div>
+										<!--Details Information-->
+										<p class="mar-no">
+											<small class="text-muted">Monday 12, May 2016</small>
+										</p>
+										<a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
+										</a>
+									</div>
 								</div>
-								
+
 							</div>
-							
+
 							<div class="blog-content">
 
 								<div class="blog-body">
@@ -160,14 +158,13 @@
 										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
 										<small>Someone famous in <cite title="Source Title">Source Title</cite></small>
 									</blockquote>
-									
+
 								</div>
 							</div>
 							<div class="blog-footer">
-								<div class="media-left">
-								</div>
+								<div class="media-left"></div>
 								<div class="media-body text-right">
-									 <i class="demo-pli-speech-bubble-5 icon-fw"></i>23
+									<i class="demo-pli-speech-bubble-5 icon-fw"></i>23
 								</div>
 							</div>
 							<div class="row">
@@ -193,7 +190,10 @@
 									</button>
 								</div>
 							</div>
-							<br><br><br><br>
+							<br>
+							<br>
+							<br>
+							<br>
 							<!-- Comment form -->
 							<!--===================================================-->
 							<hr class="new-section-sm bord-no">
@@ -209,8 +209,8 @@
 								</div>
 							</form>
 							<button id="mail-send-btn" type="button" class="btn btn-primary">
-										<i class=" icon-xs icon-fw "></i>댓글등록
-									</button>
+								<i class=" icon-xs icon-fw "></i>댓글등록
+							</button>
 							<!--===================================================-->
 							<!-- End Comment form -->
 
@@ -232,7 +232,7 @@
 										<p class="text-muted text-sm">Today 10:41AM - 12/09/2017</p>
 									</div>
 									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p>
-									
+
 								</div>
 							</div>
 							<!--===================================================-->
@@ -250,7 +250,7 @@
 										<p class="text-muted text-sm">Today 08:25AM - 12/009/2017</p>
 									</div>
 									<p>Maecenas ultrices, justo vel imperdiet gravida, urna ligula hendrerit nibh, ac cursus nibh sapien in purus.</p>
-									
+
 								</div>
 							</div>
 							<!--===================================================-->
@@ -269,7 +269,7 @@
 										<p class="text-muted text-sm">Today 05:17AM - 12/09/2017</p>
 									</div>
 									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
-									
+
 								</div>
 							</div>
 							<!--===================================================-->
@@ -348,4 +348,3 @@
 
 </body>
 </html>
-    
