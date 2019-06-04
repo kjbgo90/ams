@@ -494,6 +494,70 @@
 							</div>
 							<!--===================================================-->
 							<!--End 과제 Accordion-->
+							<!--과제 Accordion-->
+							<!--===================================================-->
+							<div class="panel-group accordion" id="accordion1">
+								<c:forEach items="${subjectList}" var="subjectVo">
+									<div class="panel">
+										<!--Accordion title-->
+										<div class="panel-heading" style="padding-left: 15px;">
+											<h4 class="panel-title text-main text-bold text-lg text-uppercase">
+												<a data-parent="#accordion1" data-toggle="collapse" href="#collapse${subjectVo.subjectNo}">${subjectVo.subjectTitle}</a>
+											</h4>
+										</div>
+										<!--Accordion content-->
+										<div class="panel-collapse collapse in" id="collapse${subjectVo.subjectNo}">
+											<div class="panel-body">
+												<div class="panel-group accordion" id="accordionInside${subjectVo.subjectNo}">
+													<!--내부 판넬 -->
+													<div class="panel panel-bordered-primary">
+														<div class="panel-heading">
+															<h4 class="panel-title">
+																<a data-parent="#accordionInside${subjectVo.subjectNo}" data-toggle="collapse" href="#collapse${subjectVo.subjectNo}Inside3">JAVA_3번 숙제</a>
+															</h4>
+														</div>
+														<div class="panel-collapse collapse in" id="collapse${subjectVo.subjectNo}Inside3">
+															<div class="panel-body">
+																<div class="row">
+																	<div class="col-sm-7 toolbar-left">
+																		<!--Sender Information-->
+																		<div class="media">
+																			<span class="media-left"> <img src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png" class="img-circle img-sm" alt="Profile Picture">
+																			</span>
+																			<div class="media-body text-left">
+																				<div class="text-bold">황일영</div>
+																				<small class="text-muted">iremys@gmail.com</small>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-sm-5 toolbar-right">
+																		<!--Details Information-->
+																		<p class="mar-no">
+																			<small class="text-muted">Monday 03, June 2019</small>
+																		</p>
+																	</div>
+																</div>
+																<p>3번숙제의 내용입니다 이 문제를 풀어보세요!</p>
+															</div>
+															<!--List group-->
+															<ul class="list-group">
+																<li class="list-group-item">Chapter : 상속과 다형성</li>
+																<li class="list-group-item">제출기한 : 2019년 6월 12일</li>
+																<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
+																</a></li>
+																<li class="list-group-item"><button class="btn btn-block btn-primary">과제제출</button></li>
+															</ul>
+														</div>
+													</div>
+													<!--내부 판넬 -->
+												</div>
+											</div>
+										</div>
+									</div>
+								</c:forEach>
+							</div>
+							<!--===================================================-->
+							<!--End 과제 Accordion-->
 						</div>
 						<div class="panel col-xs-5">
 							<p class="pad-hor mar-top text-main text-bold text-lg text-uppercase" style="padding-left: 3px;">JAVA_3번 숙제</p>
