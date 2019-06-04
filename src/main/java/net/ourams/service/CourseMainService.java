@@ -1,5 +1,7 @@
 package net.ourams.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ public class CourseMainService {
 	@Autowired
 	private CourseMainDao courseMDao;
 	
-	/*  */
+	/* @Auth 에서 CoursePath를 체크해주는 서비스 */
 	public boolean checkService(String coursePath, int userNo) {
 		
 		//코스 패스에 해당하는 코스의 정보를 가져옴 
@@ -33,6 +35,16 @@ public class CourseMainService {
 		boolean result = courseMDao.selectCourseRegistExist(courseNo, userNo);
 		
 		return result;
+	}
+
+	
+	
+	public Map<String, Object> getSubjectListAndLastChapterList(String coursePath) {
+		// TODO Auto-generated method stub
+		int courseNo =  courseMDao.selectCourseVoByCoursePath(coursePath).getCourseNo();
+		
+		
+		return null;
 	}
 
 	
