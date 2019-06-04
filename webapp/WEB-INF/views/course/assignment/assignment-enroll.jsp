@@ -123,17 +123,18 @@
 													<p class="text-sm text-muted">or click to pick manually</p>
 												</div>
 											</div>
+											<!--
 											<div class="fallback">
 												<form action="#" method="post" enctype="multipart/form-data">
 													<input name="file" type="file" multiple>
 												</form>
 											</div>
+											-->
 										</form>
 									</div>
 									<!--===================================================-->
 									<!-- End Dropzonejs -->
 									<hr>
-									<p class="text-main text-bold text-uppercase">공개 여부</p>
 									<div class="form-horizontal">
 										<div class="form-group">
 											<label class="col-sm-5 control-label text-left" for="demo-hor-inputpass">subject</label>
