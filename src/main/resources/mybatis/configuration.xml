@@ -13,6 +13,7 @@
 		<typeAlias alias="ReplyVo" type="net.ourams.vo.ReplyVo" />
 		<typeAlias alias="SubjectVo" type="net.ourams.vo.SubjectVo" />
 		<typeAlias alias="UserVo" type="net.ourams.vo.UserVo" />
+		<typeAlias alias="SubmitVo" type="net.ourams.vo.SubmitVo" />
 	</typeAliases>
 
 	<mappers>
