@@ -19,4 +19,14 @@
 		]]>
 	</select>
 	
+	<select id="searchUsers" resultType="UserVo">
+		<![CDATA[
+			SELECT userNo,
+				   email,
+				   userName,
+				   userType
+			FROM users
+		]]>
+	</select>
+	
 </mapper>

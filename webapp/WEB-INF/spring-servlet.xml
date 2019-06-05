@@ -7,7 +7,6 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
 	xmlns:mvc="http://www.springframework.org/schema/mvc">
 
-
 	<!-- annotation 설정을 하겠다. -->
 	<context:annotation-config />
 
