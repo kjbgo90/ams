@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import net.ourams.vo.AssignmentVo;
 import net.ourams.vo.SubjectVo;
+import net.ourams.vo.SubmitVo;
 
 @Repository
 public class CourseAssignmentDao {
@@ -22,6 +23,10 @@ public class CourseAssignmentDao {
 
 	public List<SubjectVo> selectSubList(int courseNo) {
 		return sqlSession.selectList("course.selectSubjectListByCourseNo", courseNo);
+	}
+
+	public int insertSubmit(SubmitVo submitVo) {
+		return sqlSession.insert("assignment.insertSubmit", submitVo);
 	}
 
 }

@@ -506,49 +506,60 @@
 											</h4>
 										</div>
 										<!--Accordion content-->
-										<div class="panel-collapse collapse in" id="collapse${subjectVo.subjectNo}">
+										<div class="panel-collapse collapse" id="collapse${subjectVo.subjectNo}">
 											<div class="panel-body">
 												<div class="panel-group accordion" id="accordionInside${subjectVo.subjectNo}">
 													<!--내부 판넬 -->
-													<div class="panel panel-bordered-primary">
-														<div class="panel-heading">
-															<h4 class="panel-title">
-																<a data-parent="#accordionInside${subjectVo.subjectNo}" data-toggle="collapse" href="#collapse${subjectVo.subjectNo}Inside3">JAVA_3번 숙제</a>
-															</h4>
-														</div>
-														<div class="panel-collapse collapse in" id="collapse${subjectVo.subjectNo}Inside3">
-															<div class="panel-body">
-																<div class="row">
-																	<div class="col-sm-7 toolbar-left">
-																		<!--Sender Information-->
-																		<div class="media">
-																			<span class="media-left"> <img src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png" class="img-circle img-sm" alt="Profile Picture">
-																			</span>
-																			<div class="media-body text-left">
-																				<div class="text-bold">황일영</div>
-																				<small class="text-muted">iremys@gmail.com</small>
-																			</div>
-																		</div>
+													<c:choose>
+														<c:when test="${empty subjectVo.assignmentListBySub }">
+															<div class="text-center" style="padding-top:40px; font-size: 20px; height:100px;">
+																<i class="pli-folder-hide icon-lg"></i> 과제함이 비었습니당~
+															</div>
+														</c:when>
+														<c:otherwise>
+															<c:forEach items="${subjectVo.assignmentListBySub}" var="assignmentVo">
+																<div class="panel panel-bordered-primary">
+																	<div class="panel-heading">
+																		<h4 class="panel-title">
+																			<a data-parent="#accordionInside${subjectVo.subjectNo}" data-toggle="collapse" href="#collapse${subjectVo.subjectNo}Inside3">${assignmentVo.assignmentTitle}</a>
+																		</h4>
 																	</div>
-																	<div class="col-sm-5 toolbar-right">
-																		<!--Details Information-->
-																		<p class="mar-no">
-																			<small class="text-muted">Monday 03, June 2019</small>
-																		</p>
+																	<div class="panel-collapse collapse" id="collapse${subjectVo.subjectNo}Inside3">
+																		<div class="panel-body">
+																			<div class="row">
+																				<div class="col-sm-7 toolbar-left">
+																					<!--Sender Information-->
+																					<div class="media">
+																						<span class="media-left"> <img src="${pageContext.request.contextPath }${assignmentVo.logoPath}" class="img-circle img-sm" alt="Profile Picture">
+																						</span>
+																						<div class="media-body text-left">
+																							<div class="text-bold">${assignmentVo.userName}</div>
+																							<small class="text-muted">${assignmentVo.email}</small>
+																						</div>
+																					</div>
+																				</div>
+																				<div class="col-sm-5 toolbar-right">
+																					<!--Details Information-->
+																					<p class="mar-no">
+																						<small class="text-muted">${assignmentVo.startDate}</small>
+																					</p>
+																				</div>
+																			</div>
+																			<p>${assignmentVo.assignmentContent}</p>
+																		</div>
+																		<!--List group-->
+																		<ul class="list-group">
+																			<li class="list-group-item">Chapter : ${assignmentVo.chapterContent}</li>
+																			<li class="list-group-item">제출기한 : ${assignmentVo.endDate} 까지</li>
+																			<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
+																			</a></li>
+																			<li class="list-group-item"><button class="btn btn-block btn-primary">과제제출</button></li>
+																		</ul>
 																	</div>
 																</div>
-																<p>3번숙제의 내용입니다 이 문제를 풀어보세요!</p>
-															</div>
-															<!--List group-->
-															<ul class="list-group">
-																<li class="list-group-item">Chapter : 상속과 다형성</li>
-																<li class="list-group-item">제출기한 : 2019년 6월 12일</li>
-																<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-																</a></li>
-																<li class="list-group-item"><button class="btn btn-block btn-primary">과제제출</button></li>
-															</ul>
-														</div>
-													</div>
+															</c:forEach>
+														</c:otherwise>
+													</c:choose>
 													<!--내부 판넬 -->
 												</div>
 											</div>
@@ -560,19 +571,21 @@
 							<!--End 과제 Accordion-->
 						</div>
 						<div class="panel col-xs-5">
-							<p class="pad-hor mar-top text-main text-bold text-lg text-uppercase" style="padding-left: 3px;">JAVA_3번 숙제</p>
+							<p class="pad-hor mar-top text-main text-bold text-lg text-uppercase" style="padding-left: 3px;">${lastAssignment.assignmentTitle }</p>
 							<div class="panel panel-bordered-primary">
 								<div class="panel-body">
-									<form action="">
+									<form id="submitForm" method="post" action="${pageContext.request.contextPath }/${coursePath}/assignment/submit">
+										<input type="hidden" name="userNo" value="${authUser.userNo }">
+										<input type="hidden" name="assignmentNo" value="${lastAssignment.assignmentNo }">
 										<div class="row">
 											<div class="col-sm-7 toolbar-left">
 												<!--Sender Information-->
 												<div class="media">
-													<span class="media-left"> <img src="${pageContext.request.contextPath }/assets/img/profile-photos/1.png" class="img-circle img-sm" alt="Profile Picture">
+													<span class="media-left"> <img src="${pageContext.request.contextPath }${authUser.logoPath }" class="img-circle img-sm" alt="Profile Picture">
 													</span>
 													<div class="media-body text-left">
-														<div class="text-bold">이종현</div>
-														<small class="text-muted">jh_93@naver.com</small>
+														<div class="text-bold">${authUser.userName }</div>
+														<small class="text-muted">${authUser.email }</small>
 													</div>
 												</div>
 											</div>
@@ -580,7 +593,7 @@
 										</div>
 										<div>
 											<p>comment</p>
-											<textarea style="width: 100%; height: 80px;"></textarea>
+											<textarea form="submitForm" name="submitContent" style="width: 100%; height: 80px;"></textarea>
 										</div>
 										<div>
 											<div class="bord-top pad-ver">
@@ -618,7 +631,7 @@
 												</div>
 											</div>
 											<div>
-												<button class="btn btn-lg btn-danger pull-right">제출하기</button>
+												<button class="btn btn-lg btn-danger pull-right" name="submit" form="submitForm">제출하기</button>
 											</div>
 										</div>
 									</form>
@@ -665,7 +678,7 @@
 											<td><button class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal">click</button></td>
 										</tr>
 										<tr>
-											<td class="text-center">3</td>
+											<td class="text-center">4</td>
 											<td>구민수</td>
 											<td><a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
 											</a></td>
@@ -673,7 +686,7 @@
 											<td><button class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal">click</button></td>
 										</tr>
 										<tr>
-											<td class="text-center">3</td>
+											<td class="text-center">5</td>
 											<td>이건창</td>
 											<td><a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
 											</a></td>
@@ -706,11 +719,11 @@
 							<div class="col-sm-7 toolbar-left">
 								<!--Sender Information-->
 								<div class="media">
-									<span class="media-left"> <img src="${pageContext.request.contextPath }/assets/img/profile-photos/1.png" class="img-circle img-sm" alt="Profile Picture">
+									<span class="media-left"> <img src="${pageContext.request.contextPath }${authUser.logoPath}" class="img-circle img-sm" alt="Profile Picture">
 									</span>
 									<div class="media-body text-left">
-										<div class="text-bold">이종현</div>
-										<small class="text-muted">jh_93@naver.com</small>
+										<div class="text-bold">${authUser.userName }</div>
+										<small class="text-muted">${authUser.email }</small>
 									</div>
 								</div>
 							</div>
