@@ -3,13 +3,16 @@
 
 <configuration>
 	<typeAliases>
-		<typeAlias alias="UserVo" type="net.ourams.vo.UserVo" />
-		<typeAlias alias="CourseVo" type="net.ourams.vo.CourseVo" />
-		<typeAlias alias="CourseRegistVo" type="net.ourams.vo.CourseRegistVo" />
 		<typeAlias alias="AssignmentVo" type="net.ourams.vo.AssignmentVo" />
+		<typeAlias alias="ChapterVo" type="net.ourams.vo.ChapterVo" />
+		
+		<typeAlias alias="CourseRegistVo" type="net.ourams.vo.CourseRegistVo" />
+		<typeAlias alias="CourseVo" type="net.ourams.vo.CourseVo" />
+
 		<typeAlias alias="PostVo" type="net.ourams.vo.PostVo" />
 		<typeAlias alias="ReplyVo" type="net.ourams.vo.ReplyVo" />
 		<typeAlias alias="SubjectVo" type="net.ourams.vo.SubjectVo" />
+		<typeAlias alias="UserVo" type="net.ourams.vo.UserVo" />
 	</typeAliases>
 
 	<mappers>
