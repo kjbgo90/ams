@@ -6,6 +6,8 @@ public class SubjectVo {
 	private String subjectTitle;
 	private int courseNo;
 	private int scheduleNo;
+	private String startDate;
+	private String endDate;
 
 	public SubjectVo() {
 	}
@@ -15,6 +17,16 @@ public class SubjectVo {
 		this.subjectTitle = subjectTitle;
 		this.courseNo = courseNo;
 		this.scheduleNo = scheduleNo;
+	}
+
+	public SubjectVo(int subjectNo, String subjectTitle, int courseNo, int scheduleNo, String startDate,
+			String endDate) {
+		this.subjectNo = subjectNo;
+		this.subjectTitle = subjectTitle;
+		this.courseNo = courseNo;
+		this.scheduleNo = scheduleNo;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 
 	public int getSubjectNo() {
@@ -49,10 +61,26 @@ public class SubjectVo {
 		this.scheduleNo = scheduleNo;
 	}
 
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
 	@Override
 	public String toString() {
 		return "SubjectVo [subjectNo=" + subjectNo + ", subjectTitle=" + subjectTitle + ", courseNo=" + courseNo
-				+ ", scheduleNo=" + scheduleNo + "]";
+				+ ", scheduleNo=" + scheduleNo + ", startDate=" + startDate + ", endDate=" + endDate + "]";
 	}
 
 }
