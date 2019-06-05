@@ -18,4 +18,15 @@ public class PostDao {
 	public List<PostVo> selectAll(int courseNo){
 		return sqlSession.selectList("notice.selectAll",courseNo);
 	}
+
+	/*
+	 * public int updateHit(int postNo) { return
+	 * sqlSession.update("notice.updateHit", postNo); }
+	 */
+	
+	
+	public PostVo selectNotice(int postNo) {
+		return sqlSession.selectOne("notice.selectNotice", postNo);
+	}
+	
 }

@@ -134,7 +134,7 @@
 						<hr>
 
 						<div class="row pad-btm">
-							<form action="#" method="post" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor" style="padding-left: 500px;">
+							<form action="${pageContext.request.contextPath}/{coursePath}/notice/list" method="get" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor" style="padding-left: 500px;">
 								<div class="input-group mar-btm">
 									<input type="text" placeholder="Search posts..." class="form-control input-sm"> <span class="input-group-btn">
 										<button class="btn btn-primary btn-sm" type="button">검색</button>
@@ -159,12 +159,13 @@
 										</tr>
 									</thead>
 									<tbody>
+									<c:forEach items="${noticeList}" var="PostVo" >
 										<tr>
-											<td>10</td>
-											<td><a class="btn-link" href="#">[공지]에어컨 가동시간 알림</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
+											<td>${PostVo.postNo}</td>
+											<td><a class="btn-link" href="${pageContext.request.contextPath }/${coursePath}/notice/read/${PostVo.postNo}">[공지]${PostVo.postTitle}</a></td>
+											<td><span class="text-muted">${PostVo.regDate}</span></td>
+											<td><a href="${pageContext.request.contextPath }/${coursePath}/notice/read/${PostVo.postNo}" class="btn-link">${PostVo.userNo}</a></td>
+											<td>${PostVo.hit}</td>
 										</tr>
 										<tr>
 											<td>9</td>
@@ -222,7 +223,7 @@
 											<td><a href="#" class="btn-link">강보은</a></td>
 											<td>22</td>
 										</tr>
-
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>

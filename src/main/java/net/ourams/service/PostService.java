@@ -18,4 +18,10 @@ public class PostService {
 		List<PostVo> noticeList = PostDao.selectAll(courseNo); 
 		return noticeList;
 	}
+
+	public PostVo read(int postNo) {
+		//PostDao.updateHit(postNo);
+		PostVo PostVo = PostDao.selectNotice(postNo);
+		return PostVo;
+	}
 }

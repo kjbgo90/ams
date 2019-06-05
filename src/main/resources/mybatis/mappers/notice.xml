@@ -5,7 +5,7 @@
 	
 	<!-- 쿼리문 작성 -->
 	
-	<!-- id와 비밀번호로 로그인 정보를 가져오는 sql -->
+	<!--  -->
 	<select id="selectAll" parameterType="int" resultType="PostVo">
 		<![CDATA[
 			SELECT  p.postNo,
@@ -13,7 +13,7 @@
         			u.userNo,
         			p.fileNo,
         			p.courseNo,
-        			p.regDate,
+        			TO_CHAR(p.regDate, 'yyyy/mm/dd') as regDate,
         			p.communityNo,
         			p.scheduleNo,
         			p.postTitle,
@@ -24,5 +24,21 @@
 			order by userNo desc
 		]]>
 	</select>
+	
+	
+	<!-- no로 글조회 -->
+	<select id="selectNotice" parameterType="int" resultType="PostVo">
+		<![CDATA[
+			select postNo, 
+				   postTitle, 
+				   postContent,
+				   hit, 
+				   TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,  
+				   userNo
+		     from post 
+		     where postNo = #{postNo}
+		]]>
+	</select>
+	
 	
 </mapper>

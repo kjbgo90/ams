@@ -1,14 +1,12 @@
 package net.ourams.vo;
 
-import java.sql.Date;
-
 public class PostVo {
 	private int postNo;
 	private int postType;
 	private int userNo;
 	private int fileNo;
 	private int courseNo;
-	private Date regDate;
+	private String regDate;
 	private int communityNo;
 	private int scheduleNo;
 	private String postTitle;
@@ -19,7 +17,7 @@ public class PostVo {
 		
 	}
 
-	public PostVo(int postNo, int postType, int userNo, int fileNo, int courseNo, Date regDate, int communityNo,
+	public PostVo(int postNo, int postType, int userNo, int fileNo, int courseNo, String regDate, int communityNo,
 			int scheduleNo, String postTitle, String postContent, int hit) {
 		super();
 		this.postNo = postNo;
@@ -75,11 +73,11 @@ public class PostVo {
 		this.courseNo = courseNo;
 	}
 
-	public Date getRegDate() {
+	public String getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(Date regDate) {
+	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
 

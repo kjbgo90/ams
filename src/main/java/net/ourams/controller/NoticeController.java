@@ -40,8 +40,14 @@ public class NoticeController {
 	
 	
 	@Auth
-	@RequestMapping(value = "/read", method = RequestMethod.GET)
-	public String noticeRead() {
+	@RequestMapping(value = "/read/{postNo}", method = RequestMethod.GET)
+	public String noticeRead(@PathVariable("coursePath") String coursePath, @AuthUser UserVo authUser,
+							@PathVariable("postNo") int postNo, Model model) {
+		
+		PostVo PostVo = PostService.read(postNo);
+		model.addAttribute("PostVo", PostVo);
+		model.addAttribute("coursePath",coursePath);
+		
 		return "course/notice/notice-read";
 	}
 	
