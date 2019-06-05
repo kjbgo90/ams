@@ -1,6 +1,6 @@
 package net.ourams.vo;
 
-public class CourseDataroomVo {
+public class CourseDataRoomVo {
 	/*
 	 * data room 
 	 */
@@ -41,7 +41,7 @@ public class CourseDataroomVo {
 	private String filePath;
 	
 	
-	public CourseDataroomVo(int dataRoomNo, 
+	public CourseDataRoomVo(int dataRoomNo, 
 							int courseNo, 
 							String dataRoomName, 
 							int pRoonNo, 
@@ -72,7 +72,7 @@ public class CourseDataroomVo {
 	}
 
 
-	public CourseDataroomVo() { }
+	public CourseDataRoomVo() { }
 
 
 	public int getDataRoomNo() {
