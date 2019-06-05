@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="courseDataRoom">
+
+<!-- 왼쪽 폴더 리스트들  -->
+	<select id="selectFolderList"  resultType="CourseDataRoomVo">
+		<![CDATA[
+		select 	dataroomno, 
+				dataroomname, 
+				proomno 
+		from dataroom where courseno=1 
+		order by proomno
+		]]>
+	</select>
+	
+	
+	<!--처음 코스 전용 자료실 페이지 들어가면 오른쪽에 있는 파일리스트들 -->
+	<select id="selectFileListAtFirst"  resultType="CourseDataRoomVo">
+		<![CDATA[
+		select dataroomno, dataroomname as filelist 
+		from dataroom 
+		where proomno=  (select dataroomno from dataroom where courseno=1 and proomno=0)
+		union
+		select d.fileno, d.filename as filelist
+		from dataroomfile dr join datafile d 
+		on dr.fileno=d.fileno where dr.dataroomno =1
+		]]>
+	</select>
+	
+	<!-- 폴더를 클릭했을때 dataroomno 를 받고 file 과 폴더 리스트를 받는다  -->
+	<select id="selectFileClickedByFolder"  resultType="CourseDataRoomVo">
+		<![CDATA[
+		select dataroomno, dataroomname as filelist 
+		from dataroom 
+		where proomno=2
+		union
+		select d.fileno, d.filename  as filelist  
+		from dataroomfile dr join datafile d 
+		on dr.fileno=d.fileno where dr.dataroomno =2
+		]]>
+	</select>
+
+
+	<!-- tag를 이용하여 파일들을 선택가능하게 하는 법 -->
+	<!-- 1.태그를 나열한다 -->
+	<select id="selectTagList" resultType="CourseDataRoomVo">
+		<![CDATA[
+			select datatagno , datatagname from datatag
+		]]>
+	</select>
+	
+	<!-- 2.태그중에 하나를 클릭해서 datatagno를 가져온다 -->
+	<select id="SelectTagOnByDataTagNo" resultType="CourseDataRoomVo">
+		<![CDATA[
+		select df.fileno, df.savename, df.filepath 
+		from datafile df join (select 
+                                a.dataroomfileno ,
+                                a.dataroomno, 
+                                a.fileno   
+                     		  from dataroomfiletag drft 
+                      		  join (select 
+                                    	drf.dataroomfileno, 
+                                    	drf.fileno, 
+                                    	drf.dataroomno 
+                      		  		from dataroom dr 
+                      		  		join dataroomfile drf 
+                      		  		on dr.dataroomno=drf.dataroomno 
+                      		  		where dr.courseno=1
+                      		  ) a
+        			  		  on drft.dataroomfileno=a.dataroomfileno where drft.datatagno=1 ) b
+		on df.fileno=b.fileno
+		]]>
+	</select>
+	
+	
+	<!-- dataroomno를 받은 상태에서 폴더를 업로드한다 태그도 추가하고  -->
+	
+	<insert id="insertFileUpLoad" parameterType="CourseDataRoomVo">
+		<![CDATA[
+			insert into datafile values(
+            	seq_datafile_no.nextval,
+            	#{fileName},
+            	#{savaName},
+            	#{fileSize},
+            	sysdate,
+            	#{filePath}
+            )
+		]]>
+	</insert>
+
+	<insert id="insertDataRoomFile" parameterType="CourseDataRoomVo">
+		<![CDATA[
+			insert into dataroomfile values(
+            	seq_dataroomfile_no.nextval,
+            	#{dataRoomNo},
+            	#{fileNo}
+            )
+		]]>
+	</insert>
+
+	<insert id="insertDataRoomFileTag" parameterType="CourseDataRoomVo">
+		<![CDATA[
+			insert into dataroomfiletag values (
+            	seq_dataroomfiletag_no.nextval,
+            	#{dataRoomFileNo},
+            	#{dataTagNo}
+            )
+		]]>
+	</insert>
+
+
+</mapper>
