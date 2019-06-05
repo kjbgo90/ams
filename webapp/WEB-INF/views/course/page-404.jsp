@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<title>Error 404 | Nifty - Admin Template</title>
+<title>Error 404 | COURSE NOT FOUND</title>
 
 
 <!--STYLESHEET-->
@@ -33,7 +33,7 @@
 
 <!--Nifty Premium Icon [ DEMONSTRATION ]-->
 <link href="${pageContext.request.contextPath }/assets/css/demo/nifty-demo-icons.css" rel="stylesheet">
-
+<link href="${pageContext.request.contextPath }/assets/css/premium/icon-sets/icons/line-icons/premium-line-icons.min.css" rel="stylesheet">
 
 <!--=================================================-->
 
@@ -83,7 +83,7 @@
 		<!--===================================================-->
 		<div class="cls-header">
 			<div class="cls-brand">
-				<a class="box-inline" href="index.html"> <!--<img alt="Nifty Admin" src="img/logo.png" class="brand-icon">--> <span class="brand-title">Nifty<span class="text-thin">Admin</span></span>
+				<a class="box-inline" href="index.html"> <!--<img alt="Nifty Admin" src="img/logo.png" class="brand-icon">--> <span class="brand-title">AMS<span class="text-thin"> Admin</span></span>
 				</a>
 			</div>
 		</div>
@@ -92,16 +92,14 @@
 		<!--===================================================-->
 		<div class="cls-content">
 			<h1 class="error-code text-info">404</h1>
-			<p class="h4 text-uppercase text-bold">Page Not Found!</p>
-			<div class="pad-btm">Sorry, but the page you are looking for has not been found on our server.</div>
+			<p class="h4 text-uppercase text-bold">Not Found!!</p>
+			<div class="pad-btm">coursePath를 확인 할 수 없거나 해당 페이지에 권한이 없습니다. </div>
 			<div class="row mar-ver">
-				<form class="col-xs-12 col-sm-10 col-sm-offset-1" method="post" action="pages-search-results.html">
-					<input type="text" placeholder="Search.." class="form-control error-search">
-				</form>
+				
 			</div>
 			<hr class="new-section-sm bord-no">
 			<div class="pad-top">
-				<a class="btn btn-primary" href="index.html">Return Home</a>
+				
 			</div>
 		</div>
 

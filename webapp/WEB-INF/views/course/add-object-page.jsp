@@ -47,6 +47,15 @@
 <!--Animate.css [ OPTIONAL ]-->
 <link href="${pageContext.request.contextPath }/assets/css/animate.css" rel="stylesheet">
 
+<!--Summernote [ OPTIONAL ]-->
+<link href="${pageContext.request.contextPath }/assets/plugins/summernote/summernote.min.css" rel="stylesheet">
+
+<!--Dropzone [ OPTIONAL ]-->
+<link href="${pageContext.request.contextPath }/assets/plugins/dropzone/dropzone.css" rel="stylesheet">
+
+<!--Bootstrap Datepicker [ OPTIONAL ]-->
+<link href="${pageContext.request.contextPath }/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet">
+
 <!--=================================================
 
     REQUIRED
@@ -121,7 +130,6 @@
 				<!--Page content-->
 				<!--===================================================-->
 				<div id="page-content">
-
 
 					<!-- Search -->
 					<!--===================================================-->
@@ -351,11 +359,13 @@
 							<!--Bootstrap Datepicker : Range-->
 							<!--===================================================-->
 							<br> <br> <label class="col-sm-3 control-label" for="demo-hor-inputemail">기간</label>
-							<div id="demo-dp-range">
+
+							<div id="dp-range">
 								<div class="input-daterange input-group" id="datepicker" style="width: 407px;">
 									<input type="text" class="form-control" name="start" /> <span class="input-group-addon">to</span> <input type="text" class="form-control" name="end" />
 								</div>
 							</div>
+
 							<br>
 							<!--===================================================-->
 
@@ -389,7 +399,7 @@
 							<!--Bootstrap Datepicker : Range-->
 							<!--===================================================-->
 							<br> <br> <label class="col-sm-3 control-label" for="demo-hor-inputemail">기간</label>
-							<div id="demo-dp-range">
+							<div id="dp-range">
 								<div class="input-daterange input-group" id="datepicker" style="width: 407px;">
 									<input type="text" class="form-control" name="start" /> <span class="input-group-addon">to</span> <input type="text" class="form-control" name="end" />
 								</div>
@@ -489,11 +499,31 @@
 
 	<!--=================================================-->
 
+	<!--Summernote [ OPTIONAL ]-->
+	<script src="${pageContext.request.contextPath }/assets/plugins/summernote/summernote.js"></script>
+
+	<!--Dropzone [ OPTIONAL ]-->
+	<script src="${pageContext.request.contextPath }/assets/plugins/dropzone/dropzone.js"></script>
+
+	<!--Bootstrap Datepicker [ OPTIONAL ]-->
+	<script src="${pageContext.request.contextPath }/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+
 	<!--Bootbox Modals [ OPTIONAL ]-->
 	<script src="${pageContext.request.contextPath }/assets/js/bootbox.js"></script>
 
 	<!--Modals [ SAMPLE ]-->
 	<script src="${pageContext.request.contextPath }/assets/js/ui-modals.js"></script>
-
+	
+	<script type="text/javascript">
+	
+	$('#dp-range .input-daterange').datepicker({
+        format: "MM dd, yyyy",
+        todayBtn: "linked",
+        autoclose: true,
+        todayHighlight: true
+    });
+	
+	</script>
+	
 </body>
 </html>
