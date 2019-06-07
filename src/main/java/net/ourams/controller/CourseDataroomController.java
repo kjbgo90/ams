@@ -1,5 +1,7 @@
 package net.ourams.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 
 import net.ourams.service.CourseDataroomService;
 import net.ourams.util.S3Util;
+import net.ourams.vo.CourseDataroomVo;
 
 @Controller
 @RequestMapping("/dataroom")
@@ -56,7 +59,16 @@ public class CourseDataroomController {
 		s3Util.getFileURL(bucketName, fileName);
 		String url = s3Util.getFileURL(bucketName, file.getOriginalFilename());
 		model.addAttribute("url", url);
-		
+
 		return "redirect:/dataroom/form";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/folderList" , method = RequestMethod.POST)
+	public List<CourseDataroomVo> getFolderList() {
+		System.out.println("get folder List");
+		List<CourseDataroomVo> list = CourseDataroomService.getfileList();
+		return list;
+	}
+	
 }

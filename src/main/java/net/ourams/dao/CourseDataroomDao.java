@@ -15,7 +15,7 @@ public class CourseDataroomDao {
 	private SqlSession sqlSession;
 	
 	public List<CourseDataroomVo> selectFileList(){
-		List<CourseDataroomVo> list = sqlSession.selectList("");
+		List<CourseDataroomVo> list = sqlSession.selectList("courseDataRoom.selectFolderList");
 		return list;
 	}
 	

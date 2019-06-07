@@ -23,5 +23,6 @@
 		<mapper resource="mybatis/mappers/assignment.xml" />
 		<mapper resource="mybatis/mappers/notice.xml" />
 		<mapper resource="mybatis/mappers/courseSchedule.xml" />
+		<mapper resource="mybatis/mappers/courseDataRoom.xml" />
 	</mappers>
 </configuration>

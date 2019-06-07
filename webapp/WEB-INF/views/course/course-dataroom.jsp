@@ -380,13 +380,13 @@
 			
 			strList = "";
 			$.ajax({
-				url : "${pageContext.request.contextPath }/dataroom/categoryList",
+				url : "${pageContext.request.contextPath }/dataroom/folderList",
 				type : "post",
 				dataType : "json",
 				success : function(list) {
 					console.log(list);
-					console.log(list[0].cateNo);
-					var no = list[0].cateNo;
+					console.log(list[0].dataRoomNo);
+					var no = list[0].dataRoomNo;
 					
 					for (var i = 0; i < list.length; i++) {
 						console.log(list.length);

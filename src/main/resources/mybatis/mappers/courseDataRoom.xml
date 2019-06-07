@@ -6,11 +6,11 @@
 <!-- 왼쪽 폴더 리스트들  -->
 	<select id="selectFolderList"  resultType="CourseDataRoomVo">
 		<![CDATA[
-		select 	dataroomno, 
-				dataroomname, 
-				proomno 
-		from dataroom where courseno=1 
-		order by proomno
+		select 	dataRoomNo, 
+				dataRoomName, 
+				pRoomNo 
+		from dataRoom where courseNo=1 
+		order by pRoomNo
 		]]>
 	</select>
 	
