@@ -65,13 +65,12 @@ public class S3Util {
     			     new ObjectMetadata());
     }
      
-    
-    // 파일 업로드
-    public void fileUpload(String bucketName, MultipartFile file, String saveName) {
 
+
+    // 파일 업로드
+    public void fileUpload(String bucketName, MultipartFile file) {
     	try {
-    		
-    		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, saveName, file.getInputStream(), new ObjectMetadata());
+    		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, file.getOriginalFilename(), file.getInputStream(), new ObjectMetadata());
     		putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead); // file permission
 			s3.putObject(putObjectRequest); // upload file
 			
@@ -80,23 +79,16 @@ public class S3Util {
 		}
     }
     
-    
     // 파일 삭제
     public void fileDelete(String bucketName, String fileName) {
     	s3.deleteObject(bucketName, fileName);
     }
-     
     // 파일 URL
-    public String getFileURL(String bucketName, String path, String fileName) {
-    	//https://s3.ap-northeast-2.amazonaws.com/com.javaex.kjbbb.upload/img_test/image-2.jpg
-    	
-    	String url = "https://s3.ap-northeast-2.amazonaws.com/" + bucketName + "/" + path + "/" + fileName;
-    	
-    	
+    public String getFileURL(String bucketName, String fileName) {
+    	//https://s3.ap-northeast-2.amazonaws.com/mybucket/puppy.jpg 
+    	String url = "https://s3.ap-northeast-2.amazonaws.com/"+bucketName+"/"+fileName;
         return url;
     }
-	
-	
 
 
 }
