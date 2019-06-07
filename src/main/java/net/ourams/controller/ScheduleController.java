@@ -6,11 +6,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.ourams.service.CourseScheduleService;
+import net.ourams.vo.CourseScheduleVo;
 import net.ourams.vo.UserVo;
 
 @Controller
@@ -20,6 +22,7 @@ public class ScheduleController {
 	@Autowired
 	private CourseScheduleService service;
 	
+	//schedule main form
 	@RequestMapping("/form")
 	public String scheduleForm() {
 		System.out.println("schedule page");
@@ -27,6 +30,7 @@ public class ScheduleController {
 		return "course/schedule";
 	}
 	
+	//schedule tag
 	@ResponseBody
 	@RequestMapping(value="/search", method=RequestMethod.POST)
 	public List<UserVo> searchUsers(String value) throws UnsupportedEncodingException {
@@ -36,7 +40,27 @@ public class ScheduleController {
 		
 		List<UserVo> list = service.searchUsers(name);
 		
-		System.out.println(list.toArray());
 		return list;
+	}
+	
+	//load schedule
+	@ResponseBody
+	@RequestMapping(value="/load", method=RequestMethod.POST)
+	public List<CourseScheduleVo> loadSchedule(){
+		System.out.println("load schedule...");
+		
+		List<CourseScheduleVo> list = service.loadSchedule();
+		return list;
+	}
+	
+	//insert schedule
+	@ResponseBody
+	@RequestMapping(value="/register", method=RequestMethod.POST)
+	public int registerSchedule(@RequestBody CourseScheduleVo vo) {
+		System.out.println("register users...");
+		System.out.println("params info: " + vo.toString());
+		
+		return service.registerSchedule(vo);
+		
 	}
 }

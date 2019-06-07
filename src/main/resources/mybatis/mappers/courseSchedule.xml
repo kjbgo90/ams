@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="courseSchedule">
+	<select id="loadSchedule" resultType="CourseScheduleVo">
+		<![CDATA[
+			SELECT scheduleNo,
+				   scheduleName,
+				   scheduleMemo,
+				   startDate,
+				   endDate,
+				   eventColor,
+				   courseNo,
+				   userNo
+			FROM schedule
+		]]>
+	</select>
+	
+	<insert id="registerSchedule" parameterType="CourseScheduleVo">
+		<![CDATA[
+			Insert into Schedule
+				(scheduleNo,
+				 scheduleName,
+				 scheduleContent,
+				 startDate,
+				 endDate,
+				 eventColor,
+				 courseNo,
+				 userNo)
+			 values(
+				seq_schedule_no.nextval,
+				#{scheduleName},
+				#{scheduleContent},
+				#{startDate},
+				#{endDate},
+				#{eventColor},
+				1,
+				6
+			)
+		]]>
+	</insert>
+</mapper>

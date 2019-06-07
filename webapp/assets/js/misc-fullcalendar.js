@@ -9,8 +9,24 @@
 
 
 $(document).on('nifty.ready', function() {
+	
+	// load schedule list
+	var schedule;
+	$.ajax({
+		url : "/ams/schedule/load",
+		async: false, // ajax 결과 값을 반환시켜 변수에 담기 위해 작성한 코드ㄴ
+		type: "post",
+		contentType : "application/json",
 
-
+		dataType : "json",
+		success : function(list) {
+			schedule = list
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+	
     // Calendar
     // =================================================================
     // Require Full Calendar
@@ -48,6 +64,7 @@ $(document).on('nifty.ready', function() {
 
     // Initialize the calendar
     // -----------------------------------------------------------------
+	
     $('#demo-calendar').fullCalendar({
         header: {
             left: 'prev,next today',
@@ -67,85 +84,20 @@ $(document).on('nifty.ready', function() {
         eventLimit: true, // allow "more" link when too many events
         events: [
         	// event name: purple, mint, warning, danger, success, dark, pink etc... 
-            {
-                title: 'project',
-                start: '2019-06-11',
-                end: '2019-06-15',
-                className: 'mint'
+        	{
+                title: schedule[3].scheduleName,
+                start: schedule[3].startDate,
+                end: schedule[3].endDate,
+                className: schedule[3].eventColor
             }
-            ,
-            {
-                title: 'All Day Event',
-                start: '2019-06-7',
-                className: 'warning'
-            }/* ,
-            {
-                title: 'Meeting',
-                start: '2017-12-20T10:30:00',
-                end: '2017-12-20T12:30:00',
-                className: 'danger'
-            },
-            {
-                title: 'All Day Event',
-                start: '2018-01-01',
-                className: 'warning'
-            },
-            {
-                title: 'Long Event',
-                start: '2018-01-07',
-                end: '2018-01-10',
-                className: 'purple'
-            },
-            {
-                id: 999,
-                title: 'Repeating Event',
-                start: '2018-01-09T16:00:00'
-            },
-            {
-                id: 999,
-                title: 'Repeating Event',
-                start: '2018-01-16T16:00:00',
-                className: 'success'
-            },
-            {
-                title: 'Conference',
-                start: '2018-01-11',
-                end: '2018-01-13',
-                className: 'dark'
-            },
-            {
-                title: 'Meeting',
-                start: '2018-01-12T10:30:00',
-                end: '2018-01-12T12:30:00'
-            },
-            {
-                title: 'Lunch',
-                start: '2018-01-12T12:00:00',
-                className: 'pink'
-            },
-            {
-                title: 'Meeting',
-                start: '2018-01-12T14:30:00'
-            },
-            {
-                title: 'Happy Hour',
-                start: '2018-01-12T17:30:00'
-            },
-            {
-                title: 'Dinner',
-                start: '2018-01-12T20:00:00'
-            },
-            {
-                title: 'Birthday Party',
-                start: '2018-01-13T07:00:00'
-            },
-            {
-                title: 'Click for Google',
-                url: 'http://google.com/',
-                start: '2018-01-28'
-            }
-*/       
         ]
     });
+    
+    events.push({
+        title: schedule[2].scheduleName,
+        start: schedule[2].startDate,
+        end: schedule[2].endDate,
+        className: schedule[2].eventColor
+    })
 
 });

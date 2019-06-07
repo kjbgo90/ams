@@ -18,6 +18,9 @@
 	<!--나눔 고딕 Font [ OPTIONAL ] -->
 	<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
+	<!--  autocomplete -->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
 	<!--Bootstrap Stylesheet [ REQUIRED ]-->	
 	<link href="${pageContext.request.contextPath }/assets/css/bootstrap.css" rel="stylesheet">
 
@@ -48,7 +51,7 @@
 	<link href="${pageContext.request.contextPath }/assets/css/chosen.css" rel="stylesheet">
   
 	<!--Bootstrap Datepicker [ OPTIONAL ]-->
-    <link href="${pageContext.request.contextPath }/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet">		
     
 </head>
 
@@ -1318,13 +1321,13 @@
 								<h3 class="panel-title">기간</h3>
 							</div>
 							<div class="panel-body">
-								 <div id="demo-dp-range">
-					                 <div class="input-daterange input-group" id="datepicker">
-					                      <input type="text" class="form-control" id="schedule-start" name="start" value="" />
-					                      <span class="input-group-addon">to</span>
-					                      <input type="text" class="form-control" id="schedule-end" name="end" value="" />
-					                 </div>
-					             </div>
+								<div id="dp-range">
+									<div class="input-daterange input-group" id="datepicker" style="width: 407px;">
+										<input type="text" class="form-control" id="schedule-start" name="start" /> 
+										<span class="input-group-addon">to</span> 
+										<input type="text" class="form-control" id="schedule-end" name="end" />
+									</div>
+								</div>								 
 							</div>
 							<div class="panel-heading">
 								<h3 class="panel-title">메모</h3>
@@ -1354,7 +1357,9 @@
 							</div>
 							<div class="panel-body">
 								<!--===================================================-->
-								<select id="demo-cs-multiselect" data-placeholder="tag user" multiple tabindex="4" type="text" value=""></select>
+									<!--<select id="demo-cs-multiselect" data-placeholder="tag user" multiple tabindex="4"></select> -->
+									<input id="schedule-tag" type="text" class="form-control" placeholder="tag">
+								
 								<!--===================================================-->
 							</div>
 							<div id="panel-body">
@@ -1380,7 +1385,8 @@
 	<script src="${pageContext.request.contextPath }/assets/js/jquery.min.js"></script>
 
 	<!--jQuery-UI [ REQUIRED] -->
-	<script type="text/javascript" src="${pageContext.request.contextPath }/assets/jquery-ui/jquery-ui.js"></script>
+	<%-- <script type="text/javascript" src="${pageContext.request.contextPath }/assets/jquery-ui/jquery-ui.css"></script> --%>
+	 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/jquery-ui/jquery-ui.js"></script>
 
 	<!--BootstrapJS [ RECOMMENDED ]-->
 	<script src="${pageContext.request.contextPath }/assets/js/bootstrap.js"></script>
@@ -1408,7 +1414,7 @@
 	<script src="${pageContext.request.contextPath }/assets/plugins/chosen/chosen.jquery.js"></script>
 	
 	<!--Bootstrap Datepicker [ OPTIONAL ]-->
-    <script src="${pageContext.request.contextPath }/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+	<script src="${pageContext.request.contextPath }/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 	
     <!--Full Calendar [ SAMPLE ]-->
     <script src="${pageContext.request.contextPath }/assets/js/misc-fullcalendar.js"></script>
@@ -1459,26 +1465,46 @@
 			$("#demo-external-events").append(str);			
 		}
 		
+		// add event - schedule calendar modal
+		$('#dp-range .input-daterange').datepicker({
+	        format: "yyyy-mm-dd",
+	        todayBtn: "linked",
+	        autoclose: true,
+	        todayHighlight: true
+	    });
+		
 		// register new schedule
 		$("#schedule-register").on("click",function(){
-			console.log("register new schedule on " + $("#schedule-start").val() + " ~ " + $("#schedule-end").val());
-			console.log("Schedule Title: " + $("#schedule-title").val());
-			console.log("Schedule Memo: " + $("#schedule-memo").val());
-			console.log("Schedule Category: " + $("input:radio[name=memberType]:checked").val());
-			
-			var schedule = {
+
+			var scheduledto = {
 				scheduleName: $("#schedule-title").val(),
 				startDate: $("#schedule-start").val(),
 				endDate: $("#schedule-end").val(),
 				scheduleMemo: $("#schedule-memo").val(),
-				scheduleCategory: $("input:radio[name=memberType]:checked").val()
+				eventColor: $("input:radio[name=memberType]:checked").val(),
+				scheduleTag: $("#schedule-tag").val()
 			};
-			console.log(schedule)
+			
+			if(scheduledto.scheduleName != "" && scheduledto.startDate != "" && scheduledto.endDate != "" && scheduledto.eventColor){
+				$.ajax({
+					url : "${pageContext.request.contextPath}/schedule/register",
+					type: "post",
+					contentType : "application/json",
+					data : JSON.stringify(scheduledto),
+
+					dataType : "json",
+					success : function(scheduledto) {
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				})
+			}
 		});
 		
 		// @tag
 		$("document").ready(function(){
-			$("#demo-cs-multiselect").autocomplete({
+			$("#schedule-tag").autocomplete({
 				//autocomplete: 자동완성 기능 
 				//source: 타이핑 시 보여질 내용 
 				//select:fuction(event, ui){}: 아이템 선택 싯 실행, ui.item이 선택된 항목을 나타내는 객체
@@ -1501,10 +1527,10 @@
 							success: function(data){
 								response(
 									$.map(data, function(item){
+										var info = item.userName + "(" + item.email +")";
 										return {
-											label: item.name,
-											value: item.name
-										}
+											label: info,
+											value: info										}
 									})
 								); 
 							}
@@ -1520,7 +1546,11 @@
 				}
 			});
 		});
-
+		
+		$("#schedule-modal").on("shown.bs.modal", function() {
+			$("#schedule-tag").autocomplete("option", "appendTo", "#schedule-modal")
+		});
+		
 		function parsing(text){
 			var content = text.value;
 			var tag = "@"
@@ -1533,53 +1563,44 @@
 				return null;
 			}
 		}
+		
+		function render (cell, segs) {
+			var view = this.view;
+			var isTheme = view.opt('theme');
+			var title = cell.start.format(view.opt('dayPopoverFormat'));
+			var content = $(
+				'<div class="fc-header ' + view.widgetHeaderClass + '">' +
+					'<span class="fc-close ' +
+						(isTheme ? 'ui-icon ui-icon-closethick' : 'fc-icon fc-icon-x') +
+					'"></span>' +
+					'<span class="fc-title">' +
+						htmlEscape(title) +
+					'</span>' +
+					'<div class="fc-clear"/>' +
+				'</div>' +
+				'<div class="fc-body ' + view.widgetContentClass + '">' +
+					'<div class="fc-event-container"></div>' +
+				'</div>'
+			);
+			var segContainer = content.find('.fc-event-container');
+			var i;
 
-		
-		function schedule_modal(date){
-			$("#schedule-aside").empty();
-			var str = "";
-			str += "<ul class='nav nav-tabs nav-justified'>"
-			str += "	<li class='active' id='schedule-info'><a data-toggle='tab'><i class='demo-pli-check icon-lg icon-fw'></i>정보</a></li>"
-			str += "	<li id='schedule-alarm'><a  data-toggle='tab'><i class='demo-pli-bell icon-lg icon-fw'></i>알림</a></li>"
-			str += "	<li id='schedule-setting'><a data-toggle='tab'><i class='demo-pli-gears icon-lg icon-fw'></i>설정</a></li>"
-			str += "</ul>"
-			str += "<div class='tab-content'>"
-			str += "	<p class='pad-all text-main text-sm text-uppercase text-bold'>TITLE<br/><br/>"
-			str += "		<input type='text' class='form-control' placeholder='Title'>"
-			str += "	</p>"
-			str += "	<p class='pad-all text-main text-sm text-uppercase text-bold'>STARTDATE<br/><br/>"
-			str += "		<input type='text' class='form-control' placeholder='" + date + "'>"
-			str += "	</p>"
-			str += "	<p class='pad-all text-main text-sm text-uppercase text-bold'>ENDDATE<br/><br/>"	
-			str += "		<input type='text' class='form-control' placeholder='" + date + "'>"
-			str += "	</p>"
-			str += "	<p class='pad-all text-main text-sm text-uppercase text-bold'>MEMO<br/><br/>"	
-			str += "		<input type='text' class='form-control' placeholder='memo'>"
-			str += "	</p>"
-			str += "	<p class='pad-all text-main text-sm text-uppercase text-bold'>CATEGORY<br/><br/>"	
-			str += "				<div class='input-group mar-btm'>"
-			str += "					<div class='input-group-addon'>"	
-			str += "                          <input id='demo-radio-addons' class='magic-radio' type='radio'>"
-			str += "						  <label for='demo-checkbox-addons'></label>"
-			str += "					</div>"
-			str += "					<input type='text' class='form-control'>"	
-			str += "				</div>"	
-			str += "	</p>"
-			str += "		<form class='form-horizontal'>"
-			str += "				<div class='input-group mar-btm'>"
-			str += "					<div class='input-group-addon'>"	
-			str += "                          <input id='demo-radio-addons' class='magic-radio' type='radio'>"
-			str += "						  <label for='demo-checkbox-addons'></label>"
-			str += "					</div>"
-			str += "					<input type='text' class='form-control'>"	
-			str += "				</div>"	
-			str += "		</form>"
-			str += "	</div>"
-			str += "</div>"
-			
-			$(".nano-content").append(str);
+			// render each seg's `el` and only return the visible segs
+			segs = this.renderFgSegEls(segs, true); // disableResizing=true
+			this.popoverSegs = segs;
+
+			for (i = 0; i < segs.length; i++) {
+
+				// because segments in the popover are not part of a grid coordinate system, provide a hint to any
+				// grids that want to do drag-n-drop about which cell it came from
+				segs[i].cell = cell;
+
+				segContainer.append(segs[i].el);
+			}
+
+			return content;
 		}
-		
+
 	</script> 
 	
 </body>
