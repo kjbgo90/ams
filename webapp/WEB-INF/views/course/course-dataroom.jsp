@@ -206,187 +206,10 @@
 										</a>
 										</li>
 
-										<!--File list item-->
-										<li>
-											<div class="file-control">
-												<input id="file-list-2" class="magic-checkbox" type="checkbox"> <label for="file-list-2"></label>
-											</div>
-											<div class="file-settings">
-												<a href="#"> <i class="pci-ver-dots"></i>
-												</a>
-											</div>
-											<div class="file-attach-icon"></div> <a href="#" class="file-details">
-												<div class="media-block">
-													<div class="media-left">
-														<i class="demo-psi-folder"></i>
-													</div>
-													<div class="media-body">
-														<p class="file-name">Photos</p>
-														<small>Created Yesterday | 22 MB</small>
-													</div>
-												</div>
-										</a>
-										</li>
+									
 
 
-										<!--File list item-->
-										<li>
-											<div class="file-control">
-												<input id="file-list-3" class="magic-checkbox" type="checkbox"> <label for="file-list-3"></label>
-											</div>
-											<div class="file-settings">
-												<a href="#"> <i class="pci-ver-dots"></i>
-												</a>
-											</div>
-											<div class="file-attach-icon"></div> <a href="#" class="file-details">
-												<div class="media-block">
-													<div class="media-left">
-														<i class="demo-psi-folder-zip text-success"></i>
-													</div>
-													<div class="media-body">
-														<p class="file-name">Package.zip</p>
-														<small>Created 3 weeks ago | 125 MB</small>
-													</div>
-												</div>
-										</a>
-										</li>
-
-
-										<!--File list item-->
-										<li>
-											<div class="file-control">
-												<input id="file-list-4" class="magic-checkbox" type="checkbox"> <label for="file-list-4"></label>
-											</div>
-											<div class="file-settings">
-												<a href="#"> <i class="pci-ver-dots"></i>
-												</a>
-											</div>
-											<div class="file-attach-icon"></div> <a href="#" class="file-details">
-												<div class="media-block">
-													<div class="media-left">
-														<i class="demo-psi-file-html text-info"></i>
-													</div>
-													<div class="media-body">
-														<p class="file-name">index.html</p>
-														<small>Created 3 weeks ago | 265 KB</small>
-													</div>
-												</div>
-										</a>
-										</li>
-
-										<!--File list item-->
-										<li>
-											<div class="file-control">
-												<input id="file-list-5" class="magic-checkbox" type="checkbox"> <label for="file-list-5"></label>
-											</div>
-											<div class="file-settings">
-												<a href="#"> <i class="pci-ver-dots"></i>
-												</a>
-											</div>
-											<div class="file-attach-icon"></div> <a href="#" class="file-details">
-												<div class="media-block">
-													<div class="media-left">
-														<i class="demo-pli-file-txt"></i>
-													</div>
-													<div class="media-body">
-														<p class="file-name">robots.txt</p>
-														<small>Created 3 weeks ago | 17 KB</small>
-													</div>
-												</div>
-										</a>
-										</li>
-
-
-										<!--File list item-->
-										<li>
-											<div class="file-control">
-												<input id="file-list-6" class="magic-checkbox" type="checkbox"> <label for="file-list-6"></label>
-											</div>
-											<div class="file-settings">
-												<a href="#"> <i class="pci-ver-dots"></i>
-												</a>
-											</div>
-											<div class="file-attach-icon"></div> <a href="#" class="file-details">
-												<div class="media-block">
-													<div class="media-left">
-														<i class="demo-pli-video"></i>
-													</div>
-													<div class="media-body">
-														<p class="file-name">Highland.mp4</p>
-														<small>Created 3 weeks ago | 540 MB</small>
-													</div>
-												</div>
-										</a>
-										</li>
-
-
-										<!--File list item-->
-										<li>
-											<div class="file-control">
-												<input id="file-list-7" class="magic-checkbox" type="checkbox"> <label for="file-list-7"></label>
-											</div>
-											<div class="file-settings">
-												<a href="#"> <i class="pci-ver-dots"></i>
-												</a>
-											</div>
-											<div class="file-attach-icon"></div> <a href="#" class="file-details">
-												<div class="media-block">
-													<div class="media-left">
-														<i class="demo-pli-file"></i>
-													</div>
-													<div class="media-body">
-														<p class="file-name">License</p>
-														<small>Created 3 weeks ago | 2 KB</small>
-													</div>
-												</div>
-										</a>
-										</li>
-
-
-										<!--File list item-->
-										<li>
-											<div class="file-control">
-												<input id="file-list-8" class="magic-checkbox" type="checkbox"> <label for="file-list-8"></label>
-											</div>
-											<div class="file-settings">
-												<a href="#"> <i class="pci-ver-dots"></i>
-												</a>
-											</div>
-											<div class="file-attach-icon"></div> <a href="#" class="file-details">
-												<div class="media-block">
-													<div class="media-left">
-														<i class="demo-pli-file-word"></i>
-													</div>
-													<div class="media-body">
-														<p class="file-name">Company Overview.doc</p>
-														<small>Created 3 weeks ago | 2 KB</small>
-													</div>
-												</div>
-										</a>
-										</li>
-
-
-										<!--File list item-->
-										<li>
-											<div class="file-control">
-												<input id="file-list-9" class="magic-checkbox" type="checkbox"> <label for="file-list-9"></label>
-											</div>
-											<div class="file-settings">
-												<a href="#"> <i class="pci-ver-dots"></i>
-												</a>
-											</div>
-											<div class="file-attach-icon"></div> <a href="#" class="file-details">
-												<div class="media-block">
-													<div class="media-left">
-														<i class="demo-pli-file-jpg"></i>
-													</div>
-													<div class="media-body">
-														<p class="file-name">Nature.jpg</p>
-														<small>Created 3 weeks ago | 56 KB</small>
-													</div>
-												</div>
-										</a>
-										</li>
+									
 									</ul>
 								</div>
 							</div>
@@ -451,7 +274,8 @@
 
 								<!--Dropzonejs-->
 								<!--===================================================-->
-								<form id="demo-dropzone" action="#" class="dropzone">
+								
+								<form id="demo-dropzone" action="${pageContext.request.contextPath }/dataroom/upload" method="post" class="dropzone">
 									<div class="dz-default dz-message">
 										<div class="dz-icon">
 											<i class="demo-pli-upload-to-cloud icon-5x"></i>
@@ -464,9 +288,13 @@
 									<div class="fallback">
 										<input name="file" type="file" multiple>
 									</div>
+										
+								</form>
+								<form action="#" method="post">
+									<!-- 위에 저장된 파일들의 정보들을 가져와서 리스트들을 뽑아보자  -->
 									<div class="bord-btm pad-btm">
-										<button data-target="#demo-lg-modal" data-toggle="modal" class="btn tbn-default">UPLOAD</button>
-									</div>
+										<button type="submit" data-target="#demo-lg-modal" data-toggle="modal" class="btn tbn-default">UPLOAD</button>
+									</div> 
 								</form>
 								<!--===================================================-->
 								<!-- End Dropzonejs -->
@@ -549,12 +377,58 @@
 
 	<script type="text/javascript">
 		$(document).on('nifty.ready',function() {
+			
+			strList = "";
+			$.ajax({
+				url : "${pageContext.request.contextPath }/dataroom/categoryList",
+				type : "post",
+				dataType : "json",
+				success : function(list) {
+					console.log(list);
+					console.log(list[0].cateNo);
+					var no = list[0].cateNo;
+					
+					for (var i = 0; i < list.length; i++) {
+						console.log(list.length);
+						fileList(list[i]);
+						// list 찾기 !!
+						
+						strList += "<li>";
+						strList += "	<div class='file-control'>";
+						strList += "		<input id='file-list-9' class='magic-checkbox' type='checkbox'> ";
+						strList += "		<label for='file-list-9'></label>";
+						strList += "	</div>";
+						strList += "	<div class='file-settings'>";
+						strList += "		<a href='#'><i class='pci-ver-dots'></i></a> ";
+						strList += "	</div>";
+						strList += "	<div class='file-attach-icon'></div> ";
+						strList += "	<a href='#' class='file-details'>";
+						strList += "		<div class='media-block'>";
+						strList += "			<div class='media-left'>";
+						strList += "				<i class='demo-pli-file-jpg'></i>";
+						strList += "			</div>";
+						strList += "			<div class='media-body/>";
+						strList += "				<p class='file-name'>Nature.jpg</p>";
+						strList += "				<small>Created 3 weeks ago | 56 KB</small>";
+						strList += "			</div>";
+						strList += "		</div>";
+						strList += "	</a>";		
+						strList += "</li>";
+					}
+					$("#commentsList").html(vr);
+					
+					strList = "";
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			
 							// CHOSEN
 							// =================================================================
 							// Require Chosen
 							// http://harvesthq.github.io/chosen/
 							// =================================================================
-							$('#demo-chosen-select').chosen();
 							$('#demo-cs-multiselect').chosen({width : '100%'});
 							// DROPZONE.JS
 							// =================================================================
@@ -636,7 +510,9 @@
 								uplodaBtn.prop('disabled', true);
 								removeBtn.prop('disabled', true);
 							});
-						});
+		});
+		
+		
 		// Custom Icon - Premium Solid Icons
 		// =================================================================
 		// Require JSTree & Premium Icons
@@ -664,207 +540,34 @@
 				}
 			}
 		});
-		// Custom Icon - Premium Solid Icons
-		// =================================================================
-		// Require JSTree & Premium Icons
-		// =================================================================
-		$('#demo-jstree-2').jstree({
-			'core' : {
-				'check_callback' : true
-			},
-			'plugins' : [ 'types', 'dnd' ],
-			'types' : {
-				'default' : {
-					'icon' : 'demo-psi-folder'
-				},
-				'html' : {
-					'icon' : 'demo-psi-file-html'
-				},
-				'file' : {
-					'icon' : 'demo-psi-file'
-				},
-				'jpg' : {
-					'icon' : 'demo-psi-file-jpg'
-				},
-				'zip' : {
-					'icon' : 'demo-psi-file-zip'
-				}
-			}
-		});
-		// Custom Icon - Font Awesome
-		// =================================================================
-		// Require JSTree & Font Awesome
-		// =================================================================
-		$('#demo-jstree-3').jstree({
-			'core' : {
-				'check_callback' : true
-			},
-			'plugins' : [ 'types', 'dnd' ],
-			'types' : {
-				'default' : {
-					'icon' : 'fa fa-folder-o'
-				},
-				'html' : {
-					'icon' : 'fa fa-file-text-o'
-				},
-				'file' : {
-					'icon' : 'fa fa-file-text-o'
-				},
-				'jpg' : {
-					'icon' : 'fa fa-file-image-o'
-				},
-				'zip' : {
-					'icon' : 'fa fa-file-zip-o'
-				}
-			}
-		});
-		// JSON Example
-		// =================================================================
-		// Require JSTree
-		// =================================================================
-		$('#demo-jstree-json').jstree({
-			'core' : {
-				'data' : [ 'Empty Folder', {
-					'text' : 'demo',
-					'state' : {
-						'opened' : true
-					},
-					'children' : [ {
-						'text' : 'basic',
-						'state' : {
-							'opened' : true
-						},
-						'children' : [ {
-							'text' : 'index.html',
-							'icon' : 'jstree-file'
-						}, {
-							'text' : 'root.json',
-							'icon' : 'jstree-file'
-						} ]
-					}, {
-						'text' : 'Readme.md',
-						'icon' : 'jstree-file'
-					} ]
-				}, {
-					'text' : 'dist',
-					'state' : {
-						'opened' : true
-					},
-					'children' : [ {
-						'text' : 'themes',
-						'state' : {
-							'opened' : true
-						},
-						'children' : [ {
-							'text' : 'default',
-							'state' : {
-								'opened' : true
-							},
-							'children' : [ {
-								'text' : '32px.png',
-								'icon' : 'jstree-file'
-							}, {
-								'text' : '40px.png',
-								'icon' : 'jstree-file'
-							}, {
-								'text' : 'style.css',
-								'icon' : 'jstree-file'
-							}, {
-								'text' : 'style.min.css',
-								'icon' : 'jstree-file'
-							} ]
-						}, {
-							'text' : 'default-dark',
-							'children' : [ {
-								'text' : '32px.png',
-								'icon' : 'jstree-file'
-							}, {
-								'text' : '40px.png',
-								'icon' : 'jstree-file'
-							}, {
-								'text' : 'style.css',
-								'icon' : 'jstree-file'
-							}, {
-								'text' : 'style.min.css',
-								'icon' : 'jstree-file'
-							} ]
-						} ]
-					}, {
-						'text' : 'jstree.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'jstree.min.js',
-						'icon' : 'jstree-file'
-					}, ]
-				}, {
-					'text' : 'src',
-					'state' : {
-						'opened' : true
-					},
-					'children' : [ {
-						'text' : 'intro.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'jstree.changed.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'jstree.checkbox.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'jstree.conditionalselect.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'jstree.contextmenu.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'jstree.dnd.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'jstree.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'jstree.massload.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'jstree.search.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'jstree.sort.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'jstree.state.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'jstree.types.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'jstree.unique.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'jstree.wholerow.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'misc.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'outro.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'sample.js',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'themes',
-						'icon' : 'jstree-file'
-					}, {
-						'text' : 'vakata-jstree.js',
-						'icon' : 'jstree-file'
-					} ]
-				}, 'unit', 'visual', {
-					'text' : 'package.zip',
-					'icon' : 'jstree-file'
-				} ]
-			}
-		});
+		
+		function fileList(CourseDataroomVo, updown){
+			strListOne = "";
+			strListOne += "<li>";
+			strListOne += "	<div class='file-control'>";
+			strListOne += "		<input id='file-list-9' class='magic-checkbox' type='checkbox'> ";
+			strListOne += "		<label for='file-list-9'></label>";
+			strListOne += "	</div>";
+			strListOne += "	<div class='file-settings'>";
+			strListOne += "		<a href='#'><i class='pci-ver-dots'></i></a> ";
+			strListOne += "	</div>";
+			strListOne += "	<div class='file-attach-icon'></div> ";
+			strListOne += "	<a href='#' class='file-details'>";
+			strListOne += "		<div class='media-block'>";
+			strListOne += "			<div class='media-left'>";
+			strListOne += "				<i class='demo-pli-file-jpg'></i>";
+			strListOne += "			</div>";
+			strListOne += "			<div class='media-body/>";
+			strListOne += "				<p class='file-name'>Nature.jpg</p>";
+			strListOne += "				<small>Created 3 weeks ago | 56 KB</small>";
+			strListOne += "			</div>";
+			strListOne += "		</div>";
+			strListOne += "	</a>";		
+			strListOne += "</li>";
+		}
+		
+		
+		
 	</script>
 
 

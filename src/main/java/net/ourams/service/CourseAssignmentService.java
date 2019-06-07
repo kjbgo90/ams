@@ -1,5 +1,6 @@
 package net.ourams.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import net.ourams.dao.CourseMainDao;
 import net.ourams.vo.AssignmentVo;
 import net.ourams.vo.CourseVo;
 import net.ourams.vo.SubjectVo;
+import net.ourams.vo.SubmitVo;
 
 @Service
 public class CourseAssignmentService {
@@ -28,11 +30,29 @@ public class CourseAssignmentService {
 		List<AssignmentVo> assignmentList = assignmentDao.selectList(courseVo.getCourseNo());
 		List<SubjectVo> subjectList = assignmentDao.selectSubList(courseVo.getCourseNo());
 		
+		for( SubjectVo subjectVo : subjectList) {
+			List<AssignmentVo> assignListBySubject = new ArrayList<AssignmentVo>();
+			for( AssignmentVo assignmentVo : assignmentList) {
+				if(subjectVo.getSubjectNo() == assignmentVo.getSubjectNo()) {
+					assignListBySubject.add(assignmentVo);
+				}
+			}
+			subjectVo.setAssignmentListBySub(assignListBySubject);
+			System.out.println(subjectVo.getSubjectTitle() + " 과제 리스트: " + subjectVo.getAssignmentListBySub());
+		}
+		
+		AssignmentVo lastAssignment = assignmentList.get(0);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("assignmentList", assignmentList);
 		map.put("subjectList", subjectList);
+		map.put("lastAssignment", lastAssignment);
 		
 		return map;
+	}
+
+	public int submit(SubmitVo submitVo) {
+		return assignmentDao.insertSubmit(submitVo);
 	}
 
 }

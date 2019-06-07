@@ -1,5 +1,7 @@
 package net.ourams.vo;
 
+import java.util.List;
+
 public class SubjectVo {
 
 	private int subjectNo;
@@ -8,6 +10,7 @@ public class SubjectVo {
 	private int scheduleNo;
 	private String startDate;
 	private String endDate;
+	private List<AssignmentVo> assignmentListBySub;
 
 	public SubjectVo() {
 	}
@@ -77,10 +80,19 @@ public class SubjectVo {
 		this.endDate = endDate;
 	}
 
+	public List<AssignmentVo> getAssignmentListBySub() {
+		return assignmentListBySub;
+	}
+
+	public void setAssignmentListBySub(List<AssignmentVo> assignmentListBySub) {
+		this.assignmentListBySub = assignmentListBySub;
+	}
+
 	@Override
 	public String toString() {
 		return "SubjectVo [subjectNo=" + subjectNo + ", subjectTitle=" + subjectTitle + ", courseNo=" + courseNo
-				+ ", scheduleNo=" + scheduleNo + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+				+ ", scheduleNo=" + scheduleNo + ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", assignmentListBySub=" + assignmentListBySub + "]";
 	}
 
 }

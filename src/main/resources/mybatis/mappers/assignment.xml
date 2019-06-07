@@ -61,4 +61,14 @@
 		]]>
 	</select>
 	
+	<insert id="insertSubmit" parameterType="SubmitVo">
+		<![CDATA[
+			insert into submit ( seq_sumbit_no.nextval,
+								 #{sumbitContent},
+								 sysdate,
+								 #{assignmentNo},
+								 #{userNo},
+								 null )
+		]]>
+	</insert>
 </mapper>
