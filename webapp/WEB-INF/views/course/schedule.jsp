@@ -1298,7 +1298,7 @@
     <!--===================================================-->
     <!-- END OF CONTAINER -->
     
-    <!--schedule-modal-->
+    <!--schedule-register-modal-->
 		<!--===================================================-->
 		<div id="schedule-modal" class="modal fade" tabindex="-1">
 			<div class="modal-dialog modal-lg">
@@ -1307,7 +1307,7 @@
 						<button type="button" class="close" data-dismiss="modal">
 							<i class="pci-cross pci-circle"></i>
 						</button>
-						<h4 class="modal-title" id="myLargeModalLabel">schedule</h4>
+						<h4 class="modal-title" id="myLargeModalLabel">일정 등록</h4>
 					</div>
 					<div class="modal-body">
 						<div class="panel">
@@ -1371,7 +1371,41 @@
 			</div>
 		</div>
 		<!--===================================================-->
-		<!--End Large Bootstrap Modal-->
+	<!--End Large Bootstrap Modal-->
+	
+	<!--schedule-info-modal-->
+		<!--===================================================-->
+		<div id="schedule-info-modal" class="modal fade" tabindex="-1">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<i class="pci-cross pci-circle"></i>
+						</button>
+						<h4 class="modal-info-title" id="myLargeModalLabel">일정 상세 정보</h4>
+					</div>
+					<div class="modal-body">
+						<div class="panel">
+							<div class="panel-heading">
+								<h3 class="panel-title"><strong>일정 이름</strong></h3>
+							</div>
+							<div class="panel-body">
+								<span id="schedule-info-title"></span>
+							</div>
+							<div class="panel-heading">
+								<h3 class="panel-title"><strong>카테고리</strong></h3>
+							</div>
+							<div class="panel-body">
+								<span id="schedule-info-category"></span>
+							</div>
+							<div class="function-per-category"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--===================================================-->
+	<!--End Large Bootstrap Modal-->
     
 	
 
@@ -1421,32 +1455,44 @@
     
 	<script type="text/javascript">
 	
+		$("#page-content").on("click", ".fc-day-grid-event", function(){
+			var scheduledto = { 
+					scheduleNo: $(this).find($(".fc-title")).data("no") 
+			};
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/schedule/selected",
+				type: "post",
+				contentType : "application/json",
+				data : JSON.stringify(scheduledto),
+
+				dataType : "json",
+				success : function(result) {
+					var temp = $.trim(result.category);
+					
+					if(temp == "과제"){
+						assignment();	
+						$("#schedule-info-content").text(result.content);
+						$("#schedule-info-courseName").text(result.courseName);
+						$("#schedule-info-subjectName").text(result.subjectTitle);
+						$("#schedule-info-chapterName").text(result.chapterContent);
+						$("#schedule-info-techerName").text(result.teacherName);
+					};
+					
+					$("#schedule-info-title").text(result.title);
+					$("#schedule-info-category").text(result.category);
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			})
+		});
+	
 		$("#page-content").on("click", ".fc-day-number", function(){
 			var date = $(this).data("date");
 			console.log(date);
 			$("#schedule-start").val(date);
 			$("#schedule-end").val(date);
-		});
-		
-		$(document).ready(function(){
-			$("#page-content").on("click", ".fc-day-grid-event", function(){
-				console.log($(this).text());
-			});
-		});
-		
-		//Schedule modal-information
-		$("#aside-container").on("click", "#schedule-info", function(){
-			console.log("schedule info");
-		});
-		
-		//Schedule modal-alarm 
-		$("#aside-container").on("click", "#schedule-alarm", function(){
-			console.log("schedule alarm");
-		});
-		
-		//Schedule modal-setting
-		$("#aside-container").on("click", "#schedule-setting", function(){
-			console.log("schedule setting");
 		});
 		
 		// add event category 
@@ -1494,6 +1540,7 @@
 
 					dataType : "json",
 					success : function(scheduledto) {
+
 					},
 					error : function(XHR, status, error) {
 						console.error(status + " : " + error);
@@ -1548,7 +1595,7 @@
 		});
 		
 		$("#schedule-modal").on("shown.bs.modal", function() {
-			$("#schedule-tag").autocomplete("option", "appendTo", "#schedule-modal")
+			$("#schedule-tag").autocomplete("option", "appendTo", "#schedule-register-modal")
 		});
 		
 		function parsing(text){
@@ -1564,43 +1611,67 @@
 			}
 		}
 		
-		function render (cell, segs) {
-			var view = this.view;
-			var isTheme = view.opt('theme');
-			var title = cell.start.format(view.opt('dayPopoverFormat'));
-			var content = $(
-				'<div class="fc-header ' + view.widgetHeaderClass + '">' +
-					'<span class="fc-close ' +
-						(isTheme ? 'ui-icon ui-icon-closethick' : 'fc-icon fc-icon-x') +
-					'"></span>' +
-					'<span class="fc-title">' +
-						htmlEscape(title) +
-					'</span>' +
-					'<div class="fc-clear"/>' +
-				'</div>' +
-				'<div class="fc-body ' + view.widgetContentClass + '">' +
-					'<div class="fc-event-container"></div>' +
-				'</div>'
-			);
-			var segContainer = content.find('.fc-event-container');
-			var i;
-
-			// render each seg's `el` and only return the visible segs
-			segs = this.renderFgSegEls(segs, true); // disableResizing=true
-			this.popoverSegs = segs;
-
-			for (i = 0; i < segs.length; i++) {
-
-				// because segments in the popover are not part of a grid coordinate system, provide a hint to any
-				// grids that want to do drag-n-drop about which cell it came from
-				segs[i].cell = cell;
-
-				segContainer.append(segs[i].el);
-			}
-
-			return content;
+		// rendering schedule per category 
+		function notice(){
+			str = '';
+			str += '<div class="panel-heading">';
+			str += '	<h3 class="panel-title"><strong>카테고리</strong></h3>'
+			str += '</div>'
+			str += '<div class="panel-body">'
+			str += '	<span id="schedule-info-category"></span>'
+			str += '</div>'
 		}
-
+		
+		function assignment(){
+			$(".function-per-category").empty();
+			
+			str = '';
+			str += '<div class="panel-heading">';
+			str += '	<h3 class="panel-title"><strong>내용</strong></h3>'
+			str += '</div>'
+			str += '<div class="panel-body">'
+			str += '	<span id="schedule-info-content"></span>'
+			str += '</div>'
+			str += '<div class="panel-heading">';
+			str += '	<h3 class="panel-title"><strong>코스명</strong></h3>'
+			str += '</div>'
+			str += '<div class="panel-body">'
+			str += '	<span id="schedule-info-courseName"></span>'
+			str += '</div>'
+			str += '<div class="panel-heading">';
+			str += '	<h3 class="panel-title"><strong>과목명</strong></h3>'
+			str += '</div>'
+			str += '<div class="panel-body">'
+			str += '	<span id="schedule-info-subjectName"></span>'
+			str += '</div>'
+			str += '<div class="panel-heading">';
+			str += '	<h3 class="panel-title"><strong>챕터명</strong></h3>'
+			str += '</div>'
+			str += '<div class="panel-body">'
+			str += '	<span id="schedule-info-chapterName"></span>'
+			str += '</div>'
+			str += '<div class="panel-heading">';
+			str += '	<h3 class="panel-title"><strong>출제자</strong></h3>'
+			str += '</div>'
+			str += '<div class="panel-body">'
+			str += '	<span id="schedule-info-techerName"></span>'
+			str += '</div>'
+			
+			$(".function-per-category").append(str);
+		}
+		
+		function course(){
+			str = "";
+		}
+		
+		function team(){
+			str = "";
+		}
+		
+		function personal(){
+			str = "";
+		}
+		
 	</script> 
 	
 </body>

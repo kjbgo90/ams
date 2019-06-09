@@ -1167,10 +1167,10 @@
 		click: function(e){
 			e.preventDefault();
 			e.stopPropagation();
-
 			var target, dir, day, year, month;
 			target = $(e.target);
-
+			//보은 누나
+			//console.log($(this))
 			// Clicked on the switch
 			if (target.hasClass('datepicker-switch') && this.viewMode !== this.o.maxViewMode){
 				this.setViewMode(this.viewMode + 1);
@@ -1227,7 +1227,10 @@
 			var $target = $(e.currentTarget);
 			var timestamp = $target.data('date');
 			var date = new Date(timestamp);
-
+			//보은 누나
+			console.log(date);
+			$("#select-day").val(date)
+			
 			if (this.o.updateViewDate) {
 				if (date.getUTCFullYear() !== this.viewDate.getUTCFullYear()) {
 					this._trigger('changeYear', this.viewDate);
@@ -1953,7 +1956,7 @@
 						'</tfoot>'
 	};
 	DPGlobal.template = '<div class="datepicker">'+
-							'<div class="datepicker-days">'+
+							'<div class="datepicker-days" id="night-days">'+
 								'<table class="table-condensed">'+
 									DPGlobal.headTemplate+
 									'<tbody></tbody>'+

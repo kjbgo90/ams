@@ -26,13 +26,12 @@ $(document).on('nifty.ready', function() {
 			console.error(status + " : " + error);
 		}
 	});
-	
     // Calendar
     // =================================================================
     // Require Full Calendar
     // -----------------------------------------------------------------
     // http://fullcalendar.io/
-    // =================================================================
+    // ==================================f===============================
 
 
     // initialize the external events
@@ -64,7 +63,19 @@ $(document).on('nifty.ready', function() {
 
     // Initialize the calendar
     // -----------------------------------------------------------------
-	
+   
+	// add event into array
+	var scheduleArray = [];
+    for(var i=0; i<schedule.length; i++){
+    	scheduleArray.push({
+    		no: schedule[i].scheduleNo,
+    		title: schedule[i].scheduleName,
+    		start: schedule[i].startDate,
+    		end: schedule[i].endDate,
+    		className: schedule[i].eventColor
+    	});
+    }
+    
     $('#demo-calendar').fullCalendar({
         header: {
             left: 'prev,next today',
@@ -82,22 +93,7 @@ $(document).on('nifty.ready', function() {
         },
         defaultDate: '2019-06-01',
         eventLimit: true, // allow "more" link when too many events
-        events: [
-        	// event name: purple, mint, warning, danger, success, dark, pink etc... 
-        	{
-                title: schedule[3].scheduleName,
-                start: schedule[3].startDate,
-                end: schedule[3].endDate,
-                className: schedule[3].eventColor
-            }
-        ]
+        events: scheduleArray
+        
     });
-    
-    events.push({
-        title: schedule[2].scheduleName,
-        start: schedule[2].startDate,
-        end: schedule[2].endDate,
-        className: schedule[2].eventColor
-    })
-
 });

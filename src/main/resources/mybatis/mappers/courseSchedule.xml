@@ -18,19 +18,19 @@
 	
 	<insert id="registerSchedule" parameterType="CourseScheduleVo">
 		<![CDATA[
-			Insert into Schedule
+			INSERT INTO Schedule
 				(scheduleNo,
 				 scheduleName,
-				 scheduleContent,
+				 scheduleMemo,
 				 startDate,
 				 endDate,
 				 eventColor,
 				 courseNo,
 				 userNo)
-			 values(
+			 VALUES(
 				seq_schedule_no.nextval,
 				#{scheduleName},
-				#{scheduleContent},
+				#{scheduleMemo},
 				#{startDate},
 				#{endDate},
 				#{eventColor},
@@ -39,4 +39,64 @@
 			)
 		]]>
 	</insert>
+	
+	<select id="selectedSchedule" parameterType="CourseScheduleVo" resultType="CourseScheduleVo">
+		<![CDATA[
+			SELECT scheduleNo,
+				   scheduleName,
+				   scheduleMemo,
+				   startDate,
+				   endDate,
+				   eventColor,
+				   courseNo,
+				   userNo
+			FROM schedule
+			WHERE scheduleNo = #{scheduleNo}  
+		]]>
+	</select>
+	
+	<select id="findAssignment" parameterType="CourseScheduleVo" resultType="AssignmentVo">
+		<![CDATA[
+			SELECT assignmentTitle,
+				   assignmentContent,
+				   courseNo,
+				   subjectNo,
+				   chapterNo,
+				   teacherNo
+			FROM assignment
+			WHERE scheduleNo = #{scheduleNo}  
+		]]>
+	</select>
+	
+	<select id="findCourseName" parameterType="int" resultType="String">
+		<![CDATA[
+			SELECT courseName
+			FROM course
+			WHERE courseNo = #{courseNo}
+		]]>
+	</select>
+	
+	<select id="findSubjectTitle" parameterType="int" resultType="String">
+		<![CDATA[
+			SELECT subjectTitle
+			FROM subject
+			WHERE subjectNo = #{subjectNo}
+		]]>
+	</select>
+	
+	<select id="findChapterContent" parameterType="int" resultType="String">
+		<![CDATA[
+			SELECT chapterContent
+			FROM chapter
+			WHERE chapterNo = #{chapterNo}
+		]]>
+	</select>
+	
+	<select id="findTeacherName" parameterType="int" resultType="String">
+		<![CDATA[
+			SELECT userName
+			FROM users
+			WHERE userNo = #{userNo}
+		]]>
+	</select>
 </mapper>

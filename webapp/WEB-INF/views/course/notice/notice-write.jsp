@@ -182,6 +182,7 @@ rhd
 											</p>
 											
 											<div id="demo-dp-inline">
+												<input id="select-day" type="hidden" value="">
 												<div></div>
 											</div>
 											<!--===================================================-->
@@ -357,6 +358,14 @@ rhd
 	<!--===================================================-->
 	<!-- blog-edit 에서 스크립트 페이지 찾기 sample page 안에 있음  -->
 	<script>
+	
+		$("#page-content").on("click", ".table-condensed", function(){
+			console.log("ho");
+		})
+		
+		$("#page-content").on("click", ".night-days", function(){
+			console.log("ho");
+		})
 		$(document).on('nifty.ready', function() {
 
 			// DROPZONE.JS
@@ -377,7 +386,14 @@ rhd
 					});
 				}
 			});
-
+			
+			$("#demo-dp-inline div").on("click",".day",function(){
+				console.log("dd")
+			})
+			
+			$(".datepicker-days").on("click",function(){
+				console.log("씨발")
+			})
 			// SUMMERNOTE
 			// =================================================================
 			// Require Summernote

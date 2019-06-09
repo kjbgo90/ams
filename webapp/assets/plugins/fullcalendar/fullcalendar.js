@@ -4670,7 +4670,7 @@ DayGrid.mixin({
 		}
 		*/
 		titleHtml =
-			'<span class="fc-title">' +
+			'<span data-no="'+ event.no +'" class="fc-title">' +
 				(htmlEscape(event.title || '') || '&nbsp;') + // we always want one line of height
 			'</span>';
 		
@@ -4753,7 +4753,7 @@ DayGrid.mixin({
 					emptyCellsUntil(seg.leftCol);
 
 					// create a container that occupies or more columns. append the event element.
-					td = $('<td class="fc-event-container"/>').append(seg.el);
+					td = $('<td class="fc-event-container" data-target="#schedule-info-modal" data-toggle="modal"/>').append(seg.el);
 					if (seg.leftCol != seg.rightCol) {
 						td.attr('colspan', seg.rightCol - seg.leftCol + 1);
 					}

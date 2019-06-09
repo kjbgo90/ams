@@ -3,6 +3,7 @@ package net.ourams.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,6 +51,7 @@ public class ScheduleController {
 		System.out.println("load schedule...");
 		
 		List<CourseScheduleVo> list = service.loadSchedule();
+		
 		return list;
 	}
 	
@@ -63,4 +65,17 @@ public class ScheduleController {
 		return service.registerSchedule(vo);
 		
 	}
+	
+	//selected schedule 
+	@ResponseBody
+	@RequestMapping(value="/selected", method=RequestMethod.POST)
+	public Map<String, Object> selectedSchedule(@RequestBody CourseScheduleVo vo) {
+		System.out.println("selected NO " + vo.getScheduleNo() + " schedule info...");
+		
+		Map<String, Object> result = service.selectedSchedule(vo);
+		
+		return result;
+	}
+	
+	
 }
