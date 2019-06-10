@@ -44,4 +44,165 @@
 			ORDER BY subjectNo ASC
 		]]>
 	</select>
+	
+	<select id="selectSubjectListPlusDateByCourseNo" parameterType="int" resultType="SubjectVo">
+		<![CDATA[
+			SELECT   subjectNo,
+					 subjectTitle,
+					 sj.courseNo,
+					 sj.scheduleNo,
+					 TO_CHAR(startDate, 'yyyy-mm-dd') as startDate,
+					 TO_CHAR(endDate, 'yyyy-mm-dd') as endDate
+			FROM	 subject sj JOIN schedule sd
+					 ON sj.scheduleNo = sd.scheduleNo
+			WHERE	 sj.courseNo = #{courseNo}
+			ORDER BY startDate ASC
+		]]>
+	</select>
+	
+	<select id="selectChapterListBysubjectNo" parameterType="int" resultType="ChapterVo">
+		<![CDATA[
+			SELECT 		chapterNo,
+       					chapterContent,
+       					subjectNo
+			FROM   		chapter
+			WHERE  		subjectNo = #{subjectNo}
+			ORDER BY 	chapterNo ASC
+			
+		]]>
+	</select>
+	
+	<update id="updateChapterByChapterNo" parameterType="map">
+		<![CDATA[
+			UPDATE 	 chapter 
+			SET 	 chapterContent = #{chapterContent}
+			WHERE 	 chapterNo = #{chapterNo}
+		]]>
+	</update>
+	
+	<select id="selectChapterByChapterNo" parameterType="int" resultType="ChapterVo">
+		<![CDATA[
+			SELECT 		chapterNo,
+       					chapterContent,
+       					subjectNo
+			FROM   		chapter
+			WHERE  		chapterNo = #{chapterNo}
+		]]>
+	</select>
+	
+	<update id="updateSubjectBySubjectVo" parameterType="SubjectVo">
+		<![CDATA[
+			UPDATE 	 subject 
+			SET 	 subjectTitle = #{subjectTitle}
+			WHERE 	 subjectNo = #{subjectNo}
+		]]>
+	</update>
+	
+	<update id="updateScheduleBySubjectVo" parameterType="SubjectVo">
+		<![CDATA[
+			UPDATE 	 schedule 
+			SET 	 scheduleName = #{subjectTitle},
+					 startDate = #{startDate},
+					 endDate = #{endDate},
+					 scheduleMemo = #{scheduleMemo}
+			WHERE 	 scheduleNo = #{scheduleNo}
+		]]>
+	</update>
+	
+	<select id="selectSubjectBySubjectNo" parameterType="int" resultType="SubjectVo">
+		<![CDATA[
+			SELECT   subjectNo,
+					 subjectTitle,
+					 sj.courseNo,
+					 sj.scheduleNo,
+					 TO_CHAR(startDate, 'yyyy-mm-dd') as startDate,
+					 TO_CHAR(endDate, 'yyyy-mm-dd') as endDate,
+					 scheduleMemo
+			FROM	 subject sj JOIN schedule sd
+					 ON sj.scheduleNo = sd.scheduleNo
+			WHERE	 subjectNo = #{subjectNo}
+		]]>
+	</select>
+	
+	<insert id="insertScheduleBySubjectVo" parameterType="SubjectVo">
+		<selectKey keyProperty="scheduleNo" resultType="int" order="BEFORE">
+			SELECT seq_schedule_no.nextval FROM dual
+		</selectKey>
+		<![CDATA[
+			INSERT INTO schedule(	scheduleNo,
+	    							scheduleName,
+	    							startDate,
+	    							endDate,
+	    							eventColor,
+	    							courseNo,
+	    							userNo,
+	    							scheduleMemo)
+			VALUES (
+	    							#{scheduleNo},
+	    							#{subjectTitle}, 
+	    							#{startDate},
+	    							#{endDate},
+	    							'dark',
+	    							#{courseNo},
+	    							#{userNo},
+	    							#{scheduleMemo})
+		]]>
+	</insert>
+	
+	<insert id="insertSubjectBySubjectVo" parameterType="SubjectVo">
+		<![CDATA[
+			INSERT INTO subject(	subjectNo,
+	    							subjectTitle,
+	    							courseNo,
+	    							scheduleNo)
+			VALUES (
+	    							seq_subject_no.nextval,
+	    							#{subjectTitle}, 
+	    							#{courseNo},
+	    							#{scheduleNo})
+		]]>
+	</insert>
+	
+	<insert id="insertChapterByChapterVo" parameterType="ChapterVo">
+		<selectKey keyProperty="chapterNo" resultType="int" order="BEFORE">
+			SELECT seq_chapter_no.nextval FROM dual
+		</selectKey>
+		<![CDATA[
+			INSERT INTO chapter(	chapterNo,
+	    							chapterContent,
+	    							subjectNo)
+			VALUES (
+	    							#{chapterNo},
+	    							#{chapterContent}, 
+	    							#{subjectNo})
+		]]>
+	</insert>
+	
+	<delete id="deleteScheduleByScheduleNo" parameterType="int">
+		<![CDATA[
+			DELETE FROM schedule
+			WHERE scheduleNo = #{scheduleNo}
+		]]>
+	</delete>
+	
+	<delete id="deleteSubjectBySubjectNo" parameterType="int">
+		<![CDATA[
+			DELETE FROM subject
+			WHERE subjectNo = #{subjectNo}
+		]]>
+	</delete>
+	
+	<delete id="deleteChapterBySubjectNo" parameterType="int">
+		<![CDATA[
+			DELETE FROM chapter
+			WHERE subjectNo = #{subjectNo}
+		]]>
+	</delete>
+	
+	<delete id="deleteChapterByChapterNo" parameterType="int">
+		<![CDATA[
+			DELETE FROM chapter
+			WHERE chapterNo = #{chapterNo}
+		]]>
+	</delete>
 </mapper>

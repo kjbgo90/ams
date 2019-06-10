@@ -58,7 +58,7 @@
 						<li><a href="${pageContext.request.contextPath }/${coursePath}/main"> <i class="pli-home"></i><span class="menu-title"> 강의실</span></a></li>
 						<li><a href="${pageContext.request.contextPath }/${coursePath}/dataroom"> <i class="pli-folder-open"></i><span class="menu-title"> 자료실</span></a></li>
 						<li><a href="${pageContext.request.contextPath }/${coursePath}/assignment/list"> <i class="pli-notepad"></i><span class="menu-title"> 과제</span></a></li>
-						<li><a href="${pageContext.request.contextPath }/${coursePath}/schedule"> <i class="pli-calendar-4"></i><span class="menu-title"> 일정</span></a></li>
+						<li><a href="${pageContext.request.contextPath }/${coursePath}/schedule/form"> <i class="pli-calendar-4"></i><span class="menu-title"> 일정</span></a></li>
 						<li><a href="${pageContext.request.contextPath }/${coursePath}/qna/list"> <i class="pli-question"></i><span class="menu-title"> 질의응답</span></a></li>
 						<li><a href="${pageContext.request.contextPath }/${coursePath}/notice/list"> <i class="pli-speaker"></i><span class="menu-title"> 공지사항</span></a></li>
 						
