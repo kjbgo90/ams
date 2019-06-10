@@ -30,5 +30,10 @@ public class UserDao {
 		return list;
 	}
 	
+	public UserVo selecteUser(int userNo) {
+		return sqlSession.selectOne("user.selectByNo", userNo);
+	}
+	
+	
 	
 }

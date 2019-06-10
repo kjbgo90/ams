@@ -29,4 +29,15 @@
 		]]>
 	</select>
 	
+	<select id="selectByNo" parameterType="int" resultType="UserVo">
+		<![CDATA[
+			SELECT userNo,
+				   email,
+				   userName,
+				   userType
+			FROM users
+			where userNo = #{userNo}
+		]]>
+	</select>
+	
 </mapper>

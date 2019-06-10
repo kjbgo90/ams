@@ -18,10 +18,12 @@
         			p.scheduleNo,
         			p.postTitle,
         			p.postContent,
-        			p.hit
-			FROM post p, users u
-			where p.userNo = u.userNo
-			order by userNo desc
+        			p.hit,
+        			p.category,
+        			u.userName
+			FROM post p join users u
+			ON p.userNo = u.userNo
+			order by postNo desc
 		]]>
 	</select>
 	
@@ -39,6 +41,26 @@
 		     where postNo = #{postNo}
 		]]>
 	</select>
+	
+	
+	<!-- 글저장 -->
+	<insert id="insert" parameterType="PostVo">
+		<![CDATA[
+			insert into post(postNo,postType,userNo,courseNo,regDate,postTitle,postContent,hit,category)
+			values (
+					seq_post_no.nextval,
+					1,
+					#{userNo},	
+					1,	
+					sysdate,		 
+					#{postTitle}, 					
+					#{postContent}, 
+					22,
+					#{category}
+					
+			) 
+		]]>
+	</insert>
 	
 	
 </mapper>

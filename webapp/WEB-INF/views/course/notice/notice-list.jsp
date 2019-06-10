@@ -164,65 +164,10 @@
 											<td>${PostVo.postNo}</td>
 											<td><a class="btn-link" href="${pageContext.request.contextPath }/${coursePath}/notice/read/${PostVo.postNo}">[공지]${PostVo.postTitle}</a></td>
 											<td><span class="text-muted">${PostVo.regDate}</span></td>
-											<td><a href="${pageContext.request.contextPath }/${coursePath}/notice/read/${PostVo.postNo}" class="btn-link">${PostVo.userNo}</a></td>
+											<td><a href="${pageContext.request.contextPath }/${coursePath}/notice/read/${PostVo.postNo}" class="btn-link">${PostVo.userName}</a></td>
 											<td>${PostVo.hit}</td>
 										</tr>
-										<tr>
-											<td>9</td>
-											<td><a class="btn-link" href="#">[공지]프젝발표날짜</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-										</tr>
-										<tr>
-											<td>8</td>
-											<td><a class="btn-link" href="#">[긴급]회식장소</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-										</tr>
-										<tr>
-											<td>7</td>
-											<td><a class="btn-link" href="#">[공지]점심시간</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-										</tr>
-										<tr>
-											<td>6</td>
-											<td><a class="btn-link" href="#">[공지]담배 지정위치 공지</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-										</tr>
-										<tr>
-											<td>5</td>
-											<td><a class="btn-link" href="#">[공지]공지3</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td><a class="btn-link" href="#">[공지]공지2</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td><a class="btn-link" href="#">[긴급]공지1</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td><a class="btn-link" href="#">[긴급]공지0</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-										</tr>
+										
 										</c:forEach>
 									</tbody>
 								</table>
@@ -243,7 +188,9 @@
 									</ul>
 								</div>
 								<div class="col-sm-5 text-right">
-									<button class="btn btn-primary btn-sm" style="margin-right: 50px;">글작성</button>
+									<%-- <div class="btn btn-primary btn-sm" style="margin-right: 50px;" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/notice/writeform' ">글작성</div> --%>
+									<a class="btn btn-primary btn-sm" href="${pageContext.request.contextPath }/${coursePath}/notice/writeform">글작성</a>
+									
 								</div>
 							</div>
 						</div>
@@ -322,6 +269,12 @@
 
 
 	<!--=================================================-->
+
+	<script type="text/javascript">
+		$("document").ready(function(){
+			$()
+		})
+	</script>
 
 </body>
 </html>
