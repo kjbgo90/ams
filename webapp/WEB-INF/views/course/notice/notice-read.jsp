@@ -122,7 +122,7 @@
 
 								<div class="mar-btm pad-btm bord-btm">
 									<h1 class="page-header"  style="font-size: 25px;">
-										<span class="label label-normal label-info">공지</span>에어컨 가동
+										<span class="label label-normal label-info">${PostVo.category}</span> ${PostVo.postTitle}
 									</h1>
 								</div>
 
@@ -133,8 +133,8 @@
 												<a href="#" class="box-inline"><img alt="Profile Picture" class="img-md img-circle" src="${pageContext.request.contextPath }/assets/img/profile-photos/9.png"></a>
 											</div>
 											<div class="media-body pad-top">
-												<a href="#" class="box-inline"> <span class="text-lg text-semibold text-main">Lucy Moon</span>
-													<p class="text-sm">gerins2314@gmail.com</p>
+												<a href="#" class="box-inline"> <span class="text-lg text-semibold text-main">${PostVo.userName}</span>
+													<p class="text-sm">${WriterVo.email}</p>
 												</a>
 											</div>
 										</div>
@@ -142,7 +142,7 @@
 									<div class="col-sm-5 toolbar-right">
 										<!--Details Information-->
 										<p class="mar-no">
-											<small class="text-muted">Monday 12, May 2016</small>
+											<small class="text-muted">${PostVo.regDate}</small>
 										</p>
 										<a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
 										</a>
@@ -155,8 +155,7 @@
 
 								<div class="blog-body">
 									<blockquote>
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-										<small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+										${PostVo.postContent}
 									</blockquote>
 
 								</div>
@@ -164,7 +163,7 @@
 							<div class="blog-footer">
 								<div class="media-left"></div>
 								<div class="media-body text-right">
-									<i class="demo-pli-speech-bubble-5 icon-fw"></i>23
+									<i class="demo-pli-speech-bubble-5 icon-fw"></i>${PostVo.hit}
 								</div>
 							</div>
 							<div class="row">
@@ -268,7 +267,7 @@
 										<a href="#" class="media-heading box-inline text-main text-bold">Kathryn Obrien</a>
 										<p class="text-muted text-sm">Today 05:17AM - 12/09/2017</p>
 									</div>
-									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
+									<p>${PostVo.postTitle}</p>
 
 								</div>
 							</div>

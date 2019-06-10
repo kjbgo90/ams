@@ -13,6 +13,7 @@ public class SubjectVo {
 	private int userNo;
 	private String scheduleMemo;
 	private List<AssignmentVo> assignmentListBySub;
+	private List<ChapterVo> chapterList;
 
 	public SubjectVo() {
 	}
@@ -34,6 +35,20 @@ public class SubjectVo {
 		this.endDate = endDate;
 		this.userNo = userNo;
 		this.scheduleMemo = scheduleMemo;
+	}
+
+	public SubjectVo(int subjectNo, String subjectTitle, int courseNo, int scheduleNo, String startDate, String endDate,
+			int userNo, String scheduleMemo, List<AssignmentVo> assignmentListBySub, List<ChapterVo> chapterList) {
+		this.subjectNo = subjectNo;
+		this.subjectTitle = subjectTitle;
+		this.courseNo = courseNo;
+		this.scheduleNo = scheduleNo;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.userNo = userNo;
+		this.scheduleMemo = scheduleMemo;
+		this.assignmentListBySub = assignmentListBySub;
+		this.chapterList = chapterList;
 	}
 
 	public int getSubjectNo() {
@@ -108,11 +123,20 @@ public class SubjectVo {
 		this.assignmentListBySub = assignmentListBySub;
 	}
 
+	public List<ChapterVo> getChapterList() {
+		return chapterList;
+	}
+
+	public void setChapterList(List<ChapterVo> chapterList) {
+		this.chapterList = chapterList;
+	}
+
 	@Override
 	public String toString() {
 		return "SubjectVo [subjectNo=" + subjectNo + ", subjectTitle=" + subjectTitle + ", courseNo=" + courseNo
 				+ ", scheduleNo=" + scheduleNo + ", startDate=" + startDate + ", endDate=" + endDate + ", userNo="
-				+ userNo + ", scheduleMemo=" + scheduleMemo + ", assignmentListBySub=" + assignmentListBySub + "]";
+				+ userNo + ", scheduleMemo=" + scheduleMemo + ", assignmentListBySub=" + assignmentListBySub
+				+ ", chapterList=" + chapterList + "]";
 	}
 
 }

@@ -62,13 +62,151 @@
 	</select>
 	
 	<insert id="insertSubmit" parameterType="SubmitVo">
+		<selectKey keyProperty="submitNo" resultType="int" order="BEFORE">
+			select seq_submit_no.nextval from dual
+		</selectKey>
 		<![CDATA[
-			insert into submit ( seq_sumbit_no.nextval,
-								 #{sumbitContent},
-								 sysdate,
-								 #{assignmentNo},
-								 #{userNo},
-								 null )
+			insert into submit values( #{submitNo},
+									 #{submitContent},
+									 sysdate,
+									 #{assignmentNo},
+									 #{userNo},
+									 null )
 		]]>
 	</insert>
+	
+	<select id="selectSubmitList" parameterType="int" resultType="SubmitVo">
+		<![CDATA[
+			select submitNo,
+			       submitContent,
+			       TO_CHAR(submitDate, 'yyyy-mm-dd') submitDate,
+			       assignmentNo,
+			       userNo,
+			       userName,
+			       su.fileNo fileNo,
+			       fileName
+			from (select submitNo,
+			           submitContent,
+			           submitDate,
+			           assignmentNo,
+			           s.userNo userNo,
+			           userName,
+			           fileNo
+			    from submit s join users u on s.userNo = u.userNo) su
+			    left join datafile d on su.fileNo = d.fileNo
+			where assignmentNo = #{assignmentNo}
+			order by userName
+		]]>
+	</select>
+	
+	<select id="selectSubmitBySubmitNo" parameterType="int" resultType="SubmitVo">
+		<![CDATA[
+			select submitNo,
+			       submitContent,
+			       TO_CHAR(submitDate, 'yyyy-mm-dd') submitDate,
+			       assignmentNo,
+			       userNo,
+			       userName,
+			       logoPath,
+			       email,
+			       su.fileNo fileNo,
+			       fileName
+			from (select submitNo,
+			           submitContent,
+			           submitDate,
+			           assignmentNo,
+			           s.userNo userNo,
+			           userName,
+			           email,
+			           logoPath,
+			           fileNo
+			    from submit s join users u on s.userNo = u.userNo) su
+			    left join datafile d on su.fileNo = d.fileNo
+			where submitNo = #{submitNo}
+		]]>
+	</select>
+	
+	<delete id="deleteSubmit" parameterType="int">
+		<![CDATA[
+			delete from submit
+			where submitNo = #{submitNo}
+		]]>
+	</delete>
+	
+	<select id="selectAssignmentByAssignmentNo" parameterType="int" resultType="AssignmentVo">
+		<![CDATA[
+			select assignmentNo,
+			       assignmentTitle,
+			       assignmentContent,
+			       courseNo,
+			       courseName,
+			       subjectNo,
+			       subjectTitle,
+			       chapterNo,
+			       chapterContent,
+			       teacherNo,
+			       TO_CHAR(startDate, 'yyyy/mm/dd') as startDate,
+			       TO_CHAR(endDate, 'yyyy/mm/dd') as endDate,
+			       email,
+			       userName,
+			       logoPath,
+			       su.scheduleNo scheduleNo,
+			       fileNo
+			from (select assignmentNo,
+			           assignmentTitle,
+			           assignmentContent,
+			           csc.courseNo courseNo,
+			           courseName,
+			           csc.subjectNo subjectNo,
+			           subjectTitle,
+			           csc.chapterNo chapterNo,
+			           chapterContent,
+			           teacherNo,
+			           scheduleNo,
+			           fileNo
+			        from (select courseNo,
+			                   courseName,
+			                   ch.subjectNo subjectNo,
+			                   subjectTitle,
+			                   chapterNo,
+			                   chapterContent
+			            from (select s.courseNo courseNo,
+			                       courseName,
+			                       subjectNo,
+			                       subjectTitle
+			                from course c join subject s on c.courseNo = s.courseNo) cs
+			                join chapter ch on cs.subjectNo = ch.subjectNo) csc
+			                join assignment a on csc.chapterNo = a.chapterNo) acsc
+			        join (select scheduleNo,
+			                   startDate,
+			                   endDate,
+			                   u.userNo userNo,
+			                   email,
+			                   userName,
+			                   logoPath
+			            from schedule s join users u on s.userNo = u.userNo) su on acsc.scheduleNo = su.scheduleNo
+			 where assignmentNo = #{assignmentNo}
+		]]>
+	</select>
+	
+	<select id="selectChapterList" resultType="ChapterVo">
+		<![CDATA[
+			select chapterNo,
+				   chapterContent,
+				   subjectNo
+			from chapter
+			order by chapterNo
+		]]>
+	</select>
+	
+	<select id="selectChapterListBySubjectNo" parameterType="int" resultType="ChapterVo">
+		<![CDATA[
+			select chapterNo,
+				   chapterContent,
+				   subjectNo
+			from chapter
+			where subjectNo = #{subjectNo}
+			order by chapterNo
+		]]>
+	</select>
 </mapper>

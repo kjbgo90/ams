@@ -16,7 +16,10 @@ public class PostDao {
 	private SqlSession sqlSession;
 	
 	public List<PostVo> selectAll(int courseNo){
-		return sqlSession.selectList("notice.selectAll",courseNo);
+		List<PostVo> list = sqlSession.selectList("notice.selectAll",courseNo);
+		System.out.println(list.toString());
+		
+		return list;
 	}
 
 	/*
@@ -27,6 +30,10 @@ public class PostDao {
 	
 	public PostVo selectNotice(int postNo) {
 		return sqlSession.selectOne("notice.selectNotice", postNo);
+	}
+
+	public int insert(PostVo postVo) {
+		return sqlSession.insert("notice.insert",postVo);
 	}
 	
 }

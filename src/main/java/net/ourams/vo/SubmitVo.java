@@ -7,7 +7,11 @@ public class SubmitVo {
 	private String submitDate;
 	private int assignmentNo;
 	private int userNo;
+	private String userName;
+	private String logoPath;
+	private String email;
 	private int fileNo;
+	private String fileName;
 
 	public SubmitVo() {
 	}
@@ -19,6 +23,32 @@ public class SubmitVo {
 		this.assignmentNo = assignmentNo;
 		this.userNo = userNo;
 		this.fileNo = fileNo;
+	}
+
+	public SubmitVo(int submitNo, String submitContent, String submitDate, int assignmentNo, int userNo,
+			String userName, int fileNo, String fileName) {
+		this.submitNo = submitNo;
+		this.submitContent = submitContent;
+		this.submitDate = submitDate;
+		this.assignmentNo = assignmentNo;
+		this.userNo = userNo;
+		this.userName = userName;
+		this.fileNo = fileNo;
+		this.fileName = fileName;
+	}
+
+	public SubmitVo(int submitNo, String submitContent, String submitDate, int assignmentNo, int userNo,
+			String userName, String logoPath, String email, int fileNo, String fileName) {
+		this.submitNo = submitNo;
+		this.submitContent = submitContent;
+		this.submitDate = submitDate;
+		this.assignmentNo = assignmentNo;
+		this.userNo = userNo;
+		this.userName = userName;
+		this.logoPath = logoPath;
+		this.email = email;
+		this.fileNo = fileNo;
+		this.fileName = fileName;
 	}
 
 	public int getSubmitNo() {
@@ -69,10 +99,43 @@ public class SubmitVo {
 		this.fileNo = fileNo;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getLogoPath() {
+		return logoPath;
+	}
+
+	public void setLogoPath(String logoPath) {
+		this.logoPath = logoPath;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public String toString() {
 		return "SubmitVo [submitNo=" + submitNo + ", submitContent=" + submitContent + ", submitDate=" + submitDate
-				+ ", assignmentNo=" + assignmentNo + ", userNo=" + userNo + ", fileNo=" + fileNo + "]";
+				+ ", assignmentNo=" + assignmentNo + ", userNo=" + userNo + ", userName=" + userName + ", logoPath="
+				+ logoPath + ", email=" + email + ", fileNo=" + fileNo + ", fileName=" + fileName + "]";
 	}
 
 }

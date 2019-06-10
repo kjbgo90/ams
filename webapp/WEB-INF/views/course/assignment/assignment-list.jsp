@@ -26,8 +26,6 @@
 <!--Pace - Page Load Progress Par [OPTIONAL]-->
 <link href="${pageContext.request.contextPath }/assets/css/pace.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath }/assets/js/pace.js"></script>
-<!--FooTable [ OPTIONAL ]-->
-<link href="${pageContext.request.contextPath }/assets/plugins/fooTable/css/footable.core.css" rel="stylesheet">
 <!--Dropzone [ OPTIONAL ]-->
 <link href="${pageContext.request.contextPath }/assets/plugins/dropzone/dropzone.css" rel="stylesheet">
 <!--=================================================
@@ -95,424 +93,22 @@
 							<!--과제 Accordion-->
 							<!--===================================================-->
 							<div class="panel-group accordion" id="accordion">
-								<div class="panel">
-									<!--Accordion title-->
-									<div class="panel-heading" style="padding-left: 15px;">
-										<h4 class="panel-title text-main text-bold text-lg text-uppercase">
-											<a data-parent="#accordion" data-toggle="collapse" href="#collapseOne">JAVA</a>
-										</h4>
-									</div>
-									<!--Accordion content-->
-									<div class="panel-collapse collapse in" id="collapseOne">
-										<div class="panel-body">
-											<div class="panel-group accordion" id="accordionInside">
-												<div class="panel panel-bordered-primary">
-													<div class="panel-heading">
-														<h4 class="panel-title">
-															<a data-parent="#accordionInside" data-toggle="collapse" href="#collapseOneInside3">JAVA_3번 숙제</a>
-														</h4>
-													</div>
-													<div class="panel-collapse collapse in" id="collapseOneInside3">
-														<div class="panel-body">
-															<div class="row">
-																<div class="col-sm-7 toolbar-left">
-																	<!--Sender Information-->
-																	<div class="media">
-																		<span class="media-left"> <img src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png" class="img-circle img-sm" alt="Profile Picture">
-																		</span>
-																		<div class="media-body text-left">
-																			<div class="text-bold">황일영</div>
-																			<small class="text-muted">iremys@gmail.com</small>
-																		</div>
-																	</div>
-																</div>
-																<div class="col-sm-5 toolbar-right">
-																	<!--Details Information-->
-																	<p class="mar-no">
-																		<small class="text-muted">Monday 03, June 2019</small>
-																	</p>
-																</div>
-															</div>
-															<p>3번숙제의 내용입니다 이 문제를 풀어보세요!</p>
-														</div>
-														<!--List group-->
-														<ul class="list-group">
-															<li class="list-group-item">Chapter : 상속과 다형성</li>
-															<li class="list-group-item">제출기한 : 2019년 6월 12일</li>
-															<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-															</a></li>
-															<li class="list-group-item"><button class="btn btn-block btn-primary">과제제출</button></li>
-														</ul>
-													</div>
-												</div>
-												<div class="panel panel-bordered-primary">
-													<div class="panel-heading">
-														<h4 class="panel-title">
-															<a data-parent="#accordionInside" data-toggle="collapse" href="#collapseOneInside2">JAVA_2번 숙제</a>
-														</h4>
-													</div>
-													<div class="panel-collapse collapse" id="collapseOneInside2">
-														<div class="panel-body">
-															<div class="row">
-																<div class="col-sm-7 toolbar-left">
-																	<!--Sender Information-->
-																	<div class="media">
-																		<span class="media-left"> <img src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png" class="img-circle img-sm" alt="Profile Picture">
-																		</span>
-																		<div class="media-body text-left">
-																			<div class="text-bold">황일영</div>
-																			<small class="text-muted">iremys@gmail.com</small>
-																		</div>
-																	</div>
-																</div>
-																<div class="col-sm-5 toolbar-right">
-																	<!--Details Information-->
-																	<p class="mar-no">
-																		<small class="text-muted">Monday 03, June 2019</small>
-																	</p>
-																</div>
-															</div>
-															<p>2번숙제의 내용입니다 이 문제를 풀어보세요!</p>
-														</div>
-														<!--List group-->
-														<ul class="list-group">
-															<li class="list-group-item">Chapter : 상속과 다형성</li>
-															<li class="list-group-item">제출기한 : 2019년 6월 12일</li>
-															<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-															</a></li>
-															<li class="list-group-item"><button class="btn btn-block btn-primary">과제제출</button></li>
-														</ul>
-													</div>
-												</div>
-												<div class="panel panel-bordered-primary">
-													<div class="panel-heading">
-														<h4 class="panel-title">
-															<a data-parent="#accordionInside" data-toggle="collapse" href="#collapseOneInside1">JAVA_1번 숙제</a>
-														</h4>
-													</div>
-													<div class="panel-collapse collapse" id="collapseOneInside1">
-														<div class="panel-body">
-															<div class="row">
-																<div class="col-sm-7 toolbar-left">
-																	<!--Sender Information-->
-																	<div class="media">
-																		<span class="media-left"> <img src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png" class="img-circle img-sm" alt="Profile Picture">
-																		</span>
-																		<div class="media-body text-left">
-																			<div class="text-bold">황일영</div>
-																			<small class="text-muted">iremys@gmail.com</small>
-																		</div>
-																	</div>
-																</div>
-																<div class="col-sm-5 toolbar-right">
-																	<!--Details Information-->
-																	<p class="mar-no">
-																		<small class="text-muted">Monday 03, June 2019</small>
-																	</p>
-																</div>
-															</div>
-															<p>1번숙제의 내용입니다 이 문제를 풀어보세요!</p>
-														</div>
-														<!--List group-->
-														<ul class="list-group">
-															<li class="list-group-item">Chapter : 상속과 다형성</li>
-															<li class="list-group-item">제출기한 : 2019년 6월 12일</li>
-															<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-															</a></li>
-															<li class="list-group-item"><button class="btn btn-block btn-primary">과제제출</button></li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="panel">
-									<!--Accordion title-->
-									<div class="panel-heading" style="padding-left: 15px;">
-										<h4 class="panel-title text-main text-bold text-lg text-uppercase">
-											<a data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">Oracle</a>
-										</h4>
-									</div>
-									<!--Accordion content-->
-									<div class="panel-collapse collapse" id="collapseTwo">
-										<div class="panel-body">
-											<div class="panel-group accordion" id="accordionInsideTwo">
-												<div class="panel panel-bordered-primary">
-													<div class="panel-heading">
-														<h4 class="panel-title">
-															<a data-parent="#accordionInsideTwo" data-toggle="collapse" href="#collapseTwoInside3">Oracle_3번 숙제</a>
-														</h4>
-													</div>
-													<div class="panel-collapse collapse in" id="collapseTwoInside3">
-														<div class="panel-body">
-															<div class="row">
-																<div class="col-sm-7 toolbar-left">
-																	<!--Sender Information-->
-																	<div class="media">
-																		<span class="media-left"> <img src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png" class="img-circle img-sm" alt="Profile Picture">
-																		</span>
-																		<div class="media-body text-left">
-																			<div class="text-bold">황일영</div>
-																			<small class="text-muted">iremys@gmail.com</small>
-																		</div>
-																	</div>
-																</div>
-																<div class="col-sm-5 toolbar-right">
-																	<!--Details Information-->
-																	<p class="mar-no">
-																		<small class="text-muted">Monday 03, June 2019</small>
-																	</p>
-																</div>
-															</div>
-															<p>3번숙제의 내용입니다 이 문제를 풀어보세요!</p>
-														</div>
-														<!--List group-->
-														<ul class="list-group">
-															<li class="list-group-item">Chapter : 상속과 다형성</li>
-															<li class="list-group-item">제출기한 : 2019년 6월 12일</li>
-															<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-															</a></li>
-															<li class="list-group-item"><button class="btn btn-block btn-primary">상세보기</button></li>
-														</ul>
-													</div>
-												</div>
-												<div class="panel panel-bordered-primary">
-													<div class="panel-heading">
-														<h4 class="panel-title">
-															<a data-parent="#accordionInsideTwo" data-toggle="collapse" href="#collapseTwoInside2">Oracle_2번 숙제</a>
-														</h4>
-													</div>
-													<div class="panel-collapse collapse" id="collapseTwoInside2">
-														<div class="panel-body">
-															<div class="row">
-																<div class="col-sm-7 toolbar-left">
-																	<!--Sender Information-->
-																	<div class="media">
-																		<span class="media-left"> <img src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png" class="img-circle img-sm" alt="Profile Picture">
-																		</span>
-																		<div class="media-body text-left">
-																			<div class="text-bold">황일영</div>
-																			<small class="text-muted">iremys@gmail.com</small>
-																		</div>
-																	</div>
-																</div>
-																<div class="col-sm-5 toolbar-right">
-																	<!--Details Information-->
-																	<p class="mar-no">
-																		<small class="text-muted">Monday 03, June 2019</small>
-																	</p>
-																</div>
-															</div>
-															<p>2번숙제의 내용입니다 이 문제를 풀어보세요!</p>
-														</div>
-														<!--List group-->
-														<ul class="list-group">
-															<li class="list-group-item">Chapter : 상속과 다형성</li>
-															<li class="list-group-item">제출기한 : 2019년 6월 12일</li>
-															<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-															</a></li>
-															<li class="list-group-item"><button class="btn btn-block btn-primary">상세보기</button></li>
-														</ul>
-													</div>
-												</div>
-												<div class="panel panel-bordered-primary">
-													<div class="panel-heading">
-														<h4 class="panel-title">
-															<a data-parent="#accordionInsideTwo" data-toggle="collapse" href="#collapseTwoInside1">Oracle_1번 숙제</a>
-														</h4>
-													</div>
-													<div class="panel-collapse collapse" id="collapseTwoInside1">
-														<div class="panel-body">
-															<div class="row">
-																<div class="col-sm-7 toolbar-left">
-																	<!--Sender Information-->
-																	<div class="media">
-																		<span class="media-left"> <img src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png" class="img-circle img-sm" alt="Profile Picture">
-																		</span>
-																		<div class="media-body text-left">
-																			<div class="text-bold">황일영</div>
-																			<small class="text-muted">iremys@gmail.com</small>
-																		</div>
-																	</div>
-																</div>
-																<div class="col-sm-5 toolbar-right">
-																	<!--Details Information-->
-																	<p class="mar-no">
-																		<small class="text-muted">Monday 03, June 2019</small>
-																	</p>
-																</div>
-															</div>
-															<p>3번숙제의 내용입니다 이 문제를 풀어보세요!</p>
-														</div>
-														<!--List group-->
-														<ul class="list-group">
-															<li class="list-group-item">Chapter : 상속과 다형성</li>
-															<li class="list-group-item">제출기한 : 2019년 6월 12일</li>
-															<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-															</a></li>
-															<li class="list-group-item"><button class="btn btn-block btn-primary">상세보기</button></li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="panel">
-									<!--Accordion title-->
-									<div class="panel-heading" style="padding-left: 15px;">
-										<h4 class="panel-title text-main text-bold text-lg text-uppercase">
-											<a data-parent="#accordion" data-toggle="collapse" href="#collapseThree">HTML/CSS</a>
-										</h4>
-									</div>
-									<!--Accordion content-->
-									<div class="panel-collapse collapse" id="collapseThree">
-										<div class="panel-body">
-											<div class="panel-group accordion" id="accordionInsideThree">
-												<div class="panel panel-bordered-primary">
-													<div class="panel-heading">
-														<h4 class="panel-title">
-															<a data-parent="#accordionInsideThree" data-toggle="collapse" href="#collapseThreeInside3">HTML/CSS_3번 숙제</a>
-														</h4>
-													</div>
-													<div class="panel-collapse collapse in" id="collapseThreeInside3">
-														<div class="panel-body">
-															<div class="row">
-																<div class="col-sm-7 toolbar-left">
-																	<!--Sender Information-->
-																	<div class="media">
-																		<span class="media-left"> <img src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png" class="img-circle img-sm" alt="Profile Picture">
-																		</span>
-																		<div class="media-body text-left">
-																			<div class="text-bold">황일영</div>
-																			<small class="text-muted">iremys@gmail.com</small>
-																		</div>
-																	</div>
-																</div>
-																<div class="col-sm-5 toolbar-right">
-																	<!--Details Information-->
-																	<p class="mar-no">
-																		<small class="text-muted">Monday 03, June 2019</small>
-																	</p>
-																</div>
-															</div>
-															<p>3번숙제의 내용입니다 이 문제를 풀어보세요!</p>
-														</div>
-														<!--List group-->
-														<ul class="list-group">
-															<li class="list-group-item">Chapter : 상속과 다형성</li>
-															<li class="list-group-item">제출기한 : 2019년 6월 12일</li>
-															<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-															</a></li>
-															<li class="list-group-item"><button class="btn btn-block btn-primary">상세보기</button></li>
-														</ul>
-													</div>
-												</div>
-												<div class="panel panel-bordered-primary">
-													<div class="panel-heading">
-														<h4 class="panel-title">
-															<a data-parent="#accordionInsideThree" data-toggle="collapse" href="#collapseThreeInside2">HTML/CSS_2번 숙제</a>
-														</h4>
-													</div>
-													<div class="panel-collapse collapse" id="collapseThreeInside2">
-														<div class="panel-body">
-															<div class="row">
-																<div class="col-sm-7 toolbar-left">
-																	<!--Sender Information-->
-																	<div class="media">
-																		<span class="media-left"> <img src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png" class="img-circle img-sm" alt="Profile Picture">
-																		</span>
-																		<div class="media-body text-left">
-																			<div class="text-bold">황일영</div>
-																			<small class="text-muted">iremys@gmail.com</small>
-																		</div>
-																	</div>
-																</div>
-																<div class="col-sm-5 toolbar-right">
-																	<!--Details Information-->
-																	<p class="mar-no">
-																		<small class="text-muted">Monday 03, June 2019</small>
-																	</p>
-																</div>
-															</div>
-															<p>2번숙제의 내용입니다 이 문제를 풀어보세요!</p>
-														</div>
-														<!--List group-->
-														<ul class="list-group">
-															<li class="list-group-item">Chapter : 상속과 다형성</li>
-															<li class="list-group-item">제출기한 : 2019년 6월 12일</li>
-															<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-															</a></li>
-															<li class="list-group-item"><button class="btn btn-block btn-primary">상세보기</button></li>
-														</ul>
-													</div>
-												</div>
-												<div class="panel panel-bordered-primary">
-													<div class="panel-heading">
-														<h4 class="panel-title">
-															<a data-parent="#accordionInsideThree" data-toggle="collapse" href="#collapseThreeInside1">HTML/CSS_1번 숙제</a>
-														</h4>
-													</div>
-													<div class="panel-collapse collapse" id="collapseThreeInside1">
-														<div class="panel-body">
-															<div class="row">
-																<div class="col-sm-7 toolbar-left">
-																	<!--Sender Information-->
-																	<div class="media">
-																		<span class="media-left"> <img src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png" class="img-circle img-sm" alt="Profile Picture">
-																		</span>
-																		<div class="media-body text-left">
-																			<div class="text-bold">황일영</div>
-																			<small class="text-muted">iremys@gmail.com</small>
-																		</div>
-																	</div>
-																</div>
-																<div class="col-sm-5 toolbar-right">
-																	<!--Details Information-->
-																	<p class="mar-no">
-																		<small class="text-muted">Monday 03, June 2019</small>
-																	</p>
-																</div>
-															</div>
-															<p>1번숙제의 내용입니다 이 문제를 풀어보세요!</p>
-														</div>
-														<!--List group-->
-														<ul class="list-group">
-															<li class="list-group-item">Chapter : 상속과 다형성</li>
-															<li class="list-group-item">제출기한 : 2019년 6월 12일</li>
-															<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-															</a></li>
-															<li class="list-group-item"><button class="btn btn-block btn-primary">상세보기</button></li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!--===================================================-->
-							<!--End 과제 Accordion-->
-							<!--과제 Accordion-->
-							<!--===================================================-->
-							<div class="panel-group accordion" id="accordion1">
 								<c:forEach items="${subjectList}" var="subjectVo">
 									<div class="panel">
 										<!--Accordion title-->
 										<div class="panel-heading" style="padding-left: 15px;">
 											<h4 class="panel-title text-main text-bold text-lg text-uppercase">
-												<a data-parent="#accordion1" data-toggle="collapse" href="#collapse${subjectVo.subjectNo}">${subjectVo.subjectTitle}</a>
+												<a data-parent="#accordion" data-toggle="collapse" href="#collapse${subjectVo.subjectNo}">${subjectVo.subjectTitle}</a>
 											</h4>
 										</div>
 										<!--Accordion content-->
 										<div class="panel-collapse collapse" id="collapse${subjectVo.subjectNo}">
-											<div class="panel-body">
+											<div class="panel-body" style="padding-top:5px;">
 												<div class="panel-group accordion" id="accordionInside${subjectVo.subjectNo}">
 													<!--내부 판넬 -->
 													<c:choose>
 														<c:when test="${empty subjectVo.assignmentListBySub }">
-															<div class="text-center" style="padding-top:40px; font-size: 20px; height:100px;">
+															<div class="text-center" style="padding-top: 40px; font-size: 20px; height: 100px;">
 																<i class="pli-folder-hide icon-lg"></i> 과제함이 비었습니당~
 															</div>
 														</c:when>
@@ -521,10 +117,10 @@
 																<div class="panel panel-bordered-primary">
 																	<div class="panel-heading">
 																		<h4 class="panel-title">
-																			<a data-parent="#accordionInside${subjectVo.subjectNo}" data-toggle="collapse" href="#collapse${subjectVo.subjectNo}Inside3">${assignmentVo.assignmentTitle}</a>
+																			<a id="submitPage" data-assignno="${assignmentVo.assignmentNo}" data-parent="#accordionInside${subjectVo.subjectNo}" data-toggle="collapse" href="#collapse${subjectVo.subjectNo}Inside${assignmentVo.assignmentNo}">${assignmentVo.assignmentTitle}</a>
 																		</h4>
 																	</div>
-																	<div class="panel-collapse collapse" id="collapse${subjectVo.subjectNo}Inside3">
+																	<div class="panel-collapse collapse" id="collapse${subjectVo.subjectNo}Inside${assignmentVo.assignmentNo}">
 																		<div class="panel-body">
 																			<div class="row">
 																				<div class="col-sm-7 toolbar-left">
@@ -553,7 +149,6 @@
 																			<li class="list-group-item">제출기한 : ${assignmentVo.endDate} 까지</li>
 																			<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
 																			</a></li>
-																			<li class="list-group-item"><button class="btn btn-block btn-primary">과제제출</button></li>
 																		</ul>
 																	</div>
 																</div>
@@ -571,12 +166,11 @@
 							<!--End 과제 Accordion-->
 						</div>
 						<div class="panel col-xs-5">
-							<p class="pad-hor mar-top text-main text-bold text-lg text-uppercase" style="padding-left: 3px;">${lastAssignment.assignmentTitle }</p>
+							<p class="pad-hor mar-top text-main text-bold text-lg text-uppercase" id="assignTitle" style="padding-left: 3px;">${lastAssignment.assignmentTitle }</p>
 							<div class="panel panel-bordered-primary">
 								<div class="panel-body">
-									<form id="submitForm" method="post" action="${pageContext.request.contextPath }/${coursePath}/assignment/submit">
-										<input type="hidden" name="userNo" value="${authUser.userNo }">
-										<input type="hidden" name="assignmentNo" value="${lastAssignment.assignmentNo }">
+									<form id="submitForm" method="post">
+										<input type="hidden" name="userNo" value="${authUser.userNo }"> <input type="hidden" name="assignmentNo" value="${lastAssignment.assignmentNo }">
 										<div class="row">
 											<div class="col-sm-7 toolbar-left">
 												<!--Sender Information-->
@@ -631,30 +225,44 @@
 												</div>
 											</div>
 											<div>
-												<button class="btn btn-lg btn-danger pull-right" name="submit" form="submitForm">제출하기</button>
+												<input id="btnSubmit" type="button" class="btn btn-lg btn-danger pull-right" value="제출하기">
 											</div>
 										</div>
 									</form>
 								</div>
 							</div>
-							<div class="panel panel-bordered-primary">
+							<div class="panel panel-bordered-primary" style="padding-left:10px; padding-right:10px;">
 								<div class="panel-heading">
-									<h3 class="panel-title text-bold">제출자 명단</h3>
+									<h3 class="panel-title text-bold" style="padding-left:7px">제출자 명단</h3>
 								</div>
 								<!--Table-->
 								<table class="table">
 									<thead>
 										<tr>
-											<th class="text-center">#</th>
 											<th>Name</th>
 											<th>File</th>
 											<th>Date</th>
 											<th>Detail</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody id="tbody">
+										<c:forEach items="${submitList}" var="submitVo">
+											<tr id="tr${submitVo.submitNo }">
+												<td>${submitVo.userName}</td>
+												<c:choose>
+													<c:when test="${submitVo.fileName eq null}">
+														<td>없음</td>
+													</c:when>
+													<c:otherwise>
+														<td><a href="#"> <strong>${submitVo.fileName}</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
+														</a></td>
+													</c:otherwise>
+												</c:choose>
+												<td>${submitVo.submitDate}</td>
+												<td><button id="submit-detail" class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal" data-submitno="${submitList.get(i).submitNo}">click</button></td>
+											</tr>
+										</c:forEach>
 										<tr>
-											<td class="text-center">1</td>
 											<td>김재봉</td>
 											<td><a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
 											</a></td>
@@ -662,7 +270,6 @@
 											<td><button class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal">click</button></td>
 										</tr>
 										<tr>
-											<td class="text-center">2</td>
 											<td>이종현</td>
 											<td><a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
 											</a></td>
@@ -670,7 +277,6 @@
 											<td><button class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal">click</button></td>
 										</tr>
 										<tr>
-											<td class="text-center">3</td>
 											<td>강보은</td>
 											<td><a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
 											</a></td>
@@ -678,7 +284,6 @@
 											<td><button class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal">click</button></td>
 										</tr>
 										<tr>
-											<td class="text-center">4</td>
 											<td>구민수</td>
 											<td><a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
 											</a></td>
@@ -686,7 +291,6 @@
 											<td><button class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal">click</button></td>
 										</tr>
 										<tr>
-											<td class="text-center">5</td>
 											<td>이건창</td>
 											<td><a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
 											</a></td>
@@ -719,30 +323,28 @@
 							<div class="col-sm-7 toolbar-left">
 								<!--Sender Information-->
 								<div class="media">
-									<span class="media-left"> <img src="${pageContext.request.contextPath }${authUser.logoPath}" class="img-circle img-sm" alt="Profile Picture">
+									<span class="media-left"> <img id="modal-logoPath" src="${pageContext.request.contextPath }${authUser.logoPath}" class="img-circle img-sm" alt="Profile Picture">
 									</span>
 									<div class="media-body text-left">
-										<div class="text-bold">${authUser.userName }</div>
-										<small class="text-muted">${authUser.email }</small>
+										<div class="text-bold" id="modal-userName">${authUser.userName }</div>
+										<small class="text-muted" id="modal-email">${authUser.email }</small>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-5 toolbar-right">
 								<!--Details Information-->
 								<p class="mar-no">
-									<small class="text-muted">Sunday 02, June 2019</small>
+									<small class="text-muted" id="modal-submitDate">Sunday 02, June 2019</small>
 								</p>
 							</div>
 						</div>
-						<div>과제 제출했습니다. 이렇게 저렇게 실행하세요.</div>
+						<div id="modal-submitContent">과제 제출했습니다. 이렇게 저렇게 실행하세요.</div>
 					</div>
-					<ul class="list-group">
-						<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-						</a></li>
+					<ul class="list-group" id="modal-fileName">
 					</ul>
 					<!--Modal footer-->
 					<div class="modal-footer">
-						<button class="btn btn-danger">Delete</button>
+						<button class="btn btn-danger" id="btnDelete" data-submitno="">Delete</button>
 						<button data-dismiss="modal" class="btn btn-primary" type="button">Close</button>
 					</div>
 				</div>
@@ -786,173 +388,190 @@
 	<!--Form File Upload [ SAMPLE ]-->
 	<script src="${pageContext.request.contextPath }/assets/js/form-file-upload.js"></script>
 	<script type="text/javascript">
-		// Tables-FooTable.js
-		// ====================================================================
-		// This file should not be included in your project.
-		// This is just a sample how to initialize plugins or components.
-		//
-		// - ThemeOn.net -
+	
+		$(document).ready(function() {
+			$("#collapse${lastAssignment.subjectNo}").attr("class","panel-collapse collapse in");
+			$("#collapse${lastAssignment.subjectNo}Inside${lastAssignment.assignmentNo}").attr("class","panel-collapse collapse in");
+		});
+	
+		$("#accordion").on("click", "#submitPage", function(){
+			console.log("제출함 보여주기");
+			var $this = $(this);
+			var assignmentNo = $this.data("assignno");
+			console.log(assignmentNo);
+			
+			$.ajax({
 
-		$(document)
-				.on(
-						'nifty.ready',
-						function() {
+				url : "${pageContext.request.contextPath }/${coursePath}/assignment/getAssignment",
+				type : "post",
+				contentType : "application/json",
+				data : JSON.stringify({assignmentNo : assignmentNo}),
 
-							// FOO TABLES
-							// =================================================================
-							// Require FooTable
-							// -----------------------------------------------------------------
-							// http://fooplugins.com/footable-demos/
-							// =================================================================
+				dataType : "json",
+				success : function(response) {
+					/*성공시 처리해야될 코드 작성*/
+					if (response.result === "success") {
+						console.log("과제 제출 페이지 보기");
+						console.log(response.data);
+						
+						$("#assignTitle").text(response.data.assignmentVo.assignmentTitle);
+						$("[name=assignmentNo]").val(response.data.assignmentVo.assignmentNo);
+						
+						$("#tbody").empty();
+						console.log(response.data.submitList);
+						for(i=0; i<response.data.submitList.length; i++){
+							renderList(response.data.submitList[i], "down");
+						}
+						
+					} else {
+						console.log("과제 제출 페이지 보기 실패~");
+					}
 
-							// Row Toggler
-							// -----------------------------------------------------------------
-							$('#demo-foo-row-toggler').footable();
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+		});
+		
+		$("#btnSubmit").on("click",function() {
+			console.log("submit");
+			var form = new FormData(document
+					.getElementById("submitForm"));
+			console.log(form);
 
-							// Expand / Collapse All Rows
-							// -----------------------------------------------------------------
-							var fooColExp = $('#demo-foo-col-exp');
-							fooColExp.footable().trigger(
-									'footable_expand_first_row');
+			$.ajax({
 
-							$('#demo-foo-collapse').on('click', function() {
-								fooColExp.trigger('footable_collapse_all');
-							});
-							$('#demo-foo-expand').on('click', function() {
-								fooColExp.trigger('footable_expand_all');
-							})
+				url : "${pageContext.request.contextPath }/${coursePath}/assignment/submit",
+				type : "post",
+				contentType : false,
+				processData : false,
+				data : form,
 
-							// Accordion
-							// -----------------------------------------------------------------
-							$('#demo-foo-accordion')
-									.footable()
-									.on(
-											'footable_row_expanded',
-											function(e) {
-												$(
-														'#demo-foo-accordion tbody tr.footable-detail-show')
-														.not(e.row)
-														.each(
-																function() {
-																	$(
-																			'#demo-foo-accordion')
-																			.data(
-																					'footable')
-																			.toggleDetail(
-																					this);
-																});
-											});
+				dataType : "json",
 
-							// Pagination
-							// -----------------------------------------------------------------
-							$('#demo-foo-pagination').footable();
-							$('#demo-show-entries').change(
-									function(e) {
-										e.preventDefault();
-										var pageSize = $(this).val();
-										$('#demo-foo-pagination').data(
-												'page-size', pageSize);
-										$('#demo-foo-pagination').trigger(
-												'footable_initialized');
-									});
+				success : function(response) {
+					/*성공시 처리해야될 코드 작성*/
+					if (response.result === "success") {
+						console.log("제출 성공");
+						
+						renderList(response.data, "up");
+					} else {
+						console.log("제출 실패");
+					}
+					
+					$("[name=submitContent]").val('');
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : "
+							+ error);
+				}
+			});
+		});
+		
+		$("#tbody").on("click", "#submit-detail", function(){
+			console.log("submit-detail");
+			var $this = $(this);
+			var submitNo = $this.data("submitno");
+			console.log(submitNo);
+			
+			$("#modal-userName").empty();
+			$("#modal-email").empty();
+			$("#modal-submitDate").empty();
+			$("#modal-submitContent").empty();
+			$("#modal-fileName").empty();
+			$("#btnDelete").data("submitno", "");
+			
+			$.ajax({
 
-							// Filtering
-							// -----------------------------------------------------------------
-							var filtering = $('#demo-foo-filtering');
-							filtering
-									.footable()
-									.on(
-											'footable_filtering',
-											function(e) {
-												var selected = $(
-														'#demo-foo-filter-status')
-														.find(':selected')
-														.val();
-												e.filter += (e.filter && e.filter.length > 0) ? ' '
-														+ selected
-														: selected;
-												e.clear = !e.filter;
-											});
+				url : "${pageContext.request.contextPath }/${coursePath}/assignment/getSubmit",
+				type : "post",
+				contentType : "application/json",
+				data : JSON.stringify({submitNo : submitNo}),
 
-							// Filter status
-							$('#demo-foo-filter-status').change(function(e) {
-								e.preventDefault();
-								filtering.trigger('footable_filter', {
-									filter : $(this).val()
-								});
-							});
+				dataType : "json",
+				success : function(response) {
+					/*성공시 처리해야될 코드 작성*/
+					if (response.result === "success") {
+						console.log("과제 상세보기");
+						
+						$("#modal-logoPath").attr("src", "${pageContext.request.contextPath }" + response.data.logoPath);
+						$("#modal-userName").append(response.data.userName);
+						$("#modal-email").append(response.data.email);
+						$("#modal-submitDate").append(response.data.submitDate);
+						$("#modal-submitContent").append(response.data.submitContent);
+						$("#btnDelete").data("submitno", response.data.submitNo);
+						if(response.data.fileName != null){
+							$("#modal-fileName").append("<li class='list-group-item'>첨부파일 : <a href='#'> <strong>" + response.data.fileName + "</strong> <i class='demo-psi-paperclip icon-lg icon-fw'></i></a></li>");
+						} else {
+							$("#modal-fileName").append("<li class='list-group-item'>첨부파일 : <a href='#'> <strong>없음</strong></a></li>");
+						}
+						$("#demo-default-modal").modal();
+					} else {
+						console.log("모달 띄우기 실패");
+					}
 
-							// Search input
-							$('#demo-foo-search').on('input', function(e) {
-								e.preventDefault();
-								filtering.trigger('footable_filter', {
-									filter : $(this).val()
-								});
-							});
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+		});
+		
+		$("#btnDelete").on("click", function(){
+			console.log("delete 실행");
+			var $this = $(this);
+			var submitNo = $this.data("submitno");
+			console.log(submitNo);
+			
+			$.ajax({
 
-							// Add & Remove Row
-							// -----------------------------------------------------------------
-							var addrow = $('#demo-foo-addrow');
-							addrow.footable().on('click', '.demo-delete-row',
-									function() {
+				url : "${pageContext.request.contextPath }/${coursePath}/assignment/deleteSubmit",
+				type : "post",
+				contentType : "application/json",
+				data : JSON.stringify({submitNo : submitNo}),
 
-										//get the footable object
-										var footable = addrow.data('footable');
-
-										//get the row we are wanting to delete
-										var row = $(this).parents('tr:first');
-
-										//delete the row
-										footable.removeRow(row);
-									});
-
-							// Search input
-							$('#demo-input-search2').on('input', function(e) {
-								e.preventDefault();
-								addrow.trigger('footable_filter', {
-									filter : $(this).val()
-								});
-							});
-
-							// Add Row Button
-							$('#demo-btn-addrow')
-									.click(
-											function() {
-
-												//get the footable object
-												var footable = addrow
-														.data('footable');
-
-												//build up the row we are wanting to add
-												var newRow = '<tr><td><button class="demo-delete-row btn btn-danger btn-xs"><i class="demo-pli-cross"></i></button></td><td>Adam</td><td>Doe</td><td>Traffic Court Referee</td><td>22 Jun 1972</td><td><span class="label label-table label-success">Active</span></td></tr>';
-
-												//add it
-												footable.appendRow(newRow);
-											});
-
-							// PANEL WITH BUTTONS - LOADING OVERLAY
-							// =================================================================
-							// Require Nifty Admin Javascript
-							// http://www.themeon.net/
-							// =================================================================
-							$('.demo-panel-ref-btn')
-									.niftyOverlay(
-											{
-												iconClass : 'demo-psi-repeat-2 spin-anim icon-2x'
-											}).on('click', function() {
-										var $el = $(this), relTime;
-										$el.niftyOverlay('show');
-
-										// Do something...
-
-										relTime = setInterval(function() {
-											// Hide the screen overlay
-											$el.niftyOverlay('hide');
-
-											clearInterval(relTime);
-										}, 2000);
-									});
-						});
+				dataType : "json",
+				success : function(response) {
+					/*성공시 처리해야될 코드 작성*/
+					if (response.result === "success") {
+						console.log("제출한 과제 삭제 성공");
+						
+						$("#tr" + response.data).remove();
+					} else {
+						console.log("제출한 과제 삭제 실패");
+						alert("본인의 과제만 삭제 가능합니다.")
+					}
+					$("#demo-default-modal").modal("hide");
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+		});
+		
+		function renderList(submitVo, updown) {
+			console.log("renderList 실행");
+			var str = "";
+			str += "<tr id='tr" + submitVo.submitNo + "'>";
+			str += "	<td>" + submitVo.userName + "</td>";
+			if(submitVo.fileName == null){
+				str += "	<td>없음</td>";
+			} else {
+				str += "	<td><a href='#'> <strong>" + submitVo.fileName + "</strong> <i class='demo-psi-paperclip icon-lg icon-fw'></i></a></td>";
+			}
+			str += "	<td>" + submitVo.submitDate + "</td>";
+			str += "	<td><button id='submit-detail' class='btn btn-sm btn-primary' data-target='#demo-default-modal' data-toggle='modal' data-submitno=" + submitVo.submitNo + ">click</button></td>";
+			str += "</tr>";
+			
+			if (updown == "up") {
+				$("#tbody").prepend(str);
+			} else if (updown == "down") {
+				$("#tbody").append(str);
+			} else {
+				console.log("updown 오류");
+			}
+		}
 	</script>
 </body>
 </html>

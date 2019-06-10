@@ -12,14 +12,14 @@ public class PostVo {
 	private String postTitle;
 	private String postContent;
 	private int hit;
-	
+	private String category;
+	private String userName;
+
 	public PostVo() {
-		
 	}
 
 	public PostVo(int postNo, int postType, int userNo, int fileNo, int courseNo, String regDate, int communityNo,
-			int scheduleNo, String postTitle, String postContent, int hit) {
-		super();
+			int scheduleNo, String postTitle, String postContent, int hit, String category, String userName) {
 		this.postNo = postNo;
 		this.postType = postType;
 		this.userNo = userNo;
@@ -31,6 +31,8 @@ public class PostVo {
 		this.postTitle = postTitle;
 		this.postContent = postContent;
 		this.hit = hit;
+		this.category = category;
+		this.userName = userName;
 	}
 
 	public int getPostNo() {
@@ -113,7 +115,6 @@ public class PostVo {
 		this.postContent = postContent;
 	}
 
-
 	public int getHit() {
 		return hit;
 	}
@@ -122,17 +123,28 @@ public class PostVo {
 		this.hit = hit;
 	}
 
-	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	@Override
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", postType=" + postType + ", userNo=" + userNo + ", fileNo=" + fileNo
 				+ ", courseNo=" + courseNo + ", regDate=" + regDate + ", communityNo=" + communityNo + ", scheduleNo="
-				+ scheduleNo + ", postTitle=" + postTitle + ", postContent=" + postContent + ", hit=" + hit + "]";
+				+ scheduleNo + ", postTitle=" + postTitle + ", postContent=" + postContent + ", hit=" + hit
+				+ ", category=" + category + ", userName=" + userName + "]";
 	}
 
-	
-	
-	
-	
 }
