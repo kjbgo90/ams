@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns="http://www.springframework.org/schema/beans"
 	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.1.xsd"
 	xmlns:mvc="http://www.springframework.org/schema/mvc">
 
 	<!-- annotation 설정을 하겠다. -->
@@ -24,6 +26,13 @@
 		<property name="suffix" value=".jsp" />
 		<property name="order" value="1" />
 	</bean>
+	
+	<!-- Spring WebSocket -->
+	<bean id="echoHandler" class="net.ourams.util.EchoHandler" />
+	<websocket:handlers>
+		<websocket:mapping handler="echoHandler" path="/echo" />
+		<websocket:sockjs />
+	</websocket:handlers>
 
 	<mvc:annotation-driven>
 		<mvc:message-converters>

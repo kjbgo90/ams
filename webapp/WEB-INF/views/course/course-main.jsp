@@ -132,8 +132,12 @@
 								<hr>
 								<h3 class="panel-title text-right">R42 강의실</h3>
 								<c:import url="/WEB-INF/views/course/lectureroom/r42.jsp"></c:import>
-								<br>
+								<br> 
+								<input type="text" id="message" /> 
+								<input type="button" id="sendBtn" value="전송" />
 
+								<div id="data">
+								</div>
 							</div>
 						</div>
 
@@ -298,10 +302,88 @@
 	<!--Bootbox Modals [ OPTIONAL ]-->
 	<script src="${pageContext.request.contextPath }/assets/js/bootbox.js"></script>
 
-
-	<!--Modals [ SAMPLE ]-->
-	<script src="${pageContext.request.contextPath }/assets/js/ui-modals.js"></script>
-
+	<!-- sockjs -->
+	<script src="${pageContext.request.contextPath }/assets/plugins/sockjs/dist/sockjs.js"></script>
 
 </body>
+
+<script type="text/javascript">
+	let webSock;
+
+	$(document).ready(function() {
+		// 웹소켓을 지정한 url로 연결한다.
+		let sock = new SockJS("<c:url value="/echo"/>");
+		var userNo = '${authUser.userNo}';
+		var userName = '${authUser.userName}';
+		console.log(userNo + " : " + userName);
+		
+		callNoty('warning', 'pli-exclamation', 'top-rignt', 0, '좌석을 선택해주세요', '빈 좌석 중에서 앉을 좌석을 골라주세요.', 'zoomIn', 'fadeOut');
+		webSock = sock;
+
+		webSock.onmessage = onMessage;
+		webSock.onclose = onClose;
+		
+	});	
+
+	$("#btnok").on("click", function(){
+		console.log("버튼 누름");
+	});
+	
+	$("#sendBtn").on("click", function() {
+		sendMessage();
+		$('#message').val('');
+	});
+
+	$("#message").on("keydown", function(key) {
+		if (key.keyCode == 13) {
+			sendMessage();
+			$('#message').val('');
+		}
+	});
+
+	// 메시지 전송
+	function sendMessage() {
+		webSock.send($("#message").val());
+	}
+
+	// 서버로부터 메시지를 받았을 때
+	function onMessage(msg) {
+		var data = msg.data;
+		$("#data").append(data + "<br/>");
+	}
+
+	// 서버와 연결을 끊었을 때
+	function onClose(evt) {
+		$("#data").append("연결 끊김");
+	}
+	
+	function callNoty(color, icon, position, time, title, message, animationIn, animationOut){
+		var notyContent = "";
+		
+		notyContent += "<div class='media-left'>";
+		notyContent += "	<span class='icon-wrap icon-wrap-xs icon-circle alert-icon'>";
+		notyContent += "		<i class='" + icon + " icon-2x'></i>";
+		notyContent += "	</span>";
+		notyContent += "</div>";
+		notyContent += "<div class='media-body'>";
+		notyContent += "	<h4 class='alert-title'>" + title + "</h4>";
+		notyContent += "	<p class='alert-message'>" + message + "</p>";
+		notyContent += "</div>";
+		notyContent += "<button class='btn btn-mint pull-right' id='btnok'>확인</button>";
+		
+		$.niftyNoty({
+			type : color,
+			container : 'floating',
+			floating    : {
+                position    : position,
+                animationIn : animationIn,
+                animationOut: animationOut
+            },
+            closeBtn : true,
+            html : notyContent,
+			timer : time
+		});
+	}
+</script>
+
 </html>

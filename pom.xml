@@ -39,6 +39,13 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+		<!-- Spring WebSocket -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		
 		<!-- jstl -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
