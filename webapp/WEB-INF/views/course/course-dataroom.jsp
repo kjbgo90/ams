@@ -44,7 +44,7 @@
 <link href="${pageContext.request.contextPath }/assets/plugins/dropzone/dropzone.css" rel="stylesheet">
 
 <!--Chosen [ OPTIONAL ]-->
-<link href="${pageContext.request.contextPath }/assets/css/chosen.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/assets/plugins/chosen/chosen.css" rel="stylesheet">
 
 
 <!--JSTree [ OPTIONAL ]-->
@@ -103,7 +103,7 @@
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<ol class="breadcrumb">
 						<li><a href="#"><i class="demo-pli-home"></i></a></li>
-						<li><a href="#"> 자료실 </a></li>
+						<li> 자료실 </li>
 						<li class="active">나의 자료실</li>
 					</ol>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -127,43 +127,23 @@
 
 									<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Folders</p>
 									<div class="list-group bg-trans pad-btm bord-btm">
-										<div id="demo-jstree-1">
-											<ul>
-												<li class="jstree-open">사용자 폴더
-													<ul>
-														<li class="jstree-open">프로그램
-															<ul>
-																<li class="jstree-open">basic
-																	<ul>
-																		<li>index</li>
-																	</ul>
-																</li>
-															</ul>
-														</li>
-														<li>강의자료
-															<ul>
-																<li class="jstree-open">java</li>
-															</ul>
-														</li>
-													</ul>
-												</li>
+										<div id="fileTree">
+											<ul id="fileTreeList">
+											
 											</ul>
 										</div>
 									</div>
-
+									
 
 									<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Tags</p>
-									<ul class="list-inline mar-hor">
-										<li class="tag tag-sm"><a href="#">Family</a></li>
-										<li class="tag tag-sm"><a href="#">Home</a></li>
-										<li class="tag tag-sm"><a href="#">Work</a></li>
-										<li class="tag tag-sm"><a href="#">Film</a></li>
-										<li class="tag tag-sm"><a href="#">Music</a></li>
-										<li class="tag tag-sm"><a href="#">Videos</a></li>
+									<ul id="tagList" class="list-inline mar-hor">
+										
 									</ul>
 								</div>
 								<div class="fluid file-panel">
 									<div class="bord-btm pad-ver">
+										
+										<!-- 바뀌게 만들기  -->
 										<ol class="breadcrumb">
 											<li><a href="#">Home</a></li>
 											<li><a href="#">App Views</a></li>
@@ -172,29 +152,28 @@
 									</div>
 									<div class="file-toolbar bord-btm">
 										<div class="btn-file-toolbar">
-											<a class="btn btn-icon add-tooltip" href="#" data-original-title="Home" data-toggle="tooltip"> <i class="icon-2x demo-pli-home"></i>
-											</a> <a class="btn btn-icon add-tooltip" href="#" data-original-title="Refresh" data-toggle="tooltip"> <i class="icon-2x demo-pli-reload-3"></i>
+											<a class="btn btn-icon add-tooltip" id="goHome" data-original-title="Home" data-toggle="tooltip"> <i class="icon-2x demo-pli-home"></i>
+											</a> <a class="btn btn-icon add-tooltip" id="refreshHere" data-original-title="Refresh" data-toggle="tooltip"> <i class="icon-2x demo-pli-reload-3"></i>
 											</a>
 										</div>
 										<div class="btn-file-toolbar">
-											<a class="btn btn-icon add-tooltip" href="#" data-original-title="New Folder" data-toggle="tooltip"> <i class="icon-2x demo-pli-folder"></i>
-											</a> <a class="btn btn-icon add-tooltip" href="#" data-original-title="New File" data-toggle="tooltip"> <i class="icon-2x demo-pli-file-add"></i>
-											</a> <a class="btn btn-icon add-tooltip" href="#" data-original-title="Edit File" data-toggle="tooltip"> <i class="icon-2x demo-pli-file-edit"></i>
-											</a>
+											<a class="btn btn-icon add-tooltip" id="newFolder" data-original-title="New Folder" data-toggle="tooltip"> <i class="icon-2x demo-pli-folder"></i>
+											</a> 
 										</div>
 										<div class="btn-file-toolbar pull-right">
-											<a class="btn btn-icon add-tooltip" href="#" data-original-title="Delete" data-toggle="tooltip"> <i class="icon-2x demo-pli-recycling"></i>
-											</a> <a class="btn btn-icon add-tooltip" href="#" data-original-title="Download" data-toggle="tooltip"> <i class="icon-2x demo-pli-download-from-cloud"></i>
+											<a class="btn btn-icon add-tooltip" id="deleteAnybody" data-original-title="Delete" data-toggle="tooltip"> <i class="icon-2x demo-pli-recycling"></i>
+											</a> <a class="btn btn-icon add-tooltip" id="downloadFile" data-original-title="Download" data-toggle="tooltip"> <i class="icon-2x demo-pli-download-from-cloud"></i>
 											</a>
 										</div>
 									</div>
-									<ul id="demo-mail-list" class="file-list">
+									<ul id="fileList" class="file-list">
 										<!--File list item-->
 										<li>
 											<div class="file-control">
-												<input id="file-list-1" class="magic-checkbox" type="checkbox"> <label for="file-list-1"></label>
+												<input class="magic-checkbox" type="checkbox"> <label for="file-list-1"></label>
 											</div>
-											<div class="file-attach-icon"></div> <a href="#" class="file-details">
+											<div class="file-attach-icon"></div> 
+											<a href="#" class="file-details">
 												<div class="media-block">
 													<div class="media-left">
 														<i class="demo-psi-folder"></i>
@@ -203,13 +182,8 @@
 														<p class="file-name single-line">...</p>
 													</div>
 												</div>
-										</a>
+											</a>
 										</li>
-
-									
-
-
-									
 									</ul>
 								</div>
 							</div>
@@ -236,6 +210,12 @@
 		</div>
 
 
+
+
+
+
+
+		<!--  모달 창  -->
 		<!--Large Bootstrap Modal-->
 		<!--===================================================-->
 		<div id="demo-lg-modal" class="modal fade" tabindex="-1">
@@ -245,28 +225,25 @@
 						<button type="button" class="close" data-dismiss="modal">
 							<i class="pci-cross pci-circle"></i>
 						</button>
-						<h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+						<h4 class="modal-title" id="myLargeModalLabel">UPLOAD</h4>
 					</div>
 					<div class="modal-body">
 
 
 						<div class="panel">
 							<div class="panel-heading">
-								<h3 class="panel-title">DropzoneJs</h3>
+								<h3 class="panel-title">UPLOAD FILE AND INSERT TAG</h3>
 							</div>
 							<div class="panel-body">
-								<p class="text-main text-bold mar-no">Drag’n’drop file uploads</p>
-								<p>DropzoneJs provides drag’n’drop file uploads with image previews.</p>
+								<p class="text-main text-bold mar-no bord-btm">Drag’n’drop file uploads</p>
+								<p>And then insert tag here</p>
 								<!-- Multiple Select Choosen
 							 		태크, 코스, 파일 개별적으로 저장 -->
 								<!--===================================================-->
-								<select id="demo-cs-multiselect" data-placeholder="Choose a Course..." multiple tabindex="4">
-									<option value="United States">Java</option>
-									<option value="United Kingdom">C++</option>
-									<option value="Afghanistan">C</option>
-									<option value="Aland Islands">Ajax</option>
-									<option value="Albania">What</option>
-								</select>
+							
+									<select id="tag-multiselect" class="tag_muti" data-placeholder="Choose a Course..." multiple tabindex="4">
+									</select>
+								
 								<!--===================================================-->
 
 								<br> <br> <br> <br>
@@ -275,7 +252,7 @@
 								<!--Dropzonejs-->
 								<!--===================================================-->
 								
-								<form id="demo-dropzone" action="${pageContext.request.contextPath }/dataroom/upload" method="post" class="dropzone">
+								<div id="dropzone" class="dropzone ">
 									<div class="dz-default dz-message">
 										<div class="dz-icon">
 											<i class="demo-pli-upload-to-cloud icon-5x"></i>
@@ -288,14 +265,14 @@
 									<div class="fallback">
 										<input name="file" type="file" multiple>
 									</div>
-										
-								</form>
-								<form action="#" method="post">
+								</div>
 									<!-- 위에 저장된 파일들의 정보들을 가져와서 리스트들을 뽑아보자  -->
+								
+									
 									<div class="bord-btm pad-btm">
-										<button type="submit" data-target="#demo-lg-modal" data-toggle="modal" class="btn tbn-default">UPLOAD</button>
+										<button id="insertTagFileUpLoad" type="submit" data-target="#demo-lg-modal" data-toggle="modal" class="btn tbn-default">UPLOAD</button>
 									</div> 
-								</form>
+									
 								<!--===================================================-->
 								<!-- End Dropzonejs -->
 
@@ -367,7 +344,7 @@
 
 
 	<!--Chosen [ OPTIONAL ]-->
-	<script src="${pageContext.request.contextPath }/assets/js/chosen.jquery.js"></script>
+	<script src="${pageContext.request.contextPath }/assets/plugins/chosen/chosen.jquery.js"></script>
 
 
 
@@ -390,32 +367,33 @@
 					
 					for (var i = 0; i < list.length; i++) {
 						console.log(list.length);
-						fileList(list[i]);
+						
 						// list 찾기 !!
 						
 						strList += "<li>";
 						strList += "	<div class='file-control'>";
-						strList += "		<input id='file-list-9' class='magic-checkbox' type='checkbox'> ";
-						strList += "		<label for='file-list-9'></label>";
+						strList += "		<input id="+"dataRoomList"+list[i].dataRoomNo+" class='magic-checkbox' type='checkbox'> ";
+						strList += "		<label for="+"dataRoomList"+list[i].dataRoomNo+"></label>";
 						strList += "	</div>";
 						strList += "	<div class='file-settings'>";
 						strList += "		<a href='#'><i class='pci-ver-dots'></i></a> ";
 						strList += "	</div>";
 						strList += "	<div class='file-attach-icon'></div> ";
+						// 폴더는 폴더 안으로 들어가게 하고 파일중에 pdf이면 어디선가에서 프리뷰로 보게 했으면 좋겠다 
 						strList += "	<a href='#' class='file-details'>";
 						strList += "		<div class='media-block'>";
 						strList += "			<div class='media-left'>";
-						strList += "				<i class='demo-pli-file-jpg'></i>";
+						strList += "				<i class='demo-psi-folder'></i>";
 						strList += "			</div>";
 						strList += "			<div class='media-body/>";
-						strList += "				<p class='file-name'>Nature.jpg</p>";
-						strList += "				<small>Created 3 weeks ago | 56 KB</small>";
+						strList += "				<p class='file-name'>"+list[i].dataRoomName+"</p>";
+						strList += "				<small>folder</small>";
 						strList += "			</div>";
 						strList += "		</div>";
 						strList += "	</a>";		
 						strList += "</li>";
 					}
-					$("#commentsList").html(vr);
+					$("#fileList").append(strList);
 					
 					strList = "";
 				},
@@ -424,122 +402,178 @@
 				}
 			});
 			
-							// CHOSEN
-							// =================================================================
-							// Require Chosen
-							// http://harvesthq.github.io/chosen/
-							// =================================================================
-							$('#demo-cs-multiselect').chosen({width : '100%'});
-							// DROPZONE.JS
-							// =================================================================
-							// Require Dropzone
-							// http://www.dropzonejs.com/
-							// =================================================================
-							Dropzone.options.demoDropzone = { // The camelized version of the ID of the form element
-								// The configuration we've talked about above
-								autoProcessQueue : false,
-								//uploadMultiple: true,
-								//parallelUploads: 25,
-								//maxFiles: 25,
-								// The setting up of the dropzone
-								init : function() {
-									var myDropzone = this;
-									//  Here's the change from enyo's tutorial...
-									//  $("#submit-all").click(function (e) {
-									//  e.preventDefault();
-									//  e.stopPropagation();
-									//  myDropzone.processQueue();
-									//
-									//}
-									//    );
-								}
-							}
-							// DROPZONE.JS WITH BOOTSTRAP'S THEME
-							// =================================================================
-							// Require Dropzone
-							// http://www.dropzonejs.com/
-							// =================================================================
-							// Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-							var previewNode = document.querySelector("#dz-template");
-							previewNode.id = "";
-							var previewTemplate = previewNode.parentNode.innerHTML;
-							previewNode.parentNode.removeChild(previewNode);
-							var uplodaBtn = $('#dz-upload-btn');
-							var removeBtn = $('#dz-remove-btn');
-							var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-								url : "/target-url", // Set the url
-								thumbnailWidth : 50,
-								thumbnailHeight : 50,
-								parallelUploads : 20,
-								previewTemplate : previewTemplate,
-								autoQueue : false, // Make sure the files aren't queued until manually added
-								previewsContainer : "#dz-previews", // Define the container to display the previews
-								clickable : ".fileinput-button" // Define the element that should be used as click trigger to select files.
-							});
-							myDropzone.on("addedfile", function(file) {
-								// Hookup the button
-								uplodaBtn.prop('disabled', false);
-								removeBtn.prop('disabled', false);
-							});
-							// Update the total progress bar
-							myDropzone.on("totaluploadprogress", function(
-									progress) {
-								$("#dz-total-progress .progress-bar").css({
-									'width' : progress + "%"
-								});
-							});
-							myDropzone.on(
-											"sending",
-											function(file) {
-												// Show the total progress bar when upload starts
-												document.querySelector("#dz-total-progress").style.opacity = "1";
-											});
-							// Hide the total progress bar when nothing's uploading anymore
-							myDropzone.on(
-											"queuecomplete",
-											function(progress) {
-												document.querySelector("#dz-total-progress").style.opacity = "0";
-											});
-							// Setup the buttons for all transfers
-							uplodaBtn.on('click', function() {
-								//Upload all files
-								//myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
-							});
-							removeBtn.on('click', function() {
-								myDropzone.removeAllFiles(true);
-								uplodaBtn.prop('disabled', true);
-								removeBtn.prop('disabled', true);
-							});
-		});
-		
-		
-		// Custom Icon - Premium Solid Icons
-		// =================================================================
-		// Require JSTree & Premium Icons
-		// =================================================================
-		$('#demo-jstree-1').jstree({
-			'core' : {
-				'check_callback' : true
-			},
-			'plugins' : [ 'types', 'dnd' ],
-			'types' : {
-				'default' : {
-					'icon' : 'demo-pli-folder'
+			tagList = "";
+			$.ajax({
+				url : "${pageContext.request.contextPath }/dataroom/tagList",
+				type : "post",
+				dataType : "json",
+				success : function(list) {
+					console.log(list);
+					console.log(list[0].dataTagNo);
+					var no = list[0].dataTagNo;
+					
+					for (var i = 0; i < list.length; i++) {
+						console.log(list.length);
+						console.log(list[i].dataTagName)
+						// list 찾기 !!
+						
+						tagList += "<li id="+"dataTagNo"+list[i].dataTagNo+" data-dataTagNo="+list[i].dataTagNo+" class='tag tag-sm btn'>"+list[i].dataTagName+"</li>";
+						
+					}
+					$("#tagList").html(tagList);
+					
+					tagList = "";
 				},
-				'html' : {
-					'icon' : 'demo-pli-file-html'
-				},
-				'file' : {
-					'icon' : 'demo-pli-file'
-				},
-				'jpg' : {
-					'icon' : 'demo-pli-file-jpg'
-				},
-				'zip' : {
-					'icon' : 'demo-pli-file-zip'
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
 				}
-			}
+			});
+			
+			$("#tagList").on("click","li",function(){
+				console.log("select tag List !!")
+				
+				$this = $(this);
+				console.log($this);
+				var dataTagNo = $this.data("dataTagNo");
+				console.log(dataTagNo);
+				
+							
+			});
+			
+			tagList2 = "";
+			$.ajax({
+				url : "${pageContext.request.contextPath }/dataroom/tagList",
+				type : "post",
+				dataType : "json",
+				success : function(list) {
+					console.log(list);
+					console.log(list[0].dataTagNo);
+					var no = list[0].dataTagNo;
+					
+					for (var i = 0; i < list.length; i++) {
+						console.log(list.length);
+						console.log(list[i].dataTagName)
+						// list 찾기 !!
+						
+						tagList2 += "<option value="+list[i].dataTagNo+">"+list[i].dataTagName+"</option>";
+						
+					}
+					$("#tag-multiselect").html(tagList2);
+					$("#tag-multiselect").chosen({width : '100%'});
+					
+					
+					tagList2 = "";
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			
+	
+		
+			
+			//tree -> 최상위 폴더에서 리스트를 다 뽑는다. -> 
+			// pRoomNp=0 -> list-> ( list[0]-> no = proomNo ) -> list ... if((no = proomno)=0) end       
+			FolderRootList="";
+			$.ajax({
+				url : "${pageContext.request.contextPath }/dataroom/RootFileList",
+				type : "post",
+				dataType : "json",
+				success : function(list) {
+					console.log(list);
+					
+					for (var i = 0; i < list.length; i++) {
+						console.log(list.length);
+						console.log(list[i].dataRoomNo)
+						// list 찾기 !!
+						FolderRootList +="<li id="+"dataRoomNo"+list[i].dataRoomNo+" class='jstree-open'>"+list[i].dataRoomName;
+						FolderRootList +="<ul>";
+						FolderRootList +="<li class='jstree-open'>"+list[i].dataRoomName;
+						FolderRootList +="<ul>";
+						
+						FolderRootList +="</ul>";
+						FolderRootList +="</li>";
+						FolderRootList +="</ul>";
+						FolderRootList +="</li>";
+						
+					}
+					$("#fileTreeList").html(FolderRootList);
+					FolderRootList="";
+					
+					
+					
+					// Custom Icon - Premium Solid Icons
+					// =================================================================
+					// Require JSTree & Premium Icons
+					// =================================================================
+					$('#fileTree').jstree({
+						'core' : {
+							'check_callback' : true
+						},
+						'plugins' : [ 'types', 'dnd' ],
+						'types' : {
+							'default' : {
+								'icon' : 'demo-pli-folder'
+							},
+							'html' : {
+								'icon' : 'demo-pli-file-html'
+							},
+							'file' : {
+								'icon' : 'demo-pli-file'
+							},
+							'jpg' : {
+								'icon' : 'demo-pli-file-jpg'
+							},
+							'zip' : {
+								'icon' : 'demo-pli-file-zip'
+							}
+						}
+					});
+					
+					$("#dataRoomNo1").on("click",function(){
+						$this=$(this);
+						console.log($this);
+						
+					});
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			
+			
+
 		});
+
+		$("file-control").on("click",function(){
+			console.log("asdf");
+		});
+		
+		$("#refreshHere").on("click",function(){
+			console.log("refresh here!!");
+		});
+	
+		$("#newFolder").on("click",function(){
+			console.log("add new folder ")
+		});
+		
+		$("#deleteAnybody").on("click",function(){
+			console.log("delete anybody ")
+			//안에 폴더가 있으면 경고창 넣고 삭제하시겠습니까?라고 물어보기 
+		});
+		
+		$("#downloadFile").on("click",function(){
+			console.log("download this  ")
+			//파일말고 폴더를 클릭했을 때에는 파일만 다운로드 가능하게 만들거나 폴더에 있는 모든 리스트들을 다운받기 
+			//alert 경고 표시 
+		});
+		
+
+		
+		$("#goHome").on("click",function(){
+			console.log("go Home !!");
+		});
+	
 		
 		function fileList(CourseDataroomVo, updown){
 			strListOne = "";
@@ -565,6 +599,71 @@
 			strListOne += "	</a>";		
 			strListOne += "</li>";
 		}
+		
+		//앞으로 저장될 파일 리스트들 
+		var fileList = [];
+		var tagNoList = [];
+		
+		//파일 업로드 드래그 앤 드롭할때 
+		$("#dropzone").dropzone({
+			url: "${pageContext.request.contextPath }/dataroom/upload" , 
+			success : function(file, fileVo){
+						console.log(file);
+						console.log(fileVo);
+						fileList.push(fileVo);
+						console.log(fileList);
+						console.log(fileList.length);
+				    }
+		});
+		
+		// 리스트 파일들을 태그 붙여서 업로드 할거다 
+		$("#insertTagFileUpLoad").on("click",function(){
+			console.log("file upload");
+			
+			
+			tagNoList=$("#tag-multiselect").val()
+			console.log(tagNoList)
+			console.log(tagNoList.length)
+			
+			if(fileList.length == 0){
+				alert('파일을 넣어주세요 !')
+			}
+			else{
+				for (var i = 0; i < fileList.length; i++) {
+					CourseDataroomVo = fileList[i];
+					console.log(CourseDataroomVo.filePath);
+					console.log(CourseDataroomVo);
+					console.log(tagNoList)
+					
+					var fileName = CourseDataroomVo.fileName;
+					var filePath = CourseDataroomVo.filePath;
+					var fileSize = CourseDataroomVo.fileSize;
+					var saveName = CourseDataroomVo.saveName;
+					
+					var jsonData = {
+						fileName:fileName,
+						filePath:filePath,
+						fileSize:fileSize,
+						saveName:saveName,
+						tagNoList:tagNoList
+					}
+					
+					$.ajax({
+						url : "${pageContext.request.contextPath }/dataroom/fileUploadInDB",
+						type : "post",
+						data : JSON.stringify(jsonData),
+						dataType : "json",
+						contentType : "application/json; charset=UTF-8",
+						success : function( ) {
+							
+						},
+						error : function(XHR, status, error) {
+							console.error(status + " : " + error);
+						}
+					});		
+				}
+			}
+		});
 		
 		
 		

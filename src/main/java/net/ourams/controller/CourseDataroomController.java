@@ -1,17 +1,19 @@
 package net.ourams.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.amazonaws.services.s3.model.ObjectMetadata;
 
 import net.ourams.service.CourseDataroomService;
 import net.ourams.util.S3Util;
@@ -29,6 +31,8 @@ public class CourseDataroomController {
 
 	private String bucketName = "net.ourams.upload";
 
+	
+	
 	// 테스트용
 	@RequestMapping(value = "/init", method = RequestMethod.GET)
 	public String init() {
@@ -50,8 +54,10 @@ public class CourseDataroomController {
 		return "course/course-dataroom";
 	}
 
+
+	@ResponseBody
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public String fileUpload(@RequestParam("file") MultipartFile file, Model model) {
+	public CourseDataroomVo fileUpload(@RequestParam("file") MultipartFile file, Model model) {
 		System.out.println("aws 파일업로드");
 		System.out.println(file.getOriginalFilename());
 		String fileName = file.getOriginalFilename();
@@ -59,8 +65,39 @@ public class CourseDataroomController {
 		s3Util.getFileURL(bucketName, fileName);
 		String url = s3Util.getFileURL(bucketName, file.getOriginalFilename());
 		model.addAttribute("url", url);
+		//확장자
+				String exName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+				System.out.println("exName: " + exName);
+				
+		//파일사이즈
+				long fileSize = file.getSize();
+				System.out.println("fileSize: " + fileSize);
 
-		return "redirect:/dataroom/form";
+		//저장파일명
+				String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
+				System.out.println("saveName: " + saveName);
+				
+		//파일패스
+				String filePath = s3Util.getFileURL(bucketName, file.getOriginalFilename());
+				System.out.println("filePath: " + filePath);
+				
+		CourseDataroomVo vo = new CourseDataroomVo();
+		vo.setFileName(fileName);
+		vo.setFilePath(filePath);
+		vo.setFileSize(fileSize);
+		vo.setSaveName(saveName);
+		System.out.println(vo.toString());
+		return vo;
+	}
+	
+	@RequestMapping(value = "/fileUploadInDB", method = RequestMethod.POST)
+	public String fileUploadInDB(@RequestBody List<Map<String, Object>> jsonList) {
+		CourseDataroomVo fileVo = new CourseDataroomVo();
+		System.out.println("fileUpLoad!!");
+		
+		System.out.println(jsonList.toString());
+		System.out.println(fileVo.toString());
+		return "";
 	}
 	
 	@ResponseBody
@@ -70,5 +107,24 @@ public class CourseDataroomController {
 		List<CourseDataroomVo> list = CourseDataroomService.getfileList();
 		return list;
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/tagList" , method = RequestMethod.POST)
+	public List<CourseDataroomVo> getTagList() {
+		System.out.println("get Tag List");
+		List<CourseDataroomVo> list = CourseDataroomService.getTagList();
+		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/RootFileList")
+	public List<CourseDataroomVo> getRootFileList(){
+		System.out.println("start root file List");
+		List<CourseDataroomVo> list = CourseDataroomService.getDataRoomRootList();
+		return list;
+	}
+	
+	
+	
 	
 }

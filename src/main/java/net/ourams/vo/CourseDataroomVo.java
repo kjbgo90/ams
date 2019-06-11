@@ -1,5 +1,7 @@
 package net.ourams.vo;
 
+import java.util.List;
+
 public class CourseDataroomVo {
 	/*
 	 * data room 
@@ -7,7 +9,7 @@ public class CourseDataroomVo {
 	private int dataRoomNo;
 	private int courseNo;
 	private String dataRoomName;
-	private int pRoonNo;
+	private int pRoomNo;
 	/*
 	 * data room file
 	 */
@@ -35,42 +37,46 @@ public class CourseDataroomVo {
 	 */
 	private int fileNo;
 	private String fileName;
-	private String savaName;
+	private String saveName;
 	private long fileSize;
 	private String regDate;
 	private String filePath;
 	
+	private List<Integer> tagNoList;
 	
+
+
 	public CourseDataroomVo(int dataRoomNo, 
 							int courseNo, 
 							String dataRoomName, 
-							int pRoonNo, 
+							int pRoomNo, 
 							int dataRoomFileNo,
 							int dataRoomFileTagNo, 
 							int dataTagNo, 
 							String dataTagName, 
 							int fileNo, 
 							String fileName, 
-							String savaName,
+							String saveName,
 							long fileSize, 
 							String regDate, 
 							String filePath) {
 		this.dataRoomNo = dataRoomNo;
 		this.courseNo = courseNo;
 		this.dataRoomName = dataRoomName;
-		this.pRoonNo = pRoonNo;
+		this.pRoomNo = pRoomNo;
 		this.dataRoomFileNo = dataRoomFileNo;
 		this.dataRoomFileTagNo = dataRoomFileTagNo;
 		this.dataTagNo = dataTagNo;
 		this.dataTagName = dataTagName;
 		this.fileNo = fileNo;
 		this.fileName = fileName;
-		this.savaName = savaName;
+		this.saveName = saveName;
 		this.fileSize = fileSize;
 		this.regDate = regDate;
 		this.filePath = filePath;
 	}
 
+	
 
 	public CourseDataroomVo() { }
 
@@ -105,13 +111,13 @@ public class CourseDataroomVo {
 	}
 
 
-	public int getpRoonNo() {
-		return pRoonNo;
+	public int getpRoomNo() {
+		return pRoomNo;
 	}
 
 
-	public void setpRoonNo(int pRoonNo) {
-		this.pRoonNo = pRoonNo;
+	public void setpRoomNo(int pRoomNo) {
+		this.pRoomNo = pRoomNo;
 	}
 
 
@@ -175,13 +181,13 @@ public class CourseDataroomVo {
 	}
 
 
-	public String getSavaName() {
-		return savaName;
+	public String getSaveName() {
+		return saveName;
 	}
 
 
-	public void setSavaName(String savaName) {
-		this.savaName = savaName;
+	public void setSaveName(String saveName) {
+		this.saveName = saveName;
 	}
 
 
@@ -218,9 +224,9 @@ public class CourseDataroomVo {
 	@Override
 	public String toString() {
 		return "CourseDataroomVo [dataRoomNo=" + dataRoomNo + ", courseNo=" + courseNo + ", dataRoomName="
-				+ dataRoomName + ", pRoonNo=" + pRoonNo + ", dataRoomFileNo=" + dataRoomFileNo + ", dataRoomFileTagNo="
+				+ dataRoomName + ", pRoomNo=" + pRoomNo + ", dataRoomFileNo=" + dataRoomFileNo + ", dataRoomFileTagNo="
 				+ dataRoomFileTagNo + ", dataTagNo=" + dataTagNo + ", dataTagName=" + dataTagName + ", fileNo=" + fileNo
-				+ ", fileName=" + fileName + ", savaName=" + savaName + ", fileSize=" + fileSize + ", regDate="
+				+ ", fileName=" + fileName + ", saveName=" + saveName + ", fileSize=" + fileSize + ", regDate="
 				+ regDate + ", filePath=" + filePath + "]";
 	}
 	

@@ -16,8 +16,38 @@ public class CourseDataroomService {
 	
 	
 	public List<CourseDataroomVo> getfileList(){
-		List<CourseDataroomVo> list = courseDataroomDao.selectFileList();
+		CourseDataroomVo vo = new CourseDataroomVo();
+		vo.setCourseNo(1);
+		List<CourseDataroomVo> list = courseDataroomDao.selectFileList(vo);
 		return list;
 	}
+	
+	public List<CourseDataroomVo> getTagList(){
+		List<CourseDataroomVo> list = courseDataroomDao.selectTagList();
+		return list;
+	}
+	
+	public List<CourseDataroomVo> getDataRoomRootList(){
+		CourseDataroomVo vo = new CourseDataroomVo();
+		vo.setpRoomNo(0);
+		vo.setCourseNo(1);
+		List<CourseDataroomVo> list = courseDataroomDao.getDataRoomRootList(vo);
+		return list;
+	}
+
+	public List<CourseDataroomVo> getDataRoomRoot(){
+		CourseDataroomVo vo = new CourseDataroomVo();
+		vo.setCourseNo(1);
+		List<CourseDataroomVo> list = courseDataroomDao.getDataRoomRoot(vo);
+		return list;
+	}
+	
+	public List<CourseDataroomVo> getDataTagList(CourseDataroomVo vo){
+		vo.setCourseNo(1);
+		List<CourseDataroomVo> list = courseDataroomDao.getDataTagList(vo);
+		return list;
+	}
+	
+	
 	
 }
