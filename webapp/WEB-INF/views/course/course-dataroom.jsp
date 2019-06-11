@@ -604,6 +604,7 @@
 		var fileList = [];
 		var tagNoList = [];
 		
+		
 		//파일 업로드 드래그 앤 드롭할때 
 		$("#dropzone").dropzone({
 			url: "${pageContext.request.contextPath }/dataroom/upload" , 

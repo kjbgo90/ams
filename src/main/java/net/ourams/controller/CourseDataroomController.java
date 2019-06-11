@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import net.ourams.service.CourseDataroomService;
 import net.ourams.util.S3Util;
+import net.ourams.vo.CourseDataroomFileUploadVo;
 import net.ourams.vo.CourseDataroomVo;
 
 @Controller
@@ -91,13 +92,11 @@ public class CourseDataroomController {
 	}
 	
 	@RequestMapping(value = "/fileUploadInDB", method = RequestMethod.POST)
-	public String fileUploadInDB(@RequestBody List<Map<String, Object>> jsonList) {
-		CourseDataroomVo fileVo = new CourseDataroomVo();
+	public String fileUploadInDB(@RequestBody CourseDataroomFileUploadVo fileVo) {
 		System.out.println("fileUpLoad!!");
 		
-		System.out.println(jsonList.toString());
 		System.out.println(fileVo.toString());
-		return "";
+		return "course/course-dataroom";
 	}
 	
 	@ResponseBody
