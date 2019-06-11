@@ -16,6 +16,7 @@ import net.ourams.interceptor.Auth;
 import net.ourams.interceptor.AuthUser;
 import net.ourams.service.CourseMainService;
 import net.ourams.vo.ChapterVo;
+import net.ourams.vo.CourseVo;
 import net.ourams.vo.SubjectVo;
 import net.ourams.vo.UserVo;
 
@@ -29,10 +30,31 @@ public class CourseMainController {
 	@Auth
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String courseMain(@PathVariable("coursePath") String coursePath,
-							 Model model) {
+							 Model model) {		
+		CourseVo courseVo = courseMService.getCourseVo(coursePath);
+		
 		model.addAttribute("coursePath", coursePath);
+		model.addAttribute("courseVo", courseVo);
 		
 		return "course/course-main";
+	}
+	
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/main/loadpage", method = RequestMethod.POST)
+	public Map<String, Object> userListCall(@PathVariable("coursePath") String coursePath){
+		return courseMService.getUserList(coursePath);
+	}
+	
+	@Auth
+	@RequestMapping(value = "/main/seatdecide", method = RequestMethod.POST)
+	public String seatDecide(@PathVariable("coursePath") String coursePath,
+							 @RequestParam("seatNo") int seatNo,
+							 @AuthUser UserVo authUser) {
+		
+		courseMService.seatDecide(coursePath, seatNo, authUser);
+		
+		return "redirect:/" + coursePath + "/main";
 	}
 	
 	@RequestMapping(value = "/404page", method = RequestMethod.GET)

@@ -109,6 +109,15 @@
 		]]>
 	</update>
 	
+	<update id="updateCourseregistByMap" parameterType="map">
+		<![CDATA[
+			UPDATE 	 courseregist 
+			SET 	 seatNo = #{seatNo}
+			WHERE 	 userNo = #{userNo}
+				AND	 courseNo = #{courseNo}
+		]]>
+	</update>
+	
 	<select id="selectSubjectBySubjectNo" parameterType="int" resultType="SubjectVo">
 		<![CDATA[
 			SELECT   subjectNo,
@@ -205,4 +214,20 @@
 			WHERE chapterNo = #{chapterNo}
 		]]>
 	</delete>
+	
+	<select id="selectUserListByCourseNo" parameterType="int" resultType="UserVo">
+		<![CDATA[
+			SELECT 		u.userNo,
+       					email,
+       					userName,
+       					userType,
+       					logoPath,
+       					phoneNumber,
+       					NVL(seatNo, 0) as seatNo
+			FROM   		users u JOIN courseregist c
+				ON		u.userNo = c.userNo
+			WHERE  		courseNo = #{courseNo}
+			
+		]]>
+	</select>
 </mapper>

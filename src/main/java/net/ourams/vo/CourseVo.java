@@ -3,7 +3,7 @@ package net.ourams.vo;
 public class CourseVo {
 	private int courseNo;
 	private String courseName;
-	private int lecRoonNo;
+	private int lecRoomNo;
 	private String startDate;
 	private String endDate;
 	private int teacherNo;
@@ -13,11 +13,11 @@ public class CourseVo {
 	public CourseVo() {
 	}
 
-	public CourseVo(int courseNo, String courseName, int lecRoonNo, String startDate, String endDate, int teacherNo,
+	public CourseVo(int courseNo, String courseName, int lecRoomNo, String startDate, String endDate, int teacherNo,
 			int managerNo, String coursePath) {
 		this.courseNo = courseNo;
 		this.courseName = courseName;
-		this.lecRoonNo = lecRoonNo;
+		this.lecRoomNo = lecRoomNo;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.teacherNo = teacherNo;
@@ -41,12 +41,12 @@ public class CourseVo {
 		this.courseName = courseName;
 	}
 
-	public int getLecRoonNo() {
-		return lecRoonNo;
+	public int getLecRoomNo() {
+		return lecRoomNo;
 	}
 
-	public void setLecRoonNo(int lecRoonNo) {
-		this.lecRoonNo = lecRoonNo;
+	public void setLecRoomNo(int lecRoomNo) {
+		this.lecRoomNo = lecRoomNo;
 	}
 
 	public String getStartDate() {
@@ -91,7 +91,7 @@ public class CourseVo {
 
 	@Override
 	public String toString() {
-		return "CourseVo [courseNo=" + courseNo + ", courseName=" + courseName + ", lecRoonNo=" + lecRoonNo
+		return "CourseVo [courseNo=" + courseNo + ", courseName=" + courseName + ", lecRoomNo=" + lecRoomNo
 				+ ", startDate=" + startDate + ", endDate=" + endDate + ", teacherNo=" + teacherNo + ", managerNo="
 				+ managerNo + ", coursePath=" + coursePath + "]";
 	}

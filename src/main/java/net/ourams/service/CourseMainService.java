@@ -9,15 +9,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import net.ourams.dao.CourseMainDao;
+import net.ourams.dao.UserDao;
 import net.ourams.vo.ChapterVo;
 import net.ourams.vo.CourseVo;
 import net.ourams.vo.SubjectVo;
+import net.ourams.vo.UserVo;
 
 @Service
 public class CourseMainService {
 
 	@Autowired
 	private CourseMainDao courseMDao;
+	
+	@Autowired
+	private UserDao userDao;
 
 	/* @Auth 에서 CoursePath를 체크해주는 서비스 */
 	public boolean checkService(String coursePath, int userNo) {
@@ -130,6 +135,40 @@ public class CourseMainService {
 
 	public int deleteChapter(int chapterNo) {
 		return courseMDao.deleteChapterByChapterNo(chapterNo);
+	}
+
+	public Map<String, Object> getUserList(String coursePath) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		CourseVo courseVo = courseMDao.selectCourseVoByCoursePath(coursePath);
+		
+		int courseNo = courseVo.getCourseNo();
+		int teacherNo = courseVo.getTeacherNo();
+		
+		UserVo teacherUserVo = userDao.selecteUser(teacherNo);
+		
+		map.put("userList", courseMDao.selectUserListByCourseNo(courseNo));
+		map.put("teacherUserVo", teacherUserVo);
+		
+		return map;
+	}
+
+	public boolean seatDecide(String coursePath, int seatNo, UserVo authUser) {
+
+		int courseNo = courseMDao.selectCourseVoByCoursePath(coursePath).getCourseNo();
+		int userNo = authUser.getUserNo();
+		
+		int result = courseMDao.updateCourseRegist(userNo, courseNo, seatNo);
+		
+		if(result == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public CourseVo getCourseVo(String coursePath) {
+		return courseMDao.selectCourseVoByCoursePath(coursePath);
 	}
 
 	

@@ -12,6 +12,7 @@ import net.ourams.vo.ChapterVo;
 import net.ourams.vo.CourseRegistVo;
 import net.ourams.vo.CourseVo;
 import net.ourams.vo.SubjectVo;
+import net.ourams.vo.UserVo;
 
 @Repository
 public class CourseMainDao {
@@ -92,4 +93,19 @@ public class CourseMainDao {
 	public int deleteChapterByChapterNo(int chapterNo) {
 		return sqlSession.delete("course.deleteChapterByChapterNo", chapterNo);
 	}
+
+	public List<UserVo> selectUserListByCourseNo(int courseNo) {
+		return sqlSession.selectList("course.selectUserListByCourseNo", courseNo);
+	}
+
+	public int updateCourseRegist(int userNo, int courseNo, int seatNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userNo", userNo);
+		map.put("courseNo", courseNo);
+		map.put("seatNo", seatNo);
+		
+		return sqlSession.update("course.updateCourseregistByMap", map);
+	}
+
+	
 }

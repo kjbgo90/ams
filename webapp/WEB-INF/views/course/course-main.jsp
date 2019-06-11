@@ -127,11 +127,11 @@
 							<div class="panel">
 								<div class="panel-heading">
 									<br>
-									<h3 class="panel-title text-2x">자바 웹개발자 고급과정</h3>
+									<h3 class="panel-title text-2x">${courseVo.courseName }</h3>
 								</div>
 								<hr>
-								<h3 class="panel-title text-right">R42 강의실</h3>
-								<c:import url="/WEB-INF/views/course/lectureroom/r42.jsp"></c:import>
+								<h3 class="panel-title text-right">R${courseVo.lecRoomNo } 강의실</h3>
+								<c:import url="/WEB-INF/views/course/lectureroom/r${courseVo.lecRoomNo }.jsp"></c:import>
 								<br> 
 								<input type="text" id="message" /> 
 								<input type="button" id="sendBtn" value="전송" />
@@ -267,6 +267,35 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="modal fade" id="seat-decide-modal" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<form method="post" action="${pageContext.request.contextPath }/${coursePath }/main/seatdecide">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<i class="pci-cross pci-circle"></i>
+						</button>
+						<h4 class="modal-title">자리 정하기</h4>
+					</div>
+		
+					<div class="modal-body text-center">
+						<div class="form-group">
+							<label class="control-labe"><span id="modal-show-seat-no"></span>자리에 앉으시겠습니까?</label>
+						</div>
+						<input type="hidden" name="seatNo" id="seatNo-decide-select">
+					</div>
+		
+					<div class="modal-footer">
+						<div class="row">
+							<button class="btn btn-default" type="submit">확인</button>
+							<button data-dismiss="modal" class="btn btn-default" type="button">취소</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 	<!--===================================================-->
 	<!--End Default Bootstrap Modal-->
 
@@ -309,24 +338,59 @@
 
 <script type="text/javascript">
 	let webSock;
+	var lecroom = "#room" + "${courseVo.lecRoomNo}";
 
 	$(document).ready(function() {
 		// 웹소켓을 지정한 url로 연결한다.
 		let sock = new SockJS("<c:url value="/echo"/>");
-		var userNo = '${authUser.userNo}';
-		var userName = '${authUser.userName}';
-		console.log(userNo + " : " + userName);
-		
-		callNoty('warning', 'pli-exclamation', 'center-center', 2000, '좌석을 선택해주세요', '빈 좌석 중에서 앉을 좌석을 골라주세요.', 'zoomIn', 'fadeOut', 'btnx');
+		var authUserNo = '${authUser.userNo}';
 		webSock = sock;
 
 		webSock.onmessage = onMessage;
 		webSock.onclose = onClose;
 		
+		$.ajax({
+			url : "${pageContext.request.contextPath }/${coursePath}/main/loadpage",		
+			type : "post",
+			success : function(map){
+				console.log(map.teacherUserVo);
+				userRender(map.teacherUserVo, 'Teacher');
+				
+				for(var i = 0; i < map.userList.length; i++){
+					if(map.userList[i].seatNo != 0){
+						userRender(map.userList[i], map.userList[i].seatNo);
+					}
+				}				
+				
+				for(var i = 0; i < map.userList.length; i++){
+					if(map.userList[i].userNo == authUserNo && map.userList[i].seatNo == 0){
+						console.log(map.userList[i]);
+						callNoty('warning', 'pli-exclamation', 'center-center', 2000, '좌석을 선택해주세요', '빈 좌석 중에서 앉을 좌석을 골라주세요.', 'zoomIn', 'fadeOut', 'btnx');
+					}
+					
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		}); 
+		
 	});	
 
-	$("#container").on("click", "#btnx", function(){
+	$("#container").on("click", "#btnx", function() {
 		console.log("x버튼 누름");
+	});
+	
+	$(lecroom).on("click", ".seatSel", function() {
+		var $this = $(this);
+		var seatNo = $this.data("seatno");
+		console.log(seatNo);
+		
+		$("#modal-show-seat-no").empty();
+		$("#modal-show-seat-no").html(seatNo + "번 ");
+		
+		$("#seatNo-decide-select").val("");
+		$("#seatNo-decide-select").val(seatNo);
 	});
 	
 	$("#sendBtn").on("click", function() {
@@ -371,6 +435,7 @@
 		notyContent += "	<p class='alert-message'>" + message + "</p>";
 		notyContent += "</div>";
 		
+		
 		$.niftyNoty({
 			type : color,
 			container : 'floating',
@@ -382,6 +447,16 @@
             html : notyContent,
 			timer : time
 		});
+	}
+	
+	function userRender(userVo, seat){
+		var seatTarget = "#seat" + seat;
+		
+		$(seatTarget).empty();
+		
+		var str = "<img class='img-circle img-sm btn btn-circle pad-no seatImg' data-target='#profile-modal' data-toggle='modal' data-userno='" + userVo.userNo + "' src='${pageContext.request.contextPath }" + userVo.logoPath + "'>";
+		
+		$(seatTarget).append(str);
 	}
 </script>
 
