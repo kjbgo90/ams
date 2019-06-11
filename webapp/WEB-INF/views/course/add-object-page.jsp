@@ -177,12 +177,14 @@
 											<thead>
 												<tr class="text-2x row">
 													<th class="col-sm-9">
-														<span id="subjectTitle" data-subno="${SCListMap.subjectVo.subjectNo }">${SCListMap.subjectVo.subjectTitle } </span> 
-														<i class="btn btn-circle pad-no pli-gear subjectEdit"
-															data-end="${SCListMap.subjectVo.endDate}" data-start="${SCListMap.subjectVo.startDate}" data-sno="${SCListMap.subjectVo.scheduleNo}" 
-															data-title="${SCListMap.subjectVo.subjectTitle}" data-no="${SCListMap.subjectVo.subjectNo}" data-memo="${SCListMap.subjectVo.scheduleMemo}" 
-															data-target="#subject-edit-modal" data-toggle="modal">
-														</i>
+														<c:if test="${SCListMap.subjectVo ne null }">
+															<span id="subjectTitle" data-subno="${SCListMap.subjectVo.subjectNo }">${SCListMap.subjectVo.subjectTitle } </span> 
+															<i class="btn btn-circle pad-no pli-gear subjectEdit"
+																data-end="${SCListMap.subjectVo.endDate}" data-start="${SCListMap.subjectVo.startDate}" data-sno="${SCListMap.subjectVo.scheduleNo}" 
+																data-title="${SCListMap.subjectVo.subjectTitle}" data-no="${SCListMap.subjectVo.subjectNo}" data-memo="${SCListMap.subjectVo.scheduleMemo}" 
+																data-target="#subject-edit-modal" data-toggle="modal">
+															</i>
+														</c:if>
 													</th>
 													<th class="col-sm-3">관리</th>
 												</tr>

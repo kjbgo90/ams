@@ -317,7 +317,7 @@
 		var userName = '${authUser.userName}';
 		console.log(userNo + " : " + userName);
 		
-		callNoty('warning', 'pli-exclamation', 'top-rignt', 0, '좌석을 선택해주세요', '빈 좌석 중에서 앉을 좌석을 골라주세요.', 'zoomIn', 'fadeOut');
+		callNoty('warning', 'pli-exclamation', 'center-center', 2000, '좌석을 선택해주세요', '빈 좌석 중에서 앉을 좌석을 골라주세요.', 'zoomIn', 'fadeOut', 'btnx');
 		webSock = sock;
 
 		webSock.onmessage = onMessage;
@@ -325,8 +325,8 @@
 		
 	});	
 
-	$("#btnok").on("click", function(){
-		console.log("버튼 누름");
+	$("#container").on("click", "#btnx", function(){
+		console.log("x버튼 누름");
 	});
 	
 	$("#sendBtn").on("click", function() {
@@ -357,9 +357,10 @@
 		$("#data").append("연결 끊김");
 	}
 	
-	function callNoty(color, icon, position, time, title, message, animationIn, animationOut){
+	function callNoty(color, icon, position, time, title, message, animationIn, animationOut, btnId){
 		var notyContent = "";
 		
+		notyContent += "<button class='close' type='button' id='" + btnId + "'><i class='pci-cross pci-circle'></i></button>";
 		notyContent += "<div class='media-left'>";
 		notyContent += "	<span class='icon-wrap icon-wrap-xs icon-circle alert-icon'>";
 		notyContent += "		<i class='" + icon + " icon-2x'></i>";
@@ -369,7 +370,6 @@
 		notyContent += "	<h4 class='alert-title'>" + title + "</h4>";
 		notyContent += "	<p class='alert-message'>" + message + "</p>";
 		notyContent += "</div>";
-		notyContent += "<button class='btn btn-mint pull-right' id='btnok'>확인</button>";
 		
 		$.niftyNoty({
 			type : color,
@@ -379,7 +379,6 @@
                 animationIn : animationIn,
                 animationOut: animationOut
             },
-            closeBtn : true,
             html : notyContent,
 			timer : time
 		});

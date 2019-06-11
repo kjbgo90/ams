@@ -46,27 +46,32 @@ public class CourseMainService {
 	public Map<String, Object> getSubjectListAndLastChapterList(String coursePath) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-
+		
 		// 코스패스를 이용해서 해당 코스의 코스 넘버를 가지고옴
 		int courseNo = courseMDao.selectCourseVoByCoursePath(coursePath).getCourseNo();
-
+		int LastSubjectNo = 0;
 		// 코스넘버를 가지고 해당코스에 등록된 subject 리스트를 가져옴
 		List<SubjectVo> subjectList = courseMDao.selectSubjectList(courseNo);
-		System.out.println(subjectList.toString());
+		System.out.println("subject리스트 : " + subjectList.toString());
 
 		// 마지막 코스의 넘버를 가지고 해당 챕터의 리스트를 가져옴
-		int LastSubjectNo = subjectList.get(0).getSubjectNo();
-		SubjectVo subjectVo = courseMDao.selectSubjectBySubjectNo(LastSubjectNo);
+		if(subjectList.size() != 0) {
+			LastSubjectNo = subjectList.get(0).getSubjectNo();
+		}
 		
 		System.out.println(LastSubjectNo);
+		
+		SubjectVo subjectVo = courseMDao.selectSubjectBySubjectNo(LastSubjectNo);
+			
 		List<ChapterVo> chapterList = courseMDao.selectChapterList(LastSubjectNo);
 		System.out.println(chapterList.toString());
-
+	
 		map.put("subjectList", subjectList);
 		map.put("subjectVo", subjectVo);
 		map.put("chapterList", chapterList);
-		
+			
 		return map;
+		
 	}
 
 	/* chapterNo를 가지고 해당 chapter를 수정하고 수정된 정보를 보내주는 서비스 */
