@@ -163,91 +163,18 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>10</td>
-											<td><a class="btn-link" href="#">궁금합니다8</a>&nbsp;&nbsp;
-												<div class="label label-warning">N</div></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td>java</td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-											<td><i class="demo-pli-speech-bubble-5 icon-fw"></i>2</td>
-										</tr>
-										<tr>
-											<td>9</td>
-											<td><a class="btn-link" href="#">궁금합니다8</a>&nbsp;&nbsp;
-												<div class="label label-warning">N</div></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td>oracle</td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-											<td><i class="demo-pli-speech-bubble-5 icon-fw"></i>3</td>
-										</tr>
-										<tr>
-											<td>8</td>
-											<td><a class="btn-link" href="#">궁금합니다8</a>&nbsp;&nbsp;
-												<div class="label label-warning">N</div></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td>oracle</td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-											<td><i class="demo-pli-speech-bubble-5 icon-fw"></i>3</td>
-										</tr>
-										<tr>
-											<td>7</td>
-											<td><a class="btn-link" href="#">궁금합니다8</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td>git</td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-											<td><i class="demo-pli-speech-bubble-5 icon-fw"></i>3</td>
-										</tr>
-										<tr>
-											<td>6</td>
-											<td><a class="btn-link" href="#">궁금합니다8</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td>spring</td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-											<td><i class="demo-pli-speech-bubble-5 icon-fw"></i>3</td>
-										</tr>
-										<tr>
-											<td>5</td>
-											<td><a class="btn-link" href="#">궁금합니다8</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td>oracle</td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-											<td><i class="demo-pli-speech-bubble-5 icon-fw"></i>3</td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td><a class="btn-link" href="#">궁금합니다8</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td>spring</td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-											<td><i class="demo-pli-speech-bubble-5 icon-fw"></i>3</td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td><a class="btn-link" href="#">궁금합니다8</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td>부트스트랩</td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-											<td><i class="demo-pli-speech-bubble-5 icon-fw"></i>3</td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td><a class="btn-link" href="#">궁금합니다8</a></td>
-											<td><span class="text-muted">Oct 22, 2014</span></td>
-											<td>프로젝트</td>
-											<td><a href="#" class="btn-link">강보은</a></td>
-											<td>22</td>
-											<td><i class="demo-pli-speech-bubble-5 icon-fw"></i>2</td>
-										</tr>
-
+										<c:forEach items="${qnaList}" var="PostVo">
+											<tr>
+												<td>${PostVo.rownum}</td>
+												<td><a class="btn-link" href="${pageContext.request.contextPath }/${coursePath}/qna/read/${PostVo.postNo}">${PostVo.postTitle}</a>&nbsp;&nbsp;
+													<div class="label label-warning">N</div></td>
+												<td><span class="text-muted">${PostVo.regDate}</span></td>
+												<td>${PostVo.subjectTitle}</td>
+												<td><a href="#" class="btn-link">${PostVo.userName}</a></td>
+												<td>${PostVo.hit}</td>
+												<td><i class="demo-pli-speech-bubble-5 icon-fw"></i>2</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -267,7 +194,7 @@
 									</ul>
 								</div>
 								<div class="col-sm-5 text-right">
-									<button class="btn btn-primary btn-sm" style="margin-right: 50px;">글작성</button>
+									<button class="btn btn-primary btn-sm" style="margin-right: 50px;" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/qna/writeform' ">글작성</button>
 								</div>
 							</div>
 						</div>

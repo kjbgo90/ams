@@ -122,8 +122,8 @@
 
 								
 								 <div class="mar-btm pad-btm bord-btm">
-					                        <h1 class="page-header" style="">
-					                            <span class="label label-normal label-info">자바고급과정</span>궁금합니다
+					                        <h1 class="page-header" style="font-size: 25px;">
+					                            <span class="label label-normal label-info">자바프로그래밍</span>${PostVo.postTitle}
 					                        </h1>
 					                    </div>
 					
@@ -131,18 +131,18 @@
 									 <div class="col-sm-7 toolbar-left">
 										<div class="media pad-ver">
 											<div class="media-left">
-												<a href="#" class="box-inline"><img alt="Profile Picture" class="img-md img-circle" src="${pageContext.request.contextPath }/assets/img/profile-photos/9.png"></a>
+												<a href="#" class="box-inline"><img alt="Profile Picture" class="img-md img-circle" src="${pageContext.request.contextPath }/${WriterVo.logoPath }"></a>
 											</div>
 											<div class="media-body pad-top">
-												<a href="#" class="box-inline"> <span class="text-lg text-semibold text-main">Lucy Moon</span>
-													<p class="text-sm">gerins2314@gmail.com</p>
+												<a href="#" class="box-inline"> <span class="text-lg text-semibold text-main">${WriterVo.userName}</span>
+													<p class="text-sm">${WriterVo.email}</p>
 												</a>
 											</div>
 										</div>
 									</div>
 									<div class="col-sm-5 toolbar-right">
 					                            <!--Details Information-->
-					                            <p class="mar-no"><small class="text-muted">Monday 12, May 2016</small></p>
+					                            <p class="mar-no"><small class="text-muted">${PostVo.regDate}</small></p>
 					                            <a href="#">
 					                                <strong>Holiday.zip</strong>
 					                                <i class="demo-psi-paperclip icon-lg icon-fw"></i>
@@ -156,8 +156,7 @@
 
 								<div class="blog-body">
 									<blockquote>
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-										<small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+										<p>${PostVo.postContent}</p>
 									</blockquote>
 									
 								</div>
@@ -173,7 +172,7 @@
 								<div class="pad-ver text-reft class col-sm-4">
 
 									<!--Send button-->
-									<button id="mail-send-btn" type="button" class="btn btn-primary">
+									<button id="mail-send-btn" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/qna/list' ">
 										<i class=" icon-xs icon-fw"></i>목록
 									</button>
 

@@ -130,10 +130,10 @@
 									<div class="col-sm-7 toolbar-left">
 										<div class="media pad-ver">
 											<div class="media-left">
-												<a href="#" class="box-inline"><img alt="Profile Picture" class="img-md img-circle" src="${pageContext.request.contextPath }/assets/img/profile-photos/9.png"></a>
+												<a href="#" class="box-inline"><img alt="Profile Picture" class="img-md img-circle" src="${pageContext.request.contextPath }/${WriterVo.logoPath }"></a>
 											</div>
 											<div class="media-body pad-top">
-												<a href="#" class="box-inline"> <span class="text-lg text-semibold text-main">${PostVo.userName}</span>
+												<a href="#" class="box-inline"> <span class="text-lg text-semibold text-main">${WriterVo.userName}</span>
 													<p class="text-sm">${WriterVo.email}</p>
 												</a>
 											</div>
@@ -170,7 +170,7 @@
 								<div class="pad-ver text-reft class col-sm-4">
 
 									<!--Send button-->
-									<button id="mail-send-btn" type="button" class="btn btn-primary">
+									<button id="mail-send-btn" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/notice/list' ">
 										<i class=" icon-xs icon-fw"></i>목록
 									</button>
 
@@ -179,12 +179,12 @@
 								<div class="pad-ver text-right col-sm-8">
 
 									<!--Save draft button-->
-									<button id="mail-send-btn" type="button" class="btn btn-default">
+									<button id="mail-send-btn" type="button" class="btn btn-default" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/notice/modifyform?postNo=${PostVo.postNo}' ">
 										<i class=" icon-xs icon-fw"></i>수정
 									</button>
 
 									<!--Discard button-->
-									<button id="mail-send-btn" type="button" class="btn btn-primary">
+									<button id="mail-send-btn" type="button" class="btn btn-primary"  onclick="location.href='${pageContext.request.contextPath }/${coursePath}/notice/delete?postNo=${PostVo.postNo}' ">
 										<i class=" icon-xs icon-fw"></i>삭제
 									</button>
 								</div>
@@ -223,6 +223,7 @@
 
 							<!-- Comments -->
 							<!--===================================================-->
+							<%-- <c:forEach items="" var="">
 							<div class="comments media-block">
 								<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png"></a>
 								<div class="media-body">
@@ -234,43 +235,7 @@
 
 								</div>
 							</div>
-							<!--===================================================-->
-							<!-- End Comments -->
-
-
-
-							<!-- Comments -->
-							<!--===================================================-->
-							<div class="comments media-block">
-								<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/assets/img/profile-photos/5.png"></a>
-								<div class="media-body">
-									<div class="comment-header">
-										<a href="#" class="media-heading box-inline text-main text-bold">Donald Brown</a>
-										<p class="text-muted text-sm">Today 08:25AM - 12/009/2017</p>
-									</div>
-									<p>Maecenas ultrices, justo vel imperdiet gravida, urna ligula hendrerit nibh, ac cursus nibh sapien in purus.</p>
-
-								</div>
-							</div>
-							<!--===================================================-->
-							<!-- End Comments -->
-
-
-
-
-							<!-- Comments -->
-							<!--===================================================-->
-							<div class="comments media-block">
-								<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/assets/img/profile-photos/8.png"></a>
-								<div class="media-body">
-									<div class="comment-header">
-										<a href="#" class="media-heading box-inline text-main text-bold">Kathryn Obrien</a>
-										<p class="text-muted text-sm">Today 05:17AM - 12/09/2017</p>
-									</div>
-									<p>${PostVo.postTitle}</p>
-
-								</div>
-							</div>
+							</c:forEach> --%>
 							<!--===================================================-->
 							<!-- End Comments -->
 

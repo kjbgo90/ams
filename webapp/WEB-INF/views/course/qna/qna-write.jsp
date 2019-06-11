@@ -128,132 +128,132 @@
 				<!--Page content-->
 				<!--===================================================-->
 				<div id="page-content">
+					<form role="form" class="form-horizontal" method="post" action="${pageContext.request.contextPath }/${coursePath}/qna/write">
+						<!-- Contact Toolbar -->
+						<!---------------------------------->
 
-					<!-- Contact Toolbar -->
-					<!---------------------------------->
+						<!---------------------------------->
 
-					<!---------------------------------->
+						<div class="fixed-fluid">
+							<div class="fixed-sm-300 pull-sm-right">
+								<div class="panel">
+									<div class="panel-body">
 
-					<div class="fixed-fluid">
-						<div class="fixed-sm-300 pull-sm-right">
-							<div class="panel">
-								<div class="panel-body">
-
-									<p class="text-main text-bold text-uppercase">파일 업로드</p>
-									<!--Dropzonejs-->
-									<!--===================================================-->
-									<div class="dropzone-container">
-										<form id="demo-dropzone" action="#">
-											<div class="dz-default dz-message">
-												<div class="dz-icon">
-													<i class="demo-pli-upload-to-cloud icon-5x"></i>
+										<p class="text-main text-bold text-uppercase">파일 업로드</p>
+										<!--Dropzonejs-->
+										<!--===================================================-->
+										<div class="dropzone-container">
+											<form id="demo-dropzone" action="#">
+												<div class="dz-default dz-message">
+													<div class="dz-icon">
+														<i class="demo-pli-upload-to-cloud icon-5x"></i>
+													</div>
+													<div>
+														<span class="dz-text">Drop files to upload</span>
+														<p class="text-sm text-muted">or click to pick manually</p>
+													</div>
 												</div>
-												<div>
-													<span class="dz-text">Drop files to upload</span>
-													<p class="text-sm text-muted">or click to pick manually</p>
+												<div class="fallback">
+													<form action="#" method="post" enctype="multipart/form-data">
+														<input name="file" type="file" multiple>
+													</form>
+												</div>
+											</form>
+										</div>
+										<!--===================================================-->
+										<!-- End Dropzonejs -->
+
+
+										<hr>
+
+										<p class="text-main text-bold text-uppercase">공개 여부</p>
+										<div class="form-horizontal">
+											<div class="form-group">
+												<label class="col-sm-5 control-label text-left" for="demo-hor-inputpass">visualbility</label>
+												<div class="col-sm-7">
+													<div class="select">
+														<select>
+															<option value="push">public</option>
+															<option value="push">private</option>
+														</select>
+													</div>
 												</div>
 											</div>
-											<div class="fallback">
-												<form action="#" method="post" enctype="multipart/form-data">
-													<input name="file" type="file" multiple>
-												</form>
+											<br>
+
+											<div class="form-group">
+
+												<!--Bootstrap Datepicker : Inline-->
+												<!--===================================================-->
+												<p class="text-main text-bold text-uppercase" style="margin-left: 10px;">
+													공지등록 &nbsp; <input id="demo-checkbox-addons" class="magic-checkbox" type="checkbox"> <label for="demo-checkbox-addons"></label>
+												</p>
+												<div id="demo-dp-inline">
+													<div></div>
+												</div>
+												<!--===================================================-->
+
+
+											</div>
+											<div class="form-group text-left" style="padding-left: 20px;">
+												<!--Save draft button-->
+												<button id="mail-save-btn" type="button" class="btn btn-default">
+													<i class="-unread icon-lg icon-fw"></i> 취소
+												</button>
+
+
+												<!--Discard button-->
+												<button id="discard-btn" type="submit" class="btn btn-primary">
+													<i class="icon-lg icon-fw"></i> 작성
+												</button>
+											</div>
+										</div>
+										<hr>
+
+
+									</div>
+								</div>
+
+
+							</div>
+							<div class="fluid">
+
+								<div class="panel">
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-sm-4">
+												<div class="media pad-ver">
+													<div class="media-left">
+														<a href="#" class="box-inline"><img alt="Profile Picture" class="img-md img-circle" src="${pageContext.request.contextPath }/assets/img/profile-photos/9.png"></a>
+													</div>
+													<div class="media-body pad-top">
+														<a href="#" class="box-inline"> <span class="text-lg text-semibold text-main">Lucy Moon</span>
+															<p class="text-sm">gerins2314@gmail.com</p>
+														</a>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+										<br>
+										<!--Dropdowns Addons-->
+										<!--===================================================-->
+										<form class="form-horizontal">
+											<div class="input-group mar-btm">
+												<div class="input-group-btn dropdown"></div>
+												<div class="input-group-btn dropdown"></div>
+
+												<!-- <input type="text" placeholder="이름" class="form-control"> -->
 											</div>
 										</form>
-									</div>
-									<!--===================================================-->
-									<!-- End Dropzonejs -->
+										<!--===================================================-->
+										<!--End Dropdowns Addons-->
 
 
-									<hr>
-
-									<p class="text-main text-bold text-uppercase">공개 여부</p>
-									<div class="form-horizontal">
-										<div class="form-group">
-											<label class="col-sm-5 control-label text-left" for="demo-hor-inputpass">visualbility</label>
-											<div class="col-sm-7">
-												<div class="select">
-													<select>
-														<option value="push">public</option>
-														<option value="push">private</option>
-													</select>
-												</div>
-											</div>
-										</div>
-										<br>
-
-										<div class="form-group">
-
-											<!--Bootstrap Datepicker : Inline-->
-											<!--===================================================-->
-											<p class="text-main text-bold text-uppercase" style="margin-left: 10px;">
-												공지등록 &nbsp; <input id="demo-checkbox-addons" class="magic-checkbox" type="checkbox"> <label for="demo-checkbox-addons"></label>
-											</p>
-											<div id="demo-dp-inline">
-												<div></div>
-											</div>
-											<!--===================================================-->
-
-
-										</div>
-										<div class="form-group text-left" style="padding-left: 20px;">
-											<!--Save draft button-->
-											<button id="mail-save-btn" type="button" class="btn btn-default">
-												<i class="-unread icon-lg icon-fw"></i> 취소
-											</button>
-
-
-											<!--Discard button-->
-											<button id="mail-discard-btn" type="button" class="btn btn-primary">
-												<i class="icon-lg icon-fw"></i> 작성
-											</button>
-										</div>
-									</div>
-									<hr>
-
-
-								</div>
-							</div>
-
-
-						</div>
-						<div class="fluid">
-
-							<div class="panel">
-								<div class="panel-body">
-									<div class="row">
-										<div class="col-sm-4">
-											<div class="media pad-ver">
-												<div class="media-left">
-													<a href="#" class="box-inline"><img alt="Profile Picture" class="img-md img-circle" src="${pageContext.request.contextPath }/assets/img/profile-photos/9.png"></a>
-												</div>
-												<div class="media-body pad-top">
-													<a href="#" class="box-inline"> <span class="text-lg text-semibold text-main">Lucy Moon</span>
-														<p class="text-sm">gerins2314@gmail.com</p>
-													</a>
-												</div>
-											</div>
-										</div>
-									</div>
-
-
-									<br>
-									<!--Dropdowns Addons-->
-									<!--===================================================-->
-									<form class="form-horizontal">
-										<div class="input-group mar-btm">
-											<div class="input-group-btn dropdown"></div>
-											<div class="input-group-btn dropdown"></div>
-
-											<!-- <input type="text" placeholder="이름" class="form-control"> -->
-										</div>
-									</form>
-									<!--===================================================-->
-									<!--End Dropdowns Addons-->
-
-									<form role="form" class="form-horizontal">
 
 										<div class="input-group mar-btm">
-											<div class="input-group-btn dropdown">
+											<div class="input-group-btn dropdown category-first">
 												<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
 													카테고리 <i class="dropdown-caret"></i>
 												</button>
@@ -265,7 +265,7 @@
 													<li><a href="#">Separated link</a></li>
 												</ul>
 											</div>
-											<div class="input-group-btn dropdown">
+											<div class="input-group-btn dropdown category-second">
 												<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
 													chapter <i class="dropdown-caret"></i>
 												</button>
@@ -279,15 +279,15 @@
 											</div>
 											<input type="text" placeholder="제목" class="form-control">
 										</div>
-									</form>
 
-									<div id="demo-summernote"></div>
+
+										<div id="demo-summernote"></div>
+									</div>
+
 								</div>
-
 							</div>
 						</div>
-					</div>
-
+					</form>
 				</div>
 				<!--===================================================-->
 				<!--End page content-->
@@ -443,6 +443,54 @@
 			});
 
 		});
+
+		/* 질의응답 저장 */
+		$("#discard-btn")
+				.on(
+						"click",
+						function() {
+							event.preventDefault();
+							console.log("저장");
+							var markstr = $('#demo-summernote').summernote(
+									'code');
+							/* var cate = $('#cate').val(); */
+							var postTitle = $('#postTitle').val();
+							var selectedDate = $('#select-day').val();
+							var postResult = {};
+							postResult["postTitle"] = postTitle;
+							/* postResult["category"] = cate; */
+							postResult["postContent"] = markstr;
+							postResult["regDate"] = selectedDate;
+
+							console.log(markstr);
+							/* console.log(cate); */
+							console.log(postTitle);
+							console.log(selectedDate);
+							//카테고리, 제목, 본문,  달력날자
+							console.log("${pageContext.request.contextPath}/${coursePath}/qna/write");
+
+							$.ajax({	url : "${pageContext.request.contextPath}/${coursePath}/qna/write", //컨트롤주소
+										type : "post",
+										//dataType: "json",          // ajax 통신으로 받는 타입
+										contentType : 'application/json; charset=utf-8',
+										data : JSON.stringify(postResult),
+
+										//여기부턴 받을때
+										//dataType : "json",
+										success : function(coursePath) {
+											console.log("성공 ");
+											window.location = "http://localhost:8088/ams/"
+													+ coursePath + "/qna/list";
+
+										},
+										error : function(jqXHR, textStatus,
+												errorThrown) {
+											console.log("에러" + textStatus
+													+ " : " + errorThrown);
+										}
+									});
+
+						});
 	</script>
 
 </body>

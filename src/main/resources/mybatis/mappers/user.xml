@@ -34,7 +34,8 @@
 			SELECT userNo,
 				   email,
 				   userName,
-				   userType
+				   userType,
+				   logoPath
 			FROM users
 			where userNo = #{userNo}
 		]]>

@@ -150,7 +150,7 @@ rhd
 										<!--Dropzonejs-->
 										<!--===================================================-->
 										<div class="dropzone-container">
-											<form id="demo-dropzone" action="#">
+											<div id="dropzone">
 												<div class="dz-default dz-message">
 													<div class="dz-icon">
 														<i class="demo-pli-upload-to-cloud icon-5x"></i>
@@ -161,11 +161,9 @@ rhd
 													</div>
 												</div>
 												<div class="fallback">
-													<form action="#" method="post" enctype="multipart/form-data">
-														<input name="file" type="file" multiple>
-													</form>
+													<input name="file" type="file" multiple>
 												</div>
-											</form>
+											</div>
 										</div>
 										<!--===================================================-->
 										<!-- End Dropzonejs -->
@@ -204,7 +202,7 @@ rhd
 
 
 											<!--Discard button-->
-											<button id="mail-discard-btn" type="submit" class="btn btn-primary">
+											<button id="discard-btn" type="submit" class="btn btn-primary">
 												<i class="icon-lg icon-fw"></i> 작성
 											</button>
 										</div>
@@ -258,8 +256,8 @@ rhd
 											<div class="row">
 												<div class="col-sm-6">
 													<select class="selectpicker " id="cate">
-														<option>[공지]</option>
-														<option>[긴급]</option>
+														<option>공지</option>
+														<option>긴급</option>
 													</select>
 													<!-- <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
 													카테고리 <i class="dropdown-caret"></i>
@@ -288,7 +286,7 @@ rhd
 
 
 											<!--Discard button-->
-											<button id="mail-discard-btn" type="submit" class="btn btn-primary">
+											<button id="discard-btn" type="submit" class="btn btn-primary">
 												<i class="icon-lg icon-fw"></i> 작성
 											</button>
 										</div> --%>
@@ -393,24 +391,17 @@ rhd
 	<!-- blog-edit 에서 스크립트 페이지 찾기 sample page 안에 있음  -->
 	<script>
 		$(document).on('nifty.ready', function() {
-
-			// DROPZONE.JS
-			// =================================================================
-			// Require Dropzone
-			// http://www.dropzonejs.com/
-			// =================================================================
-			$('#demo-dropzone').dropzone({
-				//url: '/file/post',
-				//autoProcessQueue: false,
-				addRemoveLinks : true,
-				maxFiles : 1,
-				init : function() {
-					var myDropzone = this;
-					myDropzone.on('maxfilesexceeded', function(file) {
-						"Webapp/WEB-INF/views/blog/admin/blog-admin-write.jsp"
-						this.removeAllFiles();
-						this.addFile(file);
-					});
+			
+			var fileList = [];
+			
+			$("#dropzone").dropzone({
+				url : "${pageContext.request.contextPath }/{coursePath}/notice/upload",
+				success : function(file, fileVo) {
+					console.log(file);
+					console.log(fileVo);
+					fileList.push(fileVo);
+					console.log(fileList);
+					console.log(fileList.length);
 				}
 			});
 
@@ -466,49 +457,53 @@ rhd
 		});
 
 		//공지사항 저장 버튼 클릭할때
-		$("#mail-discard-btn").on("click", function() {
-			event.preventDefault();
-			console.log("저장");
-			var markstr = $('#demo-summernote').summernote('code');
-			var cate = $('#cate').val();
-			var postTitle = $('#postTitle').val();
-			var selectedDate = $('#select-day').val();
-			var postResult = {};
-			postResult["postTitle"] = postTitle;
-			postResult["category"] = cate;
-			postResult["postContent"] = markstr;
-			postResult["regDate"] = selectedDate;
+		$("#discard-btn")
+				.on(
+						"click",
+						function() {
+							event.preventDefault();
+							console.log("저장");
+							var markstr = $('#demo-summernote').summernote(
+									'code');
+							var cate = $('#cate').val();
+							var postTitle = $('#postTitle').val();
+							var selectedDate = $('#select-day').val();
+							var postResult = {};
+							postResult["postTitle"] = postTitle;
+							postResult["category"] = cate;
+							postResult["postContent"] = markstr;
+							postResult["regDate"] = selectedDate;
 
-			console.log(markstr);
-			console.log(cate);
-			console.log(postTitle);
-			console.log(selectedDate);
-			//카테고리, 제목, 본문,  달력날자
-			console.log("${pageContext.request.contextPath}/${coursePath}/notice/write");
-			
-			$.ajax({
-				url : "${pageContext.request.contextPath}/${coursePath}/notice/write", //컨트롤주소
-				type : "post",
-				//dataType: "json",          // ajax 통신으로 받는 타입
-			    contentType : 'application/json; charset=utf-8',
-                data : JSON.stringify(postResult),  
+							console.log(markstr);
+							console.log(cate);
+							console.log(postTitle);
+							console.log(selectedDate);
+							//카테고리, 제목, 본문,  달력날자
+							console.log("${pageContext.request.contextPath}/${coursePath}/notice/write");
 
-				//여기부턴 받을때
-				//dataType : "json",
-				success : function(coursePath) {
-				  console.log("성공 ");
-				  window.location="http://localhost:8088/ams/" + coursePath + "/notice/list";
-				
-					
-					
-				},
-		        error:function(jqXHR, textStatus, errorThrown) {
-		          console.log("에러" + textStatus + " : " + errorThrown);
-		        }
-			}); 
-			
+							$.ajax({	url : "${pageContext.request.contextPath}/${coursePath}/notice/write", //컨트롤주소
+										type : "post",
+										//dataType: "json",          // ajax 통신으로 받는 타입
+										contentType : 'application/json; charset=utf-8',
+										data : JSON.stringify(postResult),
 
-		});
+										//여기부턴 받을때
+										//dataType : "json",
+										success : function(coursePath) {
+											console.log("성공 ");
+											window.location = "http://localhost:8088/ams/"
+													+ coursePath
+													+ "/notice/list";
+
+										},
+										error : function(jqXHR, textStatus,
+												errorThrown) {
+											console.log("에러" + textStatus
+													+ " : " + errorThrown);
+										}
+									});
+
+						});
 	</script>
 
 </body>

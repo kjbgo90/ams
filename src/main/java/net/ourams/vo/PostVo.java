@@ -14,12 +14,17 @@ public class PostVo {
 	private int hit;
 	private String category;
 	private String userName;
+	private int rownum;
+	private int subjectNo; 
+	private String subjectTitle;
 
 	public PostVo() {
 	}
 
 	public PostVo(int postNo, int postType, int userNo, int fileNo, int courseNo, String regDate, int communityNo,
-			int scheduleNo, String postTitle, String postContent, int hit, String category, String userName) {
+			int scheduleNo, String postTitle, String postContent, int hit, String category, String userName, int rownum,
+			int subjectNo, String subjectTitle) {
+		super();
 		this.postNo = postNo;
 		this.postType = postType;
 		this.userNo = userNo;
@@ -33,7 +38,21 @@ public class PostVo {
 		this.hit = hit;
 		this.category = category;
 		this.userName = userName;
+		this.rownum = rownum;
+		this.subjectNo = subjectNo;
+		this.subjectTitle = subjectTitle;
 	}
+
+
+	public int getRownum() {
+		return rownum;
+	}
+
+
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
+
 
 	public int getPostNo() {
 		return postNo;
@@ -139,12 +158,39 @@ public class PostVo {
 		this.userName = userName;
 	}
 
+	
+
+	public int getSubjectNo() {
+		return subjectNo;
+	}
+
+
+
+
+
+	public void setSubjectNo(int subjectNo) {
+		this.subjectNo = subjectNo;
+	}
+
+
+
+
+	public String getSubjectTitle() {
+		return subjectTitle;
+	}
+
+	public void setSubjectTitle(String subjectTitle) {
+		this.subjectTitle = subjectTitle;
+	}
+
 	@Override
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", postType=" + postType + ", userNo=" + userNo + ", fileNo=" + fileNo
 				+ ", courseNo=" + courseNo + ", regDate=" + regDate + ", communityNo=" + communityNo + ", scheduleNo="
 				+ scheduleNo + ", postTitle=" + postTitle + ", postContent=" + postContent + ", hit=" + hit
-				+ ", category=" + category + ", userName=" + userName + "]";
+				+ ", category=" + category + ", userName=" + userName + ", rownum=" + rownum + ", subjectNo="
+				+ subjectNo + ", subjectTitle=" + subjectTitle + "]";
 	}
+
 
 }

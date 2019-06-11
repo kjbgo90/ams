@@ -161,8 +161,8 @@
 									<tbody>
 									<c:forEach items="${noticeList}" var="PostVo" >
 										<tr>
-											<td>${PostVo.postNo}</td>
-											<td><a class="btn-link" href="${pageContext.request.contextPath }/${coursePath}/notice/read/${PostVo.postNo}">[공지]${PostVo.postTitle}</a></td>
+											<td>${PostVo.rownum}</td>
+											<td><a class="btn-link" href="${pageContext.request.contextPath }/${coursePath}/notice/read/${PostVo.postNo}">[${PostVo.category}]${PostVo.postTitle}</a></td>
 											<td><span class="text-muted">${PostVo.regDate}</span></td>
 											<td><a href="${pageContext.request.contextPath }/${coursePath}/notice/read/${PostVo.postNo}" class="btn-link">${PostVo.userName}</a></td>
 											<td>${PostVo.hit}</td>

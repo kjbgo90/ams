@@ -12,23 +12,40 @@ import net.ourams.vo.PostVo;
 public class PostService {
 	
 	@Autowired
-	private PostDao PostDao;
+	private PostDao postDao;
 	
 	public List<PostVo> getList(int courseNo){
-		List<PostVo> noticeList = PostDao.selectAll(courseNo); 
+		List<PostVo> noticeList = postDao.selectAll(courseNo); 
 		System.out.println(noticeList.toString());
 		return noticeList;
 	}
 
 	public PostVo read(int postNo) {
 		//PostDao.updateHit(postNo);
-		PostVo PostVo = PostDao.selectNotice(postNo);
+		postDao.updateHit(postNo);
+		PostVo PostVo = postDao.selectNotice(postNo);
 		return PostVo;
 	}
 
 	public int write(PostVo postVo) {
-		System.out.println("#########################");
 		System.out.println(postVo.toString());
-		return PostDao.insert(postVo);
+		return postDao.insert(postVo);
 	}
+
+	public int delete(PostVo postVo) {
+		System.out.println(postVo.toString());
+		return postDao.delete(postVo);
+	}
+
+	public PostVo modifyform(int postNo) {
+		PostVo postVo = postDao.selectNotice(postNo);
+		return postVo;
+	}
+
+	public int modify(PostVo postVo) {
+		return postDao.update(postVo); 
+	}
+
+	
+
 }

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="qna">
+	<select id="selectAll" parameterType="int" resultType="PostVo">
+		<![CDATA[
+		SELECT 	rownum,
+        postNo,
+        postType,
+        userNo,
+        fileNo,
+        courseNo,
+        regDate,
+        communityNo,
+        scheduleNo,
+        postTitle,
+        postContent,
+        hit,
+        category,
+        userName,
+        subjectNo,
+        subjectTitle 
+FROM (SELECT     postNo,
+                postType,
+                userNo,
+                fileNo,
+                pu.courseNo courseNo,
+                regDate,
+                communityNo,
+                pu.scheduleNo scheduleNo,
+                postTitle,
+                postContent,
+                hit,
+                category,
+                userName,
+                pu.subjectNo,
+                subjectTitle
+        FROM(
+                SELECT  postNo,
+                       postType,
+                        p.userNo userNo,
+                        fileNo,
+                        courseNo,
+                        TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,
+                       communityNo,
+                        scheduleNo,
+                        postTitle,
+                        postContent,
+                        hit,
+                        category,
+                        userName,
+                        subjectNo
+                FROM post p join users u
+                ON p.userNo = u.userNo) pu
+                left join subject s on pu.subjectno = s.subjectno 
+                where postType = 2
+                order by postNo desc)
+                            
+				order by rownum desc
+		]]>
+	</select>
+	
+		
+	<!-- 조회수 증가 -->
+	<update id="updateHit" parameterType="int">
+		<![CDATA[
+			update post 
+			set hit = hit+1
+			where postNo = #{postNo}
+		]]>
+	</update>
+	
+		
+	<!-- no로 글조회 -->
+	<select id="selectNotice" parameterType="int" resultType="PostVo">
+		<![CDATA[
+			select postNo, 
+				   postTitle, 
+				   postContent,
+				   hit, 
+				   TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,  
+				   userNo,
+				   category
+		     from post 
+		     where postNo = #{postNo}
+		]]>
+	</select>
+	
+	
+	<!-- 글저장 -->
+	<insert id="insert" parameterType="PostVo">
+		<![CDATA[
+			insert into post(postNo,postType,userNo,courseNo,regDate,postTitle,postContent,hit)
+			values (
+					seq_post_no.nextval,
+					2,
+					#{userNo},	
+					1,	
+					sysdate,		 
+					#{postTitle}, 					
+					#{postContent}, 
+					#{hit}
+					
+			) 
+		]]>
+	</insert>
+	
+
+</mapper>
