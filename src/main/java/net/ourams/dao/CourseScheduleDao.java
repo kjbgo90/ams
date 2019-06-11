@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import net.ourams.vo.AssignmentVo;
 import net.ourams.vo.CourseScheduleVo;
-import net.ourams.vo.CourseVo;
 import net.ourams.vo.PostVo;
+import net.ourams.vo.SubjectVo;
 
 @Repository
 public class CourseScheduleDao {
@@ -17,8 +17,8 @@ public class CourseScheduleDao {
 	@Autowired 
 	private SqlSession sqlSession;
 	
-	public List<CourseScheduleVo> loadSchedule(){
-		return sqlSession.selectList("courseSchedule.loadSchedule");
+	public List<CourseScheduleVo> loadSchedule(int courseNo){
+		return sqlSession.selectList("courseSchedule.loadSchedule", courseNo);
 	}
 	
 	public int registerSchedule(CourseScheduleVo vo){
@@ -37,14 +37,29 @@ public class CourseScheduleDao {
 		return sqlSession.selectOne("courseSchedule.findAssignment", vo);
 	}
 	
-	public CourseVo findCourse(CourseScheduleVo vo) {
+	public SubjectVo findCourse(CourseScheduleVo vo) {
 		return sqlSession.selectOne("courseSchedule.findCourse", vo);
 	}
 	
 	/*-----------------------------------------find one column-----------------------------------------*/
 	
+	//find courseNo
+	public int findCourseNo(String coursePath) {
+		return sqlSession.selectOne("courseSchedule.findCourseNo", coursePath);
+	}
+	
+	//find courseName
 	public String findCourseName(int courseNo) {
 		return sqlSession.selectOne("courseSchedule.findCourseName", courseNo);
+	}
+	
+	//find lecture roomNo
+	public int findLecRoomNo(int courseNo) {
+		return sqlSession.selectOne("courseSchedule.findLecRoomNo", courseNo);
+	}
+	
+	public String findCoursePath(int courseNo) {
+		return sqlSession.selectOne("courseSchedule.findCoursePath", courseNo);
 	}
 	
 	public String findSubjectTitle(int subjectNo) {
@@ -57,5 +72,9 @@ public class CourseScheduleDao {
 	
 	public String findTeacherName(int teacherNo) {
 		return sqlSession.selectOne("courseSchedule.findTeacherName", teacherNo);
+	}
+	
+	public String findWriter(int userNo) {
+		return sqlSession.selectOne("courseSchedule.findWriter", userNo);
 	}
 }

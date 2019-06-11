@@ -12,6 +12,7 @@ import net.ourams.dao.CourseScheduleDao;
 import net.ourams.dao.UserDao;
 import net.ourams.vo.AssignmentVo;
 import net.ourams.vo.CourseScheduleVo;
+import net.ourams.vo.SubjectVo;
 import net.ourams.vo.UserVo;
 
 @Service
@@ -23,7 +24,7 @@ public class CourseScheduleService {
 		@Autowired
 		private CourseScheduleDao csDao;
 		
-		//search user
+		//search particular user
 		public List<UserVo> searchUsers(String name){
 			List<UserVo> result = new ArrayList<UserVo>();
 			List<UserVo> list = userDao.searchUser();
@@ -43,9 +44,17 @@ public class CourseScheduleService {
 			return result;			
 		}
 		
+		//search all user
+		public List<UserVo> searchUserAll() {
+			List<UserVo> list = userDao.searchUser();
+
+			return list;
+		}
+		
 		//load all schedule
-		public List<CourseScheduleVo> loadSchedule(){
-			return csDao.loadSchedule();
+		public List<CourseScheduleVo> loadSchedule(String coursePath){
+			int courseNo = csDao.findCourseNo(coursePath);
+			return csDao.loadSchedule(courseNo);
 		}
 		
 		//register new schedule
@@ -70,6 +79,7 @@ public class CourseScheduleService {
 		public Map<String, Object> selectedSchedule(CourseScheduleVo vo) {
 			CourseScheduleVo temp = csDao.selectedSchedule(vo);
 			AssignmentVo aTemp;
+			SubjectVo sTemp;
 			
 			Map<String, Object> result = new HashMap<String, Object>();
 			
@@ -87,6 +97,8 @@ public class CourseScheduleService {
 				aTemp = csDao.findAssignment(temp);
 				result.put("title", aTemp.getAssignmentTitle());
 				result.put("content", aTemp.getAssignmentContent());
+				result.put("startDate", temp.getStartDate());
+				result.put("endDate", temp.getEndDate());
 				courseName = csDao.findCourseName(aTemp.getCourseNo());
 				result.put("courseName", courseName);
 				subjectTitle = csDao.findSubjectTitle(aTemp.getSubjectNo());
@@ -99,12 +111,56 @@ public class CourseScheduleService {
 				System.out.println(result);
 				return result;
 			}else if(temp.getEventColor().equals("dark")) {
+				String courseName;
+				int courseRoomNo;
+				String teacherName;
+				String coursePath;
+			
 				result.put("category", "코스 일정");
-				csDao.findCourse(temp);
+					
+				sTemp = csDao.findCourse(temp);
+				System.out.println(sTemp.toString());
+				result.put("title", sTemp.getSubjectTitle());
+				result.put("content", temp.getScheduleMemo());
+				result.put("startDate", temp.getStartDate());
+				result.put("endDate", temp.getEndDate());
+				courseName = csDao.findCourseName(sTemp.getCourseNo());
+				result.put("courseName", courseName);
+				courseRoomNo = csDao.findLecRoomNo(sTemp.getCourseNo());
+				result.put("roomNo", courseRoomNo);
+				teacherName = csDao.findTeacherName(sTemp.getUserNo());
+				result.put("teacherName", teacherName);
+				coursePath = csDao.findCoursePath(sTemp.getCourseNo());
+				result.put("coursePath", coursePath);
+				
+				System.out.println(result);
+				return result;
 			}else if(temp.getEventColor().equals("purple")) {
+				String userName;
+				String courseName;
+				
 				result.put("category", "팀별 일정");
+				result.put("title", temp.getScheduleName());
+				result.put("content", temp.getScheduleMemo());
+				result.put("startDate", temp.getStartDate());
+				result.put("endDate", temp.getEndDate());
+				courseName = csDao.findCourseName(temp.getCourseNo());
+				result.put("courseName", courseName);
+				userName = csDao.findWriter(temp.getUserNo());
+				result.put("writer", userName);
 			}else {
+				String userName;
+				String courseName; 
+				
 				result.put("category", "개인 일정");
+				result.put("title", temp.getScheduleName());
+				result.put("content", temp.getScheduleMemo());
+				result.put("startDate", temp.getStartDate());
+				result.put("endDate", temp.getEndDate());
+				courseName = csDao.findCourseName(temp.getCourseNo());
+				result.put("courseName", courseName);
+				userName = csDao.findWriter(temp.getUserNo());
+				result.put("writer", userName);
 			}
 			
 			return result;

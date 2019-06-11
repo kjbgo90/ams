@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="courseSchedule">
-	<select id="loadSchedule" resultType="CourseScheduleVo">
+	<select id="loadSchedule" parameterType="int" resultType="CourseScheduleVo">
 		<![CDATA[
 			SELECT scheduleNo,
 				   scheduleName,
@@ -13,6 +13,7 @@
 				   courseNo,
 				   userNo
 			FROM schedule
+			WHERE courseNo = #{courseNo}
 		]]>
 	</select>
 	
@@ -68,9 +69,44 @@
 		]]>
 	</select>
 	
+	<select id="findCourse" parameterType="CourseScheduleVo" resultType="SubjectVo">
+		<![CDATA[
+			SELECT s.subjectTitle as subjectTitle,
+				   s.courseNo as courseNo,
+				   c.teacherNo as userNo
+			FROM subject s join course c
+			ON s.courseNo = c.courseNo
+			WHERE scheduleNo = #{scheduleNo}  
+		]]>
+	</select> 
+	
+	<select id="findCourseNo" parameterType="String" resultType="int">
+		<![CDATA[
+			SELECT courseNo
+			FROM course
+			WHERE coursePath = #{coursePath}
+		]]>
+	</select>
+	
 	<select id="findCourseName" parameterType="int" resultType="String">
 		<![CDATA[
 			SELECT courseName
+			FROM course
+			WHERE courseNo = #{courseNo}
+		]]>
+	</select>
+	
+	<select id="findLecRoomNo" parameterType="int" resultType="int">
+		<![CDATA[
+			SELECT lecRoomNo
+			FROM course
+			WHERE courseNo = #{courseNo}
+		]]>
+	</select>
+	
+	<select id="findCoursePath" parameterType="int" resultType="String">
+		<![CDATA[
+			SELECT coursePath
 			FROM course
 			WHERE courseNo = #{courseNo}
 		]]>
@@ -93,6 +129,14 @@
 	</select>
 	
 	<select id="findTeacherName" parameterType="int" resultType="String">
+		<![CDATA[
+			SELECT userName
+			FROM users
+			WHERE userNo = #{userNo}
+		]]>
+	</select>
+	
+	<select id="findWriter" parameterType="int" resultType="String">
 		<![CDATA[
 			SELECT userName
 			FROM users
