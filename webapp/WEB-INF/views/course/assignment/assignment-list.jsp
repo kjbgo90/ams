@@ -96,7 +96,7 @@
 								<c:forEach items="${subjectList}" var="subjectVo">
 									<div class="panel">
 										<!--Accordion title-->
-										<div class="panel-heading" style="padding-left: 15px;">
+										<div class="panel-heading panel-outside" style="padding-left: 15px;">
 											<h4 class="panel-title text-main text-bold text-lg text-uppercase">
 												<a data-parent="#accordion" data-toggle="collapse" href="#collapse${subjectVo.subjectNo}">${subjectVo.subjectTitle}</a>
 											</h4>
@@ -120,7 +120,7 @@
 																			<a id="submitPage" data-assignno="${assignmentVo.assignmentNo}" data-parent="#accordionInside${subjectVo.subjectNo}" data-toggle="collapse" href="#collapse${subjectVo.subjectNo}Inside${assignmentVo.assignmentNo}">${assignmentVo.assignmentTitle}</a>
 																		</h4>
 																	</div>
-																	<div class="panel-collapse collapse" id="collapse${subjectVo.subjectNo}Inside${assignmentVo.assignmentNo}">
+																	<div class="panel-collapse collapse panel-inside" id="collapse${subjectVo.subjectNo}Inside${assignmentVo.assignmentNo}">
 																		<div class="panel-body">
 																			<div class="row">
 																				<div class="col-sm-7 toolbar-left">
@@ -142,13 +142,28 @@
 																				</div>
 																			</div>
 																			<p>${assignmentVo.assignmentContent}</p>
+																			<c:if test="${authUser.userNo eq assignmentVo.teacherNo }">
+																				<span><a href="${pageContext.request.contextPath }/${coursePath}/assignment/assignmentDelete?assignmentNo=${assignmentVo.assignmentNo}"><button class="btn btn-sm pull-right">삭제</button></a></span>
+																				<span><a href="${pageContext.request.contextPath }/${coursePath}/assignment/assignmentModifyForm?assignmentNo=${assignmentVo.assignmentNo}"><button class="btn btn-sm pull-right">수정</button></a></span>
+																			</c:if>
 																		</div>
 																		<!--List group-->
 																		<ul class="list-group">
 																			<li class="list-group-item">Chapter : ${assignmentVo.chapterContent}</li>
 																			<li class="list-group-item">제출기한 : ${assignmentVo.endDate} 까지</li>
-																			<li class="list-group-item">첨부파일 : <a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-																			</a></li>
+																			
+																			<c:choose>
+																				<c:when test="${empty assignmentVo.fileList }">
+																					<li class="list-group-item">첨부파일 : <strong>없음</strong></li>
+																				</c:when>
+																				<c:otherwise>
+																					<li class="list-group-item">첨부파일 : 
+																					<c:forEach items="${assignmentVo.fileList }" var="fileVo">
+																						<a href="${fileVo.filepath }"> <strong>${fileVo.fileName}</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i></a>
+																					</c:forEach>
+																					</li>
+																				</c:otherwise>
+																			</c:choose>
 																		</ul>
 																	</div>
 																</div>
@@ -167,70 +182,66 @@
 						</div>
 						<div class="panel col-xs-5">
 							<p class="pad-hor mar-top text-main text-bold text-lg text-uppercase" id="assignTitle" style="padding-left: 3px;">${lastAssignment.assignmentTitle }</p>
-							<div class="panel panel-bordered-primary">
-								<div class="panel-body">
-									<form id="submitForm" method="post">
-										<input type="hidden" name="userNo" value="${authUser.userNo }"> <input type="hidden" name="assignmentNo" value="${lastAssignment.assignmentNo }">
-										<div class="row">
-											<div class="col-sm-7 toolbar-left">
-												<!--Sender Information-->
-												<div class="media">
-													<span class="media-left"> <img src="${pageContext.request.contextPath }${authUser.logoPath }" class="img-circle img-sm" alt="Profile Picture">
-													</span>
-													<div class="media-body text-left">
-														<div class="text-bold">${authUser.userName }</div>
-														<small class="text-muted">${authUser.email }</small>
-													</div>
-												</div>
-											</div>
-											<div class="col-sm-5 toolbar-right"></div>
-										</div>
-										<div>
-											<p>comment</p>
-											<textarea form="submitForm" name="submitContent" style="width: 100%; height: 80px;"></textarea>
-										</div>
-										<div>
-											<div class="bord-top pad-ver">
-												<!-- The fileinput-button span is used to style the file input field as button -->
-												<span class="btn btn-primary fileinput-button dz-clickable"> <i class="fa fa-plus"></i> <span>파일 첨부</span>
-												</span>
-												<div id="dz-previews">
-													<div id="dz-template" class="pad-top bord-top">
-														<div class="media">
-															<div class="media-body">
-																<!--This is used as the file preview template-->
-																<div class="media-block">
-																	<div class="media-left">
-																		<img class="dz-img" data-dz-thumbnail>
-																	</div>
-																	<div class="media-body">
-																		<p class="text-main text-bold mar-no text-overflow" data-dz-name></p>
-																		<span class="dz-error text-danger text-sm" data-dz-errormessage></span>
-																		<p class="text-sm" data-dz-size></p>
-																		<div id="dz-total-progress" style="opacity: 0">
-																			<div class="progress progress-xs active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-																				<div class="progress-bar progress-bar-success" style="width: 0%;" data-dz-uploadprogress></div>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-															<div class="media-right">
-																<button data-dz-remove class="btn btn-xs btn-danger dz-cancel">
-																	<i class="demo-psi-trash"></i>
-																</button>
-															</div>
+							<input type="hidden" name="userNo" value="${authUser.userNo }">
+							<c:if test="${authUser.userType eq 2}">
+								<div class="panel panel-bordered-primary">
+									<div class="panel-body">
+										<form id="submitForm" method="post">
+											<input type="hidden" name="assignmentNo" value="${lastAssignment.assignmentNo }">
+											<div class="row">
+												<div class="col-sm-7 toolbar-left">
+													<!--Sender Information-->
+													<div class="media">
+														<span class="media-left"> <img src="${pageContext.request.contextPath }${authUser.logoPath }" class="img-circle img-sm" alt="Profile Picture">
+														</span>
+														<div class="media-body text-left">
+															<div class="text-bold">${authUser.userName }</div>
+															<small class="text-muted">${authUser.email }</small>
 														</div>
 													</div>
 												</div>
+												<div class="col-sm-5 toolbar-right"></div>
 											</div>
 											<div>
-												<input id="btnSubmit" type="button" class="btn btn-lg btn-danger pull-right" value="제출하기">
+												<p>comment</p>
+												<textarea form="submitForm" name="submitContent" style="width: 100%; height: 80px;"></textarea>
 											</div>
-										</div>
-									</form>
+											<div>
+												<div class="bord-top pad-ver">
+													<!--Dropzonejs-->
+													<!--===================================================-->
+													<div class="dropzone-container">
+														<div id="dropzone">
+															<div class="dz-default dz-message">
+																<div class="dz-icon">
+																	<i class="demo-pli-upload-to-cloud icon-5x"></i>
+																</div>
+																<div>
+																	<span class="dz-text">Drop files to upload</span>
+																	<p class="text-sm text-muted">or click to pick manually</p>
+																</div>
+															</div>
+															<!--
+															<div class="fallback">
+																<form action="#" method="post" enctype="multipart/form-data">
+																	<input name="file" type="file" multiple>
+																</form>
+															</div>
+															-->
+														</div>
+													</div>
+													<!--===================================================-->
+													<!-- End Dropzonejs -->
+													
+												</div>
+												<div>
+													<input id="btnSubmit" type="button" class="btn btn-lg btn-danger pull-right" value="제출하기">
+												</div>
+											</div>
+										</form>
+									</div>
 								</div>
-							</div>
+							</c:if>
 							<div class="panel panel-bordered-primary" style="padding-left:10px; padding-right:10px;">
 								<div class="panel-heading">
 									<h3 class="panel-title text-bold" style="padding-left:7px">제출자 명단</h3>
@@ -250,53 +261,21 @@
 											<tr id="tr${submitVo.submitNo }">
 												<td>${submitVo.userName}</td>
 												<c:choose>
-													<c:when test="${submitVo.fileName eq null}">
-														<td>없음</td>
+													<c:when test="${empty submitVo.fileList}">
+														<td><strong>없음</strong></td>
 													</c:when>
 													<c:otherwise>
-														<td><a href="#"> <strong>${submitVo.fileName}</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-														</a></td>
+														<td>
+														<c:forEach items="${submitVo.fileList}" var="fileVo">
+															<a href="${fileVo.filepath}"> <strong>${fileVo.fileName}</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i></a>
+														</c:forEach>
+														</td>
 													</c:otherwise>
 												</c:choose>
 												<td>${submitVo.submitDate}</td>
-												<td><button id="submit-detail" class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal" data-submitno="${submitList.get(i).submitNo}">click</button></td>
+												<td><button id="submit-detail" class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal" data-submitno="${submitVo.submitNo}">click</button></td>
 											</tr>
 										</c:forEach>
-										<tr>
-											<td>김재봉</td>
-											<td><a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-											</a></td>
-											<td>2019-06-02</td>
-											<td><button class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal">click</button></td>
-										</tr>
-										<tr>
-											<td>이종현</td>
-											<td><a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-											</a></td>
-											<td>2019-06-02</td>
-											<td><button class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal">click</button></td>
-										</tr>
-										<tr>
-											<td>강보은</td>
-											<td><a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-											</a></td>
-											<td>2019-06-02</td>
-											<td><button class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal">click</button></td>
-										</tr>
-										<tr>
-											<td>구민수</td>
-											<td><a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-											</a></td>
-											<td>2019-06-02</td>
-											<td><button class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal">click</button></td>
-										</tr>
-										<tr>
-											<td>이건창</td>
-											<td><a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-											</a></td>
-											<td>2019-06-02</td>
-											<td><button class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal">click</button></td>
-										</tr>
 									</tbody>
 								</table>
 							</div>
@@ -340,7 +319,10 @@
 						</div>
 						<div id="modal-submitContent">과제 제출했습니다. 이렇게 저렇게 실행하세요.</div>
 					</div>
-					<ul class="list-group" id="modal-fileName">
+					<ul class="list-group" id="modal-fileList" style="margin-bottom:0px;">
+					</ul>
+					<input id="scoreCheck" name="scoreCheck" value="false" type="hidden">
+					<ul class="list-group" id="scoreForm" style="margin-top:0px; margin-bottom:0px;">
 					</ul>
 					<!--Modal footer-->
 					<div class="modal-footer">
@@ -385,15 +367,38 @@
 	<script src="${pageContext.request.contextPath }/assets/js/nifty.js"></script>
 	<!--Dropzone [ OPTIONAL ]-->
 	<script src="${pageContext.request.contextPath }/assets/plugins/dropzone/dropzone.js"></script>
-	<!--Form File Upload [ SAMPLE ]-->
-	<script src="${pageContext.request.contextPath }/assets/js/form-file-upload.js"></script>
+
 	<script type="text/javascript">
 	
+		var fileList = [];
+		var assignTeacherNo = ${lastAssignment.teacherNo};
+		
+		// DROPZONE.JS
+		// =================================================================
+		// Require Dropzone
+		// http://www.dropzonejs.com/
+		// =================================================================
+		//파일 업로드 드래그 앤 드롭할때 
+		$("#dropzone").dropzone({
+			url: "${pageContext.request.contextPath }/${coursePath}/assignment/upload" , 
+			success : function(file, fileVo){
+						console.log(file);
+						console.log(fileVo);
+						fileList.push(fileVo);
+						console.log(fileList);
+						console.log(fileList.length);
+				    }
+		});
+		
 		$(document).ready(function() {
 			$("#collapse${lastAssignment.subjectNo}").attr("class","panel-collapse collapse in");
-			$("#collapse${lastAssignment.subjectNo}Inside${lastAssignment.assignmentNo}").attr("class","panel-collapse collapse in");
+			$("#collapse${lastAssignment.subjectNo}Inside${lastAssignment.assignmentNo}").attr("class","panel-collapse collapse in panel-inside");
 		});
-	
+		
+		$("#accordion").on("click", ".panel-outside", function(){
+			$(".panel-inside").attr("class","panel-collapse collapse panel-inside");
+		});
+		
 		$("#accordion").on("click", "#submitPage", function(){
 			console.log("제출함 보여주기");
 			var $this = $(this);
@@ -416,6 +421,7 @@
 						
 						$("#assignTitle").text(response.data.assignmentVo.assignmentTitle);
 						$("[name=assignmentNo]").val(response.data.assignmentVo.assignmentNo);
+						assignTeacherNo = response.data.assignmentVo.teacherNo;
 						
 						$("#tbody").empty();
 						console.log(response.data.submitList);
@@ -436,31 +442,45 @@
 		
 		$("#btnSubmit").on("click",function() {
 			console.log("submit");
-			var form = new FormData(document
-					.getElementById("submitForm"));
-			console.log(form);
+			
+			var userNo = $("[name=userNo]").val();
+			var assignmentNo = $("[name=assignmentNo]").val();
+			var submitContent = $("[name=submitContent]").val();
+			
+			var submitVo = {};
+			submitVo["userNo"] = userNo;
+			submitVo["assignmentNo"] = assignmentNo;
+			submitVo["submitContent"] = submitContent;
+			
+			if(fileList.length != 0){
+				submitVo["fileList"] = fileList;
+			}
 
+			console.log(submitVo);
+			
 			$.ajax({
 
 				url : "${pageContext.request.contextPath }/${coursePath}/assignment/submit",
 				type : "post",
-				contentType : false,
-				processData : false,
-				data : form,
+				contentType : "application/json",
+				data : JSON.stringify(submitVo),
 
 				dataType : "json",
-
 				success : function(response) {
 					/*성공시 처리해야될 코드 작성*/
 					if (response.result === "success") {
 						console.log("제출 성공");
+						console.log(response.data);
 						
 						renderList(response.data, "up");
 					} else {
 						console.log("제출 실패");
+						alert("이미 제출한 과제가 있습니다.");
 					}
 					
 					$("[name=submitContent]").val('');
+					resetDropzone();
+					fileList = [];
 				},
 				error : function(XHR, status, error) {
 					console.error(status + " : "
@@ -479,8 +499,9 @@
 			$("#modal-email").empty();
 			$("#modal-submitDate").empty();
 			$("#modal-submitContent").empty();
-			$("#modal-fileName").empty();
+			$("#modal-fileList").empty();
 			$("#btnDelete").data("submitno", "");
+			$("#scoreForm").empty();
 			
 			$.ajax({
 
@@ -501,11 +522,38 @@
 						$("#modal-submitDate").append(response.data.submitDate);
 						$("#modal-submitContent").append(response.data.submitContent);
 						$("#btnDelete").data("submitno", response.data.submitNo);
-						if(response.data.fileName != null){
-							$("#modal-fileName").append("<li class='list-group-item'>첨부파일 : <a href='#'> <strong>" + response.data.fileName + "</strong> <i class='demo-psi-paperclip icon-lg icon-fw'></i></a></li>");
+						$("#scoreCheck").val(response.data.scoreCheck);
+						if(response.data.fileList.length != 0){
+							var str = "";
+							str += "	<li class='list-group-item'>첨부파일 : ";
+							for(var i=0; i<response.data.fileList.length; i++){
+								str += "<a href=" + response.data.fileList[i].filepath + "> <strong>" + response.data.fileList[i].fileName + "</strong> <i class='demo-psi-paperclip icon-lg icon-fw'></i></a>";
+							}
+							str += "	</li>";
+							$("#modal-fileList").append(str);
 						} else {
-							$("#modal-fileName").append("<li class='list-group-item'>첨부파일 : <a href='#'> <strong>없음</strong></a></li>");
+							$("#modal-fileList").append("<li class='list-group-item'>첨부파일 : <strong>없음</strong></li>");
 						}
+						
+						if(assignTeacherNo == $("[name=userNo]").val()){
+							var str = "";
+							if(response.data.scoreCheck == 'true'){
+								str += "<li class='list-group-item'>점수 : <input style='width:40px; text-align:right;' name='score' type='text' value=" + response.data.score + "> / 100 ";
+							} else {
+								str += "<li class='list-group-item'>점수 : <input style='width:40px; text-align:right;' name='score' type='text' placeholder='0' value=''> / 100 ";
+							}
+							str += "&nbsp<button id='saveScore' data-submitno=" + response.data.submitNo + " class='btn btn-sm btn-primary'>저장</button></li>";
+							$("#scoreForm").append(str);
+						} else if($("[name=userNo]").val() == response.data.userNo){
+							var str = "";
+							if(response.data.scoreCheck == 'true'){
+								str += "<li class='list-group-item'>점수 : " + response.data.score + " / 100 </li>";
+							} else {
+								str += "<li class='list-group-item'>점수 : 미입력 </li>";
+							}
+							$("#scoreForm").append(str);
+						}
+						
 						$("#demo-default-modal").modal();
 					} else {
 						console.log("모달 띄우기 실패");
@@ -550,15 +598,70 @@
 			});
 		});
 		
+		$("#scoreForm").on("click", "#saveScore", function(){
+			console.log("점수 저장");
+			
+			var $this = $(this);
+			var submitNo = $this.data("submitno");
+			console.log($("[name=score]").val());
+			if($("[name=score]").val() > 100 || $("[name=score]").val() < 0){
+				alert("점수는 0~100점까지 입력할 수 있습니다.");
+			} else {
+				score = $("[name=score]").val();
+				
+				var submitVo = {};
+				submitVo["submitNo"] = submitNo;
+				submitVo["score"] = score;
+				
+				console.log(submitVo);
+				
+				$.ajax({
+
+					url : "${pageContext.request.contextPath }/${coursePath}/assignment/saveScore",
+					type : "post",
+					contentType : "application/json",
+					data : JSON.stringify(submitVo),
+
+					dataType : "json",
+					success : function(response) {
+						/*성공시 처리해야될 코드 작성*/
+						if (response.result === "success") {
+							console.log("점수 입력 성공");
+							alert("점수가 입력되었습니다.");
+							
+							$("#scoreForm").empty();
+							
+							var str = "";
+							str += "<li class='list-group-item'>점수 : <input style='width:40px; text-align:right;' name='score' type='text' value=" + response.data.score + "> / 100 ";
+							str += "&nbsp<button id='saveScore' data-submitno=" + response.data.submitNo + " class='btn btn-sm btn-primary'>저장</button></li>";
+							$("#scoreForm").append(str);
+							
+						} else {
+							console.log("점수 입력 실패");
+							alert("점수를 다시 확인해 주세요.");
+						}
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
+			} 
+			
+		});
+		
 		function renderList(submitVo, updown) {
 			console.log("renderList 실행");
 			var str = "";
 			str += "<tr id='tr" + submitVo.submitNo + "'>";
 			str += "	<td>" + submitVo.userName + "</td>";
-			if(submitVo.fileName == null){
-				str += "	<td>없음</td>";
+			if(submitVo.fileList.length == 0){
+				str += "	<td><strong>없음<strong></td>";
 			} else {
-				str += "	<td><a href='#'> <strong>" + submitVo.fileName + "</strong> <i class='demo-psi-paperclip icon-lg icon-fw'></i></a></td>";
+				str += "	<td>";
+				for(var i=0; i<submitVo.fileList.length; i++){
+					str += "<a href=" + submitVo.fileList[i].filepath + "> <strong>" + submitVo.fileList[i].fileName + "</strong> <i class='demo-psi-paperclip icon-lg icon-fw'></i></a>";
+				}
+				str += "	</td>";
 			}
 			str += "	<td>" + submitVo.submitDate + "</td>";
 			str += "	<td><button id='submit-detail' class='btn btn-sm btn-primary' data-target='#demo-default-modal' data-toggle='modal' data-submitno=" + submitVo.submitNo + ">click</button></td>";
@@ -571,6 +674,24 @@
 			} else {
 				console.log("updown 오류");
 			}
+		}
+		
+		function resetDropzone(){
+			var str = "";
+			$("#dropzone").empty();
+			$("#dropzone").attr("class", "dz-clickable");
+			
+			str += "<div class='dz-default dz-message'>";
+			str += "	<div class='dz-icon'>";
+			str += "		<i class='demo-pli-upload-to-cloud icon-5x'></i>";
+			str += "	</div>";
+			str += "    <div>";
+			str += "		<span class='dz-text'>Drop files to upload</span>";
+			str += "		<p class='text-sm text-muted'>or click to pick manually</p>";
+			str += "	</div>";
+			str += "</div>";
+
+			$("#dropzone").append(str);
 		}
 	</script>
 </body>

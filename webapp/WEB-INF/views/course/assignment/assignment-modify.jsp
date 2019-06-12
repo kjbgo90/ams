@@ -111,17 +111,18 @@
 					<!-- Contact Toolbar -->
 					<!---------------------------------->
 					<!---------------------------------->
-					<form role="form" class="form-horizontal" method="post" action="${pageContext.request.contextPath }/${coursePath}/assignment/enrollAssignment">
-						<input id="courseNo" type="hidden" name="courseNo" value="${courseVo.courseNo}">
+					<div>
+						<input id="assignmentNo" type="hidden" name="assignmentNo" value="${assignmentVo.assignmentNo}">
+						<input id="courseNo" type="hidden" name="courseNo" value="${assignmentVo.courseNo}">
 						<input id="teacherNo" type="hidden" name="teacherNo" value="${authUser.userNo}">
 						<div class="col-xs-9">
 							<div class="form-group" style="margin-left:1px; margin-right:1px;">
-								<input id="assignmentTitle" type="text" placeholder="과제 제목을 입력하세요" class="form-control input-lg" autofocus>
+								<input id="assignmentTitle" type="text" class="form-control input-lg" value="${assignmentVo.assignmentTitle }" autofocus>
 							</div>
 							<div class="panel">
 								<div class="panel-body">
 									<div id="demo-summernote">
-										
+										${assignmentVo.assignmentContent}
 									</div>
 								</div>
 							</div>
@@ -160,8 +161,11 @@
 										<div class="">
 											<div class="select">
 												<select id="selectSubject">
+													<option value="${assignmentVo.subjectNo}">${assignmentVo.subjectTitle }</option>
 													<c:forEach items="${subjectList}" var="subjectVo">
-														<option value="${subjectVo.subjectNo}">${subjectVo.subjectTitle}</option>
+														<c:if test="${assignmentVo.subjectNo ne subjectVo.subjectNo }">
+															<option value="${subjectVo.subjectNo}">${subjectVo.subjectTitle}</option>
+														</c:if>
 													</c:forEach>
 												</select>
 											</div>
@@ -172,8 +176,15 @@
 										<div class="">
 											<div class="select">
 												<select id="selectChapter">
-													<c:forEach items="${subjectList[0].chapterList}" var="chapterVo">
-														<option value="${chapterVo.chapterNo}">${chapterVo.chapterContent}</option>
+													<option value="${assignmentVo.chapterNo}">${assignmentVo.chapterContent}</option>
+													<c:forEach items="${subjectList}" var="subjectVo">
+														<c:if test="${assignmentVo.subjectNo eq subjectVo.subjectNo }">
+															<c:forEach items="${subjectVo.chapterList}" var="chapterVo">
+																<c:if test="${assignmentVo.chapterNo ne chapterVo.chapterNo }">
+																	<option value="${chapterVo.chapterNo}">${chapterVo.chapterContent}</option>
+																</c:if>
+															</c:forEach>
+														</c:if>
 													</c:forEach>
 												</select>
 											</div>
@@ -192,14 +203,15 @@
 										</div>
 										<!--===================================================-->
 									</div>
-									<div class="form-group">
-										<button class="btn btn-lg btn-danger pull-right" id="btnEnroll">출제하기</button>
+									<div>
+										<span><button class="btn btn-lg btn-primary pull-right" id="btnEnroll">수정하기</button></span>
+										<span style="margin-right:20px;"><a href="${pageContext.request.contextPath }/${coursePath}/assignment/list"><button class="btn btn-lg btn-danger pull-right">돌아가기</button></a></span>
 									</div>
 								</div>
 								<hr>
 							</div>
 						</div>
-					</form>>
+					</div>
 				</div>
 				<!--===================================================-->
 				<!--End page content-->
@@ -369,8 +381,9 @@
 		
 		$("#btnEnroll").on("click", function(){
 			event.preventDefault();
-			console.log("과제 출제");
+			console.log("과제 수정");
 			
+			var assignmentNo = $("#assignmentNo").val();
 			var assignmentTitle = $("#assignmentTitle").val();
 			var assignmentContent = $('#demo-summernote').summernote('code');
 			var endDate = $('#select-day').val();
@@ -380,6 +393,7 @@
 			var teacherNo = $('#teacherNo').val();
 			
 			var assignmentVo = {};
+			assignmentVo["assignmentNo"] = assignmentNo;
 			assignmentVo["assignmentTitle"] = assignmentTitle;
 			assignmentVo["assignmentContent"] = assignmentContent;
 			assignmentVo["endDate"] = endDate;
@@ -396,7 +410,7 @@
 			
 			$.ajax({
 
-				url : "${pageContext.request.contextPath }/${coursePath}/assignment/enrollAssignment",
+				url : "${pageContext.request.contextPath }/${coursePath}/assignment/modifyAssignment",
 				type : "post",
 				contentType : "application/json",
 				data : JSON.stringify(assignmentVo),
@@ -405,10 +419,10 @@
 				success : function(response) {
 					/*성공시 처리해야될 코드 작성*/
 					if (response.result === "success") {
-						alert("과제 출제 성공");
+						alert("과제 수정 성공");
 						window.location = "http://localhost:8088/ams/" + response.data + "/assignment/list";
 					} else {
-						alert("과제 출제 실패");
+						alert("과제 수정 실패");
 					}
 				},
 				error : function(XHR, status, error) {

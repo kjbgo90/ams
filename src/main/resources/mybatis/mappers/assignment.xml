@@ -21,20 +21,18 @@
 			       email,
 			       userName,
 			       logoPath,
-			       su.scheduleNo scheduleNo,
-			       fileNo
+			       su.scheduleNo scheduleNo
 			from (select assignmentNo,
 			           assignmentTitle,
 			           assignmentContent,
-			           csc.courseNo courseNo,
+			           a.courseNo courseNo,
 			           courseName,
-			           csc.subjectNo subjectNo,
+			           a.subjectNo subjectNo,
 			           subjectTitle,
-			           csc.chapterNo chapterNo,
+			           a.chapterNo chapterNo,
 			           chapterContent,
 			           teacherNo,
-			           scheduleNo,
-			           fileNo
+			           scheduleNo
 			        from (select courseNo,
 			                   courseName,
 			                   ch.subjectNo subjectNo,
@@ -45,8 +43,7 @@
 			                       courseName,
 			                       subjectNo,
 			                       subjectTitle
-			                from course c join subject s on c.courseNo = s.courseNo
-			                where c.courseNo = #{courseNo}) cs
+			                from course c join subject s on c.courseNo = s.courseNo) cs
 			                join chapter ch on cs.subjectNo = ch.subjectNo) csc
 			                join assignment a on csc.chapterNo = a.chapterNo) acsc
 			        join (select scheduleNo,
@@ -57,6 +54,7 @@
 			                   userName,
 			                   logoPath
 			            from schedule s join users u on s.userNo = u.userNo) su on acsc.scheduleNo = su.scheduleNo
+			 where courseNo = #{courseNo}
 			 order by assignmentNo desc
 		]]>
 	</select>
@@ -71,7 +69,8 @@
 									 sysdate,
 									 #{assignmentNo},
 									 #{userNo},
-									 null )
+									 null,
+									 'false')
 		]]>
 	</insert>
 	
@@ -81,19 +80,11 @@
 			       submitContent,
 			       TO_CHAR(submitDate, 'yyyy-mm-dd') submitDate,
 			       assignmentNo,
-			       userNo,
+			       s.userNo userNo,
 			       userName,
-			       su.fileNo fileNo,
-			       fileName
-			from (select submitNo,
-			           submitContent,
-			           submitDate,
-			           assignmentNo,
-			           s.userNo userNo,
-			           userName,
-			           fileNo
-			    from submit s join users u on s.userNo = u.userNo) su
-			    left join datafile d on su.fileNo = d.fileNo
+			       score,
+			       scoreCheck
+			from submit s join users u on s.userNo = u.userNo
 			where assignmentNo = #{assignmentNo}
 			order by userName
 		]]>
@@ -105,23 +96,13 @@
 			       submitContent,
 			       TO_CHAR(submitDate, 'yyyy-mm-dd') submitDate,
 			       assignmentNo,
-			       userNo,
-			       userName,
+			       s.userNo userNo,
+			       u.userName userName,
 			       logoPath,
 			       email,
-			       su.fileNo fileNo,
-			       fileName
-			from (select submitNo,
-			           submitContent,
-			           submitDate,
-			           assignmentNo,
-			           s.userNo userNo,
-			           userName,
-			           email,
-			           logoPath,
-			           fileNo
-			    from submit s join users u on s.userNo = u.userNo) su
-			    left join datafile d on su.fileNo = d.fileNo
+			       score,
+			       scoreCheck
+			from submit s join users u on s.userNo = u.userNo
 			where submitNo = #{submitNo}
 		]]>
 	</select>
@@ -129,6 +110,13 @@
 	<delete id="deleteSubmit" parameterType="int">
 		<![CDATA[
 			delete from submit
+			where submitNo = #{submitNo}
+		]]>
+	</delete>
+	
+	<delete id="deleteSubmitFile" parameterType="int">
+		<![CDATA[
+			delete from submitfile
 			where submitNo = #{submitNo}
 		]]>
 	</delete>
@@ -150,8 +138,7 @@
 			       email,
 			       userName,
 			       logoPath,
-			       su.scheduleNo scheduleNo,
-			       fileNo
+			       su.scheduleNo scheduleNo
 			from (select assignmentNo,
 			           assignmentTitle,
 			           assignmentContent,
@@ -162,8 +149,7 @@
 			           csc.chapterNo chapterNo,
 			           chapterContent,
 			           teacherNo,
-			           scheduleNo,
-			           fileNo
+			           scheduleNo
 			        from (select courseNo,
 			                   courseName,
 			                   ch.subjectNo subjectNo,
@@ -209,4 +195,134 @@
 			order by chapterNo
 		]]>
 	</select>
+	
+	<insert id="insertAssignmentSchedule" parameterType="AssignmentVo">
+		<selectKey keyProperty="scheduleNo" resultType="int" order="BEFORE">
+			select seq_schedule_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into schedule values( #{scheduleNo},
+										 #{assignmentTitle},
+										 #{assignmentContent},
+										 sysdate,
+										 #{endDate},
+										 'pink',
+										 #{courseNo},
+										 #{teacherNo},
+										 null )
+		]]>
+	</insert>
+	
+	<insert id="insertAssignment" parameterType="AssignmentVo">
+		<selectKey keyProperty="assignmentNo" resultType="int" order="BEFORE">
+			select seq_assignment_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into assignment values( #{assignmentNo},
+										 #{assignmentTitle},
+										 #{assignmentContent},
+										 #{courseNo},
+										 #{subjectNo},
+										 #{chapterNo},
+										 #{teacherNo},
+										 #{scheduleNo})
+		]]>
+	</insert>
+	
+	<insert id="insertAssignmentFile" parameterType="map">
+		<![CDATA[
+			insert into assignmentfile values( seq_assignmentfile_no.nextval,
+											   #{assignmentNo},
+											   #{fileNo} )
+		]]>
+	</insert>
+	
+	<insert id="insertSubmitFile" parameterType="map">
+		<![CDATA[
+			insert into submitfile values( seq_submitfile_no.nextval,
+										   #{submitNo},
+										   #{fileNo} )
+		]]>
+	</insert>
+	
+	<insert id="insertFile" parameterType="fileUpLoadVo">
+		<selectKey keyProperty="fileNo" resultType="int" order="BEFORE">
+			select seq_datafile_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into datafile values( #{fileNo},
+										 #{fileName},
+										 #{saveName},
+										 #{fileSize},
+										 sysdate,
+										 #{filepath})
+		]]>
+	</insert>
+	
+	<select id="selectAssignmentFileList" resultType="fileUpLoadVo">
+		<![CDATA[
+			select assignmentFileNo,
+				   assignmentNo,
+				   a.fileNo,
+				   fileName,
+				   filepath
+			from assignmentfile a join datafile d on a.fileNo = d.fileNo
+		]]>
+	</select>
+	
+	<select id="selectSubmitFileList" resultType="fileUpLoadVo">
+		<![CDATA[
+			select submitFileNo,
+				   submitNo,
+				   s.fileNo,
+				   fileName,
+				   filepath
+			from submitfile s join datafile d on s.fileNo = d.fileNo
+		]]>
+	</select>
+	
+	<select id="countSubmittedAssign" parameterType="SubmitVo" resultType="int">
+		<![CDATA[
+			select count(*)
+			from submit
+			where userNo = #{userNo} and assignmentNo = #{assignmentNo}
+		]]>
+	</select>
+	
+	<update id="updateAssignmentSchedule" parameterType="AssignmentVo">
+		<![CDATA[
+			update schedule
+			set scheduleName = #{assignmentTitle},
+				scheduleMemo = #{assignmentContent},
+				endDate = #{endDate}
+			where scheduleNo = #{scheduleNo}
+		]]>
+	</update>
+	
+	<update id="updateAssignment" parameterType="AssignmentVo">
+		<![CDATA[
+			update assignment
+			set assignmentTitle = #{assignmentTitle},
+				assignmentContent = #{assignmentContent},
+				subjectNo = #{subjectNo},
+				chapterNo = #{chapterNo}
+			where assignmentNo = #{assignmentNo}
+		]]>
+	</update>
+	
+	<delete id="deleteAssignmentFile" parameterType="AssignmentVo">
+		<![CDATA[
+			delete from assignmentfile
+			where assignmentNo = #{assignmentNo}
+		]]>
+	</delete>
+	
+	<update id="updateSubmitScore" parameterType="SubmitVo">
+		<![CDATA[
+			update submit
+			set score = #{score},
+				scoreCheck = 'true'
+			where submitNo = #{submitNo}
+		]]>
+	</update>
 </mapper>

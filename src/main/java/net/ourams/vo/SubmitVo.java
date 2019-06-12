@@ -1,5 +1,7 @@
 package net.ourams.vo;
 
+import java.util.List;
+
 public class SubmitVo {
 
 	private int submitNo;
@@ -12,6 +14,9 @@ public class SubmitVo {
 	private String email;
 	private int fileNo;
 	private String fileName;
+	private List<fileUpLoadVo> fileList;
+	private int score;
+	private String scoreCheck;
 
 	public SubmitVo() {
 	}
@@ -49,6 +54,56 @@ public class SubmitVo {
 		this.email = email;
 		this.fileNo = fileNo;
 		this.fileName = fileName;
+	}
+
+	public SubmitVo(int submitNo, String submitContent, String submitDate, int assignmentNo, int userNo,
+			String userName, String logoPath, String email, int fileNo, String fileName, List<fileUpLoadVo> fileList) {
+		this.submitNo = submitNo;
+		this.submitContent = submitContent;
+		this.submitDate = submitDate;
+		this.assignmentNo = assignmentNo;
+		this.userNo = userNo;
+		this.userName = userName;
+		this.logoPath = logoPath;
+		this.email = email;
+		this.fileNo = fileNo;
+		this.fileName = fileName;
+		this.fileList = fileList;
+	}
+
+	public SubmitVo(int submitNo, String submitContent, String submitDate, int assignmentNo, int userNo,
+			String userName, String logoPath, String email, int fileNo, String fileName, List<fileUpLoadVo> fileList,
+			int score) {
+		this.submitNo = submitNo;
+		this.submitContent = submitContent;
+		this.submitDate = submitDate;
+		this.assignmentNo = assignmentNo;
+		this.userNo = userNo;
+		this.userName = userName;
+		this.logoPath = logoPath;
+		this.email = email;
+		this.fileNo = fileNo;
+		this.fileName = fileName;
+		this.fileList = fileList;
+		this.score = score;
+	}
+
+	public SubmitVo(int submitNo, String submitContent, String submitDate, int assignmentNo, int userNo,
+			String userName, String logoPath, String email, int fileNo, String fileName, List<fileUpLoadVo> fileList,
+			int score, String scoreCheck) {
+		this.submitNo = submitNo;
+		this.submitContent = submitContent;
+		this.submitDate = submitDate;
+		this.assignmentNo = assignmentNo;
+		this.userNo = userNo;
+		this.userName = userName;
+		this.logoPath = logoPath;
+		this.email = email;
+		this.fileNo = fileNo;
+		this.fileName = fileName;
+		this.fileList = fileList;
+		this.score = score;
+		this.scoreCheck = scoreCheck;
 	}
 
 	public int getSubmitNo() {
@@ -131,11 +186,36 @@ public class SubmitVo {
 		this.email = email;
 	}
 
+	public List<fileUpLoadVo> getFileList() {
+		return fileList;
+	}
+
+	public void setFileList(List<fileUpLoadVo> fileList) {
+		this.fileList = fileList;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public String getScoreCheck() {
+		return scoreCheck;
+	}
+
+	public void setScoreCheck(String scoreCheck) {
+		this.scoreCheck = scoreCheck;
+	}
+
 	@Override
 	public String toString() {
 		return "SubmitVo [submitNo=" + submitNo + ", submitContent=" + submitContent + ", submitDate=" + submitDate
 				+ ", assignmentNo=" + assignmentNo + ", userNo=" + userNo + ", userName=" + userName + ", logoPath="
-				+ logoPath + ", email=" + email + ", fileNo=" + fileNo + ", fileName=" + fileName + "]";
+				+ logoPath + ", email=" + email + ", fileNo=" + fileNo + ", fileName=" + fileName + ", fileList="
+				+ fileList + ", score=" + score + ", scoreCheck=" + scoreCheck + "]";
 	}
 
 }

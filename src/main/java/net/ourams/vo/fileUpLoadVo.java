@@ -7,8 +7,13 @@ public class fileUpLoadVo {
 	private long fileSize;
 	private String regDate;
 	private String filepath;
-	
-	public fileUpLoadVo() { }
+	private int assignmentFileNo;
+	private int assignmentNo;
+	private int submitFileNo;
+	private int submitNo;
+
+	public fileUpLoadVo() {
+	}
 
 	public fileUpLoadVo(int fileNo, String fileName, String saveName, long fileSize, String regDate, String filepath) {
 		this.fileNo = fileNo;
@@ -17,6 +22,33 @@ public class fileUpLoadVo {
 		this.fileSize = fileSize;
 		this.regDate = regDate;
 		this.filepath = filepath;
+	}
+
+	public fileUpLoadVo(int fileNo, String fileName, String saveName, long fileSize, String regDate, String filepath,
+			int assignmentFileNo, int assignmentNo) {
+		super();
+		this.fileNo = fileNo;
+		this.fileName = fileName;
+		this.saveName = saveName;
+		this.fileSize = fileSize;
+		this.regDate = regDate;
+		this.filepath = filepath;
+		this.assignmentFileNo = assignmentFileNo;
+		this.assignmentNo = assignmentNo;
+	}
+
+	public fileUpLoadVo(int fileNo, String fileName, String saveName, long fileSize, String regDate, String filepath,
+			int assignmentFileNo, int assignmentNo, int submitFileNo, int submitNo) {
+		this.fileNo = fileNo;
+		this.fileName = fileName;
+		this.saveName = saveName;
+		this.fileSize = fileSize;
+		this.regDate = regDate;
+		this.filepath = filepath;
+		this.assignmentFileNo = assignmentFileNo;
+		this.assignmentNo = assignmentNo;
+		this.submitFileNo = submitFileNo;
+		this.submitNo = submitNo;
 	}
 
 	public int getFileNo() {
@@ -67,11 +99,44 @@ public class fileUpLoadVo {
 		this.filepath = filepath;
 	}
 
+	public int getAssignmentFileNo() {
+		return assignmentFileNo;
+	}
+
+	public void setAssignmentFileNo(int assignmentFileNo) {
+		this.assignmentFileNo = assignmentFileNo;
+	}
+
+	public int getAssignmentNo() {
+		return assignmentNo;
+	}
+
+	public void setAssignmentNo(int assignmentNo) {
+		this.assignmentNo = assignmentNo;
+	}
+
+	public int getSubmitFileNo() {
+		return submitFileNo;
+	}
+
+	public void setSubmitFileNo(int submitFileNo) {
+		this.submitFileNo = submitFileNo;
+	}
+
+	public int getSubmitNo() {
+		return submitNo;
+	}
+
+	public void setSubmitNo(int submitNo) {
+		this.submitNo = submitNo;
+	}
+
 	@Override
 	public String toString() {
 		return "fileUpLoadVo [fileNo=" + fileNo + ", fileName=" + fileName + ", saveName=" + saveName + ", fileSize="
-				+ fileSize + ", regDate=" + regDate + ", filepath=" + filepath + "]";
+				+ fileSize + ", regDate=" + regDate + ", filepath=" + filepath + ", assignmentFileNo="
+				+ assignmentFileNo + ", assignmentNo=" + assignmentNo + ", submitFileNo=" + submitFileNo + ", submitNo="
+				+ submitNo + "]";
 	}
-	
-	
+
 }

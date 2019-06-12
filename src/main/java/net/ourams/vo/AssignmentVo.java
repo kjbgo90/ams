@@ -1,5 +1,7 @@
 package net.ourams.vo;
 
+import java.util.List;
+
 public class AssignmentVo {
 
 	private int assignmentNo;
@@ -19,6 +21,7 @@ public class AssignmentVo {
 	private String endDate;
 	private int scheduleNo;
 	private int fileNo;
+	private List<fileUpLoadVo> fileList;
 
 	public AssignmentVo() {
 	}
@@ -57,6 +60,30 @@ public class AssignmentVo {
 		this.endDate = endDate;
 		this.scheduleNo = scheduleNo;
 		this.fileNo = fileNo;
+	}
+
+	public AssignmentVo(int assignmentNo, String assignmentTitle, String assignmentContent, int courseNo,
+			String courseName, int subjectNo, String subjectTitle, int chapterNo, String chapterContent, int teacherNo,
+			String userName, String email, String logoPath, String startDate, String endDate, int scheduleNo,
+			int fileNo, List<fileUpLoadVo> fileList) {
+		this.assignmentNo = assignmentNo;
+		this.assignmentTitle = assignmentTitle;
+		this.assignmentContent = assignmentContent;
+		this.courseNo = courseNo;
+		this.courseName = courseName;
+		this.subjectNo = subjectNo;
+		this.subjectTitle = subjectTitle;
+		this.chapterNo = chapterNo;
+		this.chapterContent = chapterContent;
+		this.teacherNo = teacherNo;
+		this.userName = userName;
+		this.email = email;
+		this.logoPath = logoPath;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.scheduleNo = scheduleNo;
+		this.fileNo = fileNo;
+		this.fileList = fileList;
 	}
 
 	public int getAssignmentNo() {
@@ -195,6 +222,14 @@ public class AssignmentVo {
 		this.endDate = endDate;
 	}
 
+	public List<fileUpLoadVo> getFileList() {
+		return fileList;
+	}
+
+	public void setFileList(List<fileUpLoadVo> fileList) {
+		this.fileList = fileList;
+	}
+
 	@Override
 	public String toString() {
 		return "AssignmentVo [assignmentNo=" + assignmentNo + ", assignmentTitle=" + assignmentTitle
@@ -202,7 +237,7 @@ public class AssignmentVo {
 				+ ", subjectNo=" + subjectNo + ", subjectTitle=" + subjectTitle + ", chapterNo=" + chapterNo
 				+ ", chapterContent=" + chapterContent + ", teacherNo=" + teacherNo + ", userName=" + userName
 				+ ", email=" + email + ", logoPath=" + logoPath + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", scheduleNo=" + scheduleNo + ", fileNo=" + fileNo + "]";
+				+ ", scheduleNo=" + scheduleNo + ", fileNo=" + fileNo + ", fileList=" + fileList + "]";
 	}
 
 }
