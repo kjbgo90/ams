@@ -135,7 +135,7 @@
 
 						<div class="row pad-btm">
 								<div class="input-group mar-btm col-xs-12 col-sm-10 col-sm-offset-1 pad-hor "   style="padding-left: 500px;">
-									<input type="text" placeholder="Search posts..." class="form-control input-sm"> <span class="input-group-btn">
+									<input id="searchAnyThing" type="text" placeholder="Search posts..." class="form-control input-sm"> <span class="input-group-btn">
 										<button id="searchPostTitle"  class="btn btn-primary btn-sm" type="button">검색</button>
 									</span>
 								</div>
@@ -155,7 +155,7 @@
 											<th>조회수</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody id="postList">
 									<c:forEach items="${noticeList}" var="PostVo" >
 										<tr>
 											<td>${PostVo.rownum}</td>
@@ -173,15 +173,8 @@
 							<div class="row">
 
 								<div class="col-sm-7 text-right">
-									<ul class="pagination">
-										<li class="disabled"><a href="#" class="demo-pli-arrow-left"></a></li>
-										<li class="active"><a href="#">1</a></li>
-										<li><a href="#">2</a></li>
-										<li><a href="#">3</a></li>
-										<li><a href="#">4</a></li>
-										<li><span>...</span></li>
-										<li><a href="#">20</a></li>
-										<li><a href="#" class="demo-pli-arrow-right"></a></li>
+									<ul class="pagination pager">
+										
 									</ul>
 								</div>
 								<div class="col-sm-5 text-right">
@@ -274,7 +267,156 @@
 		
 		$("#searchPostTitle").on("click",function(){
 			console.log("search anyOne");
+			var searchTitle = $("#searchAnyThing").val();
+			console.log(searchTitle);
+			
+			//ajax 처리해서 검색 
+			
+			
 		});
+		
+		//페이징 처리할 부분 첫번째 리스트를 뽑아오자~
+		/*function pagingAjax(pageNo,cateNo){
+				$.ajax({
+					url : "",
+					type : "post",
+					dataType : "json",	
+					success : function(map) {
+						console.log(map);
+						console.log(map.maxPage);
+						console.log(map.list);
+						console.log(pageNo);
+						paging(pageNo,map.maxPage);
+						
+						if (map.list.length == 0) {
+							$("#blogList").html(
+									"등록된 게시글이 없습니다.");
+						} else {
+							str = "";
+							for (var i = 0; i < map.list.length; i++) {
+								<c:forEach items="${noticeList}" var="PostVo" >
+							str+="<tr>"	
+							str+="<td>"+map.list[i].rownum+"</td>"			
+							str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+$map.list[i].postNo+">"
+							str+="["+map.list[i].category+"]"+map.list[i].postTitle+"</a></td>"				
+							str+="<td><span class='text-muted'>"+map.list[i].regDate+"</span></td>"				
+							str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo}+" class='btn-link'>"+map.list[i].userName+"</a></td>"				
+							str+="<td>"+map.list[i].hit+"</td>"				
+							str+="</tr>"			
+								
+								</c:forEach>
+								
+								
+								str += "<li id=listno"+map.list[i].postNo+" data-cateno="+map.list[i].cateNo+" data-postno="+map.list[i].postNo+" class='btn'>"
+								str += "<strong>"+ map.list[i].postTitle+"</strong> "
+								str += "<span>"+ map.list[i].regDate+ "</span>"
+								str += "</li>"
+							}
+							$("#postList").html(str);
+							str = "";
+						}
+						
+						paging(pageNo, map.maxPage);
+						
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+			});
+			
+			
+		}*/
+		
+		
+		function paging(pageno,maxPage){
+			pg = ""
+				pg +="<ul>";
+			if(pageno>1){
+				pg +="<li data-pageno="+(pageno-1)+" class='btn demo-pli-arrow-right'>";
+				pg +="</li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno>3)	
+			{
+				pg +="<li data-pageno="+(pageno-3)+" class='btn'>";
+				pg +=	pageno-3  ;
+				pg +="</li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno>2){
+				pg +="<li data-pageno="+(pageno-2)+" class='btn'>";
+				pg +=	pageno-2 ;
+				pg +="</li>";	
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno>1){
+				pg +="<li data-pageno="+(pageno-1)+" class='btn'>";
+				pg +=	pageno-1 ;
+				pg +="</li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+		
+			pg +="<li data-pageno="+pageno+" class='selected'>"+pageno +" </li>";
+			
+			if(pageno+1<=maxPage){
+				pg +="<li data-pageno="+(pageno+1)+" class='btn'>";
+				pg += 	pageno+1  ;
+				pg +="</li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno+2<=maxPage){
+				pg +="<li data-pageno="+(pageno+2)+" class='btn'>";
+				pg +=	 pageno+2  ;
+				pg +="</li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno+3<=maxPage){
+				pg +="<li data-pageno="+(pageno+3)+" class='btn'>";
+				pg +=	pageno+3 ;
+				pg +="</li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno+1<=maxPage){
+				pg +="<li data-pageno="+(pageno+1)+" class='btn demo-pli-arrow-right'>";
+				pg +="</li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+
+			pg +="</ul>";
+
+							
+					
+			$(".pager").html(pg);
+			
+			}
+		
+			function pageMove(){
+				$(".pager").on("click","li",function(){
+					$this = $(this);
+					console.log($this);
+					var pageNo = $this.data("pageno");
+					console.log(pageNo);
+				pagingAjax(pageNo,1);
+				});
+			}
+		
+			
 	</script>
 
 </body>
