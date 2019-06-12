@@ -247,31 +247,30 @@ rhd
 										<!--End Dropdowns Addons-->
 
 										<%-- <form role="form" class="form-horizontal" method="post" action="${pageContext.request.contextPath }/${coursePath}/notice/write"> --%>
+
 										<input type="hidden" name="userNo" value="${authUser.userNo }">
 
-										<div class="input-group mar-btm">
+										<!-- Bootstrap Select : primary -->
+										<!--===================================================-->
+										<div class="form-horizontal">
+											<div class="input-group mar-btm">
+												<!--  <div class="col-sm-6"> -->
+												<div class="input-group-btn dropdown category">
 
-											<!-- Bootstrap Select : primary -->
-											<!--===================================================-->
-											<div class="row">
-												<div class="col-sm-6">
-													<select class="selectpicker " id="cate">
+													<!-- <select class="selectpicker " id="cate">
 														<option>공지</option>
 														<option>긴급</option>
-													</select>
-													<!-- <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
-													카테고리 <i class="dropdown-caret"></i>
-												</button>
-												<ul class="dropdown-menu" id="cate">
-													<li><a href="#" >[공지]</a></li>s
-													<li><a href="#" >[긴급]</a></li>
-													<li class="divider"></li>
-													<li><a href="#">Separated link</a></li>
-												</ul> -->
+													</select> -->
+													<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle category" type="button">
+														카테고리 <i class="dropdown-caret"></i>
+													</button>
+													<ul class="dropdown-menu" id="cate">
+														<li><a href="#">공지</a></li>
+														<li><a href="#">긴급</a></li>
+													</ul>
 												</div>
-												<div class="col-sm-6">
-													<input type="text" placeholder="제목" class="form-control " id="postTitle">
-												</div>
+												<input type="text" placeholder="제목" class="form-control " id="postTitle">
+
 											</div>
 										</div>
 
@@ -390,69 +389,84 @@ rhd
 	<!--===================================================-->
 	<!-- blog-edit 에서 스크립트 페이지 찾기 sample page 안에 있음  -->
 	<script>
-		$(document).on('nifty.ready', function() {
-			
-			var fileList = [];
-			
-			$("#dropzone").dropzone({
-				url : "${pageContext.request.contextPath }/{coursePath}/notice/upload",
-				success : function(file, fileVo) {
-					console.log(file);
-					console.log(fileVo);
-					fileList.push(fileVo);
-					console.log(fileList);
-					console.log(fileList.length);
-				}
-			});
+		$(document)
+				.on(
+						'nifty.ready',
+						function() {
 
-			// SUMMERNOTE
-			// =================================================================
-			// Require Summernote
-			// http://hackerwins.github.io/summernote/
-			// =================================================================
-			$('#demo-summernote, #demo-summernote-full-width').summernote({
-				height : '600px'
-			});
+							var fileList = [];
 
-			// BOOTSTRAP DATEPICKER
-			// =================================================================
-			// Require Bootstrap Datepicker
-			// http://eternicode.github.io/bootstrap-datepicker/
-			// =================================================================
-			$('#demo-dp-txtinput input').datepicker();
+							$("#dropzone")
+									.dropzone(
+											{
+												url : "${pageContext.request.contextPath }/{coursePath}/notice/upload",
+												success : function(file, fileVo) {
+													console.log(file);
+													console.log(fileVo);
+													fileList.push(fileVo);
+													console.log(fileList);
+													console
+															.log(fileList.length);
+												}
+											});
 
-			// BOOTSTRAP DATEPICKER WITH AUTO CLOSE
-			// =================================================================
-			// Require Bootstrap Datepicker
-			// http://eternicode.github.io/bootstrap-datepicker/
-			// =================================================================
-			$('#demo-dp-component .input-group.date').datepicker({
-				autoclose : true
-			});
+							// SUMMERNOTE
+							// =================================================================
+							// Require Summernote
+							// http://hackerwins.github.io/summernote/
+							// =================================================================
+							$('#demo-summernote, #demo-summernote-full-width')
+									.summernote({
+										height : '600px'
+									});
 
-			// BOOTSTRAP DATEPICKER WITH RANGE SELECTION
-			// =================================================================
-			// Require Bootstrap Datepicker
-			// http://eternicode.github.io/bootstrap-datepicker/
-			// =================================================================
-			$('#demo-dp-range .input-daterange').datepicker({
-				format : "MM dd, yyyy",
-				todayBtn : "linked",
-				autoclose : true,
-				todayHighlight : true
-			});
+							// BOOTSTRAP DATEPICKER
+							// =================================================================
+							// Require Bootstrap Datepicker
+							// http://eternicode.github.io/bootstrap-datepicker/
+							// =================================================================
+							$('#demo-dp-txtinput input').datepicker();
 
-			// INLINE BOOTSTRAP DATEPICKER
-			// =================================================================
-			// Require Bootstrap Datepicker
-			// http://eternicode.github.io/bootstrap-datepicker/
-			// =================================================================
-			$('#demo-dp-inline div').datepicker({
-				format : "MM dd, yyyy",
-				todayBtn : "linked",
-				autoclose : true,
-				todayHighlight : true
-			});
+							// BOOTSTRAP DATEPICKER WITH AUTO CLOSE
+							// =================================================================
+							// Require Bootstrap Datepicker
+							// http://eternicode.github.io/bootstrap-datepicker/
+							// =================================================================
+							$('#demo-dp-component .input-group.date')
+									.datepicker({
+										autoclose : true
+									});
+
+							// BOOTSTRAP DATEPICKER WITH RANGE SELECTION
+							// =================================================================
+							// Require Bootstrap Datepicker
+							// http://eternicode.github.io/bootstrap-datepicker/
+							// =================================================================
+							$('#demo-dp-range .input-daterange').datepicker({
+								format : "MM dd, yyyy",
+								todayBtn : "linked",
+								autoclose : true,
+								todayHighlight : true
+							});
+
+							// INLINE BOOTSTRAP DATEPICKER
+							// =================================================================
+							// Require Bootstrap Datepicker
+							// http://eternicode.github.io/bootstrap-datepicker/
+							// =================================================================
+							$('#demo-dp-inline div').datepicker({
+								format : "MM dd, yyyy",
+								todayBtn : "linked",
+								autoclose : true,
+								todayHighlight : true
+							});
+
+						});
+
+		$(".category .dropdown-menu li a").click(function() {
+			console.log("dsadad");
+			$(".category .btn:first-child").text($(this).text());
+			$(".category .btn:first-child").val($(this).text());
 
 		});
 
@@ -465,7 +479,7 @@ rhd
 							console.log("저장");
 							var markstr = $('#demo-summernote').summernote(
 									'code');
-							var cate = $('#cate').val();
+							var cate = $(".category .btn:first-child").val();
 							var postTitle = $('#postTitle').val();
 							var selectedDate = $('#select-day').val();
 							var postResult = {};
@@ -479,9 +493,12 @@ rhd
 							console.log(postTitle);
 							console.log(selectedDate);
 							//카테고리, 제목, 본문,  달력날자
-							console.log("${pageContext.request.contextPath}/${coursePath}/notice/write");
+							console
+									.log("${pageContext.request.contextPath}/${coursePath}/notice/write");
 
-							$.ajax({	url : "${pageContext.request.contextPath}/${coursePath}/notice/write", //컨트롤주소
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath}/${coursePath}/notice/write", //컨트롤주소
 										type : "post",
 										//dataType: "json",          // ajax 통신으로 받는 타입
 										contentType : 'application/json; charset=utf-8',

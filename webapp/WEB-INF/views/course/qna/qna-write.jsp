@@ -189,6 +189,7 @@
 													공지등록 &nbsp; <input id="demo-checkbox-addons" class="magic-checkbox" type="checkbox"> <label for="demo-checkbox-addons"></label>
 												</p>
 												<div id="demo-dp-inline">
+													<input id="select-day" type="hidden" value="">
 													<div></div>
 												</div>
 												<!--===================================================-->
@@ -224,11 +225,11 @@
 											<div class="col-sm-4">
 												<div class="media pad-ver">
 													<div class="media-left">
-														<a href="#" class="box-inline"><img alt="Profile Picture" class="img-md img-circle" src="${pageContext.request.contextPath }/assets/img/profile-photos/9.png"></a>
+														<a href="#" class="box-inline"><img alt="Profile Picture" class="img-md img-circle" src="${pageContext.request.contextPath }/${authUser.logoPath }"></a>
 													</div>
 													<div class="media-body pad-top">
-														<a href="#" class="box-inline"> <span class="text-lg text-semibold text-main">Lucy Moon</span>
-															<p class="text-sm">gerins2314@gmail.com</p>
+														<a href="#" class="box-inline"> <span class="text-lg text-semibold text-main">${authUser.userName }</span>
+															<p class="text-sm">${authUser.email }</p>
 														</a>
 													</div>
 												</div>
@@ -249,36 +250,47 @@
 										</form>
 										<!--===================================================-->
 										<!--End Dropdowns Addons-->
+										<input type="hidden" name="userNo" value="${authUser.userNo }">
 
+										<!-- Bootstrap Select : primary -->
+										<!--===================================================-->
+										<div class="form-horizontal">
+											<div class="input-group mar-btm">
+												<!--  <div class="col-sm-6"> -->
+												<div class="input-group-btn dropdown category">
 
+													<!-- <select class="selectpicker " id="cate">
+														<option>공지</option>
+														<option>긴급</option>
+													</select> -->
+													<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle category" type="button" >
+														과목선택 <i class="dropdown-caret"></i>
+													</button>
+													
+													<ul class="dropdown-menu" id="subjectList">
+													<c:forEach items="${subjectList}" var="subjectList">
+														<li data-value="${subjectList.subjectNo}"><a href="#">${subjectList.subjectTitle}</a></li>
+														</c:forEach>
+													</ul>
+													
+												</div>
+												<input type="text" placeholder="제목" class="form-control " id="postTitle">
 
-										<div class="input-group mar-btm">
-											<div class="input-group-btn dropdown category-first">
-												<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
-													카테고리 <i class="dropdown-caret"></i>
-												</button>
-												<ul class="dropdown-menu">
-													<li><a href="#">자바</a></li>
-													<li><a href="#">aws</a></li>
-													<li><a href="#">bootstrap</a></li>
-													<li class="divider"></li>
-													<li><a href="#">Separated link</a></li>
-												</ul>
 											</div>
-											<div class="input-group-btn dropdown category-second">
-												<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">
-													chapter <i class="dropdown-caret"></i>
-												</button>
-												<ul class="dropdown-menu">
-													<li><a href="#">1chap</a></li>
-													<li><a href="#">2chap</a></li>
-													<li><a href="#">3chap</a></li>
-													<li class="divider"></li>
-													<li><a href="#">Separated link</a></li>
-												</ul>
-											</div>
-											<input type="text" placeholder="제목" class="form-control">
 										</div>
+										<input id="subjectNo" name="subjectNo" type="hidden" value="">
+
+
+										<%-- <div class="input-group mar-btm">
+											<div class="select">
+												<select style="width: 250px;" id="subjectNo">
+													<c:forEach items="${subjectList}" var="subjectList">
+														<option value="${subjectList.subjectNo}">${subjectList.subjectTitle}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<input type="text" placeholder="제목" class="form-control" id="postTitle">
+										</div> --%>
 
 
 										<div id="demo-summernote"></div>
@@ -444,6 +456,19 @@
 
 		});
 
+		$(".category .dropdown-menu li a").click(function() {
+			console.log("dsadad");
+			$(".category .btn:first-child").text($(this).text());
+			$(".category .btn:first-child").val($(this).text());
+
+		});
+
+		$("#subjectList").on("click", "a", function(){
+		    var $this = $(this).parent();
+		    $this.addClass("select").siblings().removeClass("select");
+		    $("#subjectNo").val($this.data("value"));
+		})
+
 		/* 질의응답 저장 */
 		$("#discard-btn")
 				.on(
@@ -453,23 +478,28 @@
 							console.log("저장");
 							var markstr = $('#demo-summernote').summernote(
 									'code');
-							/* var cate = $('#cate').val(); */
+							/* var cate = $(".category .btn:first-child").val(); */
+							
+							var subjectNo = $('#subjectNo').val();
 							var postTitle = $('#postTitle').val();
 							var selectedDate = $('#select-day').val();
 							var postResult = {};
 							postResult["postTitle"] = postTitle;
-							/* postResult["category"] = cate; */
+							postResult["subjectNo"] = subjectNo;
 							postResult["postContent"] = markstr;
 							postResult["regDate"] = selectedDate;
 
 							console.log(markstr);
-							/* console.log(cate); */
+							console.log(subjectNo);
 							console.log(postTitle);
 							console.log(selectedDate);
 							//카테고리, 제목, 본문,  달력날자
-							console.log("${pageContext.request.contextPath}/${coursePath}/qna/write");
+							console
+									.log("${pageContext.request.contextPath}/${coursePath}/qna/write");
 
-							$.ajax({	url : "${pageContext.request.contextPath}/${coursePath}/qna/write", //컨트롤주소
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath}/${coursePath}/qna/write", //컨트롤주소
 										type : "post",
 										//dataType: "json",          // ajax 통신으로 받는 타입
 										contentType : 'application/json; charset=utf-8',

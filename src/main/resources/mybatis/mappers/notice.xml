@@ -107,8 +107,14 @@
 	<update id="update" parameterType="PostVo">
 		<![CDATA[
 			update post 
-		   	set postTitle=#{postTitle},
-		       	postContent=#{postContent}
+		   	set 
+				   	postNo=#{postNo},
+				   	postType = #{postType},
+				   	subjectTitle=#{subjectTitle},		   	
+				   	postTitle=#{postTitle},
+				   	hit=#{hit},
+				   	postContent=#{postContent},
+				    regDate=#{regDate}
 		 	where postNo=#{postNo}
 		  	and userNo = #{userNo}
 		]]>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import net.ourams.dao.CourseQnaDao;
 import net.ourams.vo.PostVo;
+import net.ourams.vo.SubjectVo;
 
 @Service
 public class CourseQnaService {
@@ -19,18 +20,6 @@ public class CourseQnaService {
 		System.out.println(qnaList.toString());
 		return qnaList;
 	}
-	/*
-	 * public PostVo read(int postNo) { //PostDao.updateHit(postNo); PostVo PostVo =
-	 * PostDao.selectNotice(postNo); return PostVo; }
-	 * 
-	 * public int write(PostVo postVo) {
-	 * System.out.println("#########################");
-	 * System.out.println(postVo.toString()); return PostDao.insert(postVo); }
-	 * 
-	 * public int delete(PostVo postVo) {
-	 * System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
-	 * System.out.println(postVo.toString()); return PostDao.delete(postVo); }
-	 */
 
 	public PostVo read(int postNo) {
 		// TODO Auto-generated method stub
@@ -45,5 +34,27 @@ public class CourseQnaService {
 		return courseQnaDao.insert(postVo);		
 	}
 
+	public List<SubjectVo> getsubjectList(int courseNo) {
+		List<SubjectVo> subjectList = courseQnaDao.selectsubjectAll(courseNo);
+		System.out.println("SSSSVVVICCCEE");
+		System.out.println(subjectList.toString());
+		return subjectList;
+	}
+
+	public int delete(PostVo postVo) {
+		System.out.println(postVo.toString());
+		return courseQnaDao.delete(postVo);
+	}
+
+	public PostVo modifyform(int postNo) {
+		PostVo postVo = courseQnaDao.selectNotice(postNo);
+		return postVo;
+	}
+
+	public int modify(PostVo postVo) {
+		return courseQnaDao.update(postVo);
+	}
+
+	
 	
 }

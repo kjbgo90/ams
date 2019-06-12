@@ -193,6 +193,8 @@
 							<br>
 							<br>
 							<br>
+							
+							
 							<!-- Comment form -->
 							<!--===================================================-->
 							<hr class="new-section-sm bord-no">
@@ -223,19 +225,19 @@
 
 							<!-- Comments -->
 							<!--===================================================-->
-							<%-- <c:forEach items="" var="">
+							<c:forEach items="${replylist}" var="replylist">
 							<div class="comments media-block">
-								<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png"></a>
+								<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/${replylist.logoPath}"></a>
 								<div class="media-body">
 									<div class="comment-header">
-										<a href="#" class="media-heading box-inline text-main text-bold">John Doe</a>
-										<p class="text-muted text-sm">Today 10:41AM - 12/09/2017</p>
+										<a href="#" class="media-heading box-inline text-main text-bold">${replylist.userName}</a>
+										<p class="text-muted text-sm">${replylist.regDate}</p>
 									</div>
-									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p>
+									<p>${replylist.replyContent}</p>
 
 								</div>
 							</div>
-							</c:forEach> --%>
+							</c:forEach>
 							<!--===================================================-->
 							<!-- End Comments -->
 

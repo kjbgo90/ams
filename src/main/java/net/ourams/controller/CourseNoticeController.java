@@ -20,10 +20,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import net.ourams.interceptor.Auth;
 import net.ourams.interceptor.AuthUser;
+import net.ourams.service.CourseReplyService;
 import net.ourams.service.PostService;
 import net.ourams.service.UserService;
 import net.ourams.util.S3Util;
 import net.ourams.vo.PostVo;
+import net.ourams.vo.ReplyVo;
 import net.ourams.vo.UserVo;
 import net.ourams.vo.fileUpLoadVo;
 
@@ -35,6 +37,9 @@ public class CourseNoticeController {
 	private PostService postService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CourseReplyService courseReplyService;
+	
 	
 	@Autowired
 	private S3Util s3Util;
@@ -114,10 +119,14 @@ public class CourseNoticeController {
 			@PathVariable("postNo") int postNo, Model model) {
 		System.out.println("read");
 		PostVo postVo = postService.read(postNo);
+		List<ReplyVo> replylist = courseReplyService.getreplyList(postNo);
+		System.out.println(replylist.toString());
+		
 		UserVo writerVo = userService.read(postVo.getUserNo());
 		model.addAttribute("PostVo", postVo);
+		
+		model.addAttribute("replylist", replylist);
 		model.addAttribute("WriterVo", writerVo);
-		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&");
 		System.out.println(postVo.getCategory());
 		System.out.println(postVo);
 		model.addAttribute("UserVo", authUser);

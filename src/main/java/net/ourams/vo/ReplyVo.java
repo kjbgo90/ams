@@ -1,14 +1,14 @@
 package net.ourams.vo;
 
-import java.sql.Date;
 
 public class ReplyVo {
 	private int reply;
 	private int postNo;
 	private int userNo;
-	private Date regDate;
+	private String regDate;
 	private String replyContent;
-	
+	private String userName;
+	private String logoPath;
 	
 	
 	public ReplyVo() {
@@ -16,14 +16,19 @@ public class ReplyVo {
 
 
 
-	public ReplyVo(int reply, int postNo, int userNo, Date regDate, String replyContent) {
+
+	public ReplyVo(int reply, int postNo, int userNo, String regDate, String replyContent, String userName,
+			String logoPath) {
 		super();
 		this.reply = reply;
 		this.postNo = postNo;
 		this.userNo = userNo;
 		this.regDate = regDate;
 		this.replyContent = replyContent;
+		this.userName = userName;
+		this.logoPath = logoPath;
 	}
+
 
 
 
@@ -63,15 +68,45 @@ public class ReplyVo {
 
 
 
-	public Date getRegDate() {
+	public String getRegDate() {
 		return regDate;
 	}
 
 
 
-	public void setRegDate(Date regDate) {
+	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+
+	
+	
+
+
+	public String getUserName() {
+		return userName;
+	}
+
+
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+
+
+	public String getLogoPath() {
+		return logoPath;
+	}
+
+
+
+
+	public void setLogoPath(String logoPath) {
+		this.logoPath = logoPath;
+	}
+
 
 
 
@@ -87,13 +122,15 @@ public class ReplyVo {
 
 
 
+
 	@Override
 	public String toString() {
 		return "ReplyVo [reply=" + reply + ", postNo=" + postNo + ", userNo=" + userNo + ", regDate=" + regDate
-				+ ", replyContent=" + replyContent + "]";
+				+ ", replyContent=" + replyContent + ", userName=" + userName + ", logoPath=" + logoPath + "]";
 	}
-		
-	
+
+
+
 	
 }
 

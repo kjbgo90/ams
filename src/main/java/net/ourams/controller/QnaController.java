@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.ourams.interceptor.Auth;
@@ -20,6 +21,7 @@ import net.ourams.interceptor.AuthUser;
 import net.ourams.service.CourseQnaService;
 import net.ourams.service.UserService;
 import net.ourams.vo.PostVo;
+import net.ourams.vo.SubjectVo;
 import net.ourams.vo.UserVo;
 
 @Controller
@@ -67,7 +69,11 @@ public class QnaController {
 	@RequestMapping(value = "/writeform", method = RequestMethod.GET)
 	public String qnaWrite(@PathVariable("coursePath") String coursePath, Model model, HttpServletRequest re) {
 		System.out.println("writeform");
-		
+		int courseNo=1;
+		List<SubjectVo> subjectList  = courseQnaService.getsubjectList(courseNo);
+		System.out.println("##############################33");
+		System.out.println(subjectList);
+		model.addAttribute("subjectList", subjectList);
 		model.addAttribute("coursePath", coursePath);
 		return "course/qna/qna-write";
 	}
@@ -84,7 +90,7 @@ public class QnaController {
 		postVo.setUserNo(authUser.getUserNo());
 		postVo.setPostContent(resJSON.getPostContent());
 		postVo.setPostTitle(resJSON.getPostTitle());
-		/* postVo.setCategory(resJSON.getCategory()); */
+		postVo.setSubjectNo(resJSON.getSubjectNo());
 		postVo.setRegDate(resJSON.getRegDate());
 		postVo.setUserName(authUser.getUserName());
 		courseQnaService.write(postVo);
@@ -94,7 +100,45 @@ public class QnaController {
 	}
 
 	
+	/* 글삭제 */
+	@Auth
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String noticeDelete(@RequestParam int postNo, @ModelAttribute PostVo postVo,
+			@PathVariable("coursePath") String coursePath, @AuthUser UserVo authUser, HttpSession session) {
+			System.out.println("delete");
+			postVo.setPostNo(postNo);
+			postVo.setUserNo(authUser.getUserNo());
+
+			int count = courseQnaService.delete(postVo);
+			System.out.println("####삭제####");
+			System.out.println(count);
+
+			return "redirect:/" + coursePath + "/qna/list";
+	}
 	
+	
+
+	/* 글 수정폼 */
+	@Auth
+	@RequestMapping(value = "/modifyform", method = RequestMethod.GET)
+	public String modifyform(@RequestParam int postNo, @ModelAttribute PostVo postVo,
+			@PathVariable("coursePath") String coursePath, @AuthUser UserVo authUser, Model model) {
+		postVo = courseQnaService.modifyform(postNo);
+		model.addAttribute("postVo", postVo);
+		return "course/qna/qna-modify";
+	}
+	
+	@Auth
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public String modifyform(@ModelAttribute PostVo postVo, @PathVariable("coursePath") String coursePath,
+			@AuthUser UserVo authUser, Model model, HttpSession session) {
+
+		postVo.setUserNo(authUser.getUserNo());
+		int count = courseQnaService.modify(postVo);
+
+		return "redirect:/" + coursePath + "/qna/read/" + postVo.getPostNo();
+	}
+
 	
 	
 	

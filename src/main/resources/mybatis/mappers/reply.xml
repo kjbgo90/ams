@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reply">
+
+	<select id="selectreplyList" parameterType="int" resultType="ReplyVo">
+		<![CDATA[
+				   
+            select reply,
+                   postNo, 
+                   userNo,
+                   regDate,
+                   replyContent,
+                   userName,
+                   logoPath
+            from (                           
+            
+            
+                SELECT  reply,
+                        postNo,
+						r.userNo userNo,
+						TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,
+						replyContent,
+				        u.userName userName,
+                        u.logoPath logoPath
+                        
+				        FROM reply r join users u
+                        on r.userNo = u.userNo )
+                        where postNo = #{postNo}
+                        
+		]]>
+	</select>
+
+
+</mapper>

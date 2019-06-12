@@ -20,7 +20,7 @@
         userName,
         subjectNo,
         subjectTitle 
-FROM (SELECT     postNo,
+FROM (SELECT    postNo,
                 postType,
                 userNo,
                 fileNo,
@@ -37,7 +37,7 @@ FROM (SELECT     postNo,
                 subjectTitle
         FROM(
                 SELECT  postNo,
-                       postType,
+                        postType,
                         p.userNo userNo,
                         fileNo,
                         courseNo,
@@ -59,8 +59,34 @@ FROM (SELECT     postNo,
 				order by rownum desc
 		]]>
 	</select>
-	
-		
+
+
+	<!-- no로 글조회 -->
+	<select id="selectNotice" parameterType="int" resultType="PostVo">
+		<![CDATA[
+		SELECT  postNo, 
+			    postTitle, 
+			    postContent,
+			    hit, 
+			    regDate, 
+			    userNo, 
+                subjectTitle
+        FROM(
+				select postNo, 
+					   postTitle, 
+					   postContent,
+					   hit, 
+					   TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,  
+					   userNo,
+					   p.subjectNo subjectNo,
+					   subjectTitle
+			     from post p join subject s
+			     on p.subjectno = s.subjectno) 
+			     where postNo = #{postNo}     
+			     
+		]]>
+	</select>
+
 	<!-- 조회수 증가 -->
 	<update id="updateHit" parameterType="int">
 		<![CDATA[
@@ -69,28 +95,13 @@ FROM (SELECT     postNo,
 			where postNo = #{postNo}
 		]]>
 	</update>
-	
-		
-	<!-- no로 글조회 -->
-	<select id="selectNotice" parameterType="int" resultType="PostVo">
-		<![CDATA[
-			select postNo, 
-				   postTitle, 
-				   postContent,
-				   hit, 
-				   TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,  
-				   userNo,
-				   category
-		     from post 
-		     where postNo = #{postNo}
-		]]>
-	</select>
-	
-	
+
+
+
 	<!-- 글저장 -->
 	<insert id="insert" parameterType="PostVo">
 		<![CDATA[
-			insert into post(postNo,postType,userNo,courseNo,regDate,postTitle,postContent,hit)
+			insert into post(postNo,postType,userNo,courseNo,regDate,postTitle,postContent,hit,subjectNo)
 			values (
 					seq_post_no.nextval,
 					2,
@@ -99,11 +110,46 @@ FROM (SELECT     postNo,
 					sysdate,		 
 					#{postTitle}, 					
 					#{postContent}, 
-					#{hit}
-					
+					#{hit},
+					#{subjectNo}
 			) 
 		]]>
 	</insert>
+
+
+	<!-- 과목리스트 -->
+	<select id="selectSubjectAll" parameterType="int" resultType="SubjectVo">
+		<![CDATA[
+							
+				
+				SELECT   subjectNo,
+				        subjectTitle
+				        FROM subject 
+		]]>
+	</select>
+
+
+
+	<!-- 글삭제 -->
+	<delete id="delete" parameterType="PostVo">
+		<![CDATA[
+			delete from post 
+			where userNo = #{userNo}
+			and postNo = #{postNo}
+		]]>
+	</delete>
+	
+	
+	<!-- 글수정 -->
+	<update id="update" parameterType="PostVo">
+		<![CDATA[
+			update post 
+		   	set postTitle=#{postTitle},
+		       	postContent=#{postContent}
+		 	where postNo=#{postNo}
+		  	and userNo = #{userNo}
+		]]>
+	</update>
 	
 
 </mapper>

@@ -123,7 +123,7 @@
 								
 								 <div class="mar-btm pad-btm bord-btm">
 					                        <h1 class="page-header" style="font-size: 25px;">
-					                            <span class="label label-normal label-info">자바프로그래밍</span>${PostVo.postTitle}
+					                            <span class="label label-normal label-info">${PostVo.subjectTitle}</span>${PostVo.postTitle}
 					                        </h1>
 					                    </div>
 					
@@ -186,7 +186,7 @@
 									</button>
 
 									<!--Discard button-->
-									<button id="mail-send-btn" type="button" class="btn btn-primary">
+									<button id="mail-send-btn" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/qna/delete?postNo=${PostVo.postNo}' ">
 										<i class=" icon-xs icon-fw"></i>삭제
 									</button>
 								</div>

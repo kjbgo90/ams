@@ -21,7 +21,6 @@ public class PostService {
 	}
 
 	public PostVo read(int postNo) {
-		//PostDao.updateHit(postNo);
 		postDao.updateHit(postNo);
 		PostVo PostVo = postDao.selectNotice(postNo);
 		return PostVo;

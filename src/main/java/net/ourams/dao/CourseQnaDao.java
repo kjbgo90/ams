@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import net.ourams.vo.PostVo;
+import net.ourams.vo.SubjectVo;
 
 @Repository
 public class CourseQnaDao {
@@ -37,6 +38,32 @@ public class CourseQnaDao {
 
 	/* 글저장 */
 	public int insert(PostVo postVo) {
-		return sqlSession.selectOne("qna.insert", postVo);
+		return sqlSession.insert("qna.insert", postVo);
+	}
+
+
+	public List<PostVo> selectAll() {
+		List<PostVo> list = sqlSession.selectList("qna.selectAll");
+		return list;
+	}
+
+	/*과목리스트 가져오기*/
+	public List<SubjectVo> selectsubjectAll(int courseNo) {
+		List<SubjectVo> subjectlist = sqlSession.selectList("qna.selectSubjectAll",courseNo);
+		System.out.println("DDDDAAAAOOOO");
+		System.out.println(sqlSession.selectList("qna.selectSubjectAll",courseNo).toString());
+
+		System.out.println(subjectlist.toString());
+		return subjectlist;
+	}
+
+	/* 글 삭제 */
+	public int delete(PostVo postVo) {
+		return sqlSession.delete("qna.delete", postVo);
+	}
+
+
+	public int update(PostVo postVo) {
+		return sqlSession.update("qna.update", postVo);
 	}
 }
