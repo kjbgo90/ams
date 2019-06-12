@@ -263,16 +263,16 @@
 														<option>공지</option>
 														<option>긴급</option>
 													</select> -->
-													<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle category" type="button" >
+													<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle category" type="button">
 														과목선택 <i class="dropdown-caret"></i>
 													</button>
-													
+
 													<ul class="dropdown-menu" id="subjectList">
-													<c:forEach items="${subjectList}" var="subjectList">
-														<li data-value="${subjectList.subjectNo}"><a href="#">${subjectList.subjectTitle}</a></li>
+														<c:forEach items="${subjectList}" var="subjectList">
+															<li data-value="${subjectList.subjectNo}"><a href="#">${subjectList.subjectTitle}</a></li>
 														</c:forEach>
 													</ul>
-													
+
 												</div>
 												<input type="text" placeholder="제목" class="form-control " id="postTitle">
 
@@ -463,10 +463,10 @@
 
 		});
 
-		$("#subjectList").on("click", "a", function(){
-		    var $this = $(this).parent();
-		    $this.addClass("select").siblings().removeClass("select");
-		    $("#subjectNo").val($this.data("value"));
+		$("#subjectList").on("click", "a", function() {
+			var $this = $(this).parent();
+			$this.addClass("select").siblings().removeClass("select");
+			$("#subjectNo").val($this.data("value"));
 		})
 
 		/* 질의응답 저장 */
@@ -479,7 +479,7 @@
 							var markstr = $('#demo-summernote').summernote(
 									'code');
 							/* var cate = $(".category .btn:first-child").val(); */
-							
+
 							var subjectNo = $('#subjectNo').val();
 							var postTitle = $('#postTitle').val();
 							var selectedDate = $('#select-day').val();

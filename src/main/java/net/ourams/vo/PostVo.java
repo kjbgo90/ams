@@ -4,7 +4,6 @@ public class PostVo {
 	private int postNo;
 	private int postType;
 	private int userNo;
-	private int fileNo;
 	private int courseNo;
 	private String regDate;
 	private int communityNo;
@@ -21,14 +20,13 @@ public class PostVo {
 	public PostVo() {
 	}
 
-	public PostVo(int postNo, int postType, int userNo, int fileNo, int courseNo, String regDate, int communityNo,
+	public PostVo(int postNo, int postType, int userNo, int courseNo, String regDate, int communityNo,
 			int scheduleNo, String postTitle, String postContent, int hit, String category, String userName, int rownum,
 			int subjectNo, String subjectTitle) {
 		super();
 		this.postNo = postNo;
 		this.postType = postType;
 		this.userNo = userNo;
-		this.fileNo = fileNo;
 		this.courseNo = courseNo;
 		this.regDate = regDate;
 		this.communityNo = communityNo;
@@ -78,13 +76,6 @@ public class PostVo {
 		this.userNo = userNo;
 	}
 
-	public int getFileNo() {
-		return fileNo;
-	}
-
-	public void setFileNo(int fileNo) {
-		this.fileNo = fileNo;
-	}
 
 	public int getCourseNo() {
 		return courseNo;
@@ -185,12 +176,12 @@ public class PostVo {
 
 	@Override
 	public String toString() {
-		return "PostVo [postNo=" + postNo + ", postType=" + postType + ", userNo=" + userNo + ", fileNo=" + fileNo
-				+ ", courseNo=" + courseNo + ", regDate=" + regDate + ", communityNo=" + communityNo + ", scheduleNo="
-				+ scheduleNo + ", postTitle=" + postTitle + ", postContent=" + postContent + ", hit=" + hit
-				+ ", category=" + category + ", userName=" + userName + ", rownum=" + rownum + ", subjectNo="
-				+ subjectNo + ", subjectTitle=" + subjectTitle + "]";
+		return "PostVo [postNo=" + postNo + ", postType=" + postType + ", userNo=" + userNo + ", courseNo=" + courseNo
+				+ ", regDate=" + regDate + ", communityNo=" + communityNo + ", scheduleNo=" + scheduleNo
+				+ ", postTitle=" + postTitle + ", postContent=" + postContent + ", hit=" + hit + ", category="
+				+ category + ", userName=" + userName + ", rownum=" + rownum + ", subjectNo=" + subjectNo
+				+ ", subjectTitle=" + subjectTitle + "]";
 	}
-
-
+	
+	
 }
