@@ -21,5 +21,13 @@ public class ReplyDao {
 		return replyList;
 	}
 
+	public void insertReplyByReplyVo(ReplyVo registReplyVo) {
+		sqlSession.insert("reply.insertReplyByReplyVo", registReplyVo);
+	}
+
+	public ReplyVo selectReplyByReplyNo(int reply) {
+		return sqlSession.selectOne("reply.selectReplyByReplyNo", reply);
+	}
+
 
 }

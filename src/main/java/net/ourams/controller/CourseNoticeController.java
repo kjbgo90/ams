@@ -204,5 +204,15 @@ public class CourseNoticeController {
 
 		return "redirect:/" + coursePath + "/notice/read/" + postVo.getPostNo();
 	}
+	
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/comment/regist", method = RequestMethod.POST)
+	public ReplyVo commentRegist(@AuthUser UserVo authUser,
+								 @RequestParam("postNo") int postNo,
+								 @RequestParam("replyContent") String replyContent) {
+		
+		return courseReplyService.commentRegistAndGetReplyVo(authUser, postNo, replyContent);
+	}
 
 }

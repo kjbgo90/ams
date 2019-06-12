@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import net.ourams.dao.ReplyDao;
 import net.ourams.vo.ReplyVo;
+import net.ourams.vo.UserVo;
 
 @Service
 public class CourseReplyService {
@@ -20,6 +21,19 @@ public class CourseReplyService {
 		System.out.println("SSS");
 		System.out.println(replyList.toString());
 		return replyList;
+	}
+
+
+	public ReplyVo commentRegistAndGetReplyVo(UserVo authUser, int postNo, String replyContent) {
+		ReplyVo registReplyVo = new ReplyVo();
+		
+		registReplyVo.setPostNo(postNo);
+		registReplyVo.setUserNo(authUser.getUserNo());
+		registReplyVo.setReplyContent(replyContent);
+		
+		replyDao.insertReplyByReplyVo(registReplyVo);
+		
+		return replyDao.selectReplyByReplyNo(registReplyVo.getReply());
 	}
 
 
