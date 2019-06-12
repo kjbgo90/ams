@@ -31,5 +31,50 @@
 		]]>
 	</select>
 
-
+	<insert id="insertReplyByReplyVo" parameterType="ReplyVo">
+		<selectKey keyProperty="reply" resultType="int" order="BEFORE">
+			SELECT seq_reply_no.nextval FROM dual
+		</selectKey>
+		<![CDATA[
+			INSERT INTO reply(		reply,
+	    							postNo,
+	    							replyContent,
+	    							regDate,
+	    							userNo)
+			VALUES (
+	    							#{reply},
+	    							#{postNo}, 
+	    							#{replyContent},
+	    							sysdate,
+	    							#{userNo})
+		]]>
+	</insert>
+	
+	<select id="selectReplyByReplyNo" parameterType="int" resultType="ReplyVo">
+		<![CDATA[
+				   
+            select reply,
+                   postNo, 
+                   userNo,
+                   regDate,
+                   replyContent,
+                   userName,
+                   logoPath
+            from (                           
+            
+            
+                SELECT  reply,
+                        postNo,
+						r.userNo userNo,
+						TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,
+						replyContent,
+				        u.userName userName,
+                        u.logoPath logoPath
+                        
+				        FROM reply r join users u
+                        on r.userNo = u.userNo )
+                        where reply = #{reply}
+                        
+		]]>
+	</select>
 </mapper>

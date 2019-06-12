@@ -191,32 +191,30 @@
 							</div>
 							<br>
 							<br>
-							<br>
-							<br>
+							
 							
 							
 							<!-- Comment form -->
 							<!--===================================================-->
 							<hr class="new-section-sm bord-no">
 							<p class="text-lg text-main text-bold text-uppercase">Leave a comment</p>
-							<form role="form">
-								<div class="row">
+							
+							<div class="row">
 
-									<div class="col-md-12">
-										<div class="form-group">
-											<textarea class="form-control" rows="9" placeholder="Your comment"></textarea>
-										</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<textarea class="form-control" rows="9" placeholder="Your comment" id="commentContent"></textarea>
 									</div>
 								</div>
-							</form>
-							<button id="mail-send-btn" type="button" class="btn btn-primary">
+							</div>
+							<button id="btn-comment-regist" type="button" class="btn btn-primary pull-right">
 								<i class=" icon-xs icon-fw "></i>댓글등록
 							</button>
+							
+							<br>
+							<br>
 							<!--===================================================-->
 							<!-- End Comment form -->
-
-
-
 
 							<hr class="new-section-sm">
 							<p class="text-lg text-main text-bold text-uppercase pad-btm">Comments</p>
@@ -225,19 +223,19 @@
 
 							<!-- Comments -->
 							<!--===================================================-->
-							<c:forEach items="${replylist}" var="replylist">
-							<div class="comments media-block">
-								<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/${replylist.logoPath}"></a>
-								<div class="media-body">
-									<div class="comment-header">
-										<a href="#" class="media-heading box-inline text-main text-bold">${replylist.userName}</a>
-										<p class="text-muted text-sm">${replylist.regDate}</p>
+							<div class="comments media-block" id="commentDiv">
+								<c:forEach items="${replylist}" var="replylist">
+									<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/${replylist.logoPath}"></a>
+									<div class="media-body">
+										<div class="comment-header">
+											<a href="#" class="media-heading box-inline text-main text-bold">${replylist.userName}</a>
+											<p class="text-muted text-sm">${replylist.regDate} </p>
+										</div>
+										<p>${replylist.replyContent}</p>
+	
 									</div>
-									<p>${replylist.replyContent}</p>
-
-								</div>
+								</c:forEach>
 							</div>
-							</c:forEach>
 							<!--===================================================-->
 							<!-- End Comments -->
 
@@ -313,4 +311,42 @@
 
 
 </body>
+<script type="text/javascript">
+	$("#btn-comment-regist").on("click", function(){
+		var replyContent = $("#commentContent").val();
+		var postNo = '${PostVo.postNo}';
+		console.log(postNo);
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath }/${coursePath}/notice/comment/regist",
+			type : "post",
+			data : {postNo : postNo, replyContent : replyContent},
+			dataType : "json",
+			success : function(replyVo) {
+				console.log(replyVo);
+				$("#commentContent").val("");
+				replyRender(replyVo);
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	});
+	
+	function replyRender(replyVo){
+		var str = "";
+		
+		str += "<a class='media-left' href='#''><img class='img-circle img-sm' alt='Profile Picture' src='${pageContext.request.contextPath }/" + replyVo.logoPath + "'></a>";
+		str += "<div class='media-body'>";
+		str += "	<div class='comment-header'>";
+		str += "		<a href='#' class='media-heading box-inline text-main text-bold'>" + replyVo.userName + "</a>";
+		str += "		<p class='text-muted text-sm'>" + replyVo.regDate + "</p>";
+		str += "	</div>";
+		str += "	<p>" + replyVo.replyContent + "</p>";
+		str += "</div>";
+		
+		$("#commentDiv").append(str);
+	}
+</script>
+
 </html>
