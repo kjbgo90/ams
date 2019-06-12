@@ -171,6 +171,10 @@ public class CourseMainService {
 		return courseMDao.selectCourseVoByCoursePath(coursePath);
 	}
 
+	public UserVo getUserInfo(int userNo) {
+		return courseMDao.selectUserVoByUserNo(userNo);
+	}
+
 	
 
 }

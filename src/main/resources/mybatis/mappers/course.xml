@@ -218,16 +218,30 @@
 	<select id="selectUserListByCourseNo" parameterType="int" resultType="UserVo">
 		<![CDATA[
 			SELECT 		u.userNo,
-       					email,
        					userName,
        					userType,
        					logoPath,
-       					phoneNumber,
        					NVL(seatNo, 0) as seatNo
 			FROM   		users u JOIN courseregist c
 				ON		u.userNo = c.userNo
 			WHERE  		courseNo = #{courseNo}
 			
+		]]>
+	</select>
+	
+	<select id="selectUserVoByUserNo" parameterType="int" resultType="UserVo">
+		<![CDATA[
+			SELECT userNo,
+				   email,
+				   userName,
+				   userType,
+				   logoPath,
+				   phoneNumber,
+				   ((SELECT COUNT(postNo) FROM   post WHERE  post.userNo = #{userNo}) + 
+                    (SELECT COUNT(assignmentNo) FROM assignment WHERE assignment.teacherno = #{userNo}) + 
+                    (SELECT COUNT(submitNo) FROM submit WHERE submit.userno = #{userNo})) as postCnt
+			FROM users
+			where userNo = #{userNo}
 		]]>
 	</select>
 </mapper>

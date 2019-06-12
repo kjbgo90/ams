@@ -57,6 +57,13 @@ public class CourseMainController {
 		return "redirect:/" + coursePath + "/main";
 	}
 	
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/main/userinfo", method = RequestMethod.POST)
+	public UserVo userInfo(@RequestParam("userNo") int userNo) {
+		return courseMService.getUserInfo(userNo);
+	}
+	
 	@RequestMapping(value = "/404page", method = RequestMethod.GET)
 	public String courseError() {
 		return "course/page-404";

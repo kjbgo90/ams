@@ -107,5 +107,9 @@ public class CourseMainDao {
 		return sqlSession.update("course.updateCourseregistByMap", map);
 	}
 
+	public UserVo selectUserVoByUserNo(int userNo) {
+		return sqlSession.selectOne("course.selectUserVoByUserNo", userNo);
+	}
+
 	
 }

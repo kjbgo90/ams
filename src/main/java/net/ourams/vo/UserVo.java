@@ -9,6 +9,7 @@ public class UserVo {
 	private String logoPath;
 	private String phoneNumber;
 	private int seatNo;
+	private int postCnt;
 
 	public UserVo() {
 	}
@@ -25,7 +26,7 @@ public class UserVo {
 	}
 
 	public UserVo(int userNo, String email, String password, String userName, int userType, String logoPath,
-			String phoneNumber, int seatNo) {
+			String phoneNumber, int seatNo, int postCnt) {
 		this.userNo = userNo;
 		this.email = email;
 		this.password = password;
@@ -34,6 +35,7 @@ public class UserVo {
 		this.logoPath = logoPath;
 		this.phoneNumber = phoneNumber;
 		this.seatNo = seatNo;
+		this.postCnt = postCnt;
 	}
 
 	public int getUserNo() {
@@ -100,11 +102,19 @@ public class UserVo {
 		this.seatNo = seatNo;
 	}
 
+	public int getPostCnt() {
+		return postCnt;
+	}
+
+	public void setPostCnt(int postCnt) {
+		this.postCnt = postCnt;
+	}
+
 	@Override
 	public String toString() {
 		return "UserVo [userNo=" + userNo + ", email=" + email + ", password=" + password + ", userName=" + userName
 				+ ", userType=" + userType + ", logoPath=" + logoPath + ", phoneNumber=" + phoneNumber + ", seatNo="
-				+ seatNo + "]";
+				+ seatNo + ", postCnt=" + postCnt + "]";
 	}
 
 }
