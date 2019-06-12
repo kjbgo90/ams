@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
@@ -20,35 +21,54 @@
 <!--=================================================-->
 
 <!--나눔 고딕 Font [ OPTIONAL ] -->
-<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap"
+	rel="stylesheet">
 
 <!--Bootstrap Stylesheet [ REQUIRED ]-->
-<link href="${pageContext.request.contextPath }/assets/css/bootstrap.css" rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath }/assets/css/bootstrap.css"
+	rel="stylesheet">
 
 <!--Nifty Stylesheet [ REQUIRED ]-->
-<link href="${pageContext.request.contextPath }/assets/css/nifty.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/assets/css/nifty.css"
+	rel="stylesheet">
 
 <!--Nifty Premium Icon [ DEMONSTRATION ]-->
-<link href="${pageContext.request.contextPath }/assets/css/demo/nifty-demo-icons.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath }/assets/css/premium/icon-sets/icons/line-icons/premium-line-icons.min.css" rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath }/assets/css/demo/nifty-demo-icons.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath }/assets/css/premium/icon-sets/icons/line-icons/premium-line-icons.min.css"
+	rel="stylesheet">
 <!--=================================================-->
 
 
 
 <!--Pace - Page Load Progress Par [OPTIONAL]-->
-<link href="${pageContext.request.contextPath }/assets/css/pace.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/assets/css/pace.css"
+	rel="stylesheet">
 <script src="${pageContext.request.contextPath }/assets/js/pace.js"></script>
 
 
 <!--Dropzone [ OPTIONAL ]-->
-<link href="${pageContext.request.contextPath }/assets/plugins/dropzone/dropzone.css" rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath }/assets/plugins/dropzone/dropzone.css"
+	rel="stylesheet">
 
 <!--Chosen [ OPTIONAL ]-->
-<link href="${pageContext.request.contextPath }/assets/plugins/chosen/chosen.css" rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath }/assets/plugins/chosen/chosen.css"
+	rel="stylesheet">
 
 
 <!--JSTree [ OPTIONAL ]-->
-<link href="${pageContext.request.contextPath }/assets/plugins/jstree/themes/default/style.css" rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath }/assets/plugins/jstree/themes/default/style.css"
+	rel="stylesheet">
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script> 
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery.gdocsviewer.min.js"></script> 
 
 
 <!--=================================================
@@ -103,8 +123,10 @@
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<ol class="breadcrumb">
 						<li><a href="#"><i class="demo-pli-home"></i></a></li>
-						<li> 자료실 </li>
-						<li class="active">나의 자료실</li>
+						<li>자료실</li>
+						<li class="active">
+						
+								PDF at mozdev.org</a>나의 자료실</li>
 					</ol>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<!--End breadcrumb-->
@@ -122,29 +144,33 @@
 							<div class="fixed-fluid">
 								<div class="fixed-sm-200 pull-sm-left file-sidebar">
 									<div class="bord-btm pad-btm">
-										<button data-target="#demo-lg-modal" data-toggle="modal" class="btn btn-warning">UPLOAD</button>
+										<button data-target="#lg-modal" data-toggle="modal"
+											class="btn btn-warning">UPLOAD</button>
+											
 									</div>
 
-									<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Folders</p>
+									<p
+										class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Folders</p>
 									<div class="list-group bg-trans pad-btm bord-btm">
 										<div id="fileTree">
 											<ul id="fileTreeList">
-											
+
 											</ul>
 										</div>
 									</div>
-									
 
-									<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Tags</p>
+
+									<p
+										class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Tags</p>
 									<ul id="tagList" class="list-inline mar-hor">
-										
+
 									</ul>
 								</div>
 								<div class="fluid file-panel">
 									<div class="bord-btm pad-ver">
-										
+
 										<!-- 바뀌게 만들기  -->
-										<ol class="breadcrumb">
+										<ol id="changeFolder" class="breadcrumb">
 											<li><a href="#">Home</a></li>
 											<li><a href="#">App Views</a></li>
 											<li class="active">File Manager</li>
@@ -152,38 +178,32 @@
 									</div>
 									<div class="file-toolbar bord-btm">
 										<div class="btn-file-toolbar">
-											<a class="btn btn-icon add-tooltip" id="goHome" data-original-title="Home" data-toggle="tooltip"> <i class="icon-2x demo-pli-home"></i>
-											</a> <a class="btn btn-icon add-tooltip" id="refreshHere" data-original-title="Refresh" data-toggle="tooltip"> <i class="icon-2x demo-pli-reload-3"></i>
+											<a class="btn btn-icon add-tooltip" id="goHome"
+												data-original-title="Home" data-toggle="tooltip"> <i
+												class="icon-2x demo-pli-home"></i>
+											</a> <a class="btn btn-icon add-tooltip" id="refreshHere"
+												data-original-title="Refresh" data-toggle="tooltip"> <i
+												class="icon-2x demo-pli-reload-3"></i>
 											</a>
 										</div>
 										<div class="btn-file-toolbar">
-											<a class="btn btn-icon add-tooltip" id="newFolder" data-original-title="New Folder" data-toggle="tooltip"> <i class="icon-2x demo-pli-folder"></i>
-											</a> 
+											<a class="btn btn-icon add-tooltip" id="newFolder"
+												data-original-title="New Folder" data-toggle="tooltip">
+												<i class="icon-2x demo-pli-folder"></i>
+											</a>
 										</div>
 										<div class="btn-file-toolbar pull-right">
-											<a class="btn btn-icon add-tooltip" id="deleteAnybody" data-original-title="Delete" data-toggle="tooltip"> <i class="icon-2x demo-pli-recycling"></i>
-											</a> <a class="btn btn-icon add-tooltip" id="downloadFile" data-original-title="Download" data-toggle="tooltip"> <i class="icon-2x demo-pli-download-from-cloud"></i>
+											<a class="btn btn-icon add-tooltip" id="deleteAnybody"
+												data-original-title="Delete" data-toggle="tooltip"> <i
+												class="icon-2x demo-pli-recycling"></i>
+											</a> <a class="btn btn-icon add-tooltip" id="downloadFile"
+												data-original-title="Download" data-toggle="tooltip"> <i
+												class="icon-2x demo-pli-download-from-cloud"></i>
 											</a>
 										</div>
 									</div>
 									<ul id="fileList" class="file-list">
-										<!--File list item-->
-										<li>
-											<div class="file-control">
-												<input class="magic-checkbox" type="checkbox"> <label for="file-list-1"></label>
-											</div>
-											<div class="file-attach-icon"></div> 
-											<a href="#" class="file-details">
-												<div class="media-block">
-													<div class="media-left">
-														<i class="demo-psi-folder"></i>
-													</div>
-													<div class="media-body">
-														<p class="file-name single-line">...</p>
-													</div>
-												</div>
-											</a>
-										</li>
+										
 									</ul>
 								</div>
 							</div>
@@ -218,7 +238,7 @@
 		<!--  모달 창  -->
 		<!--Large Bootstrap Modal-->
 		<!--===================================================-->
-		<div id="demo-lg-modal" class="modal fade" tabindex="-1">
+		<div id="lg-modal" class="modal fade" tabindex="-1">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -235,15 +255,17 @@
 								<h3 class="panel-title">UPLOAD FILE AND INSERT TAG</h3>
 							</div>
 							<div class="panel-body">
-								<p class="text-main text-bold mar-no bord-btm">Drag’n’drop file uploads</p>
+								<p class="text-main text-bold mar-no bord-btm">Drag’n’drop
+									file uploads</p>
 								<p>And then insert tag here</p>
 								<!-- Multiple Select Choosen
 							 		태크, 코스, 파일 개별적으로 저장 -->
 								<!--===================================================-->
-							
-									<select id="tag-multiselect" class="tag_muti" data-placeholder="Choose a Course..." multiple tabindex="4">
-									</select>
-								
+
+								<select id="tag-multiselect" class="tag_muti"
+									data-placeholder="Choose a Course..." multiple tabindex="4">
+								</select>
+
 								<!--===================================================-->
 
 								<br> <br> <br> <br>
@@ -251,7 +273,7 @@
 
 								<!--Dropzonejs-->
 								<!--===================================================-->
-								
+
 								<div id="dropzone" class="dropzone ">
 									<div class="dz-default dz-message">
 										<div class="dz-icon">
@@ -266,13 +288,14 @@
 										<input name="file" type="file" multiple>
 									</div>
 								</div>
-									<!-- 위에 저장된 파일들의 정보들을 가져와서 리스트들을 뽑아보자  -->
-								
-									
-									<div class="bord-btm pad-btm">
-										<button id="insertTagFileUpLoad" type="submit" data-target="#demo-lg-modal" data-toggle="modal" class="btn tbn-default">UPLOAD</button>
-									</div> 
-									
+								<!-- 위에 저장된 파일들의 정보들을 가져와서 리스트들을 뽑아보자  -->
+
+
+								<div class="bord-btm pad-btm">
+									<button id="insertTagFileUpLoad" data-target="#lg-modal"
+										type="submit" data-toggle="modal" class="btn tbn-default">UPLOAD</button>
+								</div>
+
 								<!--===================================================-->
 								<!-- End Dropzonejs -->
 
@@ -324,11 +347,13 @@
 	<!--=================================================-->
 
 	<!--jQuery [ REQUIRED ]-->
-	<script src="${pageContext.request.contextPath }/assets/js/jquery.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/assets/js/jquery.min.js"></script>
 
 
 	<!--BootstrapJS [ RECOMMENDED ]-->
-	<script src="${pageContext.request.contextPath }/assets/js/bootstrap.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/assets/js/bootstrap.js"></script>
 
 
 	<!--NiftyJS [ RECOMMENDED ]-->
@@ -339,59 +364,54 @@
 
 	<!--=================================================-->
 	<!--Dropzone [ OPTIONAL ]-->
-	<script src="${pageContext.request.contextPath }/assets/plugins/dropzone/dropzone.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/assets/plugins/dropzone/dropzone.js"></script>
 
 
 
 	<!--Chosen [ OPTIONAL ]-->
-	<script src="${pageContext.request.contextPath }/assets/plugins/chosen/chosen.jquery.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/assets/plugins/chosen/chosen.jquery.js"></script>
 
 
 
 	<!--JSTree [ OPTIONAL ]-->
-	<script src="${pageContext.request.contextPath }/assets/plugins/jstree/jstree.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/assets/plugins/jstree/jstree.js"></script>
 
 
 	<script type="text/javascript">
+	
+		//클릭 안했을때 
 		$(document).on('nifty.ready',function() {
 			
+		
+			
+			var courseNo=1 
+			var dataRoomNo=1 
+			
+
+			
+			//2. 폴더하고 파일리스트 뽑아주는것 
 			strList = "";
 			$.ajax({
 				url : "${pageContext.request.contextPath }/dataroom/folderList",
 				type : "post",
 				dataType : "json",
+				data:{
+					courseNo:courseNo,
+					dataRoomNo:dataRoomNo
+				},
 				success : function(list) {
 					console.log(list);
 					console.log(list[0].dataRoomNo);
 					var no = list[0].dataRoomNo;
 					
+					strFolderListAtFirst();
+					
 					for (var i = 0; i < list.length; i++) {
 						console.log(list.length);
-						
-						// list 찾기 !!
-						
-						strList += "<li>";
-						strList += "	<div class='file-control'>";
-						strList += "		<input id="+"dataRoomList"+list[i].dataRoomNo+" class='magic-checkbox' type='checkbox'> ";
-						strList += "		<label for="+"dataRoomList"+list[i].dataRoomNo+"></label>";
-						strList += "	</div>";
-						strList += "	<div class='file-settings'>";
-						strList += "		<a href='#'><i class='pci-ver-dots'></i></a> ";
-						strList += "	</div>";
-						strList += "	<div class='file-attach-icon'></div> ";
-						// 폴더는 폴더 안으로 들어가게 하고 파일중에 pdf이면 어디선가에서 프리뷰로 보게 했으면 좋겠다 
-						strList += "	<a href='#' class='file-details'>";
-						strList += "		<div class='media-block'>";
-						strList += "			<div class='media-left'>";
-						strList += "				<i class='demo-psi-folder'></i>";
-						strList += "			</div>";
-						strList += "			<div class='media-body/>";
-						strList += "				<p class='file-name'>"+list[i].dataRoomName+"</p>";
-						strList += "				<small>folder</small>";
-						strList += "			</div>";
-						strList += "		</div>";
-						strList += "	</a>";		
-						strList += "</li>";
+						strFolderList(list[i]);
 					}
 					$("#fileList").append(strList);
 					
@@ -401,7 +421,38 @@
 					console.error(status + " : " + error);
 				}
 			});
+			strList2 = "";
+			$.ajax({
+				url : "${pageContext.request.contextPath }/dataroom/fileList",
+				type : "post",
+				data:{
+					courseNo:courseNo,
+					dataRoomNo:dataRoomNo
+				},
+				dataType : "json",
+				success : function(list) {
+					console.log(list);
+					console.log(list[0].dataRoomNo);
+					var no = list[0].dataRoomNo;
+					
+					for (var i = 0; i < list.length; i++) {
+						console.log(list.length);
+						
+						strFileList(list[i]);
+							
+					}
+					$("#fileList").append(strList2);
+					
+					strList2 = "";
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			//!폴더하고 파일리스트 뽑아주는것 
 			
+			
+			//태그 리스트
 			tagList = "";
 			$.ajax({
 				url : "${pageContext.request.contextPath }/dataroom/tagList",
@@ -429,17 +480,53 @@
 				}
 			});
 			
+			
+			//태득 선택했을때 나오는 파일 리스트들 
+			strList2 = "";
 			$("#tagList").on("click","li",function(){
 				console.log("select tag List !!")
 				
 				$this = $(this);
 				console.log($this);
-				var dataTagNo = $this.data("dataTagNo");
+				var dataTagNo = $this.data("datatagno");
 				console.log(dataTagNo);
+				
+				
+				$.ajax({
+					url : "${pageContext.request.contextPath }/dataroom/SelectTagOnByDataTagNo",
+					type : "post",
+					data : {
+						dataTagNo : dataTagNo
+					}, 
+					dataType : "json",
+					success : function(list) {
+						console.log(list);
+						if(list.length != 0 ){
+							for (var i = 0; i < list.length; i++) {
+							console.log(list.length);
+							
+							strFileList(list[i]);
+							
+							}
+						}else{
+							console.log("empty !!")
+						}
+						$("#fileList").html(strList2);
+						
+						
+						strList2 = "";
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
 				
 							
 			});
 			
+			
+			
+			//업로드할때 태그 
 			tagList2 = "";
 			$.ajax({
 				url : "${pageContext.request.contextPath }/dataroom/tagList",
@@ -469,137 +556,563 @@
 				}
 			});
 			
-	
+			//3.  새로고침 
+			$("#refreshHere").on("click",function(){
+				console.log("refresh here!!");
+				$("#fileList").empty("")
+				strList = "";
+				$.ajax({
+					url : "${pageContext.request.contextPath }/dataroom/folderList",
+					type : "post",
+					dataType : "json",
+					data:{
+						courseNo:courseNo,
+						dataRoomNo:dataRoomNo
+					},
+					success : function(list) {
+						
+						if(list.length != 0){
+						console.log(list);
+						console.log(list[0].dataRoomNo);
+						var no = list[0].dataRoomNo;
+						
+						strFolderListAtFirst();
+						
+						for (var i = 0; i < list.length; i++) {
+							console.log(list.length);
+							strFolderList(list[i]);
+						}
+						$("#fileList").append(strList);
+						
+						strList = "";
+						
+						}else{
+							console.log("empty")
+						}
+						
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
+				strList2 = "";
+				$.ajax({
+					url : "${pageContext.request.contextPath }/dataroom/fileList",
+					type : "post",
+					data:{
+						courseNo:courseNo,
+						dataRoomNo:dataRoomNo
+					},
+					dataType : "json",
+					success : function(list) {
+						if(list.length != 0){
+						console.log(list);
+						console.log(list[0].dataRoomNo);
+						var no = list[0].dataRoomNo;
+						
+						for (var i = 0; i < list.length; i++) {
+							console.log(list.length);
+							
+							strFileList(list[i]);
+								
+						}
+						$("#fileList").append(strList2);
+						
+						strList2 = "";
+						
+						}else{
+							console.log("empty")
+						}
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
+				
+			});
+			
+			
+			
+
+			// 4. 폴더 생성 버튼 클릭시 나오는 버튼 
+			$("#newFolder").on("click",function(){
+				strList = "";
+				console.log("add new folder "+dataRoomNo);
+				$.ajax({
+					url : "${pageContext.request.contextPath }/dataroom/insertFolderByDataRoomNo",
+					type : "post",
+					data : {
+						dataRoomNo : dataRoomNo
+					},
+					dataType : "json",
+					success : function(CourseDataroomVo) {
+						console.log("new folder ")
+						console.log(CourseDataroomVo);
+						
+						strFolderList(CourseDataroomVo);
+						$("#fileList").append(strList);
+						strList = "";
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
+			});
+			
+			
+			
+			
+			
+			
 		
 			
-			//tree -> 최상위 폴더에서 리스트를 다 뽑는다. -> 
-			// pRoomNp=0 -> list-> ( list[0]-> no = proomNo ) -> list ... if((no = proomno)=0) end       
-			FolderRootList="";
+			
+
+			
+			
+		});
+
+		$("file-control").on("click",function(){
+			console.log("asdf");
+		});
+
+		
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		$("#fileList").on("click","a",function(){
+			strList="";
+			console.log("hi")
+			$this = $(this);
+			console.log($this);
+			var dataRoomNo = $this.data("dataroomno");
+			console.log(dataRoomNo);
+			var courseNo = 1 ;
+			$("#fileList").empty("")
+			strList = "";
 			$.ajax({
-				url : "${pageContext.request.contextPath }/dataroom/RootFileList",
+				url : "${pageContext.request.contextPath }/dataroom/folderList",
 				type : "post",
 				dataType : "json",
+				data:{
+					courseNo:courseNo,
+					dataRoomNo:dataRoomNo
+				},
 				success : function(list) {
+					
+					if(list.length != 0){
 					console.log(list);
+					console.log(list[0].dataRoomNo);
+					var no = list[0].dataRoomNo;
+					
+					strFolderListAtFirst();
 					
 					for (var i = 0; i < list.length; i++) {
 						console.log(list.length);
-						console.log(list[i].dataRoomNo)
-						// list 찾기 !!
-						FolderRootList +="<li id="+"dataRoomNo"+list[i].dataRoomNo+" class='jstree-open'>"+list[i].dataRoomName;
-						FolderRootList +="<ul>";
-						FolderRootList +="<li class='jstree-open'>"+list[i].dataRoomName;
-						FolderRootList +="<ul>";
-						
-						FolderRootList +="</ul>";
-						FolderRootList +="</li>";
-						FolderRootList +="</ul>";
-						FolderRootList +="</li>";
-						
+						strFolderList(list[i]);
 					}
-					$("#fileTreeList").html(FolderRootList);
-					FolderRootList="";
+					$("#fileList").append(strList);
 					
+					strList = "";
 					
+					}else{
+						console.log("empty")
+					}
 					
-					// Custom Icon - Premium Solid Icons
-					// =================================================================
-					// Require JSTree & Premium Icons
-					// =================================================================
-					$('#fileTree').jstree({
-						'core' : {
-							'check_callback' : true
-						},
-						'plugins' : [ 'types', 'dnd' ],
-						'types' : {
-							'default' : {
-								'icon' : 'demo-pli-folder'
-							},
-							'html' : {
-								'icon' : 'demo-pli-file-html'
-							},
-							'file' : {
-								'icon' : 'demo-pli-file'
-							},
-							'jpg' : {
-								'icon' : 'demo-pli-file-jpg'
-							},
-							'zip' : {
-								'icon' : 'demo-pli-file-zip'
-							}
-						}
-					});
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			strList2 = "";
+			$.ajax({
+				url : "${pageContext.request.contextPath }/dataroom/fileList",
+				type : "post",
+				data:{
+					courseNo:courseNo,
+					dataRoomNo:dataRoomNo
+				},
+				dataType : "json",
+				success : function(list) {
+					if(list.length != 0){
+					console.log(list);
+					console.log(list[0].dataRoomNo);
+					var no = list[0].dataRoomNo;
 					
-					$("#dataRoomNo1").on("click",function(){
-						$this=$(this);
-						console.log($this);
+					for (var i = 0; i < list.length; i++) {
+						console.log(list.length);
 						
-					});
+						strFileList(list[i]);
+							
+					}
+					$("#fileList").append(strList2);
+					
+					strList2 = "";
+					
+					}else{
+						console.log("empty")
+					}
 				},
 				error : function(XHR, status, error) {
 					console.error(status + " : " + error);
 				}
 			});
 			
+			//3. 새로 고침 ~
+			$("#refreshHere").on("click",function(){
+				var dataRoomNo = $this.data("dataroomno");
+				console.log(dataRoomNo);
+				console.log("refresh here!!");
+				$("#fileList").empty("")
+				strList = "";
+				$.ajax({
+					url : "${pageContext.request.contextPath }/dataroom/folderList",
+					type : "post",
+					dataType : "json",
+					data:{
+						courseNo:courseNo,
+						dataRoomNo:dataRoomNo
+					},
+					success : function(list) {
+						
+						if(list.length != 0){
+						console.log(list);
+						console.log(list[0].dataRoomNo);
+						var no = list[0].dataRoomNo;
+						
+						strFolderListAtFirst();
+						
+						for (var i = 0; i < list.length; i++) {
+							console.log(list.length);
+							strFolderList(list[i]);
+						}
+						$("#fileList").append(strList);
+						
+						strList = "";
+						
+						}else{
+							console.log("empty")
+						}
+						
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
+				strList2 = "";
+				$.ajax({
+					url : "${pageContext.request.contextPath }/dataroom/fileList",
+					type : "post",
+					data:{
+						courseNo:courseNo,
+						dataRoomNo:dataRoomNo
+					},
+					dataType : "json",
+					success : function(list) {
+						if(list.length != 0){
+						console.log(list);
+						console.log(list[0].dataRoomNo);
+						var no = list[0].dataRoomNo;
+						
+						for (var i = 0; i < list.length; i++) {
+							console.log(list.length);
+							
+							strFileList(list[i]);
+								
+						}
+						$("#fileList").append(strList2);
+						
+						strList2 = "";
+						
+						}else{
+							console.log("empty")
+						}
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
+				
+			});
+
+			// 4.폴더 생성 버튼 클릭시 나오는 버튼 
+			$("#newFolder").on("click",function(){
+				strList = "";
+				console.log("add new folder "+dataRoomNo);
+				$.ajax({
+					url : "${pageContext.request.contextPath }/dataroom/insertFolderByDataRoomNo",
+					type : "post",
+					data : {
+						dataRoomNo : dataRoomNo
+					},
+					dataType : "json",
+					success : function(CourseDataroomVo) {
+						console.log("new folder ")
+						console.log(CourseDataroomVo);
+						
+						strFolderList(CourseDataroomVo);
+						$("#fileList").append(strList);
+						strList = "";
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
+			});
+			
 			
 
-		});
-
-		$("file-control").on("click",function(){
-			console.log("asdf");
+			
+			
 		});
 		
-		$("#refreshHere").on("click",function(){
-			console.log("refresh here!!");
-		});
+		$(".file-details").on("click",function(){
+			console.log("hi")
+		
+		})
+		
 	
-		$("#newFolder").on("click",function(){
-			console.log("add new folder ")
-		});
+		
+		
 		
 		$("#deleteAnybody").on("click",function(){
 			console.log("delete anybody ")
-			//안에 폴더가 있으면 경고창 넣고 삭제하시겠습니까?라고 물어보기 
+			//안에 폴더가 있으면 경고창 넣고 삭제하시겠습니까?라고 물어보기
+					
+			var checklength = $('input:checkbox[name="checkingFileBox"]').length
+			console.log(checklength);
+			var checkingList = $('input:checkbox[name="checkingFileBox"]');
+			console.log(checkingList);
+			var checkedlength = $('input:checkbox[name="checkingFileBox"]:checked').length
+			console.log(checkedlength);
+			var chekedList = $('input:checkbox[name="checkingFileBox"]:checked');
+			
+			console.log(chekedList);
+			
 		});
+		
+		
 		
 		$("#downloadFile").on("click",function(){
 			console.log("download this  ")
 			//파일말고 폴더를 클릭했을 때에는 파일만 다운로드 가능하게 만들거나 폴더에 있는 모든 리스트들을 다운받기 
 			//alert 경고 표시 
+			
+			
+		});
+		
+
+		strList2 = "";
+		strList = "";
+		
+		
+	
+			
+		
+		
+
+		
+		//집으로 ~~
+		$("#goHome").on("click",function(){
+			var courseNo=1 
+			var dataRoomNo=1 
+			console.log("go Home !!");
+			
+			$("#fileList").empty("")
+			
+			strList = "";
+			$.ajax({
+				url : "${pageContext.request.contextPath }/dataroom/folderList",
+				type : "post",
+				dataType : "json",
+				data:{
+					courseNo:courseNo,
+					dataRoomNo:dataRoomNo
+				},
+				success : function(list) {
+					console.log(list);
+					console.log(list[0].dataRoomNo);
+					var no = list[0].dataRoomNo;
+					
+					strFolderListAtFirst();
+					
+					for (var i = 0; i < list.length; i++) {
+						console.log(list.length);
+						strFolderList(list[i]);
+					}
+					$("#fileList").append(strList);
+					
+					strList = "";
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			strList2 = "";
+			$.ajax({
+				url : "${pageContext.request.contextPath }/dataroom/fileList",
+				type : "post",
+				data:{
+					courseNo:courseNo,
+					dataRoomNo:dataRoomNo
+				},
+				dataType : "json",
+				success : function(list) {
+					console.log(list);
+					console.log(list[0].dataRoomNo);
+					var no = list[0].dataRoomNo;
+					
+					for (var i = 0; i < list.length; i++) {
+						console.log(list.length);
+						
+						strFileList(list[i]);
+							
+					}
+					$("#fileList").append(strList2);
+					
+					strList2 = "";
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			
 		});
 		
 
 		
-		$("#goHome").on("click",function(){
-			console.log("go Home !!");
-		});
-	
 		
-		function fileList(CourseDataroomVo, updown){
-			strListOne = "";
-			strListOne += "<li>";
-			strListOne += "	<div class='file-control'>";
-			strListOne += "		<input id='file-list-9' class='magic-checkbox' type='checkbox'> ";
-			strListOne += "		<label for='file-list-9'></label>";
-			strListOne += "	</div>";
-			strListOne += "	<div class='file-settings'>";
-			strListOne += "		<a href='#'><i class='pci-ver-dots'></i></a> ";
-			strListOne += "	</div>";
-			strListOne += "	<div class='file-attach-icon'></div> ";
-			strListOne += "	<a href='#' class='file-details'>";
-			strListOne += "		<div class='media-block'>";
-			strListOne += "			<div class='media-left'>";
-			strListOne += "				<i class='demo-pli-file-jpg'></i>";
-			strListOne += "			</div>";
-			strListOne += "			<div class='media-body/>";
-			strListOne += "				<p class='file-name'>Nature.jpg</p>";
-			strListOne += "				<small>Created 3 weeks ago | 56 KB</small>";
-			strListOne += "			</div>";
-			strListOne += "		</div>";
-			strListOne += "	</a>";		
-			strListOne += "</li>";
+		
+		function strFileList(CourseDataroomVo ){
+			// list 찾기 !!
+			strList2 += "<li>";
+			strList2 += "	<div class='file-control'>";
+			strList2 += "		<input id="+"dataRoomList"+CourseDataroomVo.fileNo+" class='magic-checkbox' name='checkingFileBox' type='checkbox'> ";
+			strList2 += "		<label for="+"dataRoomList"+CourseDataroomVo.fileNo+"></label>";
+			strList2 += "	</div>";
+			strList2 += "	<div class='file-settings'>";
+			strList2 += "	</div>";
+			strList2 += "	<div class='file-attach-icon'></div> ";
+			// 폴더는 폴더 안으로 들어가게 하고 파일중에 pdf이면 어디선가에서 프리뷰로 보게 했으면 좋겠다 
+			
+			var ext = CourseDataroomVo.fileName.split('.').pop().toLowerCase();
+			console.log(ext)
+			
+			
+			if(ext == 'jpg'){
+				strList2 += "	<a href='#' class='file-details'>";
+				strList2 += "		<div class='media-block'>";
+				strList2 += "			<div class='media-left'>";
+				strList2 += "				<i class='demo-pli-file-jpg'></i>";
+				
+			}else if(ext == 'html'){
+				strList2 += "	<a href='#' class='file-details'>";
+				strList2 += "		<div class='media-block'>";
+				strList2 += "			<div class='media-left'>";
+				strList2 += "				<i class='demo-pli-file-html'></i>";
+				
+			}else if(ext == 'txt'){
+				strList2 += "	<a href='#' class='file-details'>";
+				strList2 += "		<div class='media-block'>";
+				strList2 += "			<div class='media-left'>";
+				strList2 += "				<i class='demo-pli-file-txt'></i>";
+				
+			}else if(ext == 'doc'){
+				strList2 += "	<a href='#' class='file-details'>";
+				strList2 += "		<div class='media-block'>";
+				strList2 += "			<div class='media-left'>";
+				strList2 += "				<i class='demo-pli-doc'></i>";
+				
+			}else if(ext == 'pdf'){
+				strList2 += "	<a href='https://docs.google.com/gview?url="+CourseDataroomVo.filePath+"&embedeede=true' class='embed file-details' id='test'>";
+				strList2 += "		<div class='media-block'>";
+				strList2 += "			<div class='media-left'>";
+				strList2 += "				<i class='demo-pli-doc'></i>";
+				
+			}else if(ext == 'ppt'){
+				strList2 += "	<a href='https://docs.google.com/gview?url="+CourseDataroomVo.filePath+"&embedeede=true' class='embed file-details' id='test'>";
+				strList2 += "		<div class='media-block'>";
+				strList2 += "			<div class='media-left'>";
+				strList2 += "				<i class='demo-pli-doc'></i>";
+				
+			}else{
+				strList2 += "	<a href='#' class='file-details'>";
+				strList2 += "		<div class='media-block'>";
+				strList2 += "			<div class='media-left'>";
+				strList2 += "				<i class='demo-pli-file'></i>";
+				
+			}
+			
+			
+			strList2 += "			</div>";
+			strList2 += "			<div class='media-body/>";
+			strList2 += "				<p class='file-name'>"+CourseDataroomVo.fileName+"</p>";
+			strList2 += "				<small>folder</small>";
+			strList2 += "			</div>";
+			strList2 += "		</div>";
+			strList2 += "	</a>";		
+			strList2 += "</li>";
 		}
 		
+		
+		function strFolderListAtFirst(){
+			
+			strList += "	<li>";
+			strList += "		<div class='file-control'>";
+			strList += "			<label for='file-list-1'></label>";
+			strList += "		</div>";
+			strList += "		<div class='file-attach-icon'></div> ";
+			strList += "		<div id ='FolderBefore'>";
+			strList += "			<div class='media-block'>";
+			strList += "				<div class='media-left'>";
+			strList += "					<i class='demo-psi-folder'></i>";
+			strList += "				</div>";
+			strList += "				<div class='media-body'>";
+			strList += "					<p class='file-name single-line'>...</p>";
+			strList += "				</div>";
+			strList += "			</div>";
+			strList += "		</div>";
+			strList += "	</li>";
+			
+			
+		}
+		
+		
+		function strFolderList(CourseDataroomVo){
+			
+			// list 찾기 !!
+			strList += "<li>";
+			strList += "	<div class='file-control'>";
+			strList += "		<input id="+"dataRoomList"+CourseDataroomVo.dataRoomNo+" class='magic-checkbox' data-dataroomno="+CourseDataroomVo.dataRoomNo+" name='checkingFolderBox' type='checkbox'> ";
+			strList += "		<label for="+"dataRoomList"+CourseDataroomVo.dataRoomNo+"></label>";
+			strList += "	</div>";
+			strList += "	<div class='file-settings'>";
+			strList += "	</div>";
+			strList += "	<div class='file-attach-icon'></div> ";
+			// 폴더는 폴더 안으로 들어가게 하고 파일중에 pdf이면 어디선가에서 프리뷰로 보게 했으면 좋겠다 
+			strList += "	<a class='file-details'  data-dataroomno="+CourseDataroomVo.dataRoomNo+">";
+			strList += "		<div class='media-block'>";
+			strList += "			<div class='media-left'>";
+			strList += "				<i class='demo-psi-folder'></i>";
+			strList += "			</div>";
+			strList += "			<div class='media-body/>";
+			strList += "				<p class='file-name'>"+CourseDataroomVo.dataRoomName+"</p>";
+			strList += "				<small>folder</small>";
+			strList += "			</div>";
+			strList += "		</div>";
+			strList += "	</a>";		
+			strList += "</li>";
+		}
+
+		
+		
+
 		//앞으로 저장될 파일 리스트들 
 		var fileList = [];
 		var tagNoList = [];
@@ -665,9 +1178,8 @@
 				}
 			}
 		});
-		
-		
-		
+
+	
 	</script>
 
 

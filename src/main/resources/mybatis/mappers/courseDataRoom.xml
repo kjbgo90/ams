@@ -4,7 +4,7 @@
 <mapper namespace="courseDataRoom">
 
 	<!-- 왼쪽 폴더 리스트들 틀림 -->
-	<select id="selectFolderList" resultType="CourseDataRoomVo">
+	<select id="selectFolderList"  resultType="CourseDataRoomVo">
 		<![CDATA[
 		select 	dataRoomNo, 
 				dataRoomName, 
@@ -15,14 +15,36 @@
 	</select>
 
 
+	<insert id="insertFolder" parameterType="CourseDataRoomVo">
+		<selectKey keyProperty="dataRoomNo" resultType="int" order="BEFORE">
+			select seq_dataroom_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+		insert into dataroom values(
+            #{dataRoomNo},
+            #{courseNo},
+            #{dataRoomName},
+            #{pRoomNo}
+            )
+		]]>
+	</insert>
+
+
+
+
 	<!--처음 코스 전용 자료실 페이지 들어가면 오른쪽에 있는 파일리스트들 -->
+	<select id="selectFolderListAtFirst"
+		parameterType="CourseDataRoomVo" resultType="CourseDataRoomVo">
+		<![CDATA[
+		select dataroomno, dataroomname , proomno 
+		from dataroom 
+		where proomno=  (select dataroomno from dataroom where courseno=#{courseNo} and proomno=0)
+		]]>
+	</select>
+	
 	<select id="selectFileListAtFirst"
 		parameterType="CourseDataRoomVo" resultType="CourseDataRoomVo">
 		<![CDATA[
-		select dataroomno, dataroomname 
-		from dataroom 
-		where proomno=  (select dataroomno from dataroom where courseno=#{courseNo} and proomno=0)
-		union
 		select d.fileno as fileNo, d.filename as fileName
 		from dataroomfile dr join datafile d 
 		on dr.fileno=d.fileno where dr.dataroomno = (select dataroomno from dataroom where courseno=#{courseNo} and proomno=0)
@@ -33,13 +55,18 @@
 	<select id="selectFileClickedByFolder"
 		resultType="CourseDataRoomVo">
 		<![CDATA[
-		select dataroomno, dataroomname as filelist 
-		from dataroom 
-		where proomno=2
-		union
-		select d.fileno, d.filename  as filelist  
+		select d.fileno, d.filename    
 		from dataroomfile dr join datafile d 
-		on dr.fileno=d.fileno where dr.dataroomno =2
+		on dr.fileno=d.fileno where dr.dataroomno = #{dataRoomNo}
+		]]>
+	</select>
+	
+	<select id="selectFolderClickedByFolder"
+		resultType="CourseDataRoomVo">
+		<![CDATA[
+		select dataroomno, dataroomname , proomno 
+		from dataroom 
+		where proomno=#{dataRoomNo}
 		]]>
 	</select>
 
@@ -53,10 +80,11 @@
 	</select>
 
 	<!-- 2.태그중에 하나를 클릭해서 datatagno를 가져온다 -->
-	<select id="SelectTagOnByDataTagNo" resultType="CourseDataRoomVo">
+	<select id="SelectTagOnByDataTagNo" parameterType="CourseDataRoomVo" resultType="CourseDataRoomVo">
 		<![CDATA[
 		select 	df.fileno as fileNo, 
 				df.savename as saveName, 
+				df.filename as fileName,
 				df.filepath as filePath 
 		from datafile df join (select 
                                 a.dataroomfileno ,
@@ -81,14 +109,14 @@
 	<!-- dataroomno를 받은 상태에서 폴더를 업로드한다 태그도 추가하고 -->
 
 	<insert id="insertFileUpLoad" parameterType="CourseDataRoomVo">
-		<selectKey keyProperty="dataFileNo" resultType="int" order="BEFORE">
+		<selectKey keyProperty="fileNo" resultType="int" order="BEFORE">
 			select seq_datafile_no.nextval from dual
 		</selectKey>
 		<![CDATA[
 			insert into datafile values(
-            	dataFileNo,
+            	#{fileNo},
             	#{fileName},
-            	#{savaName},
+            	#{saveName},
             	#{fileSize},
             	sysdate,
             	#{filePath}
@@ -102,14 +130,15 @@
 		</selectKey>
 		<![CDATA[
 			insert into dataroomfile values(
-            	dataRoomFileNo,
+            	#{dataRoomFileNo},
             	#{dataRoomNo},
             	#{fileNo}
             )
 		]]>
 	</insert>
 
-	<insert id="insertDataRoomFileTag" parameterType="CourseDataRoomVo">
+	<insert id="insertDataRoomFileTag"
+		parameterType="CourseDataRoomVo">
 		<![CDATA[
 			insert into dataroomfiletag values (
             	seq_dataroomfiletag_no.nextval,
@@ -120,7 +149,8 @@
 	</insert>
 
 
-	<select id="selectRootFolderList" parameterType="CourseDataRoomVo" resultType="CourseDataRoomVo">
+	<select id="selectRootFolderList"
+		parameterType="CourseDataRoomVo" resultType="CourseDataRoomVo">
 	<![CDATA[
 	select 	dataRoomNo , 
 			dataRoomName, 
@@ -143,7 +173,8 @@
 	]]>
 	</select>
 
-	<select id="selectUpFolder" parameterType="CourseDataRoomVo" resultType="CourseDataRoomVo">
+	<select id="selectUpFolder" parameterType="CourseDataRoomVo"
+		resultType="CourseDataRoomVo">
 	<![CDATA[
 	select dataRoomNo, dataRoomName, pRoomNo from dataRoom where dataRoomNo=#{pRoomNo}
 	]]>

@@ -1,7 +1,6 @@
 package net.ourams.controller;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +53,16 @@ public class CourseDataroomController {
 	public String dataroomForm() {
 		return "course/course-dataroom";
 	}
-
+	
+	@ResponseBody
+	@RequestMapping(value = "/insertFolderByDataRoomNo")
+	public CourseDataroomVo insertFolderByDataRoomNo(@RequestParam("dataRoomNo") int dataRoomNo) {
+		
+		CourseDataroomVo vo = CourseDataroomService.insertFolderByDataRoomNo(dataRoomNo);
+		
+		return vo;
+	}
+	
 
 	@ResponseBody
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -91,22 +99,47 @@ public class CourseDataroomController {
 		return vo;
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "/fileUploadInDB", method = RequestMethod.POST)
-	public String fileUploadInDB(@RequestBody CourseDataroomFileUploadVo fileVo) {
+	public int fileUploadInDB(@RequestBody CourseDataroomFileUploadVo fileVo) {
+		int count = 0;
 		System.out.println("fileUpLoad!!");
-		
 		System.out.println(fileVo.toString());
-		return "course/course-dataroom";
+		CourseDataroomService.fileUploadInDB(fileVo);
+		return count;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/SelectTagOnByDataTagNo")
+	public List<CourseDataroomVo> SelectTagOnByDataTagNo(@RequestParam("dataTagNo") int dataTagNo){
+		System.out.println(dataTagNo);
+		List<CourseDataroomVo> list = CourseDataroomService.SelectTagOnByDataTagNo(dataTagNo);
+		return list;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/fileList" , method = RequestMethod.POST)
+	public List<CourseDataroomVo> getFileList(@RequestParam("courseNo") int courseNo,
+											  @RequestParam("dataRoomNo") int dataRoomNo) {
+		System.out.println("get file List");
+		CourseDataroomVo vo = new CourseDataroomVo();
+		System.out.println(dataRoomNo);
+		vo.setDataRoomNo(dataRoomNo);
+		List<CourseDataroomVo> list = CourseDataroomService.selectFileClickedByFolder(vo);
+		return list;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/folderList" , method = RequestMethod.POST)
-	public List<CourseDataroomVo> getFolderList() {
+	public List<CourseDataroomVo> getFolderList(@RequestParam("courseNo") int courseNo,
+												@RequestParam("dataRoomNo") int dataRoomNo) {
 		System.out.println("get folder List");
-		List<CourseDataroomVo> list = CourseDataroomService.getfileList();
+		CourseDataroomVo vo = new CourseDataroomVo();
+		System.out.println(dataRoomNo);
+		vo.setDataRoomNo(dataRoomNo);
+		List<CourseDataroomVo> list = CourseDataroomService.selectFolderClickedByFolder(vo);
 		return list;
 	}
-
+	
 	@ResponseBody
 	@RequestMapping(value = "/tagList" , method = RequestMethod.POST)
 	public List<CourseDataroomVo> getTagList() {
@@ -115,15 +148,7 @@ public class CourseDataroomController {
 		return list;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/RootFileList")
-	public List<CourseDataroomVo> getRootFileList(){
-		System.out.println("start root file List");
-		List<CourseDataroomVo> list = CourseDataroomService.getDataRoomRootList();
-		return list;
-	}
-	
-	
+
 	
 	
 }

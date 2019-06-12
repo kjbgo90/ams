@@ -134,14 +134,11 @@
 						<hr>
 
 						<div class="row pad-btm">
-							<form action="${pageContext.request.contextPath}/{coursePath}/notice/list" method="get" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor" style="padding-left: 500px;">
-								<div class="input-group mar-btm">
+								<div class="input-group mar-btm col-xs-12 col-sm-10 col-sm-offset-1 pad-hor "   style="padding-left: 500px;">
 									<input type="text" placeholder="Search posts..." class="form-control input-sm"> <span class="input-group-btn">
-										<button class="btn btn-primary btn-sm" type="button">검색</button>
+										<button id="searchPostTitle"  class="btn btn-primary btn-sm" type="button">검색</button>
 									</span>
 								</div>
-
-							</form>
 						</div>
 						<!--Posts Table-->
 						<!--===================================================-->
@@ -274,6 +271,10 @@
 		$("document").ready(function(){
 			$()
 		})
+		
+		$("#searchPostTitle").on("click",function(){
+			console.log("search anyOne");
+		});
 	</script>
 
 </body>

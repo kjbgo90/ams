@@ -15,9 +15,14 @@ public class CourseDataroomDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<CourseDataroomVo> selectFileList(CourseDataroomVo courseDataroomVo){
-		List<CourseDataroomVo> list = sqlSession.selectList("courseDataRoom.selectFileListAtFirst", courseDataroomVo);
-		return list;
+
+	public int insertFolder(CourseDataroomVo vo) {
+		System.out.println(vo.getCourseNo());
+		System.out.println(vo.getpRoomNo());
+		System.out.println(vo.getDataRoomName());
+		int count = sqlSession.insert("courseDataRoom.insertFolder",vo);
+		System.out.println(vo.getDataRoomNo());
+		return count;
 	}
 	
 	public List<CourseDataroomVo> selectTagList(){
@@ -39,6 +44,12 @@ public class CourseDataroomDao {
 		List<CourseDataroomVo> list = sqlSession.selectList("courseDataRoom.SelectTagOnByDataTagNo", vo);
 		return list;
 	}
+
+	public List<CourseDataroomVo> SelectTagOnByDataTagNo(CourseDataroomVo vo){
+		List<CourseDataroomVo> list = sqlSession.selectList("courseDataRoom.SelectTagOnByDataTagNo", vo);
+		return list;
+	}
+	
 	
 	public int insertFileUpLoad(CourseDataroomVo vo) {
 		int count = sqlSession.insert("courseDataRoom.insertFileUpLoad",vo);
@@ -57,6 +68,16 @@ public class CourseDataroomDao {
 	public int insertDataRoomFileTag(CourseDataroomVo vo) {
 		int count = sqlSession.insert("courseDataRoom.insertDataRoomFileTag",vo);
 		return count;
+	}
+	
+	public List<CourseDataroomVo> selectFileClickedByFolder(CourseDataroomVo vo){
+		List<CourseDataroomVo> list = sqlSession.selectList("courseDataRoom.selectFileClickedByFolder", vo);
+		return list;
+	}
+	
+	public List<CourseDataroomVo> selectFolderClickedByFolder(CourseDataroomVo vo){
+		List<CourseDataroomVo> list = sqlSession.selectList("courseDataRoom.selectFolderClickedByFolder", vo);
+		return list;
 	}
 	
 }

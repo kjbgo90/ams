@@ -42,7 +42,6 @@ public class CourseDataroomVo {
 	private String regDate;
 	private String filePath;
 	
-	private List<Integer> tagNoList;
 	
 
 
@@ -181,14 +180,18 @@ public class CourseDataroomVo {
 	}
 
 
+
+
 	public String getSaveName() {
 		return saveName;
 	}
 
 
+
 	public void setSaveName(String saveName) {
 		this.saveName = saveName;
 	}
+
 
 
 	public long getFileSize() {
