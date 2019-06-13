@@ -162,9 +162,12 @@
 							</div>
 							<br> <br>
 							<div class="row">
-
+							
 								<div class="col-sm-7 text-right">
-									<ul class="pager">
+								
+
+								
+									<ul id="pager" class="pagination">
 										
 									</ul>
 								</div>
@@ -354,69 +357,69 @@
 		
 		function paging(pageno,maxPage){
 			pg = ""
-				pg +="<ul>";
+				pg +="<ul class='pagination'>";
 			if(pageno>1){
-				pg +="<li data-pageno="+(pageno-1)+" class='btn demo-pli-arrow-right'>";
-				pg +="</li>";
+				pg +="<li data-pageno="+(pageno-1)+"><a class='demo-pli-arrow-left'>";
+				pg +="</a></li>";
 			}else{
 				pg +="<li>";
 				pg +="</li>";
 			}
 			if(pageno>3)	
 			{
-				pg +="<li data-pageno="+(pageno-3)+" class='btn'>";
+				pg +="<li data-pageno="+(pageno-3)+" ><a>";
 				pg +=	pageno-3  ;
-				pg +="</li>";
+				pg +="</a></li>";
 			}else{
 				pg +="<li>";
 				pg +="</li>";
 			}
 			if(pageno>2){
-				pg +="<li data-pageno="+(pageno-2)+" class='btn'>";
+				pg +="<li data-pageno="+(pageno-2)+" ><a>";
 				pg +=	pageno-2 ;
-				pg +="</li>";	
+				pg +="</a></li>";	
 			}else{
 				pg +="<li>";
 				pg +="</li>";
 			}
 			if(pageno>1){
-				pg +="<li data-pageno="+(pageno-1)+" class='btn'>";
+				pg +="<li data-pageno="+(pageno-1)+"><a>";
 				pg +=	pageno-1 ;
-				pg +="</li>";
+				pg +="</a></li>";
 			}else{
 				pg +="<li>";
 				pg +="</li>";
 			}
 		
-			pg +="<li data-pageno="+pageno+" class='selected'>"+pageno +" </li>";
+			pg +="<li data-pageno="+pageno+" class='active'><a>"+pageno +" </li>";
 			
 			if(pageno+1<=maxPage){
-				pg +="<li data-pageno="+(pageno+1)+" class='btn'>";
+				pg +="<li data-pageno="+(pageno+1)+"><a>";
 				pg += 	pageno+1  ;
-				pg +="</li>";
+				pg +="</a></li>";
 			}else{
 				pg +="<li>";
 				pg +="</li>";
 			}
 			if(pageno+2<=maxPage){
-				pg +="<li data-pageno="+(pageno+2)+" class='btn'>";
+				pg +="<li data-pageno="+(pageno+2)+"><a>";
 				pg +=	 pageno+2  ;
-				pg +="</li>";
+				pg +="</a></li>";
 			}else{
 				pg +="<li>";
 				pg +="</li>";
 			}
 			if(pageno+3<=maxPage){
-				pg +="<li data-pageno="+(pageno+3)+" class='btn'>";
+				pg +="<li data-pageno="+(pageno+3)+"><a>";
 				pg +=	pageno+3 ;
-				pg +="</li>";
+				pg +="</a></li>";
 			}else{
 				pg +="<li>";
 				pg +="</li>";
 			}
 			if(pageno+1<=maxPage){
-				pg +="<li data-pageno="+(pageno+1)+" class='btn demo-pli-arrow-right'>";
-				pg +="</li>";
+				pg +="<li data-pageno="+(pageno+1)+"><a  class='demo-pli-arrow-right'>";
+				pg +="</a></li>";
 			}else{
 				pg +="<li>";
 				pg +="</li>";
@@ -426,13 +429,13 @@
 
 							
 					
-			$(".pager").html(pg);
+			$("#pager").html(pg);
 			
 		}
 		
 
 			function pageMove(){
-				$(".pager").on("click","li",function(){
+				$("#pager").on("click","li",function(){
 					$this = $(this);
 					console.log($this);
 					var pageNo = $this.data("pageno");
