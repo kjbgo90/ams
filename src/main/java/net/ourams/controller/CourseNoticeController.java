@@ -108,7 +108,7 @@ public class CourseNoticeController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value = "/selectPostPaging", method = RequestMethod.GET)
+	@RequestMapping(value = "/selectPostPaging", method = RequestMethod.POST)
 	public Map<String, Object> selectPostPaging(@RequestParam("paneNo") int pageNo) {
 		System.out.println("selectPostPaging");
 		Map<String, Object> map = postService.selectPostPaging(pageNo);
@@ -117,7 +117,7 @@ public class CourseNoticeController {
 
 
 	@ResponseBody
-	@RequestMapping(value = "/searchList", method = RequestMethod.GET)
+	@RequestMapping(value = "/searchList", method = RequestMethod.POST)
 	public List<PostVo> searchList(@RequestParam("postTitle") String postTitle) {
 		System.out.println("searchList");
 		List<PostVo> list = postService.searchList(postTitle);

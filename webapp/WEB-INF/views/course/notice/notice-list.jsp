@@ -255,8 +255,8 @@
 		$("document").ready(function(){
 			pageNo = 1;
 			pagingAjax(pageNo);
-			console.log(pageNo)
-		})
+			console.log(pageNo);
+		});
 		
 		
 		//검색기능 
@@ -298,14 +298,14 @@
 				error : function(XHR, status, error) {
 					console.error(status + " : " + error);
 				}
-		});
+			});
 			
 		});
 		
 		//페이징 처리할 부분 첫번째 리스트를 뽑아오자~
 		function pagingAjax(pageNo){
 				$.ajax({
-					url : "${pageContext.request.contextPath }/${coursePath}/notice/listFile",
+					url : "${pageContext.request.contextPath }/${coursePath}/notice/selectPostPaging",
 					type : "post",
 					data : {
 						pageNo:pageNo
@@ -316,6 +316,7 @@
 						console.log(map.maxPage);
 						console.log(map.list);
 						console.log(pageNo);
+						
 						paging(pageNo,map.maxPage);
 						
 						if (map.list.length == 0) {
@@ -327,7 +328,7 @@
 								
 								
 							str+="<tr>"	
-							str+="<td>"+map.list[i].rownum+"</td>"			
+							str+="<td>"+map.list[i].rnum+"</td>"			
 							str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo+">["+map.list[i].category+"]"+map.list[i].postTitle+"</a></td>"
 							str+="<td><span class='text-muted'>"+map.list[i].regDate+"</span></td>"				
 							str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo+" class='btn-link'>"+map.list[i].userName+"</a></td>"				
@@ -345,9 +346,7 @@
 					error : function(XHR, status, error) {
 						console.error(status + " : " + error);
 					}
-			});
-			
-			
+				});
 		}
 		
 		
