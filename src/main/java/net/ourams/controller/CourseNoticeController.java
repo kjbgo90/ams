@@ -39,15 +39,12 @@ public class CourseNoticeController {
 	private UserService userService;
 	@Autowired
 	private CourseReplyService courseReplyService;
-	
-	
+
 	@Autowired
 	private S3Util s3Util;
-	
-	
-	private String bucketName ="net.ourams.notice";
 
-	
+	private String bucketName = "net.ourams.notice";
+
 	// 테스트용
 	@RequestMapping(value = "/init", method = RequestMethod.GET)
 	public String init() {
@@ -63,7 +60,7 @@ public class CourseNoticeController {
 
 		return "redirect:/dataroom/form";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public fileUpLoadVo fileUpload(@RequestParam("file") MultipartFile file, Model model) {
@@ -73,23 +70,23 @@ public class CourseNoticeController {
 		s3Util.fileUpload(bucketName, file);
 		s3Util.getFileURL(bucketName, fileName);
 		String url = s3Util.getFileURL(bucketName, file.getOriginalFilename());
-		
-		//확장자
-				String exName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-				System.out.println("exName: " + exName);
-				
-		//파일사이즈
-				long fileSize = file.getSize();
-				System.out.println("fileSize: " + fileSize);
 
-		//저장파일명
-				String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
-				System.out.println("saveName: " + saveName);
-				
-		//파일패스
-				String filePath = s3Util.getFileURL(bucketName, file.getOriginalFilename());
-				System.out.println("filePath: " + filePath);
-				
+		// 확장자
+		String exName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+		System.out.println("exName: " + exName);
+
+		// 파일사이즈
+		long fileSize = file.getSize();
+		System.out.println("fileSize: " + fileSize);
+
+		// 저장파일명
+		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
+		System.out.println("saveName: " + saveName);
+
+		// 파일패스
+		String filePath = s3Util.getFileURL(bucketName, file.getOriginalFilename());
+		System.out.println("filePath: " + filePath);
+
 		fileUpLoadVo vo = new fileUpLoadVo();
 		vo.setFileName(fileName);
 		vo.setFilepath(filePath);
@@ -121,10 +118,10 @@ public class CourseNoticeController {
 		PostVo postVo = postService.read(postNo);
 		List<ReplyVo> replylist = courseReplyService.getreplyList(postNo);
 		System.out.println(replylist.toString());
-		
+
 		UserVo writerVo = userService.read(postVo.getUserNo());
 		model.addAttribute("PostVo", postVo);
-		
+
 		model.addAttribute("replylist", replylist);
 		model.addAttribute("WriterVo", writerVo);
 		System.out.println(postVo.getCategory());
@@ -153,6 +150,29 @@ public class CourseNoticeController {
 		postVo.setRegDate(resJSON.getRegDate());
 		postVo.setUserName(authUser.getUserName());
 		postService.write(postVo);
+		System.out.println(coursePath);
+
+		return coursePath;
+	}
+
+	/* 글업데이트 */
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(@PathVariable("coursePath") String coursePath, @AuthUser UserVo authUser,
+			@ModelAttribute PostVo postVo, HttpSession session, @RequestBody PostVo resJSON, HttpServletRequest re) {
+		System.out.println("###update###");
+		System.out.println("###test### 10");
+
+		System.out.println(resJSON.getPostTitle());
+		postVo.setUserNo(authUser.getUserNo());
+		postVo.setPostContent(resJSON.getPostContent());
+		postVo.setPostTitle(resJSON.getPostTitle());
+		postVo.setPostNo(resJSON.getPostNo());
+		postVo.setCategory(resJSON.getCategory());
+		postVo.setRegDate(resJSON.getRegDate());
+		postVo.setUserName(authUser.getUserName());
+		postService.update(postVo);
 		System.out.println(coursePath);
 
 		return coursePath;
@@ -204,14 +224,13 @@ public class CourseNoticeController {
 
 		return "redirect:/" + coursePath + "/notice/read/" + postVo.getPostNo();
 	}
-	
+
 	@Auth
 	@ResponseBody
 	@RequestMapping(value = "/comment/regist", method = RequestMethod.POST)
-	public ReplyVo commentRegist(@AuthUser UserVo authUser,
-								 @RequestParam("postNo") int postNo,
-								 @RequestParam("replyContent") String replyContent) {
-		
+	public ReplyVo commentRegist(@AuthUser UserVo authUser, @RequestParam("postNo") int postNo,
+			@RequestParam("replyContent") String replyContent) {
+
 		return courseReplyService.commentRegistAndGetReplyVo(authUser, postNo, replyContent);
 	}
 

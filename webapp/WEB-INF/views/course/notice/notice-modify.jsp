@@ -474,7 +474,8 @@ rhd
 			var postTitle = $('#postTitle').val();
 			var selectedDate = $('#select-day').val();
 			var postResult = {};
-			postResult["postTitle"] = postTitle;
+			postResult["postNo"] = getUrlParams().postNo;
+ 			postResult["postTitle"] = postTitle;
 			postResult["category"] = cate;
 			postResult["postContent"] = markstr;
 			postResult["regDate"] = selectedDate;
@@ -484,10 +485,10 @@ rhd
 			console.log(postTitle);
 			console.log(selectedDate);
 			//카테고리, 제목, 본문,  달력날자
-			console.log("${pageContext.request.contextPath}/${coursePath}/notice/write");
+			console.log("${pageContext.request.contextPath}/${coursePath}/notice/update");
 			
 			$.ajax({
-				url : "${pageContext.request.contextPath}/${coursePath}/notice/write", //컨트롤주소
+				url : "${pageContext.request.contextPath}/${coursePath}/notice/update", //컨트롤주소
 				type : "post",
 				//dataType: "json",          // ajax 통신으로 받는 타입
 			    contentType : 'application/json; charset=utf-8',
@@ -509,6 +510,12 @@ rhd
 			
 
 		});
+		
+		function getUrlParams() {
+		    var params = {};
+		    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
+		    return params;
+		} 
 	</script>
 
 </body>

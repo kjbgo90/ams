@@ -90,8 +90,6 @@
 		]]>
 	</insert>
 	
-	
-	
 	<!-- 글삭제 -->
 	<delete id="delete" parameterType="PostVo">
 		<![CDATA[
@@ -106,13 +104,10 @@
 		<![CDATA[
 			update post 
 		   	set 
-				   	postNo=#{postNo},
-				   	postType = #{postType},
-				   	subjectTitle=#{subjectTitle},		   	
 				   	postTitle=#{postTitle},
-				   	hit=#{hit},
+				   	category=#{category},
 				   	postContent=#{postContent},
-				    regDate=#{regDate}
+				    regDate=sysdate
 		 	where postNo=#{postNo}
 		  	and userNo = #{userNo}
 		]]>

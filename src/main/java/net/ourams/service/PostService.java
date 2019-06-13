@@ -30,6 +30,11 @@ public class PostService {
 		System.out.println(postVo.toString());
 		return postDao.insert(postVo);
 	}
+	
+	public int update(PostVo postVo) {
+		System.out.println(postVo.toString());
+		return postDao.update(postVo);
+	}
 
 	public int delete(PostVo postVo) {
 		System.out.println(postVo.toString());
