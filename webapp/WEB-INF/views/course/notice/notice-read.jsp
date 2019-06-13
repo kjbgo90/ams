@@ -28,6 +28,7 @@
 <link href="${pageContext.request.contextPath }/assets/css/bootstrap.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/assets/css/ionicons.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/assets/css/premium/icon-sets/icons/line-icons/premium-line-icons.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/assets/css/font-awesome.css" rel="stylesheet">
 
 <!--Nifty Stylesheet [ REQUIRED ]-->
 <link href="${pageContext.request.contextPath }/assets/css/nifty.css" rel="stylesheet">
@@ -225,6 +226,10 @@
 							<!--===================================================-->
 							<div class="comments media-block" id="commentDiv">
 								<c:forEach items="${replylist}" var="replylist">
+								<div class="commentContent">
+									<c:if test="${replylist.userNo eq authUser.userNo}">
+										<i class="btn btn-danger fa fa-trash pull-right btnCommentDel" data-reply="${replylist.reply}"></i>
+									</c:if>
 									<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/${replylist.logoPath}"></a>
 									<div class="media-body">
 										<div class="comment-header">
@@ -232,8 +237,8 @@
 											<p class="text-muted text-sm">${replylist.regDate} </p>
 										</div>
 										<p>${replylist.replyContent}</p>
-	
 									</div>
+								</div>
 								</c:forEach>
 							</div>
 							<!--===================================================-->
@@ -312,6 +317,7 @@
 
 </body>
 <script type="text/javascript">
+	/* comment 등록하는 스크립트 */
 	$("#btn-comment-regist").on("click", function(){
 		var replyContent = $("#commentContent").val();
 		var postNo = '${PostVo.postNo}';
@@ -333,17 +339,43 @@
 		});
 	});
 	
+	/* comment 삭제하는 스크립트 */
+	$("#commentDiv").on("click", ".btnCommentDel", function(){
+		var $this = $(this);
+		var reply = $this.data("reply");
+		
+		console.log(reply);
+		$.ajax({
+			url : "${pageContext.request.contextPath }/${coursePath}/notice/comment/delete",
+			type : "post",
+			data : {reply : reply},
+			dataType : "json",
+			success : function(result) {
+				console.log(result);
+				$this.parent(".commentContent").remove();
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+	});
+	
+	
 	function replyRender(replyVo){
 		var str = "";
 		
-		str += "<a class='media-left' href='#''><img class='img-circle img-sm' alt='Profile Picture' src='${pageContext.request.contextPath }/" + replyVo.logoPath + "'></a>";
-		str += "<div class='media-body'>";
-		str += "	<div class='comment-header'>";
-		str += "		<a href='#' class='media-heading box-inline text-main text-bold'>" + replyVo.userName + "</a>";
-		str += "		<p class='text-muted text-sm'>" + replyVo.regDate + "</p>";
+		str += "<div class='commentContent'>";
+		str += "	<i class='btn btn-danger fa fa-trash pull-right btnCommentDel' data-reply='" + replyVo.reply + "'></i>";
+		str += "	<a class='media-left' href='#''><img class='img-circle img-sm' alt='Profile Picture' src='${pageContext.request.contextPath }/" + replyVo.logoPath + "'></a>";
+		str += "	<div class='media-body'>";
+		str += "		<div class='comment-header'>";
+		str += "			<a href='#' class='media-heading box-inline text-main text-bold'>" + replyVo.userName + "</a>";
+		str += "			<p class='text-muted text-sm'>" + replyVo.regDate + "</p>";
+		str += "		</div>";
+		str += "		<p>" + replyVo.replyContent + "</p>";
 		str += "	</div>";
-		str += "	<p>" + replyVo.replyContent + "</p>";
-		str += "</div>";
+		str += "</div>"
 		
 		$("#commentDiv").append(str);
 	}

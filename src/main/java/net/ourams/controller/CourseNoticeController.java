@@ -234,4 +234,10 @@ public class CourseNoticeController {
 		return courseReplyService.commentRegistAndGetReplyVo(authUser, postNo, replyContent);
 	}
 
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/comment/delete", method = RequestMethod.POST)
+	public int commentDelete(@RequestParam("reply") int reply) {
+		return courseReplyService.commentDelete(reply);
+	}
 }

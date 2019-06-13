@@ -37,4 +37,9 @@ public class CourseReplyService {
 	}
 
 
+	public int commentDelete(int reply) {
+		return replyDao.deleteReplyByReply(reply);
+	}
+
+
 }

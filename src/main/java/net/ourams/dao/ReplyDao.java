@@ -29,5 +29,9 @@ public class ReplyDao {
 		return sqlSession.selectOne("reply.selectReplyByReplyNo", reply);
 	}
 
+	public int deleteReplyByReply(int reply) {
+		return sqlSession.delete("reply.deleteReplyByReply", reply);
+	}
+
 
 }

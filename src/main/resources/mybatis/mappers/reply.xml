@@ -27,6 +27,7 @@
 				        FROM reply r join users u
                         on r.userNo = u.userNo )
                         where postNo = #{postNo}
+                        order by reply ASC
                         
 		]]>
 	</select>
@@ -77,4 +78,11 @@
                         
 		]]>
 	</select>
+	
+	<delete id="deleteReplyByReply" parameterType="int">
+		<![CDATA[
+			DELETE FROM reply
+			WHERE reply = #{reply}
+		]]>
+	</delete>
 </mapper>
