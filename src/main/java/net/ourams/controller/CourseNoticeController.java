@@ -1,6 +1,7 @@
 package net.ourams.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -101,14 +102,28 @@ public class CourseNoticeController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String noticeList(@PathVariable("coursePath") String coursePath, @AuthUser UserVo authUser, Model model) {
 		System.out.println("list");
-		int courseNo = 1;
-		List<PostVo> noticeList = postService.getList(courseNo);
-		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("coursePath", coursePath);
-
 		return "course/notice/notice-list";
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/selectPostPaging", method = RequestMethod.GET)
+	public Map<String, Object> selectPostPaging(@RequestParam("paneNo") int pageNo) {
+		System.out.println("selectPostPaging");
+		Map<String, Object> map = postService.selectPostPaging(pageNo);
+		return map;
+	}
 
+
+	@ResponseBody
+	@RequestMapping(value = "/searchList", method = RequestMethod.GET)
+	public List<PostVo> searchList(@RequestParam("postTitle") String postTitle) {
+		System.out.println("searchList");
+		List<PostVo> list = postService.searchList(postTitle);
+		return list;
+	}
+	
 	/* 글읽기 */
 	@Auth
 	@RequestMapping(value = "/read/{postNo}", method = RequestMethod.GET)

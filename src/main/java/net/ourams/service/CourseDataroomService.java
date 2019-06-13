@@ -18,11 +18,8 @@ public class CourseDataroomService {
 	
 	
 	
-	public CourseDataroomVo insertFolderByDataRoomNo(int dataRoomNo) {
-		CourseDataroomVo vo = new CourseDataroomVo();
-		vo.setCourseNo(1);
-		vo.setpRoomNo(dataRoomNo);
-		vo.setDataRoomName("1231312");
+	public CourseDataroomVo insertFolderByDataRoomNo(CourseDataroomVo vo) {
+		
 		int count = courseDataroomDao.insertFolder(vo);
 		int no = vo.getDataRoomNo();
 		System.out.println(no);
@@ -76,7 +73,7 @@ public class CourseDataroomService {
 		vo.setFileSize(fileVo.getFileSize());
 		vo.setSaveName(fileVo.getSaveName());
 		
-		vo.setDataRoomNo(1);
+		vo.setDataRoomNo(fileVo.getDataRoomNo());
 		System.out.println(vo.toString());
 		courseDataroomDao.insertFileUpLoad(vo);
 		
@@ -116,5 +113,10 @@ public class CourseDataroomService {
 		return list;
 	}
 	
+	
+	public int selectFolderVo(int dataRoomNo) {
+		int no = courseDataroomDao.selectFolderVo(dataRoomNo);
+		return no;
+	}
 	
 }

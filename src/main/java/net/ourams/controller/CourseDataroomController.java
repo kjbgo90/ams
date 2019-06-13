@@ -56,9 +56,16 @@ public class CourseDataroomController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/insertFolderByDataRoomNo")
-	public CourseDataroomVo insertFolderByDataRoomNo(@RequestParam("dataRoomNo") int dataRoomNo) {
+	public CourseDataroomVo insertFolderByDataRoomNo(@RequestParam("dataRoomNo") int dataRoomNo , 
+													 @RequestParam("dataRoomName") String dataRoomName,
+													 @RequestParam("courseNo") int courseNo) {
 		
-		CourseDataroomVo vo = CourseDataroomService.insertFolderByDataRoomNo(dataRoomNo);
+		CourseDataroomVo vo = new CourseDataroomVo();
+		vo.setDataRoomNo(dataRoomNo);
+		vo.setDataRoomName(dataRoomName);
+		vo.setCourseNo(courseNo);
+				
+		CourseDataroomService.insertFolderByDataRoomNo(vo);
 		
 		return vo;
 	}
@@ -105,6 +112,7 @@ public class CourseDataroomController {
 		int count = 0;
 		System.out.println("fileUpLoad!!");
 		System.out.println(fileVo.toString());
+		System.out.println(fileVo.getDataRoomNo());
 		CourseDataroomService.fileUploadInDB(fileVo);
 		return count;
 	}
@@ -146,6 +154,16 @@ public class CourseDataroomController {
 		System.out.println("get Tag List");
 		List<CourseDataroomVo> list = CourseDataroomService.getTagList();
 		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/selectFolderVo")
+	public int selectFolderVo(@RequestParam("dataRoomNo") int dataRoomNo) {
+		System.out.println("proomno");
+		System.out.println(dataRoomNo);
+		int pRoomNo = CourseDataroomService.selectFolderVo(dataRoomNo);
+		System.out.println(pRoomNo);
+		return pRoomNo;
 	}
 	
 

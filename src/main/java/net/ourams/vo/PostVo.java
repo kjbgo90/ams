@@ -13,15 +13,16 @@ public class PostVo {
 	private int hit;
 	private String category;
 	private String userName;
-	private int rownum;
+	private int rnum;
 	private int subjectNo; 
 	private String subjectTitle;
+	public int pageNo;
 
 	public PostVo() {
 	}
 
 	public PostVo(int postNo, int postType, int userNo, int courseNo, String regDate, int communityNo,
-			int scheduleNo, String postTitle, String postContent, int hit, String category, String userName, int rownum,
+			int scheduleNo, String postTitle, String postContent, int hit, String category, String userName, int rnum,
 			int subjectNo, String subjectTitle) {
 		super();
 		this.postNo = postNo;
@@ -36,19 +37,29 @@ public class PostVo {
 		this.hit = hit;
 		this.category = category;
 		this.userName = userName;
-		this.rownum = rownum;
+		this.rnum = rnum;
 		this.subjectNo = subjectNo;
 		this.subjectTitle = subjectTitle;
 	}
+	
+	
 
 
-	public int getRownum() {
-		return rownum;
+	public int getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+
+	public int getRnum() {
+		return rnum;
 	}
 
 
-	public void setRownum(int rownum) {
-		this.rownum = rownum;
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
 	}
 
 
@@ -179,7 +190,7 @@ public class PostVo {
 		return "PostVo [postNo=" + postNo + ", postType=" + postType + ", userNo=" + userNo + ", courseNo=" + courseNo
 				+ ", regDate=" + regDate + ", communityNo=" + communityNo + ", scheduleNo=" + scheduleNo
 				+ ", postTitle=" + postTitle + ", postContent=" + postContent + ", hit=" + hit + ", category="
-				+ category + ", userName=" + userName + ", rownum=" + rownum + ", subjectNo=" + subjectNo
+				+ category + ", userName=" + userName + ", rnum=" + rnum + ", subjectNo=" + subjectNo
 				+ ", subjectTitle=" + subjectTitle + "]";
 	}
 	

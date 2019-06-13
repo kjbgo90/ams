@@ -2,27 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="notice">
-	
+
 	<!-- 쿼리문 작성 -->
+
+
+	<!--검색하는 기능  -->
+	<select id="searchList" parameterType="PostVo" resultType="PostVo">
+	<![CDATA[
+	SELECT * FROM post WHERE posttitle LIKE '%'||#{postTitle}||'%'  ORDER BY REGDATE DESC
+	]]>
+	</select>
 	
-	<!--  -->
-	<select id="selectAll" parameterType="int" resultType="PostVo">
+	
+	
+	<!-- 포스트 페이징 -->
+	<select id="selectListPaging" parameterType="map"
+		resultType="PostVo">
+		
 		<![CDATA[
-			SELECT 	rownum,
-					postNo,
-                    postType,
-        			userNo,
-        			courseNo,
-        			regDate,
-        			communityNo,
-                    scheduleNo,
-        			postTitle,
-        			postContent,
-        			hit,
-        			category,
-        			userName 
-        			FROM (
-							SELECT  p.postNo,
+		select   					B.rnum as rnum ,
+        	      					B.postNo as postNo,
+				        			B.postType as postType,
+				        			B.userNo as userNo,
+				        			B.courseNo as courseNo,
+				        			B.regDate as regDate,
+				        			B.communityNo as communityNo,
+				        			B.scheduleNo as scheduleNo,
+				        			B.postTitle as postTitle,
+				        			B.postContent as postContent,
+				        			B.hit as hit,
+				        			B.category as category,
+				        			B.userName as userName
+		from(select   rownum as rnum, 
+        	      					A.postNo,
+				        			A.postType,
+				        			A.userNo,
+				        			A.courseNo,
+				        			A.regDate,
+				        			A.communityNo,
+				        			A.scheduleNo,
+				        			A.postTitle,
+				        			A.postContent,
+				        			A.hit,
+				        			A.category,
+				        			A.userName
+   		     from (SELECT 				
+   		     						p.postNo,
 				        			p.postType,
 				        			u.userNo,
 				        			p.courseNo,
@@ -37,13 +62,20 @@
 							FROM post p join users u
 							ON p.userNo = u.userNo
 							where p.postType = 1
-							order by postNo desc
-					)order by rownum desc
-					
-					
-		]]>
+							order by postNo desc ) A
+	  		 where rownum <= #{pageNo2} ) B
+		where B.rnum >= #{pageNo1}
+	]]>
 	</select>
-	
+
+
+	<!-- 포스트 총 갯수  -->
+	<select id="countPost"  resultType="int">
+	<![CDATA[
+ 	   select count(*) from post where postType= 1
+	]]>
+	</select>
+
 	<!-- 조회수 증가 -->
 	<update id="updateHit" parameterType="int">
 		<![CDATA[
@@ -52,11 +84,12 @@
 			where postNo = #{postNo}
 		]]>
 	</update>
-	
-	
-	
+
+
+
 	<!-- no로 글조회 -->
-	<select id="selectNotice" parameterType="int" resultType="PostVo">
+	<select id="selectNotice" parameterType="int"
+		resultType="PostVo">
 		<![CDATA[
 			select postNo, 
 				   postTitle, 
@@ -69,8 +102,8 @@
 		     where postNo = #{postNo}
 		]]>
 	</select>
-	
-	
+
+
 	<!-- 글저장 -->
 	<insert id="insert" parameterType="PostVo">
 		<![CDATA[
@@ -89,7 +122,7 @@
 			) 
 		]]>
 	</insert>
-	
+
 	<!-- 글삭제 -->
 	<delete id="delete" parameterType="PostVo">
 		<![CDATA[
@@ -98,7 +131,7 @@
 			and postNo = #{postNo}
 		]]>
 	</delete>
-	
+
 	<!-- 글수정 -->
 	<update id="update" parameterType="PostVo">
 		<![CDATA[
@@ -112,7 +145,7 @@
 		  	and userNo = #{userNo}
 		]]>
 	</update>
-	
-	
-	
+
+
+
 </mapper>

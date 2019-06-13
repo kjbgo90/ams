@@ -30,6 +30,11 @@ public class CourseDataroomDao {
 		return list;
 	}
 	
+	public int selectFolderVo(int dataRoomNo) {
+		int no = sqlSession.selectOne("courseDataRoom.selectFolderVo", dataRoomNo);
+		return no;
+	}
+	
 	public List<CourseDataroomVo> getDataRoomRootList(CourseDataroomVo vo){
 		List<CourseDataroomVo> list = sqlSession.selectList("courseDataRoom.selectRootFolderList", vo);
 		return list;

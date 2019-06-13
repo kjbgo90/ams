@@ -4,13 +4,11 @@
 <mapper namespace="courseDataRoom">
 
 	<!-- 왼쪽 폴더 리스트들 틀림 -->
-	<select id="selectFolderList"  resultType="CourseDataRoomVo">
+	<select id="selectFolderVo"  resultType="int">
 		<![CDATA[
-		select 	dataRoomNo, 
-				dataRoomName, 
-				pRoomNo 
-		from dataRoom where courseNo=1 
-		order by pRoomNo and dataRoomNo
+		select 	pRoomNo 
+		from dataRoom where dataroomno = #{dataRoomNo}
+		
 		]]>
 	</select>
 

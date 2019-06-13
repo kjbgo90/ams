@@ -1,6 +1,8 @@
 package net.ourams.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +16,22 @@ public class PostService {
 	@Autowired
 	private PostDao postDao;
 	
-	public List<PostVo> getList(int courseNo){
-		List<PostVo> noticeList = postDao.selectAll(courseNo); 
-		System.out.println(noticeList.toString());
-		return noticeList;
+	public Map<String, Object> selectPostPaging( int pageNo){
+		int listSize = 3 ;
+		int pageNo1 = 1+listSize*(pageNo-1);
+		int pageNo2 = listSize*pageNo;
+		int countPage = postDao.countPost();
+		System.out.println("countPage"+countPage);
+		int maxPage = (int)Math.ceil((double)countPage/listSize);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pageNo1", pageNo1);
+		map.put("pageNo2", pageNo2);
+		List<PostVo> list = postDao.selectPaging(map);
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("list", list);
+		map2.put("maxPage", maxPage);
+		return map2;
 	}
-
 	public PostVo read(int postNo) {
 		postDao.updateHit(postNo);
 		PostVo PostVo = postDao.selectNotice(postNo);
@@ -50,6 +62,10 @@ public class PostService {
 		return postDao.update(postVo); 
 	}
 
+	public List<PostVo> searchList(String postTitle){
+		List<PostVo> list = postDao.searchList(postTitle);
+		return list;
+	}
 	
 
 }

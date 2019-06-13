@@ -156,16 +156,7 @@
 										</tr>
 									</thead>
 									<tbody id="postList">
-									<c:forEach items="${noticeList}" var="PostVo" >
-										<tr>
-											<td>${PostVo.rownum}</td>
-											<td><a class="btn-link" href="${pageContext.request.contextPath }/${coursePath}/notice/read/${PostVo.postNo}">[${PostVo.category}]${PostVo.postTitle}</a></td>
-											<td><span class="text-muted">${PostVo.regDate}</span></td>
-											<td><a href="${pageContext.request.contextPath }/${coursePath}/notice/read/${PostVo.postNo}" class="btn-link">${PostVo.userName}</a></td>
-											<td>${PostVo.hit}</td>
-										</tr>
-										
-										</c:forEach>
+									
 									</tbody>
 								</table>
 							</div>
@@ -173,7 +164,7 @@
 							<div class="row">
 
 								<div class="col-sm-7 text-right">
-									<ul class="pagination pager">
+									<ul class="pager">
 										
 									</ul>
 								</div>
@@ -262,24 +253,63 @@
 
 	<script type="text/javascript">
 		$("document").ready(function(){
-			$()
+			pageNo = 1;
+			pagingAjax(pageNo);
+			console.log(pageNo)
 		})
 		
+		
+		//검색기능 
 		$("#searchPostTitle").on("click",function(){
 			console.log("search anyOne");
-			var searchTitle = $("#searchAnyThing").val();
-			console.log(searchTitle);
+			var postTitle = $("#searchAnyThing").val();
+			console.log(postTitle);
 			
 			//ajax 처리해서 검색 
-			
+			$("#postList").empty("");
+			$.ajax({
+				url : "${pageContext.request.contextPath }/${coursePath}/notice/searchList",
+				type : "post",
+				data : {
+					postTitle:postTitle
+				},
+				dataType : "json",	
+				success : function(list) {
+					if (list.length == 0) {
+						$("#blogList").html("검색된 게시글이 없습니다.");
+					} else {
+						str = "";
+						for (var i = 0; i < list.length; i++) {
+							
+						str+="<tr>"	
+						str+="<td>"+list[i].postNo+"</td>"			
+						str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+">["+list[i].category+"]"+list[i].postTitle+"</a></td>"
+						str+="<td><span class='text-muted'>"+list[i].regDate+"</span></td>"				
+						str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+" class='btn-link'>"+list[i].userName+"</a></td>"				
+						str+="<td>"+list[i].hit+"</td>"				
+						str+="</tr>"		
+						
+						}
+						$("#postList").html(str);
+						str = "";
+					}
+					
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+		});
 			
 		});
 		
 		//페이징 처리할 부분 첫번째 리스트를 뽑아오자~
-		/*function pagingAjax(pageNo,cateNo){
+		function pagingAjax(pageNo){
 				$.ajax({
-					url : "",
+					url : "${pageContext.request.contextPath }/${coursePath}/notice/listFile",
 					type : "post",
+					data : {
+						pageNo:pageNo
+					},
 					dataType : "json",	
 					success : function(map) {
 						console.log(map);
@@ -294,23 +324,16 @@
 						} else {
 							str = "";
 							for (var i = 0; i < map.list.length; i++) {
-								<c:forEach items="${noticeList}" var="PostVo" >
+								
+								
 							str+="<tr>"	
 							str+="<td>"+map.list[i].rownum+"</td>"			
-							str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+$map.list[i].postNo+">"
-							str+="["+map.list[i].category+"]"+map.list[i].postTitle+"</a></td>"				
+							str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo+">["+map.list[i].category+"]"+map.list[i].postTitle+"</a></td>"
 							str+="<td><span class='text-muted'>"+map.list[i].regDate+"</span></td>"				
-							str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo}+" class='btn-link'>"+map.list[i].userName+"</a></td>"				
+							str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo+" class='btn-link'>"+map.list[i].userName+"</a></td>"				
 							str+="<td>"+map.list[i].hit+"</td>"				
-							str+="</tr>"			
-								
-								</c:forEach>
-								
-								
-								str += "<li id=listno"+map.list[i].postNo+" data-cateno="+map.list[i].cateNo+" data-postno="+map.list[i].postNo+" class='btn'>"
-								str += "<strong>"+ map.list[i].postTitle+"</strong> "
-								str += "<span>"+ map.list[i].regDate+ "</span>"
-								str += "</li>"
+							str+="</tr>"		
+							
 							}
 							$("#postList").html(str);
 							str = "";
@@ -325,7 +348,7 @@
 			});
 			
 			
-		}*/
+		}
 		
 		
 		function paging(pageno,maxPage){
@@ -404,19 +427,18 @@
 					
 			$(".pager").html(pg);
 			
-			}
+		}
 		
+
 			function pageMove(){
 				$(".pager").on("click","li",function(){
 					$this = $(this);
 					console.log($this);
 					var pageNo = $this.data("pageno");
 					console.log(pageNo);
-				pagingAjax(pageNo,1);
+					pagingAjax(pageNo);
 				});
 			}
-		
-			
 			
 			
 	</script>

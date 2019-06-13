@@ -1,6 +1,7 @@
 package net.ourams.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,22 @@ public class PostDao {
 	private SqlSession sqlSession;
 	
 	/* 글전체리스트 가져오기 기본*/
-	public List<PostVo> selectAll(int courseNo){
-		List<PostVo> list = sqlSession.selectList("notice.selectAll",courseNo);
+	public List<PostVo> selectPaging(Map<String, Object> map){
+		List<PostVo> list = sqlSession.selectList("notice.selectListPaging",map);
 		System.out.println(list.toString());
 		
 		return list;
 	}
-
+	
+	public List<PostVo> searchList(String postTitle){
+		List<PostVo> list = sqlSession.selectList("notice.searchList", postTitle);
+		return list;
+	}
+	
+	public int countPost() {
+		int count = sqlSession.selectOne("notice.countPost");
+		return count;
+	}
 	
 	/* no로 글가져오기 */
 	public PostVo selectNotice(int postNo) {
