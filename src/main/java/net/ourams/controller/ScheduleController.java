@@ -67,10 +67,11 @@ public class ScheduleController {
 	//load schedule
 	@ResponseBody
 	@RequestMapping(value="/load", method=RequestMethod.POST)
-	public List<CourseScheduleVo> loadSchedule(@PathVariable("coursePath") String coursePath){
+	public List<CourseScheduleVo> loadSchedule(@PathVariable("coursePath") String coursePath, @AuthUser UserVo authUser){
+		System.out.println("login User: " + authUser.getUserName());
 		System.out.println("load "+ coursePath +" schedule...");
 		
-		List<CourseScheduleVo> list = service.loadSchedule(coursePath);
+		List<CourseScheduleVo> list = service.loadSchedule(coursePath, authUser);
 		
 		return list;
 	}

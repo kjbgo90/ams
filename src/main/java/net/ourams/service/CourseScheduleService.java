@@ -53,9 +53,34 @@ public class CourseScheduleService {
 		}
 		
 		//load all schedule
-		public List<CourseScheduleVo> loadSchedule(String coursePath){
+		public List<CourseScheduleVo> loadSchedule(String coursePath, UserVo authUser){
 			int courseNo = csDao.findCourseNo(coursePath);
-			return csDao.loadSchedule(courseNo);
+			List<CourseScheduleVo> list = new ArrayList();
+			CourseScheduleVo vo = new CourseScheduleVo();
+			
+			vo.setCourseNo(courseNo);
+			vo.setUserNo(authUser.getUserNo());
+			
+			//add notice schedule
+			vo.setEventColor("warning");
+			List<CourseScheduleVo> temp = csDao.loadCourseSchedule(vo);
+			list.addAll(temp);
+			
+			//add assign schedule
+			vo.setEventColor("pink");
+			temp = csDao.loadCourseSchedule(vo);
+			list.addAll(temp);
+			
+			//add course schedule
+			vo.setEventColor("dark");
+			temp = csDao.loadCourseSchedule(vo);
+			list.addAll(temp);
+			
+			//add Team&personal schedule
+			temp = csDao.loadPersonalSchedule(vo);
+			list.addAll(temp);
+			
+			return list;
 		}
 		
 		public List<String> loadTag(int courseNo){
