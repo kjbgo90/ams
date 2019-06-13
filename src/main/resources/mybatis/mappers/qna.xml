@@ -142,7 +142,9 @@ FROM (SELECT    postNo,
 		<![CDATA[
 			update post 
 		   	set postTitle=#{postTitle},
-		       	postContent=#{postContent}
+		       	postContent=#{postContent},
+		       	subjectNo=#{subjectNo},
+		       	regDate=sysdate
 		 	where postNo=#{postNo}
 		  	and userNo = #{userNo}
 		]]>

@@ -27,7 +27,7 @@
 <link href="${pageContext.request.contextPath }/assets/css/bootstrap.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/assets/css/ionicons.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/assets/css/premium/icon-sets/icons/line-icons/premium-line-icons.min.css" rel="stylesheet">
-
+<link href="${pageContext.request.contextPath }/assets/css/font-awesome.css" rel="stylesheet">
 <!--Nifty Stylesheet [ REQUIRED ]-->
 <link href="${pageContext.request.contextPath }/assets/css/nifty.css" rel="stylesheet">
 
@@ -181,7 +181,7 @@
 								<div class="pad-ver text-right col-sm-8">
 
 									<!--Save draft button-->
-									<button id="mail-send-btn" type="button" class="btn btn-default">
+									<button id="mail-send-btn" type="button" class="btn btn-default"  onclick="location.href='${pageContext.request.contextPath }/${coursePath}/qna/modifyform?postNo=${PostVo.postNo}' ">
 										<i class=" icon-xs icon-fw"></i>수정
 									</button>
 
@@ -192,28 +192,29 @@
 								</div>
 							</div>
 							<br><br><br><br>
+							
+							
 							<!-- Comment form -->
 							<!--===================================================-->
 							<hr class="new-section-sm bord-no">
 							<p class="text-lg text-main text-bold text-uppercase">Leave a comment</p>
-							<form role="form">
-								<div class="row">
+							
+							<div class="row">
 
-									<div class="col-md-12">
-										<div class="form-group">
-											<textarea class="form-control" rows="9" placeholder="Your comment"></textarea>
-										</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<textarea class="form-control" rows="9" placeholder="Your comment" id="commentContent"></textarea>
 									</div>
 								</div>
-							</form>
-							<button id="mail-send-btn" type="button" class="btn btn-primary">
-										<i class=" icon-xs icon-fw"></i>댓글등록
-									</button>
+							</div>
+							<button id="btn-comment-regist" type="button" class="btn btn-primary pull-right">
+								<i class=" icon-xs icon-fw "></i>댓글등록
+							</button>
+							
+							<br>
+							<br>
 							<!--===================================================-->
 							<!-- End Comment form -->
-
-
-
 
 							<hr class="new-section-sm">
 							<p class="text-lg text-main text-bold text-uppercase pad-btm">Comments</p>
@@ -222,53 +223,22 @@
 
 							<!-- Comments -->
 							<!--===================================================-->
-							<div class="comments media-block">
-								<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png"></a>
-								<div class="media-body">
-									<div class="comment-header">
-										<a href="#" class="media-heading box-inline text-main text-bold">John Doe</a>
-										<p class="text-muted text-sm">Today 10:41AM - 12/09/2017</p>
+							<div class="comments media-block" id="commentDiv">
+								<c:forEach items="${replylist}" var="replylist">
+								<div class="commentContent">
+									<c:if test="${replylist.userNo eq authUser.userNo}">
+										<i class="btn btn-danger fa fa-trash pull-right btnCommentDel" data-reply="${replylist.reply}"></i>
+									</c:if>
+									<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/${replylist.logoPath}"></a>
+									<div class="media-body">
+										<div class="comment-header">
+											<a href="#" class="media-heading box-inline text-main text-bold">${replylist.userName}</a>
+											<p class="text-muted text-sm">${replylist.regDate} </p>
+										</div>
+										<p>${replylist.replyContent}</p>
 									</div>
-									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p>
-									
 								</div>
-							</div>
-							<!--===================================================-->
-							<!-- End Comments -->
-
-
-
-							<!-- Comments -->
-							<!--===================================================-->
-							<div class="comments media-block">
-								<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/assets/img/profile-photos/5.png"></a>
-								<div class="media-body">
-									<div class="comment-header">
-										<a href="#" class="media-heading box-inline text-main text-bold">Donald Brown</a>
-										<p class="text-muted text-sm">Today 08:25AM - 12/009/2017</p>
-									</div>
-									<p>Maecenas ultrices, justo vel imperdiet gravida, urna ligula hendrerit nibh, ac cursus nibh sapien in purus.</p>
-									
-								</div>
-							</div>
-							<!--===================================================-->
-							<!-- End Comments -->
-
-
-
-
-							<!-- Comments -->
-							<!--===================================================-->
-							<div class="comments media-block">
-								<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/assets/img/profile-photos/8.png"></a>
-								<div class="media-body">
-									<div class="comment-header">
-										<a href="#" class="media-heading box-inline text-main text-bold">Kathryn Obrien</a>
-										<p class="text-muted text-sm">Today 05:17AM - 12/09/2017</p>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
-									
-								</div>
+								</c:forEach>
 							</div>
 							<!--===================================================-->
 							<!-- End Comments -->
@@ -341,6 +311,71 @@
 	<script src="${pageContext.request.contextPath }/assets/js/nifty.js"></script>
 
 	<!--=================================================-->
+	
+	<script type="text/javascript">
+	/* comment 등록하는 스크립트 */
+	$("#btn-comment-regist").on("click", function(){
+		var replyContent = $("#commentContent").val();
+		var postNo = '${PostVo.postNo}';
+		console.log(postNo);
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath }/${coursePath}/qna/comment/regist",
+			type : "post",
+			data : {postNo : postNo, replyContent : replyContent},
+			dataType : "json",
+			success : function(replyVo) {
+				console.log(replyVo);
+				$("#commentContent").val("");
+				replyRender(replyVo);
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	});
+	
+	/* comment 삭제하는 스크립트 */
+	$("#commentDiv").on("click", ".btnCommentDel", function(){
+		var $this = $(this);
+		var reply = $this.data("reply");
+		
+		console.log(reply);
+		$.ajax({
+			url : "${pageContext.request.contextPath }/${coursePath}/qna/comment/delete",
+			type : "post",
+			data : {reply : reply},
+			dataType : "json",
+			success : function(result) {
+				console.log(result);
+				$this.parent(".commentContent").remove();
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+	});
+	
+	
+	function replyRender(replyVo){
+		var str = "";
+		
+		str += "<div class='commentContent'>";
+		str += "	<i class='btn btn-danger fa fa-trash pull-right btnCommentDel' data-reply='" + replyVo.reply + "'></i>";
+		str += "	<a class='media-left' href='#''><img class='img-circle img-sm' alt='Profile Picture' src='${pageContext.request.contextPath }/" + replyVo.logoPath + "'></a>";
+		str += "	<div class='media-body'>";
+		str += "		<div class='comment-header'>";
+		str += "			<a href='#' class='media-heading box-inline text-main text-bold'>" + replyVo.userName + "</a>";
+		str += "			<p class='text-muted text-sm'>" + replyVo.regDate + "</p>";
+		str += "		</div>";
+		str += "		<p>" + replyVo.replyContent + "</p>";
+		str += "	</div>";
+		str += "</div>"
+		
+		$("#commentDiv").append(str);
+	}
+</script>
 
 
 

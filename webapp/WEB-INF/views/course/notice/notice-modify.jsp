@@ -198,13 +198,13 @@ rhd
 										<hr>
 										<div class="form-group text-left" style="padding-left: 20px;">
 											<!--Save draft button-->
-											<button id="mail-save-btn" type="button" class="btn btn-default">
-												<i class="-unread icon-lg icon-fw" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/notice/list' "></i> 취소
+											<button id="mail-save-btn" type="button" class="btn btn-default" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/notice/list' ">
+												<i class="-unread icon-lg icon-fw" ></i> 취소
 											</button>
 
 
 											<!--Discard button-->
-											<button id="mail-discard-btn" type="submit" class="btn btn-primary">
+											<button id="discard-btn" type="submit" class="btn btn-primary">
 												<i class="icon-lg icon-fw"></i> 수정
 											</button>
 										</div>
@@ -288,7 +288,7 @@ rhd
 
 
 											<!--Discard button-->
-											<button id="mail-discard-btn" type="submit" class="btn btn-primary">
+											<button id="discard-btn" type="submit" class="btn btn-primary">
 												<i class="icon-lg icon-fw"></i> 작성
 											</button>
 										</div> --%>
@@ -466,7 +466,7 @@ rhd
 		});
 
 		//공지사항 저장 버튼 클릭할때
-		$("#mail-discard-btn").on("click", function() {
+		$("#discard-btn").on("click", function() {
 			event.preventDefault();
 			console.log("저장");
 			var markstr = $('#demo-summernote').summernote('code');

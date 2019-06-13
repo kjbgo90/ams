@@ -162,7 +162,6 @@ public class CourseNoticeController {
 	public String update(@PathVariable("coursePath") String coursePath, @AuthUser UserVo authUser,
 			@ModelAttribute PostVo postVo, HttpSession session, @RequestBody PostVo resJSON, HttpServletRequest re) {
 		System.out.println("###update###");
-		System.out.println("###test### 10");
 
 		System.out.println(resJSON.getPostTitle());
 		postVo.setUserNo(authUser.getUserNo());
@@ -240,4 +239,5 @@ public class CourseNoticeController {
 	public int commentDelete(@RequestParam("reply") int reply) {
 		return courseReplyService.commentDelete(reply);
 	}
+
 }

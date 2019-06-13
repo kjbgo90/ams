@@ -128,7 +128,7 @@
 				<!--Page content-->
 				<!--===================================================-->
 				<div id="page-content">
-					<form role="form" class="form-horizontal" method="post" action="${pageContext.request.contextPath }/${coursePath}/qna/write">
+					<div>
 						<!-- Contact Toolbar -->
 						<!---------------------------------->
 
@@ -198,8 +198,8 @@
 											</div>
 											<div class="form-group text-left" style="padding-left: 20px;">
 												<!--Save draft button-->
-												<button id="mail-save-btn" type="button" class="btn btn-default">
-													<i class="-unread icon-lg icon-fw" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/qna/list' "></i> 취소
+							 					<button id="mail-save-btn" type="button" class="btn btn-default" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/qna/list' ">
+													<i class="-unread icon-lg icon-fw" ></i> 취소
 												</button>
 
 
@@ -299,7 +299,7 @@
 								</div>
 							</div>
 						</div>
-					</form>
+					</div>
 				</div>
 				<!--===================================================-->
 				<!--End page content-->
@@ -484,6 +484,7 @@
 							var postTitle = $('#postTitle').val();
 							var selectedDate = $('#select-day').val();
 							var postResult = {};
+							postResult["postNo"] = getUrlParams().postNo;
 							postResult["postTitle"] = postTitle;
 							postResult["subjectNo"] = subjectNo;
 							postResult["postContent"] = markstr;
@@ -495,11 +496,11 @@
 							console.log(selectedDate);
 							//카테고리, 제목, 본문,  달력날자
 							console
-									.log("${pageContext.request.contextPath}/${coursePath}/qna/write");
+									.log("${pageContext.request.contextPath}/${coursePath}/qna/update");
 
 							$
 									.ajax({
-										url : "${pageContext.request.contextPath}/${coursePath}/qna/write", //컨트롤주소
+										url : "${pageContext.request.contextPath}/${coursePath}/qna/update", //컨트롤주소
 										type : "post",
 										//dataType: "json",          // ajax 통신으로 받는 타입
 										contentType : 'application/json; charset=utf-8',
@@ -521,6 +522,12 @@
 									});
 
 						});
+
+		function getUrlParams() {
+		    var params = {};
+		    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
+		    return params;
+		} 
 	</script>
 
 </body>

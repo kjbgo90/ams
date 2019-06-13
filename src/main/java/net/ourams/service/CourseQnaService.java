@@ -54,6 +54,12 @@ public class CourseQnaService {
 	public int modify(PostVo postVo) {
 		return courseQnaDao.update(postVo);
 	}
+	
+
+	public int update(PostVo postVo) {
+		System.out.println(postVo.toString());
+		return courseQnaDao.update(postVo);
+	}
 
 	
 	
