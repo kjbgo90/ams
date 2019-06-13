@@ -1,6 +1,8 @@
 package net.ourams.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,17 +17,33 @@ public class CourseQnaService {
 	@Autowired
 	private CourseQnaDao courseQnaDao;
 	
-	public List<PostVo> getList(int courseNo){
-		List<PostVo> qnaList = courseQnaDao.selectAll(courseNo); 
-		System.out.println(qnaList.toString());
-		return qnaList;
+
+	public Map<String, Object> selectListPaging( int pageNo){
+		int listSize = 10 ;
+		int pageNo1 = 1+listSize*(pageNo-1);
+		int pageNo2 = listSize*pageNo;
+		int countPage = courseQnaDao.countPost();
+		System.out.println("countPage"+countPage);
+		int maxPage = (int)Math.ceil((double)countPage/listSize);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pageNo1", pageNo1);
+		map.put("pageNo2", pageNo2);
+		List<PostVo> list = courseQnaDao.selectListPaging(map);
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("list", list);
+		map2.put("maxPage", maxPage);
+		return map2;
 	}
 
+	public List<PostVo> searchList(String postTitle){
+		List<PostVo> list = courseQnaDao.searchList(postTitle);
+		return list;
+	}
+	
 	public PostVo read(int postNo) {
-		// TODO Auto-generated method stub
-		courseQnaDao.updateHit(postNo); 
-		PostVo PostVo = courseQnaDao.selectNotice(postNo); 
-		return PostVo; 
+		courseQnaDao.updateHit(postNo);
+		PostVo PostVo = courseQnaDao.selectNotice(postNo);
+		return PostVo;
 	}
 
 	public int write(PostVo postVo) {

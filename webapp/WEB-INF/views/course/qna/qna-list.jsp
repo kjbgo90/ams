@@ -137,13 +137,12 @@
 						<hr>
 
 						<div class="row pad-btm">
-							<form action="#" method="post" class="col-xs-12 col-sm-10 col-sm-offset-1 pad-hor" style="padding-left: 500px;">
-								<div class="input-group mar-btm">
-									<input type="text" placeholder="Search posts..." class="form-control input-sm"> <span class="input-group-btn">
-										<button class="btn btn-primary btn-sm" type="button">검색</button>
+								<div class="input-group mar-btm col-xs-12 col-sm-10 col-sm-offset-1 pad-hor "   style="padding-left: 500px;">
+									<input id="searchAnyThing" type="text" placeholder="Search posts..." class="form-control input-sm"> 
+									<span class="input-group-btn">
+										<button id="searchPostTitle"  class="btn btn-primary btn-sm" type="button">검색</button>
 									</span>
 								</div>
-							</form>
 						</div>
 						<!--Posts Table-->
 						<!--===================================================-->
@@ -162,36 +161,16 @@
 											<th>댓글수</th>
 										</tr>
 									</thead>
-									<tbody>
-										<c:forEach items="${qnaList}" var="PostVo">
-											<tr>
-												<td>${PostVo.rownum}</td>
-												<td><a class="btn-link" href="${pageContext.request.contextPath }/${coursePath}/qna/read/${PostVo.postNo}">${PostVo.postTitle}</a>&nbsp;&nbsp;
-													<div class="label label-warning">N</div></td>
-												<td><span class="text-muted">${PostVo.regDate}</span></td>
-												<td>${PostVo.subjectTitle}</td>
-												<td><a href="#" class="btn-link">${PostVo.userName}</a></td>
-												<td>${PostVo.hit}</td>
-												<td><i class="demo-pli-speech-bubble-5 icon-fw"></i>2</td>
-											</tr>
-										</c:forEach>
+									<tbody id="postList">
+										
 									</tbody>
 								</table>
 							</div>
 							<br> <br>
 							<div class="row">
 
-								<div class="col-sm-7 text-right">
-									<ul class="pagination">
-										<li class="disabled"><a href="#" class="demo-pli-arrow-left"></a></li>
-										<li class="active"><a href="#">1</a></li>
-										<li><a href="#">2</a></li>
-										<li><a href="#">3</a></li>
-										<li><a href="#">4</a></li>
-										<li><span>...</span></li>
-										<li><a href="#">20</a></li>
-										<li><a href="#" class="demo-pli-arrow-right"></a></li>
-									</ul>
+								<div id="pager" class="col-sm-7 text-right">
+									
 								</div>
 								<div class="col-sm-5 text-right">
 									<button class="btn btn-primary btn-sm" style="margin-right: 50px;" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/qna/writeform' ">글작성</button>
@@ -267,6 +246,220 @@
 	<script src="${pageContext.request.contextPath }/assets/js/nifty.js"></script>
 
 	<!--=================================================-->
+	<script type="text/javascript">
+		$("document").ready(function(){
+			pageNo = 1;
+			pagingAjax(pageNo);
+			console.log(pageNo);
+			pageMove()
+		});
+		
+		
+		//검색기능 
+		
+		$("#searchPostTitle").on("click",function(){
+			console.log("search anyOne");
+			var postTitle = $("#searchAnyThing").val();
+			console.log(postTitle);
+			
+			//ajax 처리해서 검색 
+			
+			$("#postList").empty("");
+			$.ajax({
+				url : "${pageContext.request.contextPath }/${coursePath}/qna/searchList",
+				type : "post",
+				data : {
+					postTitle:postTitle
+				},
+				dataType : "json",	
+				success : function(list) {
+					if (list.length == 0) {
+						$("#blogList").html("검색된 게시글이 없습니다.");
+					} else {
+						str = "";
+						for (var i = 0; i < list.length; i++) {
+							
+								str+="<tr>"	
+								str+="<td>"+list[i].rnum+"</td>"			
+								str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"'>["+list[i].subjectTitle+"]"+list[i].postTitle+"</a>&nbsp;&nbsp;<div class='label label-warning'>N</div></td>"
+								str+="<td><span class='text-muted'>"+list[i].regDate+"</span></td>"
+								str+="<td>"+list[i].subjectTitle+"</td>"	
+								str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"' class='btn-link'>"+list[i].userName+"</a></td>"				
+								str+="<td>"+list[i].hit+"</td>"	
+								str+="<td><i class='demo-pli-speech-bubble-5 icon-fw'></i>2</td>"
+								str+="</tr>"		
+								
+						}
+						$("#postList").html(str);
+						str = "";
+					}
+					
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			
+			
+		});
+		
+		//페이징 처리할 부분 첫번째 리스트를 뽑아오자~
+		function pagingAjax(pageNo){
+				console.log(pageNo);
+				$.ajax({
+					url : "${pageContext.request.contextPath }/${coursePath}/qna/selectPostPaging",
+					type : "post",
+					data : {
+						pageNo:pageNo
+					},
+					dataType : "json",	
+					success : function(map) {
+						console.log(map);
+						console.log(map.maxPage);
+						console.log(map.list);
+						console.log(pageNo);
+						
+						paging(pageNo,map.maxPage);
+						
+						if (map.list.length == 0) {
+							$("#blogList").html(
+									"등록된 게시글이 없습니다.");
+						} else {
+							str = "";
+							for (var i = 0; i < map.list.length; i++) {
+								
+								
+							str+="<tr>"	
+							str+="<td>"+map.list[i].rnum+"</td>"			
+							str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo+"'>["+map.list[i].subjectTitle+"]"+map.list[i].postTitle+"</a>&nbsp;&nbsp;<div class='label label-warning'>N</div></td>"
+							str+="<td><span class='text-muted'>"+map.list[i].regDate+"</span></td>"
+							str+="<td>"+map.list[i].subjectTitle+"</td>"	
+							str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo+"' class='btn-link'>"+map.list[i].userName+"</a></td>"				
+							str+="<td>"+map.list[i].hit+"</td>"	
+							str+="<td><i class='demo-pli-speech-bubble-5 icon-fw'></i>2</td>"
+							str+="</tr>"		
+							
+							/*
+							<tr>
+								<td>${PostVo.rownum}</td>
+								<td><a class="btn-link" href="${pageContext.request.contextPath }/${coursePath}/qna/read/${PostVo.postNo}">${PostVo.postTitle}</a>&nbsp;&nbsp;<div class="label label-warning">N</div></td>
+								<td><span class="text-muted">${PostVo.regDate}</span></td>
+								<td>${PostVo.subjectTitle}</td>
+								<td><a href="#" class="btn-link">${PostVo.userName}</a></td>
+								<td>${PostVo.hit}</td>
+								<td><i class="demo-pli-speech-bubble-5 icon-fw"></i>2</td>
+							</tr>
+							*/
+							
+							}
+							$("#postList").html(str);
+							str = "";
+						}
+						
+						paging(pageNo, map.maxPage);
+						
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
+		}
+		
+		
+		function paging(pageno,maxPage){
+			pg = ""
+				pg +="<ul class='pagination'>";
+			if(pageno>1){
+				pg +="<li data-pageno="+(pageno-1)+"><a class='demo-pli-arrow-left'>";
+				pg +="</a></li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno>3)	
+			{
+				pg +="<li data-pageno="+(pageno-3)+" ><a>";
+				pg +=	pageno-3  ;
+				pg +="</a></li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno>2){
+				pg +="<li data-pageno="+(pageno-2)+" ><a>";
+				pg +=	pageno-2 ;
+				pg +="</a></li>";	
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno>1){
+				pg +="<li data-pageno="+(pageno-1)+"><a>";
+				pg +=	pageno-1 ;
+				pg +="</a></li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+		
+			pg +="<li data-pageno="+pageno+" class='active'><a>"+pageno +" </li>";
+			
+			if(pageno+1<=maxPage){
+				pg +="<li data-pageno="+(pageno+1)+"><a>";
+				pg += 	pageno+1  ;
+				pg +="</a></li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno+2<=maxPage){
+				pg +="<li data-pageno="+(pageno+2)+"><a>";
+				pg +=	 pageno+2  ;
+				pg +="</a></li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno+3<=maxPage){
+				pg +="<li data-pageno="+(pageno+3)+"><a>";
+				pg +=	pageno+3 ;
+				pg +="</a></li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno+1<=maxPage){
+				pg +="<li data-pageno="+(pageno+1)+"><a  class='demo-pli-arrow-right'>";
+				pg +="</a></li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+
+			pg +="</ul>";
+
+							
+					
+			$("#pager").html(pg);
+			
+		}
+		
+
+			function pageMove(){
+				$("#pager").on("click","li",function(){
+					$this = $(this);
+					console.log($this);
+					var pageNo = $this.data("pageno");
+					console.log(pageNo);
+					pagingAjax(pageNo);
+				});
+			}
+			
+			
+	</script>
+
+
 
 </body>
+
 </html>

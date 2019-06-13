@@ -1,6 +1,7 @@
 package net.ourams.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -44,11 +45,27 @@ public class QnaController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String qnaList(@PathVariable("coursePath") String coursePath, @AuthUser UserVo authUser, Model model) {
 		System.out.println("list");
-		int courseNo=1;
-		List<PostVo> qnaList  = courseQnaService.getList(courseNo);
-		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("coursePath",coursePath);
 		return "course/qna/qna-list";
+	}
+	
+	
+
+	@ResponseBody
+	@RequestMapping(value = "/selectPostPaging", method = RequestMethod.POST)
+	public Map<String, Object> selectPostPaging(@RequestParam("pageNo") int pageNo) {
+		System.out.println("selectPostPaging");
+		Map<String, Object> map = courseQnaService.selectListPaging(pageNo);
+		return map;
+	}
+
+	
+	@ResponseBody
+	@RequestMapping(value = "/searchList", method = RequestMethod.POST)
+	public List<PostVo> searchList(@RequestParam("postTitle") String postTitle) {
+		System.out.println("searchList");
+		List<PostVo> list = courseQnaService.searchList(postTitle);
+		return list;
 	}
 	
 	@Auth

@@ -1,6 +1,7 @@
 package net.ourams.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +15,22 @@ public class CourseQnaDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	
-	
+	//post 갯수 
+	public int countPost() {
+		int count = sqlSession.selectOne("qna.countPost");
+		return count;
+	}
 	
 	/* 글전체리스트 가져오기 기본*/
-	public List<PostVo> selectAll(int courseNo){
-		List<PostVo> list = sqlSession.selectList("qna.selectAll",courseNo);
+	public List<PostVo> selectListPaging(Map<String, Object> map){
+		List<PostVo> list = sqlSession.selectList("qna.selectListPaging",map);
 		System.out.println(list.toString());
 		
+		return list;
+	}
+	public List<PostVo> searchList(String postTitle){
+		List<PostVo> list = sqlSession.selectList("qna.searchList", postTitle);
+		System.out.println(list.toString());
 		return list;
 	}
 

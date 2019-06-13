@@ -2,9 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="qna">
-	<select id="selectAll" parameterType="int" resultType="PostVo">
+
+
+	<!--검색하는 기능  -->
+	<select id="searchList" parameterType="PostVo" resultType="PostVo">
+	<![CDATA[
+	SELECT * FROM post WHERE posttitle LIKE '%'||#{postTitle}||'%'  ORDER BY REGDATE DESC
+	]]>
+	</select>
+	
+	<!-- 포스트 총 갯수  -->
+	<select id="countPost"  resultType="int">
+	<![CDATA[
+ 	   select count(*) from post where postType= 2
+	]]>
+	</select>
+	
+	
+
+	<select id="selectListPaging" parameterType="map" resultType="PostVo">
 		<![CDATA[
-		SELECT rownum rnum,
+		        
+SELECT  rnum as rnum,
         postNo,
         postType,
         userNo,
@@ -19,20 +38,21 @@
         userName,
         subjectNo,
         subjectTitle
-FROM (SELECT    postNo,
-                postType,
-                userNo,
+FROM (SELECT    rownum as rnum, 
+                pu.postNo,
+                pu.postType,
+                pu.userNo,
                 pu.courseNo courseNo,
-                regDate,
-                communityNo,
+                pu.regDate,
+                pu.communityNo,
                 pu.scheduleNo scheduleNo,
-                postTitle,
-                postContent,
-                hit,
-                category,
-                userName,
+                pu.postTitle,
+                pu.postContent,
+                pu.hit,
+                pu.category,
+                pu.userName,
                 pu.subjectNo,
-                subjectTitle
+                s.subjectTitle
         FROM(
                 SELECT  postNo,
                         postType,
@@ -48,12 +68,14 @@ FROM (SELECT    postNo,
                         userName,
                         subjectNo
                 FROM post p join users u
-                ON p.userNo = u.userNo) pu
-                left join subject s on pu.subjectno = s.subjectno 
+                ON p.userNo = u.userNo
                 where postType = 2
-                order by postNo desc)
-                            
-				order by rnum desc
+                order by postNo desc) pu
+                left join subject s 
+                on pu.subjectno = s.subjectno 
+                where rownum <= #{pageNo2} ) 
+                where rnum >= #{pageNo1}
+                order by rnum desc
 		]]>
 	</select>
 

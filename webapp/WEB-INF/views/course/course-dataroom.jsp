@@ -596,8 +596,7 @@
 														+ "</option>";
 
 											}
-											$("#tag-multiselect")
-													.html(tagList2);
+											$("#tag-multiselect").html(tagList2);
 											$("#tag-multiselect").chosen({
 												width : '100%'
 											});
