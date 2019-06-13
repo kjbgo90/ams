@@ -12,6 +12,7 @@ import net.ourams.dao.CourseScheduleDao;
 import net.ourams.dao.UserDao;
 import net.ourams.vo.AssignmentVo;
 import net.ourams.vo.CourseScheduleVo;
+import net.ourams.vo.ScheduleTagVo;
 import net.ourams.vo.SubjectVo;
 import net.ourams.vo.UserVo;
 
@@ -57,22 +58,66 @@ public class CourseScheduleService {
 			return csDao.loadSchedule(courseNo);
 		}
 		
-		//register new schedule
-		public int registerSchedule(CourseScheduleVo vo) {
+		public List<String> loadTag(int courseNo){
+			List<Integer> userNoList = csDao.loadTag(courseNo);
+			List<String> userNameList = new ArrayList();
 			
-			if(vo.getEventColor().equals("notice")) {
-				vo.setEventColor("warning");
-			}else if(vo.getEventColor().equals("assign")) {
-				vo.setEventColor("pink");
-			}else if(vo.getEventColor().equals("course")) {
-				vo.setEventColor("dark");
-			}else if(vo.getEventColor().equals("team")) {
-				vo.setEventColor("purple");
-			}else {
-				vo.setEventColor("info");
+			for(int i=0; i<userNoList.size(); i++) {
+				userNameList.add(csDao.findTeacherName(userNoList.get(i)));
 			}
 			
-			return csDao.registerSchedule(vo);
+			return userNameList;
+		}
+		
+		//register new schedule
+		public int registerSchedule(List<Object> multiParam) {
+			System.out.println(multiParam.toString());
+			// insert into CourseScehduleVo
+			HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(1);
+			CourseScheduleVo csVo = new CourseScheduleVo((String)map.get("scheduleName"), (String)map.get("scheduleMemo"), (String)map.get("startDate"),
+									(String)map.get("endDate"), (String)map.get("eventColor"), 1, 6);
+			
+			System.out.println(csVo);
+			
+			if(csVo.getEventColor().equals("notice")) {
+				csVo.setEventColor("warning");
+			}else if(csVo.getEventColor().equals("assign")) {
+				csVo.setEventColor("pink");
+			}else if(csVo.getEventColor().equals("course")) {
+				csVo.setEventColor("dark");
+			}else if(csVo.getEventColor().equals("team")) {
+				csVo.setEventColor("purple");
+			}else {
+				csVo.setEventColor("info");
+			}
+			
+			int scheduleFlag = csDao.registerSchedule(csVo);
+			
+			// insert into ScheduleTagVo
+			
+			List<Integer> tagList = (List<Integer>)(multiParam.get(0));
+			
+			int tagFlag = 0;
+			int scheduleNo = csVo.getScheduleNo();
+			
+			for(int i=0; i<tagList.size(); i++) {
+				
+				ScheduleTagVo stVo = new ScheduleTagVo();
+				stVo.setScheduleNo(scheduleNo);
+				
+				stVo.setUserNo(Integer.parseInt(""+tagList.get(i)));
+				tagFlag = csDao.registerScheduleTag(stVo);
+				if(tagFlag == 0) {
+					System.out.println("error");
+					break;
+				}
+			}
+			
+			if(tagFlag == 1 && scheduleFlag == 1)
+				return 1;
+			else 
+				return 0;
+						
 		}
 		
 		//find selected schedule
@@ -140,6 +185,8 @@ public class CourseScheduleService {
 				String courseName;
 				
 				result.put("category", "팀별 일정");
+				result.put("scheduleNo", temp.getScheduleNo());
+				result.put("writerNo", temp.getUserNo());
 				result.put("title", temp.getScheduleName());
 				result.put("content", temp.getScheduleMemo());
 				result.put("startDate", temp.getStartDate());
@@ -153,6 +200,8 @@ public class CourseScheduleService {
 				String courseName; 
 				
 				result.put("category", "개인 일정");
+				result.put("scheduleNo", temp.getScheduleNo());
+				result.put("writerNo", temp.getUserNo());
 				result.put("title", temp.getScheduleName());
 				result.put("content", temp.getScheduleMemo());
 				result.put("startDate", temp.getStartDate());
@@ -165,4 +214,10 @@ public class CourseScheduleService {
 			
 			return result;
 		}
+		
+		public int deleteSchedule(CourseScheduleVo vo) {
+			return csDao.deleteSchedule(vo);
+		}
 }
+
+		

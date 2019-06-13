@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.ourams.interceptor.Auth;
+import net.ourams.interceptor.AuthUser;
 import net.ourams.service.CourseScheduleService;
 import net.ourams.vo.CourseScheduleVo;
 import net.ourams.vo.UserVo;
@@ -29,10 +31,12 @@ public class ScheduleController {
 	//schedule main form
 	@Auth
 	@RequestMapping("/form")
-	public String scheduleForm(@PathVariable("coursePath") String coursePath, Model model) {
+	public String scheduleForm(@PathVariable("coursePath") String coursePath, Model model, 
+								@AuthUser UserVo authUser) {
 		System.out.println("schedule page");
 		
 		model.addAttribute("coursePath", coursePath);
+		model.addAttribute("authUser", authUser);
 		return "course/schedule";
 	}
 	
@@ -71,15 +75,23 @@ public class ScheduleController {
 		return list;
 	}
 	
+	//load tag case by schedule
+	@ResponseBody
+	@RequestMapping(value="/loadTag", method=RequestMethod.POST)
+	public List<String> loadTag(@RequestBody CourseScheduleVo vo){
+		System.out.println("load tag on schedule No" + vo.getScheduleNo());
+		
+		return service.loadTag(vo.getScheduleNo());
+	}
+	
 	//insert schedule
 	@ResponseBody
 	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public int registerSchedule(@RequestBody CourseScheduleVo vo) {
+	public int registerSchedule(@RequestBody List<Object> multiParam) {
 		System.out.println("register users...");
-		System.out.println("params info: " + vo.toString());
+		System.out.println(multiParam);
 		
-		return service.registerSchedule(vo);
-		
+		return service.registerSchedule(multiParam);
 	}
 	
 	//selected schedule 
@@ -91,6 +103,21 @@ public class ScheduleController {
 		Map<String, Object> result = service.selectedSchedule(vo);
 		
 		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/modify", method=RequestMethod.POST)
+	public int modifySchedule(@RequestBody CourseScheduleVo vo){
+		
+		return 0;
+	}
+	
+	@ResponseBody 
+	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	public int deleteSchedule(@RequestBody CourseScheduleVo vo) {
+		System.out.println("delete schdule NO " + vo.getScheduleNo() + "...");
+		
+		return service.deleteSchedule(vo);
 	}
 	
 	

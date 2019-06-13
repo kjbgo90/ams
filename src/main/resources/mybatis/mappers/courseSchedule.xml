@@ -17,7 +17,18 @@
 		]]>
 	</select>
 	
+	<select id="loadTag" parameterType="int" resultType="int">
+		<![CDATA[
+			SELECT userNo
+			FROM scheduleTag
+			WHERE scheduleNo = #{scheduleNo}
+		]]>
+	</select>
+	
 	<insert id="registerSchedule" parameterType="CourseScheduleVo">
+		<selectKey keyProperty="scheduleNo" resultType="int" order="BEFORE">
+			select seq_schedule_no.nextval from dual
+		</selectKey>
 		<![CDATA[
 			INSERT INTO Schedule
 				(scheduleNo,
@@ -29,7 +40,7 @@
 				 courseNo,
 				 userNo)
 			 VALUES(
-				seq_schedule_no.nextval,
+				#{scheduleNo},
 				#{scheduleName},
 				#{scheduleMemo},
 				#{startDate},
@@ -38,6 +49,20 @@
 				1,
 				6
 			)
+		]]>
+	</insert>
+	
+	<insert id="registerScheduleTag" parameterType="ScheduleTagVo">
+		<![CDATA[
+			INSERT INTO scheduleTag 
+					(scheduleTagNo,
+					 userNo,
+					 scheduleNo)
+			VALUES(
+					seq_scheduletag_no.nextval,
+					#{userNo},
+					#{scheduleNo}
+			)			
 		]]>
 	</insert>
 	
@@ -55,6 +80,13 @@
 			WHERE scheduleNo = #{scheduleNo}  
 		]]>
 	</select>
+	
+	<delete id="deleteSchedule" parameterType="CourseScheduleVo">
+		<![CDATA[
+			DELETE FROM schedule
+			WHERE scheduleNo = #{scheduleNo}
+		]]>
+	</delete>
 	
 	<select id="findAssignment" parameterType="CourseScheduleVo" resultType="AssignmentVo">
 		<![CDATA[

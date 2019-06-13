@@ -161,7 +161,7 @@
     <!-- END OF CONTAINER -->
     
     <!--schedule-register-modal-->
-		<!--===================================================-->
+	<!--===================================================-->
 	<div id="schedule-modal" class="modal fade" tabindex="-1">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -244,7 +244,7 @@
 	<!--End Large Bootstrap Modal-->
 	
 	<!--schedule-info-modal-->
-		<!--===================================================-->
+	<!--===================================================-->
 		<div id="schedule-info-modal" class="modal fade" tabindex="-1">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
@@ -255,30 +255,66 @@
 						<h4 class="modal-info-title" id="myLargeModalLabel">일정 상세 정보</h4>
 					</div>
 					<div class="modal-body">
-						<div class="panel">
-							<div class="panel-heading">
-								<h3 class="panel-title"><strong>일정 이름</strong></h3>
-							</div>
-							<div class="panel-body">
-								<span id="schedule-info-title"></span>
-							</div>
-							<div class="panel-heading">
-								<h3 class="panel-title"><strong>카테고리</strong></h3>
-							</div>
-							<div class="panel-body">
-								<span id="schedule-info-category"></span>
-							</div>
-							<div class="function-per-category"></div>
-							<div id="panel-body">
-								<span><button class="btn btn-primary pull-right" id="schedule-modify">수정</button></span>
-								<span><button class="btn btn-primary pull-right" id="schedule-delete">삭제 </button></span>
-							</div>
-						</div>
+						 <div class="panel">
+					            <!-- Striped Table -->
+					            <!--===================================================-->
+					            <div class="panel-body">
+					                <div class="table-responsive">
+					                    <table class="table table-striped">
+					                        <thead>
+					                            <tr>
+					                                <th>항목</th>
+					                                <th>내용</th>
+					                            </tr>
+					                        </thead>
+					                        <tbody>
+					                            <tr>
+					                                <td><a class="btn-link">일정이름</a></td>
+					                                <td><span id="schedule-info-title"></span></td>
+					                            </tr>
+					                            <tr>
+					                                <td><a class="btn-link">카테고리</a></td>
+					                                <td><span id="schedule-info-category"></span></td>
+					                            </tr>
+					                            <tr></tr><tr class="function-per-category"></tr>
+					                            <tr>
+					                                <td><a class="btn-link">태그된 사람</a></td>
+					                                <td>
+					                                	<ul class="list-inline mar-hor col-center" id="schedule-info-tag">
+															<li class="tag tag-xs">
+																<a href="#"><i class="demo-pli-tag"></i>김재봉</a>
+															</li>
+															<li class="tag tag-xs">
+																<a href="#"><i class="demo-pli-tag"></i>구민수</a>
+															</li>
+															<li class="tag tag-xs">
+																<a href="#"><i class="demo-pli-tag"></i>이종현</a>
+															</li>
+															<li class="tag tag-xs">
+																<a href="#"><i class="demo-pli-tag"></i>강보은</a>
+															</li>
+															<li class="tag tag-xs">
+																<a href="#"><i class="demo-pli-tag"></i>이건창</a>
+															</li>
+														</ul>
+					                                </td>
+					                            </tr>
+					                        </tbody>
+					                    </table>
+					                </div>
+					            </div>
+					            <div class="form-group" id="panel-body">
+									<button class="btn btn-danger col-sm-2" id="schedule-delete">삭제</button>
+									<button class="btn btn-primary col-sm-2" id="schedule-modify">수정</button>
+								</div>
+					            <!--===================================================-->
+					            <!-- End Striped Table -->
+					        </div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!--===================================================-->
+	<!--===================================================-->
 	<!--End Large Bootstrap Modal-->
     
 	
@@ -326,88 +362,20 @@
 	
 	<script type="text/javascript">
 
-
-		$(document).on('nifty.ready', function() {
-			
-			// load schedule list
-			var schedule;
-			$.ajax({
-				url : "/ams/${coursePath}/schedule/load",
-				async: false, // ajax 결과 값을 반환시켜 변수에 담기 위해 작성한 코드ㄴ
-				type: "post",
-				contentType : "application/json",
-
-				dataType : "json",	
-				success : function(list) {
-					schedule = list
-				},
-				error : function(XHR, status, error) {
-					console.error(status + " : " + error);
-				}
-			});
-	    	// Calendar
-
-	   	 	// initialize the external events
-		    $('#demo-external-events .fc-event').each(function() {
-		        // store data so the calendar knows to render an event upon drop
-	      	  $(this).data('event', {
-	       	     title: $.trim($(this).text()), // use the element's text as the event title
-	       	     stick: true, // maintain when user navigates (see docs on the renderEvent method)
-	       	     className : $(this).data('class')
-		        });
-	
-		      
-		        // make the event draggable using jQuery UI
-	   	      $(this).draggable({
-	   	          zIndex: 99999,
-	   	          revert: true,      // will cause the event to go back to its
-	   	          revertDuration: 0  //  original position after the drag
-	   	        });
-	   	    });
-	    
-	    // CHOSEN
+		/*=================================================== append schedule event =================================================== */
+		
+		//스케줄 데이타 배열
+		var scheduleArray =[];
+		
+		$("document").ready(function(){
+			console.log("ready()");
+			loadSchedule();
+		
+			// CHOSEN
 			$('#demo-chosen-select').chosen();
 			$('#demo-cs-multiselect').chosen({width : '100%'});
-
-	    // Initialize the calendar
-		// add event into array
-			var scheduleArray = [];
-		    for(var i=0; i<schedule.length; i++){
-		    	scheduleArray.push({
-		    		no: schedule[i].scheduleNo,
-		    		title: schedule[i].scheduleName,
-		    		start: schedule[i].startDate,
-		    		end: schedule[i].endDate,
-		    		className: schedule[i].eventColor
-		    	});
-		    }
-	    
-	    	$('#demo-calendar').fullCalendar({
-		        header: {
-	   	         left: 'prev,next today',
-	   	         center: 'title',
-	   	         right: 'month,agendaWeek,agendaDay'
-	    	    },
-	       	 editable: true,
-	       	 droppable: true, // this allows things to be dropped onto the calendar
-	       	 drop: function() {
-	       	     // is the "remove after drop" checkbox checked?
-	       	     if ($('#drop-remove').is(':checked')) {
-	       	         // if so, remove the element from the "Draggable Events" list
-	       	         $(this).remove();
-	       	     }
-	       	 },
-	       	 defaultDate: '2019-06-01',
-	       	 eventLimit: true, // allow "more" link when too many events
-	       	 events: scheduleArray
-	        
-	    	});
-		});
-
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		$("document").ready(function(){
 			
-			tagList2 = "";
+			var	tagList2 = "";
 			$.ajax({
 				url : "${pageContext.request.contextPath }/${coursePath}/schedule/search",
 				type : "post",
@@ -420,7 +388,7 @@
 						tagList2 += "<option value="+list[i].userNo+">"+list[i].userName+"</option>";
 						
 					}
-					console.log(tagList2)
+					//console.log(tagList2);
 					$("#schedule-tag").html(tagList2);
 					$("#schedule-tag").chosen({width : '100%'});
 					
@@ -433,15 +401,8 @@
 			});
 		});
 		
-		/* $("page-content").on("click", ".fc-event-container", function(){
-			console.log('hi');
-		}); */
-		
-		$(".fc-event-container").on("click", ".fc-day-grid-event",function(){
-			console.log("te");
-		})
-		
 		$("#page-content").on("click", ".fc-day-grid-event", function(){
+			console.log("-------------------------이벤트 상세 정보-------------------------");
 			
 			var scheduledto = { 
 					scheduleNo: $(this).find($(".fc-title")).data("no") 
@@ -464,7 +425,7 @@
 						$("#schedule-info-assign-courseName").text(result.courseName);
 						$("#schedule-info-assign-subjectName").text(result.subjectTitle);
 						$("#schedule-info-assign-chapterName").text(result.chapterContent);
-						$("#schedule-info-assign-techerName").text(result.teacherName);
+						$("#schedule-info-assign-teacherName").text(result.teacherName);
 					}else if(temp == "공지사항"){
 						notice();
 					}else if(temp == "코스 일정"){
@@ -477,10 +438,13 @@
 						$("#schedule-info-course-link").text(result.coursePath);
 					}else if(temp =="팀별 일정"){
 						team();
+						console.log(result.writerNo)
 						$("#schedule-info-team-duration").text(result.startDate + " ~ " + result.endDate);
 						$("#schedule-info-team-content").text(result.content);
 						$("#schedule-info-team-courseName").text(result.courseName);
 						$("#schedule-info-team-writer").text(result.writer);
+						$("#schedule-info-team-writer").data("writerNo", result.writerNo);
+						$("#schedule-info-title").data("scheduleNo", result.scheduleNo);
 						$("#schedule-info-course-link").text(result.coursePath);
 					}else{
 						personal();
@@ -488,11 +452,20 @@
 						$("#schedule-info-personal-content").text(result.content);
 						$("#schedule-info-personal-courseName").text(result.courseName);
 						$("#schedule-info-personal-writer").text(result.writer);
+						$("#schedule-info-personal-writer").data("writerNo", result.writerNo);
+						$("#schedule-info-title").data("scheduleNo", result.scheduleNo);
 						$("#schedule-info-personal-link").text(result.coursePath);
 					}
 					
 					$("#schedule-info-title").text(result.title);
 					$("#schedule-info-category").text(result.category);
+					
+					var tagList = load_tag(scheduledto.scheduleNo);
+					$("#schedule-info-tag").empty();
+					for(var i=0; i<tagList.length; i++){
+						tag(tagList[i])
+					}
+					
 				},
 				error : function(XHR, status, error) {		
 					console.error(status + " : " + error);
@@ -531,19 +504,28 @@
 	        todayHighlight: true
 	    });
 		
+		
 		// register new schedule
 		$("#schedule-register").on("click",function(){
+			console.log("-------------------------등록-------------------------");
+			
+			var multiParam = Array();
+			
 			var tagList = [];
 			tagList = $("#schedule-tag").val();
+			
 			var scheduledto = {
 				scheduleName: $("#schedule-title").val(),
 				startDate: $("#schedule-start").val(),
 				endDate: $("#schedule-end").val(),
 				scheduleMemo: $("#schedule-memo").val(),
 				eventColor: $("input:radio[name=memberType]:checked").val(),
-				scheduleTag: tagList
 			};
 			
+			multiParam.push(tagList);
+			multiParam.push(scheduledto);
+			console.log(multiParam)
+
 			if(scheduledto.scheduleName != "" && scheduledto.startDate != "" && scheduledto.endDate != "" && scheduledto.eventColor){
 				var temp = $.trim(scheduledto.eventColor);
 				if(temp == "course" || temp == "assignment" || temp == "notice"){
@@ -554,11 +536,13 @@
 						url : "${pageContext.request.contextPath}/${coursePath}/schedule/register",
 						type: "post",
 						contentType : "application/json",
-						data : JSON.stringify(scheduledto),
+						data : JSON.stringify(multiParam),
 	
 						dataType : "json",
 						success : function(scheduledto) {
-	
+							console.log('등록');
+							reflashSchedule();
+							$("#schedule-modal").modal("hide");
 						},
 						error : function(XHR, status, error) {
 							console.error(status + " : " + error);
@@ -568,81 +552,256 @@
 			}
 		});
 		
-		$("#schedule-modify").on("click", function(){
-			console.log("수정");
-		})
 		
-		$("#schedule-delete").on("click", function(){
-			console.log("삭제");
-		})
-	
-		/* @tag autocomplete
-		$("document").ready(function(){
-			$("#temp").chosen({width : '100%'});
-			$("#temp").autocomplete({
-				//autocomplete: 자동완성 기능 
-				//source: 타이핑 시 보여질 내용 
-				//select:fuction(event, ui){}: 아이템 선택 싯 실행, ui.item이 선택된 항목을 나타내는 객체
-				//focus: function(event, ui){ return false;} : jQuery UI autocomplete를 한글과 사용할때 커서를 사용해서 아이템을 선택하면 나머지가 사라져 버리는 버그가 있다. 
-				//												이 코드를 추가하면 해결된다. return false; 또는 event.preventDefault(); 를 사용해서 이벤트를 무시하게 하는 것이다.
-				source : function(request, response){
-					var text = {value: request.term};
-				 	var param = parsing(text);
-					console.log("parameter: " + param); 
-				    if(param != null){
-						$.ajax({
-							url : "${pageContext.request.contextPath}/schedule/search",
-							type : "post",
-							data : {value: param}, 
-							//contentType : "application/json",
-							//data : JSON.stringify(param),
-							
-							// 값을 돌려받을 때
-							dataType: "json",
-							success: function(data){
-								response(
-									$.map(data, function(item){
-										var info = item.userName + "(" + item.email +")";
-										return {
-											label: info,
-											value: info										}
-									})
-								); 
-							}
-						});
-					}else{
-						console.log("no tag");
-					}
-				},
-				minLength: 1,
-				select: function(event,ui){},
-				focus: function(event,ui){
-					event.preventDefault();
+		// modify schedule
+		$("#schedule-modify").on("click", function(){
+			console.log("-------------------------수정-------------------------");
+			
+			var category = $.trim($("#schedule-info-category").text());
+			var authUserNo = ${authUser.userNo};
+			
+			if(category == "팀별 일정"){
+				var writerNo = $("#schedule-info-team-writer").data("writerNo");
+				if(authUserNo == writerNo){
+					console.log("팀별 일정, 수정 권한 있음");
+					
+				}else{
+					callNoty('warning', 'pli-exclamation', 'center-center', 0, '알림', '해당 글 작성자만 게시글을 수정할 수 있습니다..', 'zoomIn', 'fadeOut', 'btnx');
 				}
-			});
+			}else{
+				var writerNo = $("#schedule-info-personal-writer").data("writerNo");
+				if(authUserNo == writerNo){
+					console.log("개인 일정, 수정 권한 있음")
+					
+				}else{
+					callNoty('warning', 'pli-exclamation', 'center-center', 0, '알림', '해당 글 작성자만 게시글을 수정할 수 있습니다..', 'zoomIn', 'fadeOut', 'btnx');
+				}
+			}
+			
 		});
 		
-		$("#schedule-modal").on("shown.bs.modal", function() {
-			$("#schedule-tag").autocomplete("option", "appendTo", "#schedule-modal")
-		}); 
 		
 		
-		function parsing(text){
-			var content = text.value;
-			var tag = "@"
-			var result;
-			if(content.indexOf(tag) != -1){
-				result = content.substring(content.indexOf(tag)+1);
-				return result;
+		// delete schedule
+		$("#schedule-delete").on("click", function(){
+			console.log("-------------------------삭제-------------------------");
+			
+			var category = $.trim($("#schedule-info-category").text());
+			var authUserNo = ${authUser.userNo};
+			
+			if(category == "팀별 일정"){
+				var writerNo = $("#schedule-info-team-writer").data("writerNo");
+				if(authUserNo == writerNo){
+					console.log("팀별 일정, 삭제 권한 있음");
+					var scheduleNo = $("#schedule-info-title").data("scheduleNo");
+					
+					ajax_delete(scheduleNo);
+				}else{
+					callNoty('warning', 'pli-exclamation', 'center-center', 0, '알림', '해당 글 작성자만 게시글을 삭제할 수 있습니다..', 'zoomIn', 'fadeOut', 'btnx');
+				}
+			}else{
+				var writerNo = $("#schedule-info-personal-writer").data("writerNo");
+				if(authUserNo == writerNo){
+					console.log("개인 일정, 삭제 권한 있음")
+					var scheduleNo = $("#schedule-info-title").data("scheduleNo");
+					
+					ajax_delete(scheduleNo);
+					$("#schedule-info-modal").modal("hide");
+				}else{
+					callNoty('warning', 'pli-exclamation', 'center-center', 0, '알림', '해당 글 작성자만 게시글을 삭제할 수 있습니다..', 'zoomIn', 'fadeOut', 'btnx');
+				}
 			}
-			else{ 
-				return null;
-			}
+		});
+		
+		
+		// inform-console-modal
+		$("#container").on("click", "#btnx", function(){
+			console.log("-------------------------리다이렉션 버튼-------------------------");
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/${coursePath}/schedule/load",
+				type: "post",
+				contentType : "application/json",
+
+				dataType : "json",
+				success : function(result) {
+					console.log("로딩 완료...")
+					var scheduleArray = [];
+			    	scheduleArray = load_scheduleList();
+			    	console.log(scheduleArray);
+					external_event();
+					append_schedule(scheduleArray);
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			})
+		});
+	
+		
+		
+		/*============================================================ ajax function ============================================================ */
+		
+		//load schedule
+		function loadSchedule() {
+			console.log("load_scheduleList");
+			
+			$.ajax({
+				url : "/ams/${coursePath}/schedule/load",
+				async: false, // ajax 결과 값을 반환시켜 변수에 담기 위해 작성한 코드
+				type: "post",
+				contentType : "application/json",
+
+				dataType : "json",	
+				success : function(schedule) {
+					for(var i=0; i<schedule.length; i++){
+				    	scheduleArray.push({
+				    		no: schedule[i].scheduleNo,
+				    		title: schedule[i].scheduleName,
+				    		start: schedule[i].startDate,
+				    		end: schedule[i].endDate,
+				    		className: schedule[i].eventColor
+				    	});
+				    }
+					
+					console.log(scheduleArray);
+					external_event()
+					$('#demo-calendar').fullCalendar({
+						header: {
+				   	    	left: 'prev,next today',
+				   	        center: 'title',
+				   	        right: 'month,agendaWeek,agendaDay'
+				    	},
+				       	editable: false,
+				       	droppable: false, // this allows things to be dropped onto the calendar
+				       	defaultDate: '2019-06-01',
+				       	eventLimit: true, // allow "more" link when too many events
+				       	events: scheduleArray 
+				    });
+					
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			
+		   
 		}
 		
-		*/
+		//Reflash Schedule
+		function reflashSchedule() {
+			scheduleArray =[];
+			loadSchedule();
+			$("#demo-calendar").fullCalendar('removeEvents'); 
+		    $("#demo-calendar").fullCalendar('addEventSource', scheduleArray);
+		}
 		
-		// rendering schedule per category 
+		function external_event(){
+			 $('#demo-external-events .fc-event').each(function() {
+			        // store data so the calendar knows to render an event upon drop
+		      	  $(this).data('event', {
+		       	     title: $.trim($(this).text()), // use the element's text as the event title
+		       	     stick: true, // maintain when user navigates (see docs on the renderEvent method)
+		       	     className : $(this).data('class')
+			        });
+		
+			        // make the event draggable using jQuery UI
+		   	      $(this).draggable({
+		   	          zIndex: 99999,
+		   	          revert: true,      // will cause the event to go back to its
+		   	          revertDuration: 0  //  original position after the drag
+		   	        });
+		   	   });
+		}
+		
+		//load scheduleTag
+		function load_tag(scheduleNo){
+			var resultList;
+			
+			var scheduledto = {
+					scheduleNo : scheduleNo
+			}
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/${coursePath}/schedule/loadTag",
+				async: false,
+				type: "post",
+				contentType : "application/json",
+				data : JSON.stringify(scheduledto),
+
+				dataType : "json",
+				success : function(result) {
+					resultList = result;
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			})
+			
+			return resultList;
+		}
+		
+		//ajax 삭제
+		function ajax_delete(scheduleNo){ 
+			var scheduledto = {
+					scheduleNo : scheduleNo
+			}
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/${coursePath}/schedule/delete",
+				type: "post",
+				contentType : "application/json",
+				data : JSON.stringify(scheduledto),
+
+				dataType : "json",
+				success : function(result) {
+					reflashSchedule();
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			})
+		}
+		
+		// ajax 수정 
+		function ajax_modify(){ 
+			var scheduledto = {
+					scheduleNo : $("#schedule-info-title").data("scheduleNo")
+			}
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/${coursePath}/schedule/delete",
+				type: "post",
+				contentType : "application/json",
+				data : JSON.stringify(scheduledto),
+
+				dataType : "json",
+				success : function(result) {
+					reflashSchedule();
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			})
+		}
+	
+		
+		/*=================================================== rendering html form =================================================== */
+		
+		
+		function modify_form(){
+			
+		};
+		
+		function tag(userName){
+			str = '';
+			str += '<li class="tag tag-xs">'
+			str += '	<a href="#"><i class="demo-pli-tag" id="tagUser">'+ userName +'</i></a>'
+			str += '</li>'
+			
+			$("#schedule-info-tag").append(str);	
+		}
+		
 		function notice(){
 			$(".function-per-category").empty();
 			
@@ -685,179 +844,232 @@
 			str += '</div>'
 			
 			$(".function-per-category").append(str);
-		}
+		};
 		
 		function assignment(){
-			$(".function-per-category").empty();
+			$(".column-target").remove();
 			
 			str = '';
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>기간</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-assign-duration"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>내용</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-assign-content"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>코스명</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-assign-courseName"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>과목명</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-assign-subjectName"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>챕터명</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-assign-chapterName"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>출제자</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-assign-techerName"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>바로가기</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<a href id="schedule-info-assign-link">GO</a>'
-			str += '</div>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">기간</a></td>'
+			str += '	<td><span id="schedule-info-assign-duration"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">내용</a></td>'
+			str += '	<td><span id="schedule-info-assign-content"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">코스명</a></td>'
+			str += '	<td><span id="schedule-info-assign-courseName"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">과목명</a></td>'
+			str += '	<td><span id="schedule-info-assign-subjectName"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">챕터명</a></td>'
+			str += '	<td><span id="schedule-info-assign-chapterName"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">출제자</a></td>'
+			str += '	<td><span id="schedule-info-assign-teacherName"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">코스 바로가기</a></td>'
+			str += '	<td><span id="schedule-info-assign-link">link</span></td>'
+			str += '</tr>'
 			
-			$(".function-per-category").append(str);
-		}
+			$(".function-per-category").after(str);
+		
+		};
 		
 		function course(){
-			$(".function-per-category").empty();
+			$(".column-target").remove();
 			
 			str = '';
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>기간</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-course-duration"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>내용</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-course-content"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>코스명</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-course-courseName"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>코스 강의실</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-course-roomNo"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>지도 교사</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-course-teacher"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>코스 바로가기</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<a href id="schedule-info-course-link"></a>'
-			str += '</div>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">기간</a></td>'
+			str += '	<td><span id="schedule-info-course-duration"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">내용</a></td>'
+			str += '	<td><span id="schedule-info-course-content"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">코스명</a></td>'
+			str += '	<td><span id="schedule-info-course-courseName"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">코스 강의실</a></td>'
+			str += '	<td><span id="schedule-info-course-roomNo"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">지도 교사</a></td>'
+			str += '	<td><span id="schedule-info-course-teacher"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">코스 바로가기</a></td>'
+			str += '	<td><span id="schedule-info-course-link">link</span></td>'
+			str += '</tr>'
 			
-			$(".function-per-category").append(str);
-		}
+			$(".function-per-category").after(str);
+		};
 		
 		function team(){
-			$(".function-per-category").empty();
+			$(".column-target").remove();
 			
 			str = '';
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>기간</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-team-duration"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>내용</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-team-content"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>코스명</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-team-courseName"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>작성자</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-team-writer"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>코스 바로가기</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<a href id="schedule-info-team-link"></a>'
-			str += '</div>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">기간</a></td>'
+			str += '	<td><span id="schedule-info-team-duration"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">내용</a></td>'
+			str += '	<td><span id="schedule-info-team-content"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">코스명</a></td>'
+			str += '	<td><span id="schedule-info-team-courseName"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">작성자</a></td>'
+			str += '	<td><span id="schedule-info-team-writer"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">코스 바로가기</a></td>'
+			str += '	<td><span id="schedule-info-team-link">link</span></td>'
+			str += '</tr>'
 			
-			$(".function-per-category").append(str);
-		}
+			$(".function-per-category").after(str);
+			
+		};
 		
 		function personal(){
-			$(".function-per-category").empty();
+			$(".column-target").remove();
 			
 			str = '';
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>기간</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-personal-duration"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>내용</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-personal-content"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>코스명</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-personal-courseName"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>작성자</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-personal-writer"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>코스 바로가기</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<a href id="schedule-info-personal-link"></a>'
-			str += '</div>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">기간</a></td>'
+			str += '	<td><span id="schedule-info-personal-duration"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">내용</a></td>'
+			str += '	<td><span id="schedule-info-personal-content"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">코스명</a></td>'
+			str += '	<td><span id="schedule-info-personal-courseName"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">작성자</a></td>'
+			str += '	<td><span id="schedule-info-personal-writer"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">코스 바로가기</a></td>'
+			str += '	<td><span id="schedule-info-personal-link">link</span></td>'
+			str += '</tr>'
 			
-			$(".function-per-category").append(str);
-		}
+			$(".function-per-category").after(str);
+		};
+		
+		function callNoty(color, icon, position, time, title, message, animationIn, animationOut, btnId){
+			var notyContent = "";
+			
+			notyContent += "<button class='close' data-target='#schedule-modal' data-toggle='modal' type='button' id='" + btnId + "'><i class='pci-cross pci-circle'></i></button>";
+			notyContent += "<div class='media-left'>";
+			notyContent += "	<span class='icon-wrap icon-wrap-xs icon-circle alert-icon'>";
+			notyContent += "		<i class='" + icon + " icon-2x'></i>";
+			notyContent += "	</span>";
+			notyContent += "</div>";
+			notyContent += "<div class='media-body'>";
+			notyContent += "	<h4 class='alert-title'>" + title + "</h4>";
+			notyContent += "	<p class='alert-message'>" + message + "</p>";
+			notyContent += "</div>";
+			
+			$.niftyNoty({
+				type : color,
+				container : 'floating',
+				floating    : {
+	                position    : position,
+	                animationIn : animationIn,
+	                animationOut: animationOut
+	            },
+	            html : notyContent,
+				timer : time
+			});
+		};
 		
 	</script> 
 	
+	<script type="text/javascript">
+		/* @tag autocomplete
+		$("document").ready(function(){
+			$("#temp").chosen({width : '100%'});
+			$("#temp").autocomplete({
+			//autocomplete: 자동완성 기능 
+			//source: 타이핑 시 보여질 내용 
+			//select:fuction(event, ui){}: 아이템 선택 싯 실행, ui.item이 선택된 항목을 나타내는 객체
+			//focus: function(event, ui){ return false;} : jQuery UI autocomplete를 한글과 사용할때 커서를 사용해서 아이템을 선택하면 나머지가 사라져 버리는 버그가 있다. 
+			//												이 코드를 추가하면 해결된다. return false; 또는 event.preventDefault(); 를 사용해서 이벤트를 무시하게 하는 것이다.
+			source : function(request, response){
+				var text = {value: request.term};
+			 	var param = parsing(text);
+				console.log("parameter: " + param); 
+			    if(param != null){
+					$.ajax({
+						url : "${pageContext.request.contextPath}/schedule/search",
+						type : "post",
+						data : {value: param}, 
+						//contentType : "application/json",
+						//data : JSON.stringify(param),
+						
+						// 값을 돌려받을 때
+						dataType: "json",
+						success: function(data){
+							response(
+								$.map(data, function(item){
+									var info = item.userName + "(" + item.email +")";
+									return {
+										label: info,
+										value: info										}
+								})
+							); 
+						}
+					});
+				}else{
+					console.log("no tag");
+				}
+			},
+			minLength: 1,
+			select: function(event,ui){},
+			focus: function(event,ui){
+				event.preventDefault();
+			}
+		});
+	});
+	
+	$("#schedule-modal").on("shown.bs.modal", function() {
+		$("#schedule-tag").autocomplete("option", "appendTo", "#schedule-modal")
+	}); 
+	
+	
+	function parsing(text){
+		var content = text.value;
+		var tag = "@"
+		var result;
+		if(content.indexOf(tag) != -1){
+			result = content.substring(content.indexOf(tag)+1);
+			return result;
+		}
+		else{ 
+			return null;
+		}
+	}
+	
+	*/
+	</script>
 </body>
 </html>
+
+
+

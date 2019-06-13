@@ -7,6 +7,7 @@
 		<typeAlias alias="ChapterVo" type="net.ourams.vo.ChapterVo" />
 		<typeAlias alias="CourseDataroomVo" type="net.ourams.vo.CourseDataroomVo" /> <!-- courseDataRoomVo -->
 		<typeAlias alias="CourseScheduleVo" type="net.ourams.vo.CourseScheduleVo" />
+		<typeAlias alias="ScheduleTagVo" type="net.ourams.vo.ScheduleTagVo" />
 		<typeAlias alias="CourseRegistVo" type="net.ourams.vo.CourseRegistVo" />
 		<typeAlias alias="CourseVo" type="net.ourams.vo.CourseVo" />
 		<typeAlias alias="fileUploadVo" type="net.ourams.vo.fileUpLoadVo" />
