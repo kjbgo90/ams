@@ -17,7 +17,7 @@ public class PostService {
 	private PostDao postDao;
 	
 	public Map<String, Object> selectPostPaging( int pageNo){
-		int listSize = 5 ;
+		int listSize = 10 ;
 		int pageNo1 = 1+listSize*(pageNo-1);
 		int pageNo2 = listSize*pageNo;
 		int countPage = postDao.countPost();

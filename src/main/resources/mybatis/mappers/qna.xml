@@ -4,7 +4,7 @@
 <mapper namespace="qna">
 	<select id="selectAll" parameterType="int" resultType="PostVo">
 		<![CDATA[
-		SELECT 	rownum,
+		SELECT rownum rnum,
         postNo,
         postType,
         userNo,
@@ -18,7 +18,7 @@
         category,
         userName,
         subjectNo,
-        subjectTitle 
+        subjectTitle
 FROM (SELECT    postNo,
                 postType,
                 userNo,
@@ -53,7 +53,7 @@ FROM (SELECT    postNo,
                 where postType = 2
                 order by postNo desc)
                             
-				order by rownum desc
+				order by rnum desc
 		]]>
 	</select>
 
