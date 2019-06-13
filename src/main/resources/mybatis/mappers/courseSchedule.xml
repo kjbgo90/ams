@@ -17,6 +17,42 @@
 		]]>
 	</select>
 	
+	<select id="loadCourseSchedule" parameterType="CourseScheduleVo" resultType="CourseScheduleVo">
+		<![CDATA[
+			SELECT scheduleNo,
+				   scheduleName,
+				   scheduleMemo,
+				   startDate,
+				   endDate,
+				   eventColor,
+				   courseNo,
+				   userNo
+			FROM schedule
+			WHERE courseNo = #{courseNo} AND eventColor = #{eventColor}
+		]]>
+	</select>
+	
+	<select id="loadPersonalSchedule" parameterType="CourseScheduleVo" resultType="CourseScheduleVo">
+		<![CDATA[
+			SELECT st.scheduleNo as scheduleNo,
+       				scheduleName,
+       				scheduleMemo,
+      				startDate,
+       				endDate,
+       				eventColor,
+       				courseNo,
+       				st.userNo as userNo
+			FROM (select scheduleTagNo,
+              		   userNo,
+               		   scheduleNo
+        			FROM scheduleTag
+        			WHERE userNo = #{userNo}) st 
+            		JOIN schedule s
+                	ON st.scheduleNo = s.scheduleNo
+			WHERE courseNo = #{courseNo} 
+		]]>
+	</select>
+	
 	<select id="loadTag" parameterType="int" resultType="int">
 		<![CDATA[
 			SELECT userNo
@@ -71,8 +107,8 @@
 			SELECT scheduleNo,
 				   scheduleName,
 				   scheduleMemo,
-				   startDate,
-				   endDate,
+				   TO_CHAR(startDate, 'yyyy-mm-dd') as startDate,
+				   TO_CHAR(endDate, 'yyyy-mm-dd') as endDate,
 				   eventColor,
 				   courseNo,
 				   userNo

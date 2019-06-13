@@ -462,10 +462,13 @@
 					
 					var tagList = load_tag(scheduledto.scheduleNo);
 					$("#schedule-info-tag").empty();
-					for(var i=0; i<tagList.length; i++){
-						tag(tagList[i])
+					if(tagList.length == 0){
+						tag("channel");
+					}else{
+						for(var i=0; i<tagList.length; i++){
+							tag(tagList[i])
+						}
 					}
-					
 				},
 				error : function(XHR, status, error) {		
 					console.error(status + " : " + error);
@@ -794,6 +797,7 @@
 		};
 		
 		function tag(userName){
+			console.log(userName)
 			str = '';
 			str += '<li class="tag tag-xs">'
 			str += '	<a href="#"><i class="demo-pli-tag" id="tagUser">'+ userName +'</i></a>'

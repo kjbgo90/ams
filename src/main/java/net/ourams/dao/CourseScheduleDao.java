@@ -21,6 +21,14 @@ public class CourseScheduleDao {
 	public List<CourseScheduleVo> loadSchedule(int courseNo) {
 		return sqlSession.selectList("courseSchedule.loadSchedule", courseNo);
 	}
+	
+	public List<CourseScheduleVo> loadCourseSchedule(CourseScheduleVo vo){
+		return sqlSession.selectList("courseSchedule.loadCourseSchedule", vo);
+	}
+
+	public List<CourseScheduleVo> loadPersonalSchedule(CourseScheduleVo vo){
+		return sqlSession.selectList("courseSchedule.loadPersonalSchedule", vo);
+	}
 
 	public List<Integer> loadTag(int courseNo) {
 		return sqlSession.selectList("courseSchedule.loadTag", courseNo);
