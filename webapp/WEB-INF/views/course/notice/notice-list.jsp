@@ -256,6 +256,7 @@
 			pageNo = 1;
 			pagingAjax(pageNo);
 			console.log(pageNo);
+			pageMove()
 		});
 		
 		
@@ -304,6 +305,7 @@
 		
 		//페이징 처리할 부분 첫번째 리스트를 뽑아오자~
 		function pagingAjax(pageNo){
+				console.log(pageNo);
 				$.ajax({
 					url : "${pageContext.request.contextPath }/${coursePath}/notice/selectPostPaging",
 					type : "post",

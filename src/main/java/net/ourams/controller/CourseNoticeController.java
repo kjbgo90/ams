@@ -109,7 +109,7 @@ public class CourseNoticeController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/selectPostPaging", method = RequestMethod.POST)
-	public Map<String, Object> selectPostPaging(@RequestParam("paneNo") int pageNo) {
+	public Map<String, Object> selectPostPaging(@RequestParam("pageNo") int pageNo) {
 		System.out.println("selectPostPaging");
 		Map<String, Object> map = postService.selectPostPaging(pageNo);
 		return map;
