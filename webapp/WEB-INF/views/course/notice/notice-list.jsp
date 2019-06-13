@@ -287,7 +287,7 @@
 							
 						str+="<tr>"	
 						str+="<td>"+list[i].postNo+"</td>"			
-						str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+">["+list[i].category+"]"+list[i].postTitle+"</a></td>"
+						str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/'"+list[i].postNo+">["+list[i].category+"]"+list[i].postTitle+"</a></td>"
 						str+="<td><span class='text-muted'>"+list[i].regDate+"</span></td>"				
 						str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+" class='btn-link'>"+list[i].userName+"</a></td>"				
 						str+="<td>"+list[i].hit+"</td>"				
@@ -334,7 +334,7 @@
 								
 							str+="<tr>"	
 							str+="<td>"+map.list[i].rnum+"</td>"			
-							str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo+">["+map.list[i].category+"]"+map.list[i].postTitle+"</a></td>"
+							str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/'"+map.list[i].postNo+">["+map.list[i].category+"]"+map.list[i].postTitle+"</a></td>"
 							str+="<td><span class='text-muted'>"+map.list[i].regDate+"</span></td>"				
 							str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo+" class='btn-link'>"+map.list[i].userName+"</a></td>"				
 							str+="<td>"+map.list[i].hit+"</td>"				
