@@ -162,12 +162,81 @@ public class CourseNoticeController {
 		postVo.setPostContent(resJSON.getPostContent());
 		postVo.setPostTitle(resJSON.getPostTitle());
 		postVo.setCategory(resJSON.getCategory());
-		postVo.setRegDate(resJSON.getRegDate());
 		postVo.setUserName(authUser.getUserName());
-		postService.write(postVo);
-		System.out.println(coursePath);
+		
+		if(resJSON.getSelectedDate() == null ) {
+			postService.write(postVo);
+			System.out.println(coursePath);
 
-		return coursePath;
+			return coursePath;
+		} else {
+			String str = resJSON.getSelectedDate();
+			System.out.println(str);
+			String selectedDate = "";
+			selectedDate += str.split(" ")[3];
+
+			String month = str.split(" ")[1];
+			switch (month) {
+
+			case "Jan":
+				month = "-01";
+				break;
+
+			case "Feb":
+				month = "-02";
+				break;
+
+			case "Mar":
+				month = "-03";
+				break;
+
+			case "Apr":
+				month = "-04";
+				break;
+
+			case "May":
+				month = "-05";
+				break;
+
+			case "Jun":
+				month = "-06";
+				break;
+
+			case "Jul":
+				month = "-07";
+				break;
+
+			case "Aug":
+				month = "-08";
+				break;
+
+			case "Sep":
+				month = "-09";
+				break;
+
+			case "Oct":
+				month = "-10";
+				break;
+
+			case "Nov":
+				month = "-11";
+				break;
+
+			case "Dec":
+				month = "-12";
+				break;
+			}
+
+			selectedDate += month;
+
+			selectedDate += "-" + str.split(" ")[2];
+			System.out.println(selectedDate);
+			postVo.setSelectedDate(selectedDate);
+			
+			postService.writePostSchedule(postVo);
+			
+			return coursePath;
+		}
 	}
 
 	/* 글업데이트 */

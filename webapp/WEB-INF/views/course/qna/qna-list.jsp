@@ -326,17 +326,23 @@
 									"등록된 게시글이 없습니다.");
 						} else {
 							str = "";
+							var currentDate = new Date();
+							currentDate = currentDate.getFullYear() + "/" + pad( (currentDate.getMonth()+1), 2 ) + "/"+ currentDate.getDate() + ""
+							console.log("currentDate", currentDate);
+							
 							for (var i = 0; i < map.list.length; i++) {
 								
 								
 							str+="<tr>"	
 							str+="<td>"+map.list[i].rnum+"</td>"			
-							str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo+"'>["+map.list[i].subjectTitle+"]"+map.list[i].postTitle+"</a>&nbsp;&nbsp;<div class='label label-warning'>N</div></td>"
+							str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo+"'>["+map.list[i].subjectTitle+"]"+map.list[i].postTitle+"</a>"
+							str+=  map.list[i].regDate == currentDate ? "&nbsp;&nbsp; <div class='label label-warning'>N</div>" : ""
+							str+="</td>"
 							str+="<td><span class='text-muted'>"+map.list[i].regDate+"</span></td>"
 							str+="<td>"+map.list[i].subjectTitle+"</td>"	
-							str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo+"' class='btn-link'>"+map.list[i].userName+"</a></td>"				
+							str+="<td><span>"+map.list[i].userName+"</span></td>"				
 							str+="<td>"+map.list[i].hit+"</td>"	
-							str+="<td><i class='demo-pli-speech-bubble-5 icon-fw'></i>2</td>"
+							str+="<td><i class='demo-pli-speech-bubble-5 icon-fw'></i>"+map.list[i].replyCount+"</td>"
 							str+="</tr>"		
 							
 							/*
@@ -444,6 +450,10 @@
 			
 		}
 		
+		function pad(n, width) {
+			  n = n + '';
+			  return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+		}
 
 			function pageMove(){
 				$("#pager").on("click","li",function(){

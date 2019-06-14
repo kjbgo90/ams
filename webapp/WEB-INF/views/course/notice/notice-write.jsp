@@ -486,7 +486,7 @@ rhd
 							postResult["postTitle"] = postTitle;
 							postResult["category"] = cate;
 							postResult["postContent"] = markstr;
-							postResult["regDate"] = selectedDate;
+							postResult["selectedDate"] = selectedDate;
 
 							console.log(markstr);
 							console.log(cate);

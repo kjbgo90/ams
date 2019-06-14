@@ -146,6 +146,39 @@
 		]]>
 	</update>
 
+	<insert id="insertSchedule" parameterType="PostVo">
+		<selectKey keyProperty="scheduleNo" resultType="int" order="BEFORE">
+			select seq_schedule_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into schedule values( #{scheduleNo},
+										 #{postTitle},
+										 #{postContent},
+										 #{selectedDate},
+										 #{selectedDate},
+										 'warning',
+										 1,
+										 #{userNo},
+										 null )
+		]]>
+	</insert>
 
-
+	<insert id="insertSchedulePost" parameterType="PostVo">
+		<![CDATA[
+			insert into post(postNo,postType,userNo,courseNo,regDate,postTitle,postContent,hit,category,scheduleNo)
+			values (
+					seq_post_no.nextval,
+					1,
+					#{userNo},	
+					1,	
+					sysdate,		 
+					#{postTitle}, 					
+					#{postContent}, 
+					#{hit},
+					#{category},
+					#{scheduleNo}
+					
+			) 
+		]]>
+	</insert>
 </mapper>

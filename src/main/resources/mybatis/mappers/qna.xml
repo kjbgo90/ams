@@ -23,59 +23,62 @@
 	<select id="selectListPaging" parameterType="map" resultType="PostVo">
 		<![CDATA[
 		        
-SELECT  rnum as rnum,
-        postNo,
-        postType,
-        userNo,
-        courseNo,
-        regDate,
-        communityNo,
-        scheduleNo,
-        postTitle,
-        postContent,
-        hit,
-        category,
-        userName,
-        subjectNo,
-        subjectTitle
-FROM (SELECT    rownum as rnum, 
-                pu.postNo,
-                pu.postType,
-                pu.userNo,
-                pu.courseNo courseNo,
-                pu.regDate,
-                pu.communityNo,
-                pu.scheduleNo scheduleNo,
-                pu.postTitle,
-                pu.postContent,
-                pu.hit,
-                pu.category,
-                pu.userName,
-                pu.subjectNo,
-                s.subjectTitle
-        FROM(
-                SELECT  postNo,
-                        postType,
-                        p.userNo userNo,
-                        courseNo,
-                        TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,
-                       communityNo,
-                        scheduleNo,
-                        postTitle,
-                        postContent,
-                        hit,
-                        category,
-                        userName,
-                        subjectNo
-                FROM post p join users u
-                ON p.userNo = u.userNo
-                where postType = 2
-                order by postNo desc) pu
-                left join subject s 
-                on pu.subjectno = s.subjectno 
-                where rownum <= #{pageNo2} ) 
-                where rnum >= #{pageNo1}
-                order by rnum desc
+		SELECT  rnum as rnum,
+		        postNo,
+		        postType,
+		        userNo,
+		        courseNo,
+		        regDate,
+		        communityNo,
+		        scheduleNo,
+		        postTitle,
+		        postContent,
+		        hit,
+		        category,
+		        userName,
+		        subjectNo,
+		        subjectTitle,
+		        replyCount
+		FROM (SELECT    rownum as rnum, 
+		                pu.postNo,
+		                pu.postType,
+		                pu.userNo,
+		                pu.courseNo courseNo,
+		                pu.regDate,
+		                pu.communityNo,
+		                pu.scheduleNo scheduleNo,
+		                pu.postTitle,
+		                pu.postContent,
+		                pu.hit,
+		                pu.category,
+		                pu.userName,
+		                pu.subjectNo,
+		                s.subjectTitle,
+		                (select count(*) from reply r 
+		        	where r.postNo = pu.postNo) as replyCount
+		        FROM(
+		                SELECT  postNo,
+		                        postType,
+		                        p.userNo userNo,
+		                        courseNo,
+		                        TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,
+		                       communityNo,
+		                        scheduleNo,
+		                        postTitle,
+		                        postContent,
+		                        hit,
+		                        category,
+		                        userName,
+		                        subjectNo
+		                FROM post p join users u
+		                ON p.userNo = u.userNo
+		                where postType = 2
+		                order by postNo desc) pu
+		                left join subject s 
+		                on pu.subjectno = s.subjectno 
+		                where rownum <= #{pageNo2} ) 
+		                where rnum >= #{pageNo1}
+		                order by rnum desc
 		]]>
 	</select>
 

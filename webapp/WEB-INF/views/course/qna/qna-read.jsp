@@ -162,11 +162,7 @@
 								</div>
 							</div>
 							<div class="blog-footer">
-								<div class="media-left">
-								</div>
-								<div class="media-body text-right">
-									 <i class="demo-pli-speech-bubble-5 icon-fw"></i>23
-								</div>
+								
 							</div>
 							<div class="row">
 								<div class="pad-ver text-reft class col-sm-4">

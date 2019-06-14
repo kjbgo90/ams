@@ -58,6 +58,14 @@ public class PostDao {
 		return sqlSession.update("notice.updateHit", postNo);
 	}
 
+	public int insertSchedule(PostVo postVo) {
+		return sqlSession.insert("notice.insertSchedule", postVo);
+	}
+
+	public int insertSchedulePost(PostVo postVo) {
+		return sqlSession.insert("notice.insertSchedulePost", postVo);
+	}
+
 
 	
 }

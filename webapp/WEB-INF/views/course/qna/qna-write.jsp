@@ -166,10 +166,10 @@
 
 										<hr>
 
-										<p class="text-main text-bold text-uppercase">공개 여부</p>
+										<p class="text-main text-bold text-uppercase"></p>
 										<div class="form-horizontal">
 											<div class="form-group">
-												<label class="col-sm-5 control-label text-left" for="demo-hor-inputpass">visualbility</label>
+												<!-- <label class="col-sm-5 control-label text-left" for="demo-hor-inputpass">visualbility</label>
 												<div class="col-sm-7">
 													<div class="select">
 														<select>
@@ -177,7 +177,7 @@
 															<option value="push">private</option>
 														</select>
 													</div>
-												</div>
+												</div> -->
 											</div>
 											<br>
 
@@ -186,7 +186,7 @@
 												<!--Bootstrap Datepicker : Inline-->
 												<!--===================================================-->
 												<p class="text-main text-bold text-uppercase" style="margin-left: 10px;">
-													공지등록 &nbsp; <input id="demo-checkbox-addons" class="magic-checkbox" type="checkbox"> <label for="demo-checkbox-addons"></label>
+													<!-- 공지등록 &nbsp; <input id="demo-checkbox-addons" class="magic-checkbox" type="checkbox"> <label for="demo-checkbox-addons"></label> -->
 												</p>
 												<div id="demo-dp-inline">
 													<input id="select-day" type="hidden" value="">
@@ -209,7 +209,7 @@
 												</button>
 											</div>
 										</div>
-										<hr>
+									
 
 
 									</div>

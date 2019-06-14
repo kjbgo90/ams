@@ -14,17 +14,18 @@ public class PostVo {
 	private String category;
 	private String userName;
 	private int rnum;
-	private int subjectNo; 
+	private int subjectNo;
 	private String subjectTitle;
 	public int pageNo;
-
+	private String selectedDate;
+	private int replyCount;
+	
 	public PostVo() {
 	}
 
-	public PostVo(int postNo, int postType, int userNo, int courseNo, String regDate, int communityNo,
-			int scheduleNo, String postTitle, String postContent, int hit, String category, String userName, int rnum,
-			int subjectNo, String subjectTitle) {
-		super();
+	public PostVo(int postNo, int postType, int userNo, int courseNo, String regDate, int communityNo, int scheduleNo,
+			String postTitle, String postContent, int hit, String category, String userName, int rnum, int subjectNo,
+			String subjectTitle, int pageNo, String selectedDate, int replyCount) {
 		this.postNo = postNo;
 		this.postType = postType;
 		this.userNo = userNo;
@@ -40,10 +41,10 @@ public class PostVo {
 		this.rnum = rnum;
 		this.subjectNo = subjectNo;
 		this.subjectTitle = subjectTitle;
+		this.pageNo = pageNo;
+		this.selectedDate = selectedDate;
+		this.replyCount = replyCount;
 	}
-	
-	
-
 
 	public int getPageNo() {
 		return pageNo;
@@ -57,11 +58,9 @@ public class PostVo {
 		return rnum;
 	}
 
-
 	public void setRnum(int rnum) {
 		this.rnum = rnum;
 	}
-
 
 	public int getPostNo() {
 		return postNo;
@@ -86,7 +85,6 @@ public class PostVo {
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
-
 
 	public int getCourseNo() {
 		return courseNo;
@@ -160,22 +158,13 @@ public class PostVo {
 		this.userName = userName;
 	}
 
-	
-
 	public int getSubjectNo() {
 		return subjectNo;
 	}
 
-
-
-
-
 	public void setSubjectNo(int subjectNo) {
 		this.subjectNo = subjectNo;
 	}
-
-
-
 
 	public String getSubjectTitle() {
 		return subjectTitle;
@@ -185,14 +174,30 @@ public class PostVo {
 		this.subjectTitle = subjectTitle;
 	}
 
+	public String getSelectedDate() {
+		return selectedDate;
+	}
+
+	public void setSelectedDate(String selectedDate) {
+		this.selectedDate = selectedDate;
+	}
+	
+	public int getReplyCount() {
+		return replyCount;
+	}
+
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
+
 	@Override
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", postType=" + postType + ", userNo=" + userNo + ", courseNo=" + courseNo
 				+ ", regDate=" + regDate + ", communityNo=" + communityNo + ", scheduleNo=" + scheduleNo
 				+ ", postTitle=" + postTitle + ", postContent=" + postContent + ", hit=" + hit + ", category="
 				+ category + ", userName=" + userName + ", rnum=" + rnum + ", subjectNo=" + subjectNo
-				+ ", subjectTitle=" + subjectTitle + "]";
+				+ ", subjectTitle=" + subjectTitle + ", pageNo=" + pageNo + ", selectedDate=" + selectedDate + ""
+				+ ", replyCount=" + replyCount + "]";
 	}
-	
-	
+
 }

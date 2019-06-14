@@ -289,7 +289,7 @@
 						str+="<td>"+list[i].postNo+"</td>"			
 						str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"'>["+list[i].category+"]"+list[i].postTitle+"</a></td>"
 						str+="<td><span class='text-muted'>"+list[i].regDate+"</span></td>"				
-						str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+" class='btn-link'>"+list[i].userName+"</a></td>"				
+						str+="<td><span>"+list[i].userName+"</span></td>"				
 						str+="<td>"+list[i].hit+"</td>"				
 						str+="</tr>"		
 						

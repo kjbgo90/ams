@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.ourams.dao.PostDao;
 import net.ourams.vo.PostVo;
@@ -65,6 +66,12 @@ public class PostService {
 	public List<PostVo> searchList(String postTitle){
 		List<PostVo> list = postDao.searchList(postTitle);
 		return list;
+	}
+	
+	@Transactional
+	public int writePostSchedule(PostVo postVo) {
+		postDao.insertSchedule(postVo);
+		return postDao.insertSchedulePost(postVo);
 	}
 	
 
