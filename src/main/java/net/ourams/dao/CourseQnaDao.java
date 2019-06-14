@@ -71,9 +71,12 @@ public class CourseQnaDao {
 		return sqlSession.delete("qna.delete", postVo);
 	}
 	
-	
 	public int deletereply(PostVo postVo) {
 		return sqlSession.delete("qna.deletereply", postVo);
+	}
+	
+	public int countReply(PostVo postVo) {
+		return sqlSession.selectOne("qna.countReply", postVo);
 	}
 
 	public int update(PostVo postVo) {

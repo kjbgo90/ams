@@ -188,6 +188,11 @@
 		]]>
 	</delete>
 	
+	<select id="countReply" parameterType="PostVo" resultType="int">
+	<![CDATA[
+			 select count(*) from reply where postno=#{postNo}
+		]]>
+	</select>
 	
 	<!-- 글수정 -->
 	<update id="update" parameterType="PostVo">

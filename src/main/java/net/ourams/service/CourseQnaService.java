@@ -61,10 +61,12 @@ public class CourseQnaService {
 
 	public int delete(PostVo postVo) {
 		System.out.println(postVo.toString());
-		
+		int countReply = courseQnaDao.countReply(postVo);
+		System.out.println(countReply);
+		if(countReply != 0) {
 		int count1 = courseQnaDao.deletereply(postVo);
 		System.out.println(count1);
-		
+		}
 		
 		int count2 = courseQnaDao.delete(postVo);
 		System.out.println(count2);
