@@ -270,6 +270,20 @@
 		]]>
 	</select>
 	
+	<select id="selectFileListByAssignmentNo" parameterType="AssignmentVo" resultType="fileUpLoadVo">
+		<![CDATA[
+			select assignmentFileNo,
+				   assignmentNo,
+				   a.fileNo,
+				   fileName,
+				   filepath,
+				   saveName,
+				   fileSize
+			from assignmentfile a join datafile d on a.fileNo = d.fileNo
+			where assignmentNo = #{assignmentNo}
+		]]>
+	</select>
+	
 	<select id="selectSubmitFileList" resultType="fileUpLoadVo">
 		<![CDATA[
 			select submitFileNo,

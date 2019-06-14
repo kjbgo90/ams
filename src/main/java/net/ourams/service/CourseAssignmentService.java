@@ -239,4 +239,8 @@ public class CourseAssignmentService {
 		return assignmentDao.updateSubmitScore(submitVo);
 	}
 
+	public List<fileUpLoadVo> getFileList(AssignmentVo assignmentVo) {
+		return assignmentDao.selectFileListByAssignmentNo(assignmentVo);
+	}
+
 }

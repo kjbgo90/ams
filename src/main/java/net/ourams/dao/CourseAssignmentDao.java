@@ -116,4 +116,8 @@ public class CourseAssignmentDao {
 		return sqlSession.update("assignment.updateSubmitScore", submitVo);
 	}
 
+	public List<fileUpLoadVo> selectFileListByAssignmentNo(AssignmentVo assignmentVo) {
+		return sqlSession.selectList("assignment.selectFileListByAssignmentNo", assignmentVo);
+	}
+
 }

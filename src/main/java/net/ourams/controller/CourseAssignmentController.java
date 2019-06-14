@@ -101,87 +101,91 @@ public class CourseAssignmentController {
 			Model model, @RequestParam("assignmentNo") int assignmentNo) {
 		System.out.println("assignmentModifyForm 실행");
 
-		Map<String, Object> map = assignmentService.getModifyPage(coursePath ,assignmentNo);
+		Map<String, Object> map = assignmentService.getModifyPage(coursePath, assignmentNo);
 
 		model.addAttribute("assignmentVo", map.get("assignmentVo"));
 		model.addAttribute("authUser", authUser);
 		model.addAttribute("coursePath", coursePath);
 		model.addAttribute("subjectList", map.get("subjectList"));
 		model.addAttribute("courseVo", map.get("courseVo"));
-		
+
 		return "course/assignment/assignment-modify";
 	}
 
 	@Auth
 	@ResponseBody
 	@RequestMapping(value = "/modifyAssignment", method = RequestMethod.POST)
-	public JSONResult modifyAssignment(@PathVariable("coursePath") String coursePath, @RequestBody AssignmentVo assignmentVo) {
+	public JSONResult modifyAssignment(@PathVariable("coursePath") String coursePath,
+			@RequestBody AssignmentVo assignmentVo) {
 		System.out.println("modifyAssignment 실행");
 		System.out.println(assignmentVo.toString());
 
-		String str = assignmentVo.getEndDate();
+		if (assignmentVo.getSelectDate() != null) {
+			String str = assignmentVo.getSelectDate();
 
-		String endDate = "";
-		endDate += str.split(" ")[3];
+			String selectDate = "";
+			selectDate += str.split(" ")[3];
 
-		String month = str.split(" ")[1];
-		switch (month) {
+			String month = str.split(" ")[1];
+			switch (month) {
 
-		case "Jan":
-			month = "-01";
-			break;
+			case "Jan":
+				month = "-01";
+				break;
 
-		case "Feb":
-			month = "-02";
-			break;
+			case "Feb":
+				month = "-02";
+				break;
 
-		case "Mar":
-			month = "-03";
-			break;
+			case "Mar":
+				month = "-03";
+				break;
 
-		case "Apr":
-			month = "-04";
-			break;
+			case "Apr":
+				month = "-04";
+				break;
 
-		case "May":
-			month = "-05";
-			break;
+			case "May":
+				month = "-05";
+				break;
 
-		case "Jun":
-			month = "-06";
-			break;
+			case "Jun":
+				month = "-06";
+				break;
 
-		case "Jul":
-			month = "-07";
-			break;
+			case "Jul":
+				month = "-07";
+				break;
 
-		case "Aug":
-			month = "-08";
-			break;
+			case "Aug":
+				month = "-08";
+				break;
 
-		case "Sep":
-			month = "-09";
-			break;
+			case "Sep":
+				month = "-09";
+				break;
 
-		case "Oct":
-			month = "-10";
-			break;
+			case "Oct":
+				month = "-10";
+				break;
 
-		case "Nov":
-			month = "-11";
-			break;
+			case "Nov":
+				month = "-11";
+				break;
 
-		case "Dec":
-			month = "-12";
-			break;
+			case "Dec":
+				month = "-12";
+				break;
+			}
+
+			selectDate += month;
+
+			selectDate += "-" + str.split(" ")[2];
+			System.out.println(selectDate);
+			assignmentVo.setEndDate(selectDate);
 		}
-
-		endDate += month;
-
-		endDate += "-" + str.split(" ")[2];
-		System.out.println(endDate);
-		assignmentVo.setEndDate(endDate);
-
+		System.out.println("###############################################################################");
+		System.out.println(assignmentVo);
 		int count = assignmentService.modifyAssignment(assignmentVo);
 
 		JSONResult jsonResult;
@@ -193,7 +197,7 @@ public class CourseAssignmentController {
 
 		return jsonResult;
 	}
-	
+
 	@Auth
 	@ResponseBody
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
@@ -373,7 +377,7 @@ public class CourseAssignmentController {
 
 		return jsonResult;
 	}
-	
+
 	@Auth
 	@ResponseBody
 	@RequestMapping(value = "/saveScore", method = RequestMethod.POST)
@@ -386,6 +390,26 @@ public class CourseAssignmentController {
 		JSONResult jsonResult;
 		if (count != 0) {
 			jsonResult = JSONResult.success(submitVo);
+		} else {
+			jsonResult = JSONResult.error(null);
+		}
+
+		return jsonResult;
+	}
+
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/getFileList", method = RequestMethod.POST)
+	public JSONResult getFileList(@PathVariable("coursePath") String coursePath,
+			@RequestBody AssignmentVo assignmentVo) {
+		System.out.println("getFileList 실행");
+		System.out.println(assignmentVo.toString());
+
+		List<fileUpLoadVo> fileList = assignmentService.getFileList(assignmentVo);
+
+		JSONResult jsonResult;
+		if (fileList != null) {
+			jsonResult = JSONResult.success(fileList);
 		} else {
 			jsonResult = JSONResult.error(null);
 		}

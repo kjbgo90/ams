@@ -22,50 +22,15 @@ public class AssignmentVo {
 	private int scheduleNo;
 	private int fileNo;
 	private List<fileUpLoadVo> fileList;
+	private String selectDate;
 
 	public AssignmentVo() {
 	}
 
-	public AssignmentVo(int assignmentNo, String assignmentTitle, String assignmentContent, int courseNo, int subjectNo,
-			int chapterNo, int teacherNo, int scheduleNo, int fileNo) {
-		this.assignmentNo = assignmentNo;
-		this.assignmentTitle = assignmentTitle;
-		this.assignmentContent = assignmentContent;
-		this.courseNo = courseNo;
-		this.subjectNo = subjectNo;
-		this.chapterNo = chapterNo;
-		this.teacherNo = teacherNo;
-		this.scheduleNo = scheduleNo;
-		this.fileNo = fileNo;
-	}
-
 	public AssignmentVo(int assignmentNo, String assignmentTitle, String assignmentContent, int courseNo,
 			String courseName, int subjectNo, String subjectTitle, int chapterNo, String chapterContent, int teacherNo,
 			String userName, String email, String logoPath, String startDate, String endDate, int scheduleNo,
-			int fileNo) {
-		this.assignmentNo = assignmentNo;
-		this.assignmentTitle = assignmentTitle;
-		this.assignmentContent = assignmentContent;
-		this.courseNo = courseNo;
-		this.courseName = courseName;
-		this.subjectNo = subjectNo;
-		this.subjectTitle = subjectTitle;
-		this.chapterNo = chapterNo;
-		this.chapterContent = chapterContent;
-		this.teacherNo = teacherNo;
-		this.userName = userName;
-		this.email = email;
-		this.logoPath = logoPath;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.scheduleNo = scheduleNo;
-		this.fileNo = fileNo;
-	}
-
-	public AssignmentVo(int assignmentNo, String assignmentTitle, String assignmentContent, int courseNo,
-			String courseName, int subjectNo, String subjectTitle, int chapterNo, String chapterContent, int teacherNo,
-			String userName, String email, String logoPath, String startDate, String endDate, int scheduleNo,
-			int fileNo, List<fileUpLoadVo> fileList) {
+			int fileNo, List<fileUpLoadVo> fileList, String selectDate) {
 		this.assignmentNo = assignmentNo;
 		this.assignmentTitle = assignmentTitle;
 		this.assignmentContent = assignmentContent;
@@ -84,6 +49,7 @@ public class AssignmentVo {
 		this.scheduleNo = scheduleNo;
 		this.fileNo = fileNo;
 		this.fileList = fileList;
+		this.selectDate = selectDate;
 	}
 
 	public int getAssignmentNo() {
@@ -230,6 +196,14 @@ public class AssignmentVo {
 		this.fileList = fileList;
 	}
 
+	public String getSelectDate() {
+		return selectDate;
+	}
+
+	public void setSelectDate(String selectDate) {
+		this.selectDate = selectDate;
+	}
+
 	@Override
 	public String toString() {
 		return "AssignmentVo [assignmentNo=" + assignmentNo + ", assignmentTitle=" + assignmentTitle
@@ -237,7 +211,8 @@ public class AssignmentVo {
 				+ ", subjectNo=" + subjectNo + ", subjectTitle=" + subjectTitle + ", chapterNo=" + chapterNo
 				+ ", chapterContent=" + chapterContent + ", teacherNo=" + teacherNo + ", userName=" + userName
 				+ ", email=" + email + ", logoPath=" + logoPath + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", scheduleNo=" + scheduleNo + ", fileNo=" + fileNo + ", fileList=" + fileList + "]";
+				+ ", scheduleNo=" + scheduleNo + ", fileNo=" + fileNo + ", fileList=" + fileList + ", selectDate="
+				+ selectDate + "]";
 	}
 
 }

@@ -26,6 +26,7 @@
 <!--Nifty Premium Icon [ DEMONSTRATION ]-->
 <link href="${pageContext.request.contextPath }/assets/css/demo/nifty-demo-icons.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/assets/css/premium/icon-sets/icons/line-icons/premium-line-icons.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/assets/css/font-awesome.css" rel="stylesheet">
 
 <!--=================================================-->
 <!--Pace - Page Load Progress Par [OPTIONAL]-->
@@ -115,6 +116,7 @@
 						<input id="assignmentNo" type="hidden" name="assignmentNo" value="${assignmentVo.assignmentNo}">
 						<input id="courseNo" type="hidden" name="courseNo" value="${assignmentVo.courseNo}">
 						<input id="teacherNo" type="hidden" name="teacherNo" value="${authUser.userNo}">
+						<input id="scheduleNo" type="hidden" name="scheduleNo" value="${assignmentVo.scheduleNo }">
 						<div class="col-xs-9">
 							<div class="form-group" style="margin-left:1px; margin-right:1px;">
 								<input id="assignmentTitle" type="text" class="form-control input-lg" value="${assignmentVo.assignmentTitle }" autofocus>
@@ -154,6 +156,8 @@
 								</div>
 								<!--===================================================-->
 								<!-- End Dropzonejs -->
+								<ul id="fileList" class="list-group">
+								</ul>
 								<hr>
 								<div class="form-horizontal">
 									<div class="form-group" style="padding-left:10px;">
@@ -199,6 +203,7 @@
 										<!--===================================================-->
 										<div id="demo-dp-inline">
 											<input id="select-day" type="hidden" value=""> 
+											<input id="endDate" type="hidden" value="${assignmentVo.endDate}"> 
 											<div></div>
 										</div>
 										<!--===================================================-->
@@ -347,6 +352,37 @@
 
 		});
 		
+		$(document).ready(function() {
+			var assignmentNo = $("[name=assignmentNo]").val();
+			console.log(assignmentNo);
+			
+			$.ajax({
+
+				url : "${pageContext.request.contextPath }/${coursePath}/assignment/getFileList",
+				type : "post",
+				contentType : "application/json",
+				data : JSON.stringify({assignmentNo : assignmentNo}),
+
+				dataType : "json",
+				success : function(response) {
+					/*성공시 처리해야될 코드 작성*/
+					if (response.result === "success") {
+						console.log(response.data);
+						
+						for(var i=0; i<response.data.length; i++){
+							renderFileList(response.data[i], "down");
+							fileList.push(response.data[i]);
+						}
+					} else {
+						
+					}
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+		});
+		
 		$("#selectSubject").on("change", function(){
 			console.log(this.value);
 			var subjectNo = this.value;
@@ -386,21 +422,25 @@
 			var assignmentNo = $("#assignmentNo").val();
 			var assignmentTitle = $("#assignmentTitle").val();
 			var assignmentContent = $('#demo-summernote').summernote('code');
-			var endDate = $('#select-day').val();
+			var selectDate = $('#select-day').val();
+			var endDate = $("#endDate").val();
 			var subjectNo = $("#selectSubject").val();
 			var chapterNo = $("#selectChapter").val();
 			var courseNo = $('#courseNo').val();
 			var teacherNo = $('#teacherNo').val();
+			var scheduleNo = $('#scheduleNo').val();
 			
 			var assignmentVo = {};
 			assignmentVo["assignmentNo"] = assignmentNo;
 			assignmentVo["assignmentTitle"] = assignmentTitle;
 			assignmentVo["assignmentContent"] = assignmentContent;
 			assignmentVo["endDate"] = endDate;
+			assignmentVo["selectDate"] = selectDate;
 			assignmentVo["subjectNo"] = subjectNo;
 			assignmentVo["chapterNo"] = chapterNo;
 			assignmentVo["courseNo"] = courseNo;
 			assignmentVo["teacherNo"] = teacherNo;
+			assignmentVo["scheduleNo"] = scheduleNo;
 			
 			if(fileList.length != 0){
 				assignmentVo["fileList"] = fileList;
@@ -430,6 +470,36 @@
 				}
 			});
 		});
+		
+		$("#fileList").on("click", "#btnDeleteFile", function(){
+			console.log("delete file");
+			var $this = $(this);
+			var fileNo = $this.data("fileno");
+			
+			$("#file" + fileNo).remove();
+			for(var i=0; i<fileList.length; i++){
+				if(fileList[i].fileNo == fileNo){
+					fileList.splice(i,1);
+				}
+			}
+			
+			console.log(fileList);
+		});
+		
+		function renderFileList(fileUpLoadVo, updown) {
+			console.log("renderFileList 실행");
+			var str = "";
+			str += "<li id='file" + fileUpLoadVo.fileNo + "' class='list-group-item'><a href=" + fileUpLoadVo.filepath + "> <strong>" + fileUpLoadVo.fileName + "</strong> <i class='demo-psi-paperclip icon-lg icon-fw'></i></a> ";
+			str += "<span id='btnDeleteFile' class='btn btn-xs btn-danger pull-right' data-fileno=" + fileUpLoadVo.fileNo + "><i class='fa fa-trash'></i></span></li>";
+			
+			if (updown == "up") {
+				$("#fileList").prepend(str);
+			} else if (updown == "down") {
+				$("#fileList").append(str);
+			} else {
+				console.log("updown 오류");
+			}
+		}
 	</script>
 </body>
 </html>
