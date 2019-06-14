@@ -22,7 +22,11 @@ public class CourseScheduleDao {
 		return sqlSession.selectList("courseSchedule.loadSchedule", courseNo);
 	}
 	
-	public List<CourseScheduleVo> loadCourseSchedule(CourseScheduleVo vo){
+	public List<CourseScheduleVo> loadTodaySchedule(String coursePath, String today){
+		return sqlSession.selectList("courseSchedule.loadTodaySchedule", coursePath);
+	}
+	
+ 	public List<CourseScheduleVo> loadCourseSchedule(CourseScheduleVo vo){
 		return sqlSession.selectList("courseSchedule.loadCourseSchedule", vo);
 	}
 

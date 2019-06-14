@@ -84,6 +84,15 @@ public class CourseScheduleService {
 			return list;
 		}
 		
+		public List<CourseScheduleVo> loadTodaySchedule(String coursePath, String today){
+			int courseNo = csDao.findCourseNo(coursePath);
+			
+			List<CourseScheduleVo> list = new ArrayList();
+			list = csDao.loadTodaySchedule(coursePath, today);
+			
+			return list;
+		}
+		
 		public List<String> loadTag(int courseNo){
 			List<Integer> userNoList = csDao.loadTag(courseNo);
 			List<String> userNameList = new ArrayList();

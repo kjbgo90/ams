@@ -104,13 +104,14 @@
 					                        <div id="person" class="fc-event fc-list" data-class="info">개인 일정</div>
 					                         -->
 					                    </div>
-					                   <!--  <p class="text-muted text-sm text-uppercase">출석부</p>
+					                    <hr>
+					                   <p class="text-muted text-sm text-uppercase">오늘의 일정</p>
 					                    <div class="input-group pad-all bord-btm">
 					                		<input type="text" placeholder="조회 일자" class="form-control">
 					               			<span class="input-group-btn">
 					                    		<button class="btn btn-primary add-tooltip" data-original-title="search" type="button"><i class="demo-pli-check icon-lg icon-fw"></i></button>
 					                 		</span>
-					            		</div> -->
+					            		</div>
 					                    <!-- ============================================ -->
 					                </div>
 					                <div class="fluid">
@@ -390,6 +391,10 @@
 			});
 		});
 		
+		$("document").ready(function(){
+			console.log()
+		})
+		
 		$("#page-content").on("click", ".fc-day-grid-event", function(){
 			console.log("-------------------------이벤트 상세 정보-------------------------");
 			
@@ -419,8 +424,12 @@
 						tag("channel");
 					}else if(temp == "공지사항"){
 						notice();
-						$("#schedule-info-notice-content").text(result.content);
-						$("#schedule-info-notice-category").text(result.typeCategory);
+						$("#schedule-info-notice-content").html(result.content);
+						if(result.typeCategory == "긴급"){
+							$("#schedule-info-notice-category").text(result.typeCategory).css('background-color', '#FAA732');
+						}else{
+							$("#schedule-info-notice-category").text(result.typeCategory)
+						}
 						$("#schedule-info-notice-hit").text(result.hit);
 						$("#schedule-info-notice-courseName").text(result.courseName);
 						$("#schedule-info-notice-writer").text(result.writer);

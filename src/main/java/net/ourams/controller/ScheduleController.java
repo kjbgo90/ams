@@ -84,6 +84,17 @@ public class ScheduleController {
 		return list;
 	}
 	
+	//load today schedule
+	@ResponseBody
+	@RequestMapping(value="/today", method=RequestMethod.POST)
+	public List<CourseScheduleVo> loadTodaySchedule(@PathVariable("coursePath") String coursePath, String today){
+		System.out.println("today's event");
+		
+		List<CourseScheduleVo> list = service.loadTodaySchedule(coursePath, today);
+
+		return list;
+	}
+	
 	//load tag case by schedule
 	@ResponseBody
 	@RequestMapping(value="/loadTag", method=RequestMethod.POST)
@@ -115,6 +126,7 @@ public class ScheduleController {
 		return result;
 	}
 	
+	//search schedule
 	@ResponseBody
 	@RequestMapping(value="/searchSchedule")
 	public List<CourseScheduleVo> searchSchedule(@RequestBody CourseScheduleVo vo){
@@ -141,7 +153,6 @@ public class ScheduleController {
 
 	// mailSending 코드
 	
-	@ResponseBody 
 	@RequestMapping(value = "/alarm", method=RequestMethod.POST)
 	public void mailSending(HttpServletRequest request) {
 
