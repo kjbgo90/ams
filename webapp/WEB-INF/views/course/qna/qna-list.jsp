@@ -335,7 +335,7 @@
 								
 							str+="<tr>"	
 							str+="<td>"+map.list[i].rnum+"</td>"			
-							str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo+"'>["+map.list[i].subjectTitle+"]"+map.list[i].postTitle+"</a>"
+							str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/qna/read/"+map.list[i].postNo+"'>["+map.list[i].subjectTitle+"]"+map.list[i].postTitle+"</a>"
 							str+=  map.list[i].regDate == currentDate ? "&nbsp;&nbsp; <div class='label label-warning'>N</div>" : ""
 							str+="</td>"
 							str+="<td><span class='text-muted'>"+map.list[i].regDate+"</span></td>"
