@@ -155,7 +155,7 @@
 										 #{postTitle},
 										 #{postContent},
 										 #{selectedDate},
-										 #{selectedDate},
+										 #{endDate},
 										 'warning',
 										 1,
 										 #{userNo},

@@ -182,9 +182,9 @@ rhd
 
 												<!--Bootstrap Datepicker : Inline-->
 												<!--===================================================-->
-												<p class="text-main text-bold text-uppercase" style="margin-left: 10px;">
+												 <p class="text-main text-bold text-uppercase" style="margin-left: 10px;">
 													공지등록 &nbsp; <input id="demo-checkbox-addons" class="magic-checkbox" type="checkbox"> <label for="demo-checkbox-addons"></label>
-												</p>
+												</p> 
 
 												<div id="demo-dp-inline">
 													<input id="select-day" type="hidden" value="">

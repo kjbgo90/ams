@@ -70,6 +70,7 @@ public class CourseQnaService {
 		
 		int count2 = courseQnaDao.delete(postVo);
 		System.out.println(count2);
+		//if count2 != 0 스케줄에 삭제
 		return 0;
 	}
 
