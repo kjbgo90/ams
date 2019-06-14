@@ -82,8 +82,8 @@
 				#{startDate},
 				#{endDate},
 				#{eventColor},
-				1,
-				6
+				#{courseNo},
+				#{userNo}
 			)
 		]]>
 	</insert>
@@ -117,12 +117,54 @@
 		]]>
 	</select>
 	
+	<select id="searchSchedule" parameterType="CourseScheduleVo" resultType="CourseScheduleVo">
+		<![CDATA[
+			SELECT scheduleNo,
+				   scheduleName,
+				   scheduleMemo,
+				   TO_CHAR(startDate, 'yyyy-mm-dd') as startDate,
+				   TO_CHAR(endDate, 'yyyy-mm-dd') as endDate,
+				   eventColor,
+				   courseNo,
+				   userNo
+			FROM schedule
+			WHERE scheduleName 
+			LIKE '%'||#{scheduleName}||'%'
+			ORDER BY eventColor DESC
+		]]>
+	</select>
+	
 	<delete id="deleteSchedule" parameterType="CourseScheduleVo">
 		<![CDATA[
 			DELETE FROM schedule
 			WHERE scheduleNo = #{scheduleNo}
 		]]>
 	</delete>
+	
+	<delete id="deleteTag" parameterType="CourseScheduleVo">
+		<![CDATA[
+			DELETE FROM scheduleTag
+			WHERE scheduleNo = #{scheduleNo}
+		]]>
+	</delete>
+	
+	<select id="findNotice" parameterType="CourseScheduleVo" resultType="PostVo">
+		<![CDATA[
+			SELECT postNo,
+				   postType,
+				   userNo,
+				   courseNo,
+				   regDate,
+				   postTitle,
+				   postContent,
+				   communityNo,
+				   hit,
+				   category,
+				   subjectNo
+			FROM post
+			WHERE scheduleNo = #{scheduleNo}
+		]]>
+	</select>
 	
 	<select id="findAssignment" parameterType="CourseScheduleVo" resultType="AssignmentVo">
 		<![CDATA[

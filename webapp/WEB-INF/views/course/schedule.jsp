@@ -86,30 +86,31 @@
 					            <div class="fixed-fluid">
 					                <div class="fixed-sm-200 pull-sm-left fixed-right-border">
 					                    <div class="form-group">
-					                        <input type="text" id="event_title" placeholder="새로운 이벤트" class="form-control" value="">
+					                        <input type="text" id="schedule_title" placeholder="일정 이름" class="form-control" value="">
 					                    </div>
-					                    <button class="btn btn-block btn-purple btn-lg" id="event_register_btn">이벤트 등록</button>
+					                    <button class="btn btn-block btn-purple btn-lg" id="schedule_search_btn">일정 검색</button>
 					                    
 					                    <hr>
 					
 					                    <!-- Draggable Events -->
 					                    <!-- ============================================ -->
-					                    <p class="text-muted text-sm text-uppercase">이벤트</p>
+					                    <p class="text-muted text-sm text-uppercase"></p>
 					                    <div id="demo-external-events">
+					                    	<!-- 
 					                        <div id="notice" class="fc-event fc-list" data-class="warning">공지사항</div>
 					                        <div id="assign" class="fc-event fc-list" data-class="pink">과제</div>
 					                        <div id="course" class="fc-event fc-list" data-class="dark">코스 일정</div>
 					                        <div id="team" class="fc-event fc-list" data-class="purple">팀별 일정</div>
 					                        <div id="person" class="fc-event fc-list" data-class="info">개인 일정</div>
+					                         -->
 					                    </div>
-					                    <hr>
-					                    <p class="text-muted text-sm text-uppercase">출석부</p>
+					                   <!--  <p class="text-muted text-sm text-uppercase">출석부</p>
 					                    <div class="input-group pad-all bord-btm">
 					                		<input type="text" placeholder="조회 일자" class="form-control">
 					               			<span class="input-group-btn">
 					                    		<button class="btn btn-primary add-tooltip" data-original-title="search" type="button"><i class="demo-pli-check icon-lg icon-fw"></i></button>
 					                 		</span>
-					            		</div>
+					            		</div> -->
 					                    <!-- ============================================ -->
 					                </div>
 					                <div class="fluid">
@@ -282,19 +283,7 @@
 					                                <td>
 					                                	<ul class="list-inline mar-hor col-center" id="schedule-info-tag">
 															<li class="tag tag-xs">
-																<a href="#"><i class="demo-pli-tag"></i>김재봉</a>
-															</li>
-															<li class="tag tag-xs">
-																<a href="#"><i class="demo-pli-tag"></i>구민수</a>
-															</li>
-															<li class="tag tag-xs">
-																<a href="#"><i class="demo-pli-tag"></i>이종현</a>
-															</li>
-															<li class="tag tag-xs">
-																<a href="#"><i class="demo-pli-tag"></i>강보은</a>
-															</li>
-															<li class="tag tag-xs">
-																<a href="#"><i class="demo-pli-tag"></i>이건창</a>
+																<a href="#"><i class="demo-pli-tag" data-range="channel"></i>channel</a>
 															</li>
 														</ul>
 					                                </td>
@@ -377,7 +366,7 @@
 			
 			var	tagList2 = "";
 			$.ajax({
-				url : "${pageContext.request.contextPath }/${coursePath}/schedule/search",
+				url : "${pageContext.request.contextPath }/${coursePath}/schedule/searchUser",
 				type : "post",
 				dataType : "json",
 				success : function(list) {
@@ -426,8 +415,18 @@
 						$("#schedule-info-assign-subjectName").text(result.subjectTitle);
 						$("#schedule-info-assign-chapterName").text(result.chapterContent);
 						$("#schedule-info-assign-teacherName").text(result.teacherName);
+						$("#schedule-info-tag").empty();
+						tag("channel");
 					}else if(temp == "공지사항"){
 						notice();
+						$("#schedule-info-notice-content").text(result.content);
+						$("#schedule-info-notice-category").text(result.typeCategory);
+						$("#schedule-info-notice-hit").text(result.hit);
+						$("#schedule-info-notice-courseName").text(result.courseName);
+						$("#schedule-info-notice-writer").text(result.writer);
+						$("#schedule-info-notice-regDate").text(result.regDate);
+						$("#schedule-info-tag").empty();
+						tag("channel")
 					}else if(temp == "코스 일정"){
 						course();
 						$("#schedule-info-course-duration").text(result.startDate + " ~ " + result.endDate);
@@ -436,6 +435,8 @@
 						$("#schedule-info-course-roomNo").text(result.roomNo);
 						$("#schedule-info-course-teacher").text(result.teacherName);
 						$("#schedule-info-course-link").text(result.coursePath);
+						$("#schedule-info-tag").empty();
+						tag("channel")
 					}else if(temp =="팀별 일정"){
 						team();
 						console.log(result.writerNo)
@@ -446,6 +447,7 @@
 						$("#schedule-info-team-writer").data("writerNo", result.writerNo);
 						$("#schedule-info-title").data("scheduleNo", result.scheduleNo);
 						$("#schedule-info-course-link").text(result.coursePath);
+						$("#schedule-info-tag").empty();
 					}else{
 						personal();
 						$("#schedule-info-personal-duration").text(result.startDate + " ~ " + result.endDate);
@@ -455,19 +457,17 @@
 						$("#schedule-info-personal-writer").data("writerNo", result.writerNo);
 						$("#schedule-info-title").data("scheduleNo", result.scheduleNo);
 						$("#schedule-info-personal-link").text(result.coursePath);
+						$("#schedule-info-tag").empty();
 					}
 					
 					$("#schedule-info-title").text(result.title);
 					$("#schedule-info-category").text(result.category);
 					
 					var tagList = load_tag(scheduledto.scheduleNo);
-					$("#schedule-info-tag").empty();
-					if(tagList.length == 0){
-						tag("channel");
-					}else{
-						for(var i=0; i<tagList.length; i++){
+					//$("#schedule-info-tag").empty();
+						
+					for(var i=0; i<tagList.length; i++){
 							tag(tagList[i])
-						}
 					}
 				},
 				error : function(XHR, status, error) {		
@@ -483,21 +483,34 @@
 			$("#schedule-end").val(date);
 		});
 		
-		// add event category 
-		$("#event_register_btn").on("click", function(){
-			var new_event = $("#event_title").val();
-			console.log(new_event);
-			render_Event(new_event);
-		});
-		
-		
-		// event category html source
-		function render_Event(eventName){
-			var str = "";
-			str += "<div id='user-define' class='fc-event fc-list' data-class='mint'>"+ eventName +"</div>"
+		// search schedule
+		$("#schedule_search_btn").on("click", function(){
+			var scheduleName = $("#schedule_title").val();
+			console.log(scheduleName);
 			
-			$("#demo-external-events").append(str);			
-		}
+			var scheduledto = {
+					scheduleName: scheduleName
+			}
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/${coursePath}/schedule/searchSchedule",
+				type: "post",
+				contentType : "application/json",
+				data : JSON.stringify(scheduledto),
+
+				dataType : "json",
+				success : function(result) {
+					$("#demo-external-events").empty();
+					for(var i=0; i<result.length; i++){
+						console.log(result[i])
+						render_searchedScheudule(result[i]);
+					}
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			})
+		});
 		
 		// add event - schedule calendar modal
 		$('#dp-range .input-daterange').datepicker({
@@ -552,6 +565,13 @@
 						}
 					})
 				}
+			}
+			
+			if(tagList == null){
+				console.log("태그 없음")
+			}else{
+				console.log("태그 있음");
+				send_mail();
 			}
 		});
 		
@@ -787,6 +807,26 @@
 				}
 			})
 		}
+		
+		//send mail
+		function send_mail(){
+			$.ajax({
+				url : "${pageContext.request.contextPath}/${coursePath}/schedule/alarm",
+				type: "post",
+				contentType : "application/json",
+
+				dataType : "json",
+				success : function(result) {
+					if(result == 1)
+						console.log("메일 전송 완료");
+					else 
+						console.log("메일 전송 실패");
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			})
+		}
 	
 		
 		/*=================================================== rendering html form =================================================== */
@@ -796,8 +836,16 @@
 			
 		};
 		
+		// searchedScheudle rendering
+		function render_searchedScheudule(scheduledto){
+			var str = "";
+			str += "<div id='user-define' class='fc-event fc-list' data-class='"+scheduledto.eventColor+"'>"+ scheduledto.scheduleName +"</div>"
+			
+			$("#demo-external-events").append(str);			
+		}
+		
 		function tag(userName){
-			console.log(userName)
+			
 			str = '';
 			str += '<li class="tag tag-xs">'
 			str += '	<a href="#"><i class="demo-pli-tag" id="tagUser">'+ userName +'</i></a>'
@@ -807,47 +855,39 @@
 		}
 		
 		function notice(){
-			$(".function-per-category").empty();
+			$(".column-target").remove();
 			
 			str = '';
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>내용</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-notice-content"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>중요도</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-notice-category"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>조회수</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-notice-hit"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>코스명</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-notice-courseName"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>작성자</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<span id="schedule-info-notice-userName"></span>'
-			str += '</div>'
-			str += '<div class="panel-heading">';
-			str += '	<h3 class="panel-title"><strong>바로가기</strong></h3>'
-			str += '</div>'
-			str += '<div class="panel-body">'
-			str += '	<a href id="schedule-info-assign-link">GO</a>'
-			str += '</div>'
-			
-			$(".function-per-category").append(str);
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">내용</a></td>'
+			str += '	<td><span id="schedule-info-notice-content"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">중요도</a></td>'
+			str += '	<td><span id="schedule-info-notice-category"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">조회수</a></td>'
+			str += '	<td><span id="schedule-info-notice-hit"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">코스명</a></td>'
+			str += '	<td><span id="schedule-info-notice-courseName"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">작성자</a></td>'
+			str += '	<td><span id="schedule-info-notice-writer"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">작성 일자</a></td>'
+			str += '	<td><span id="schedule-info-notice-regDate"></span></td>'
+			str += '</tr>'
+			str += '<tr class="column-target">';
+			str += '	<td><a class="btn-link">바로가기</a></td>'
+			str += '	<td><span id="schedule-info-notice-link"></span></td>'
+			str += '</tr>'
+		
+			$(".function-per-category").after(str);
 		};
 		
 		function assignment(){
@@ -979,7 +1019,7 @@
 		function callNoty(color, icon, position, time, title, message, animationIn, animationOut, btnId){
 			var notyContent = "";
 			
-			notyContent += "<button class='close' data-target='#schedule-modal' data-toggle='modal' type='button' id='" + btnId + "'><i class='pci-cross pci-circle'></i></button>";
+			notyContent += "<button class='close' type='button' id='" + btnId + "'><i class='pci-cross pci-circle'></i></button>";
 			notyContent += "<div class='media-left'>";
 			notyContent += "	<span class='icon-wrap icon-wrap-xs icon-circle alert-icon'>";
 			notyContent += "		<i class='" + icon + " icon-2x'></i>";

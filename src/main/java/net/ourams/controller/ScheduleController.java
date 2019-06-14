@@ -5,14 +5,18 @@ import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.ourams.interceptor.Auth;
@@ -27,6 +31,10 @@ public class ScheduleController {
 	
 	@Autowired
 	private CourseScheduleService service;
+	
+	@Autowired
+	private JavaMailSender mailSender;
+	 
 	
 	//schedule main form
 	@Auth
@@ -55,7 +63,7 @@ public class ScheduleController {
 	
 	//search all users
 	@ResponseBody
-	@RequestMapping(value="/search", method=RequestMethod.POST)
+	@RequestMapping(value="/searchUser", method=RequestMethod.POST)
 	public List<UserVo> searchUserAll(){
 		System.out.println("search users All...");
 			
@@ -88,11 +96,12 @@ public class ScheduleController {
 	//insert schedule
 	@ResponseBody
 	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public int registerSchedule(@RequestBody List<Object> multiParam) {
+	public int registerSchedule(@RequestBody List<Object> multiParam, @AuthUser UserVo authUser,
+								@PathVariable("coursePath") String coursePath) {
 		System.out.println("register users...");
 		System.out.println(multiParam);
 		
-		return service.registerSchedule(multiParam);
+		return service.registerSchedule(multiParam, authUser, coursePath);
 	}
 	
 	//selected schedule 
@@ -107,6 +116,15 @@ public class ScheduleController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/searchSchedule")
+	public List<CourseScheduleVo> searchSchedule(@RequestBody CourseScheduleVo vo){
+		System.out.println("searching schedule named " + vo.getScheduleName() + "...");
+		
+		return service.searchSchedule(vo);
+	}
+	
+	
+	@ResponseBody
 	@RequestMapping(value="/modify", method=RequestMethod.POST)
 	public int modifySchedule(@RequestBody CourseScheduleVo vo){
 		
@@ -117,9 +135,40 @@ public class ScheduleController {
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public int deleteSchedule(@RequestBody CourseScheduleVo vo) {
 		System.out.println("delete schdule NO " + vo.getScheduleNo() + "...");
-		
+
 		return service.deleteSchedule(vo);
 	}
+
+	// mailSending 코드
 	
-	
+	@ResponseBody 
+	@RequestMapping(value = "/alarm", method=RequestMethod.POST)
+	public void mailSending(HttpServletRequest request) {
+
+		String setfrom = "rnalstn0507@gmail.com";
+		/*
+		 * String tomail = request.getParameter("tomail"); // 받는 사람 이메일 String title =
+		 * request.getParameter("[Academy Management Service]"); // 제목 String content =
+		 * request.getParameter("새로운 이벤트가 등록 되었습니다."); // 내용
+		 */
+
+		String tomail = "rnalstn0507@gmail.com";
+		String title = "[Academy Management Service]";
+		String content = "새로운 이벤트가 등록 되었습니다.";
+
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+
+			messageHelper.setFrom(setfrom); // 보내는사람 생략하거나 하면 정상작동을 안함
+			messageHelper.setTo(tomail); // 받는사람 이메일
+			messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+			messageHelper.setText(content); // 메일 내용
+
+			mailSender.send(message);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
 }

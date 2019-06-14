@@ -45,11 +45,19 @@ public class CourseScheduleDao {
 	public CourseScheduleVo selectedSchedule(CourseScheduleVo vo) {
 		return sqlSession.selectOne("courseSchedule.selectedSchedule", vo);
 	}
-
+	
+	public List<CourseScheduleVo> searchSchedule(CourseScheduleVo vo){
+		return sqlSession.selectList("courseSchedule.searchSchedule", vo);
+	}
+	
 	public int deleteSchedule(CourseScheduleVo vo) {
 		return sqlSession.delete("courseSchedule.deleteSchedule", vo);
 	}
 
+	public int deleteTag(CourseScheduleVo vo) {
+		return sqlSession.delete("courseSchedule.deleteTag", vo);
+	}
+	
 	public PostVo findNotice(CourseScheduleVo vo) {
 		return sqlSession.selectOne("courseSchedule.findNotice", vo);
 	}

@@ -12,6 +12,7 @@ import net.ourams.dao.CourseScheduleDao;
 import net.ourams.dao.UserDao;
 import net.ourams.vo.AssignmentVo;
 import net.ourams.vo.CourseScheduleVo;
+import net.ourams.vo.PostVo;
 import net.ourams.vo.ScheduleTagVo;
 import net.ourams.vo.SubjectVo;
 import net.ourams.vo.UserVo;
@@ -95,12 +96,12 @@ public class CourseScheduleService {
 		}
 		
 		//register new schedule
-		public int registerSchedule(List<Object> multiParam) {
+		public int registerSchedule(List<Object> multiParam, UserVo authUser, String coursePath) {
 			System.out.println(multiParam.toString());
 			// insert into CourseScehduleVo
 			HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(1);
 			CourseScheduleVo csVo = new CourseScheduleVo((String)map.get("scheduleName"), (String)map.get("scheduleMemo"), (String)map.get("startDate"),
-									(String)map.get("endDate"), (String)map.get("eventColor"), 1, 6);
+									(String)map.get("endDate"), (String)map.get("eventColor"), csDao.findCourseNo(coursePath), authUser.getUserNo());
 			
 			System.out.println(csVo);
 			
@@ -148,14 +149,30 @@ public class CourseScheduleService {
 		//find selected schedule
 		public Map<String, Object> selectedSchedule(CourseScheduleVo vo) {
 			CourseScheduleVo temp = csDao.selectedSchedule(vo);
+			PostVo pTemp;
 			AssignmentVo aTemp;
 			SubjectVo sTemp;
 			
 			Map<String, Object> result = new HashMap<String, Object>();
 			
 			if(temp.getEventColor().equals("warning")) {
+				String writer;
+				String courseName;
+				
+				pTemp = csDao.findNotice(temp);
 				result.put("category", "공지사항");
-				csDao.findNotice(temp);
+				result.put("title", pTemp.getPostTitle());
+				result.put("content", pTemp.getPostContent());
+				result.put("regDate", pTemp.getRegDate());
+				result.put("typeCategory", pTemp.getCategory());
+				courseName = csDao.findCourseName(pTemp.getCourseNo());
+				result.put("courseName", courseName);
+				result.put("hit", pTemp.getHit());
+				writer = csDao.findTeacherName(pTemp.getUserNo());
+				result.put("writer", writer);
+				
+				System.out.println(result);
+				return result;
 			}else if(temp.getEventColor().equals("pink")) {
 				//managing assignment
 				String courseName;
@@ -240,8 +257,17 @@ public class CourseScheduleService {
 			return result;
 		}
 		
+		public List<CourseScheduleVo> searchSchedule(CourseScheduleVo vo){
+			return csDao.searchSchedule(vo);
+		}
+		
 		public int deleteSchedule(CourseScheduleVo vo) {
-			return csDao.deleteSchedule(vo);
+			int flag = csDao.deleteTag(vo);
+			
+			if(flag == 1) 
+				return csDao.deleteSchedule(vo);
+			else 
+				return 0;
 		}
 }
 
