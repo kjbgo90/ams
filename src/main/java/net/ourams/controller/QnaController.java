@@ -2,6 +2,7 @@ package net.ourams.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,16 +17,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import net.ourams.dao.CourseMainDao;
 import net.ourams.interceptor.Auth;
 import net.ourams.interceptor.AuthUser;
 import net.ourams.service.CourseQnaService;
 import net.ourams.service.CourseReplyService;
 import net.ourams.service.UserService;
+import net.ourams.util.JSONResult;
+import net.ourams.util.S3Util;
+import net.ourams.vo.AssignmentVo;
+import net.ourams.vo.CourseVo;
 import net.ourams.vo.PostVo;
 import net.ourams.vo.ReplyVo;
 import net.ourams.vo.SubjectVo;
 import net.ourams.vo.UserVo;
+import net.ourams.vo.fileUpLoadVo;
 
 @Controller
 @RequestMapping(value="/{coursePath}/qna")
@@ -33,18 +41,26 @@ public class QnaController {
 	
 	@Autowired
 	private CourseQnaService courseQnaService;
-	
 	@Autowired
 	private UserService userService;
-	
 	@Autowired
 	private CourseReplyService courseReplyService;
+	@Autowired
+	private CourseMainDao mainDao;
+
+	@Autowired
+	private S3Util s3Util;
+
+	private String bucketName = "net.ourams.notice";
+
 
 	/* 리스트 기본 */
 	@Auth
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String qnaList(@PathVariable("coursePath") String coursePath, @AuthUser UserVo authUser, Model model) {
 		System.out.println("list");
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
+		System.out.println(courseVo.getCourseNo());
 		model.addAttribute("coursePath",coursePath);
 		return "course/qna/qna-list";
 	}
@@ -53,9 +69,12 @@ public class QnaController {
 
 	@ResponseBody
 	@RequestMapping(value = "/selectPostPaging", method = RequestMethod.POST)
-	public Map<String, Object> selectPostPaging(@RequestParam("pageNo") int pageNo) {
+	public Map<String, Object> selectPostPaging(@PathVariable("coursePath") String coursePath, @RequestParam("pageNo") int pageNo) {
 		System.out.println("selectPostPaging");
-		Map<String, Object> map = courseQnaService.selectListPaging(pageNo);
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
+		System.out.println(courseVo.getCourseNo());
+
+		Map<String, Object> map = courseQnaService.selectListPaging(pageNo, courseVo.getCourseNo());
 		return map;
 	}
 
@@ -118,6 +137,7 @@ public class QnaController {
 		postVo.setSubjectNo(resJSON.getSubjectNo());
 		postVo.setRegDate(resJSON.getRegDate());
 		postVo.setUserName(authUser.getUserName());
+		postVo.setFileList(resJSON.getFileList());
 		courseQnaService.write(postVo);
 		System.out.println(coursePath);
 
@@ -167,19 +187,25 @@ public class QnaController {
 	/* 글 수정폼 */
 	@Auth
 	@RequestMapping(value = "/modifyform", method = RequestMethod.GET)
-	public String modifyform(@RequestParam int postNo, @ModelAttribute PostVo postVo,
+	public String modifyform(@RequestParam int postNo, @RequestParam("subjectNo") int subjectNo,  @ModelAttribute PostVo postVo,
 			@PathVariable("coursePath") String coursePath, @AuthUser UserVo authUser, Model model) {
 		postVo = courseQnaService.modifyform(postNo);
-		
-		
+		System.out.println("subjectNo" + subjectNo);
+		String subjectTitle = "과목선택";
 		int courseNo=1;
 		List<SubjectVo> subjectList  = courseQnaService.getsubjectList(courseNo);
+		for(int i=0; i<subjectList.size(); i++) {
+			if (subjectList.get(i).getSubjectNo() == subjectNo) {
+				subjectTitle = subjectList.get(i).getSubjectTitle();
+			}
+		}
 		System.out.println("##############################33");
 		System.out.println(subjectList);
 		model.addAttribute("subjectList", subjectList);
 		model.addAttribute("postVo", postVo);
-		
-		
+		model.addAttribute("subjectNo", subjectNo);
+		model.addAttribute("subjectTitle", subjectTitle);
+
 		return "course/qna/qna-modify";
 	}
 	
@@ -208,6 +234,65 @@ public class QnaController {
 	@RequestMapping(value = "/comment/delete", method = RequestMethod.POST)
 	public int commentDelete(@RequestParam("reply") int reply) {
 		return courseReplyService.commentDelete(reply);
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public fileUpLoadVo fileUpload(@RequestParam("file") MultipartFile file, Model model) {
+		System.out.println("aws 파일업로드");
+		System.out.println(file.getOriginalFilename());
+		String fileName = file.getOriginalFilename();
+		s3Util.fileUpload(bucketName, file);
+		s3Util.getFileURL(bucketName, fileName);
+		String url = s3Util.getFileURL(bucketName, file.getOriginalFilename());
+
+		// 확장자
+		String exName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+		System.out.println("exName: " + exName);
+
+		// 파일사이즈
+		long fileSize = file.getSize();
+		System.out.println("fileSize: " + fileSize);
+
+		// 저장파일명
+		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
+		System.out.println("saveName: " + saveName);
+
+		// 파일패스
+		String filePath = s3Util.getFileURL(bucketName, file.getOriginalFilename());
+		System.out.println("filePath: " + filePath);
+
+		fileUpLoadVo vo = new fileUpLoadVo();
+		vo.setFileName(fileName);
+		vo.setFilepath(filePath);
+		vo.setFileSize(fileSize);
+		vo.setSaveName(saveName);
+		System.out.println(vo.toString());
+		return vo;
+	}
+	
+	
+	
+
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/getFileList", method = RequestMethod.POST)
+	public JSONResult getFileList(@PathVariable("coursePath") String coursePath,
+			@RequestBody PostVo postVo) {
+		System.out.println("getFileList 실행");
+		System.out.println(postVo.toString());
+
+		List<fileUpLoadVo> fileList = courseQnaService.getFileList(postVo);
+
+		JSONResult jsonResult;
+		if (fileList != null) {
+			jsonResult = JSONResult.success(fileList);
+		} else {
+			jsonResult = JSONResult.error(null);
+		}
+
+		return jsonResult;
 	}
 	
 	

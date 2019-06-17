@@ -143,7 +143,7 @@
 										<!--Dropzonejs-->
 										<!--===================================================-->
 										<div class="dropzone-container">
-											<form id="demo-dropzone" action="#">
+											<div id="dropzone">
 												<div class="dz-default dz-message">
 													<div class="dz-icon">
 														<i class="demo-pli-upload-to-cloud icon-5x"></i>
@@ -154,11 +154,9 @@
 													</div>
 												</div>
 												<div class="fallback">
-													<form action="#" method="post" enctype="multipart/form-data">
-														<input name="file" type="file" multiple>
-													</form>
+													<input name="file" type="file" multiple>
 												</div>
-											</form>
+											</div>
 										</div>
 										<!--===================================================-->
 										<!-- End Dropzonejs -->
@@ -209,7 +207,7 @@
 												</button>
 											</div>
 										</div>
-									
+
 
 
 									</div>
@@ -384,77 +382,83 @@
 	<!--===================================================-->
 	<!-- blog-edit 에서 스크립트 페이지 찾기 sample page 안에 있음  -->
 	<script>
-		$(document).on('nifty.ready', function() {
+		var fileList = [];
 
-			// DROPZONE.JS
-			// =================================================================
-			// Require Dropzone
-			// http://www.dropzonejs.com/
-			// =================================================================
-			$('#demo-dropzone').dropzone({
-				//url: '/file/post',
-				//autoProcessQueue: false,
-				addRemoveLinks : true,
-				maxFiles : 1,
-				init : function() {
-					var myDropzone = this;
-					myDropzone.on('maxfilesexceeded', function(file) {
-						this.removeAllFiles();
-						this.addFile(file);
-					});
-				}
-			});
+		$(document)
+				.on(
+						'nifty.ready',
+						function() {
 
-			// SUMMERNOTE
-			// =================================================================
-			// Require Summernote
-			// http://hackerwins.github.io/summernote/
-			// =================================================================
-			$('#demo-summernote, #demo-summernote-full-width').summernote({
-				height : '600px'
-			});
+							// DROPZONE.JS
+							// =================================================================
+							// Require Dropzone
+							// http://www.dropzonejs.com/
+							// =================================================================
+							$("#dropzone").dropzone(
+											{
+												url : "${pageContext.request.contextPath }/{coursePath}/qna/upload",
+												success : function(file, fileVo) {
+													console.log(file);
+													console.log(fileVo);
+													fileList.push(fileVo);
+													console.log(fileList);
+													console
+															.log(fileList.length);
+												}
+											});
 
-			// BOOTSTRAP DATEPICKER
-			// =================================================================
-			// Require Bootstrap Datepicker
-			// http://eternicode.github.io/bootstrap-datepicker/
-			// =================================================================
-			$('#demo-dp-txtinput input').datepicker();
+							// SUMMERNOTE
+							// =================================================================
+							// Require Summernote
+							// http://hackerwins.github.io/summernote/
+							// =================================================================
+							$('#demo-summernote, #demo-summernote-full-width')
+									.summernote({
+										height : '600px'
+									});
 
-			// BOOTSTRAP DATEPICKER WITH AUTO CLOSE
-			// =================================================================
-			// Require Bootstrap Datepicker
-			// http://eternicode.github.io/bootstrap-datepicker/
-			// =================================================================
-			$('#demo-dp-component .input-group.date').datepicker({
-				autoclose : true
-			});
+							// BOOTSTRAP DATEPICKER
+							// =================================================================
+							// Require Bootstrap Datepicker
+							// http://eternicode.github.io/bootstrap-datepicker/
+							// =================================================================
+							$('#demo-dp-txtinput input').datepicker();
 
-			// BOOTSTRAP DATEPICKER WITH RANGE SELECTION
-			// =================================================================
-			// Require Bootstrap Datepicker
-			// http://eternicode.github.io/bootstrap-datepicker/
-			// =================================================================
-			$('#demo-dp-range .input-daterange').datepicker({
-				format : "MM dd, yyyy",
-				todayBtn : "linked",
-				autoclose : true,
-				todayHighlight : true
-			});
+							// BOOTSTRAP DATEPICKER WITH AUTO CLOSE
+							// =================================================================
+							// Require Bootstrap Datepicker
+							// http://eternicode.github.io/bootstrap-datepicker/
+							// =================================================================
+							$('#demo-dp-component .input-group.date')
+									.datepicker({
+										autoclose : true
+									});
 
-			// INLINE BOOTSTRAP DATEPICKER
-			// =================================================================
-			// Require Bootstrap Datepicker
-			// http://eternicode.github.io/bootstrap-datepicker/
-			// =================================================================
-			$('#demo-dp-inline div').datepicker({
-				format : "MM dd, yyyy",
-				todayBtn : "linked",
-				autoclose : true,
-				todayHighlight : true
-			});
+							// BOOTSTRAP DATEPICKER WITH RANGE SELECTION
+							// =================================================================
+							// Require Bootstrap Datepicker
+							// http://eternicode.github.io/bootstrap-datepicker/
+							// =================================================================
+							$('#demo-dp-range .input-daterange').datepicker({
+								format : "MM dd, yyyy",
+								todayBtn : "linked",
+								autoclose : true,
+								todayHighlight : true
+							});
 
-		});
+							// INLINE BOOTSTRAP DATEPICKER
+							// =================================================================
+							// Require Bootstrap Datepicker
+							// http://eternicode.github.io/bootstrap-datepicker/
+							// =================================================================
+							$('#demo-dp-inline div').datepicker({
+								format : "MM dd, yyyy",
+								todayBtn : "linked",
+								autoclose : true,
+								todayHighlight : true
+							});
+
+						});
 
 		$(".category .dropdown-menu li a").click(function() {
 			console.log("dsadad");
@@ -489,6 +493,11 @@
 							postResult["postContent"] = markstr;
 							postResult["regDate"] = selectedDate;
 
+							if(fileList.length != 0){
+								postResult["fileList"] = fileList;
+							}
+							console.log(postResult);
+							
 							console.log(markstr);
 							console.log(subjectNo);
 							console.log(postTitle);

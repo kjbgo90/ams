@@ -11,34 +11,17 @@ public class fileUpLoadVo {
 	private int assignmentNo;
 	private int submitFileNo;
 	private int submitNo;
+	private int postFileNo;
+	private int postNo;
 
 	public fileUpLoadVo() {
 	}
 
-	public fileUpLoadVo(int fileNo, String fileName, String saveName, long fileSize, String regDate, String filepath) {
-		this.fileNo = fileNo;
-		this.fileName = fileName;
-		this.saveName = saveName;
-		this.fileSize = fileSize;
-		this.regDate = regDate;
-		this.filepath = filepath;
-	}
+	
 
 	public fileUpLoadVo(int fileNo, String fileName, String saveName, long fileSize, String regDate, String filepath,
-			int assignmentFileNo, int assignmentNo) {
+			int assignmentFileNo, int assignmentNo, int submitFileNo, int submitNo, int postFileNo, int postNo) {
 		super();
-		this.fileNo = fileNo;
-		this.fileName = fileName;
-		this.saveName = saveName;
-		this.fileSize = fileSize;
-		this.regDate = regDate;
-		this.filepath = filepath;
-		this.assignmentFileNo = assignmentFileNo;
-		this.assignmentNo = assignmentNo;
-	}
-
-	public fileUpLoadVo(int fileNo, String fileName, String saveName, long fileSize, String regDate, String filepath,
-			int assignmentFileNo, int assignmentNo, int submitFileNo, int submitNo) {
 		this.fileNo = fileNo;
 		this.fileName = fileName;
 		this.saveName = saveName;
@@ -49,7 +32,11 @@ public class fileUpLoadVo {
 		this.assignmentNo = assignmentNo;
 		this.submitFileNo = submitFileNo;
 		this.submitNo = submitNo;
+		this.postFileNo = postFileNo;
+		this.postNo = postNo;
 	}
+
+
 
 	public int getFileNo() {
 		return fileNo;
@@ -131,12 +118,41 @@ public class fileUpLoadVo {
 		this.submitNo = submitNo;
 	}
 
+	
+	
+	
+	public int getPostFileNo() {
+		return postFileNo;
+	}
+
+
+
+	public void setPostFileNo(int postFileNo) {
+		this.postFileNo = postFileNo;
+	}
+
+
+
+	public int getPostNo() {
+		return postNo;
+	}
+
+
+
+	public void setPostNo(int postNo) {
+		this.postNo = postNo;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "fileUpLoadVo [fileNo=" + fileNo + ", fileName=" + fileName + ", saveName=" + saveName + ", fileSize="
 				+ fileSize + ", regDate=" + regDate + ", filepath=" + filepath + ", assignmentFileNo="
 				+ assignmentFileNo + ", assignmentNo=" + assignmentNo + ", submitFileNo=" + submitFileNo + ", submitNo="
-				+ submitNo + "]";
+				+ submitNo + ", postFileNo=" + postFileNo + ", postNo=" + postNo + "]";
 	}
+
+
 
 }

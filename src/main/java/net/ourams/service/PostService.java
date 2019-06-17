@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import net.ourams.dao.PostDao;
 import net.ourams.vo.PostVo;
+import net.ourams.vo.fileUpLoadVo;
 
 @Service
 public class PostService {
@@ -41,7 +42,19 @@ public class PostService {
 
 	public int write(PostVo postVo) {
 		System.out.println(postVo.toString());
-		return postDao.insert(postVo);
+		int count = postDao.insert(postVo);
+		
+
+		if (postVo.getFileList() != null) {
+			for (fileUpLoadVo fileVo : postVo.getFileList()) {
+				postDao.insertFile(fileVo);
+				postDao.insertPostFile(postVo.getPostNo(), fileVo.getFileNo());
+			}
+		}
+		return  count;
+		
+		
+		
 	}
 	
 	public int update(PostVo postVo) {
@@ -71,7 +84,18 @@ public class PostService {
 	@Transactional
 	public int writePostSchedule(PostVo postVo) {
 		postDao.insertSchedule(postVo);
-		return postDao.insertSchedulePost(postVo);
+		int count = postDao.insertSchedulePost(postVo);
+		if (postVo.getFileList() != null) {
+			for (fileUpLoadVo fileVo : postVo.getFileList()) {
+				postDao.insertFile(fileVo);
+				postDao.insertPostFile(postVo.getPostNo(), fileVo.getFileNo());
+			}
+		}
+		return count;
+	}
+	public List<fileUpLoadVo> getFileList(PostVo postVo) {
+		// TODO Auto-generated method stub
+		return postDao.selectFileListByPostNo(postVo);
 	}
 	
 

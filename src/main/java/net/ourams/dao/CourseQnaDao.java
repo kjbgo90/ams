@@ -1,5 +1,6 @@
 package net.ourams.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import net.ourams.vo.PostVo;
 import net.ourams.vo.SubjectVo;
+import net.ourams.vo.fileUpLoadVo;
 
 @Repository
 public class CourseQnaDao {
@@ -23,7 +25,7 @@ public class CourseQnaDao {
 	
 	/* 글전체리스트 가져오기 기본*/
 	public List<PostVo> selectListPaging(Map<String, Object> map){
-		List<PostVo> list = sqlSession.selectList("qna.selectListPaging",map);
+		List<PostVo> list = sqlSession.selectList("qna.selectListPaging", map);
 		System.out.println(list.toString());
 		
 		return list;
@@ -81,5 +83,22 @@ public class CourseQnaDao {
 
 	public int update(PostVo postVo) {
 		return sqlSession.update("qna.update", postVo);
+	}
+
+	public int insertFile(fileUpLoadVo fileVo) {
+		return sqlSession.insert("qna.insertFile", fileVo);		
+	}
+
+	public int insertPostFile(int postNo, int fileNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("postNo", postNo);
+		map.put("fileNo", fileNo);
+		
+		return sqlSession.insert("qna.insertPostFile", map);
+		
+	}
+
+	public List<fileUpLoadVo> selectFileListByPostNo(PostVo postVo) {
+		return sqlSession.selectList("qna.selectFileListByPostNo", postVo);
 	}
 }

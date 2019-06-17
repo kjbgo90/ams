@@ -1,5 +1,6 @@
 package net.ourams.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import net.ourams.vo.PostVo;
+import net.ourams.vo.fileUpLoadVo;
 
 
 @Repository
@@ -64,6 +66,23 @@ public class PostDao {
 
 	public int insertSchedulePost(PostVo postVo) {
 		return sqlSession.insert("notice.insertSchedulePost", postVo);
+	}
+
+	public List<fileUpLoadVo> selectFileListByPostNo(PostVo postVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("notice.selectFileListByPostNo", postVo);
+	}
+
+	public int insertFile(fileUpLoadVo fileVo) {
+		return sqlSession.insert("notice.insertFile", fileVo);			
+	}
+
+	public int insertPostFile(int postNo, int fileNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("postNo", postNo);
+		map.put("fileNo", fileNo);
+		
+		return sqlSession.insert("notice.insertPostFile", map);		
 	}
 
 

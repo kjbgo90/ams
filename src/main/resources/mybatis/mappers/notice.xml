@@ -155,7 +155,7 @@
 										 #{postTitle},
 										 #{postContent},
 										 #{selectedDate},
-										 #{endDate},
+										 #{selectedDate},
 										 'warning',
 										 1,
 										 #{userNo},
@@ -164,10 +164,13 @@
 	</insert>
 
 	<insert id="insertSchedulePost" parameterType="PostVo">
+		<selectKey keyProperty="postNo" resultType="int" order="BEFORE">
+			select seq_post_no.nextval from dual
+		</selectKey>
 		<![CDATA[
 			insert into post(postNo,postType,userNo,courseNo,regDate,postTitle,postContent,hit,category,scheduleNo)
 			values (
-					seq_post_no.nextval,
+					#{postNo},
 					1,
 					#{userNo},	
 					1,	
@@ -181,4 +184,47 @@
 			) 
 		]]>
 	</insert>
+	
+	<select id="selectFileListByPostNo" parameterType="PostVo" resultType="fileUpLoadVo">
+		<![CDATA[
+			select postFileNo,
+				   postNo,
+				   a.fileNo,
+				   fileName,
+				   filepath,
+				   saveName,
+				   fileSize
+			from postfile a join datafile d on a.fileNo = d.fileNo
+			where postNo = #{postNo}
+		]]>
+	</select>
+	
+	<insert id="insertFile" parameterType="fileUpLoadVo">
+		<selectKey keyProperty="fileNo" resultType="int" order="BEFORE">
+			select seq_datafile_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into datafile values( #{fileNo},
+										 #{fileName},
+										 #{saveName},
+										 #{fileSize},
+										 sysdate,
+										 #{filepath})
+		]]>
+	</insert>
+	
+	
+	<insert id="insertPostFile" parameterType="map">
+		<![CDATA[
+			insert into postfile values( seq_postfile_no.nextval,
+											   #{postNo},
+											   #{fileNo} )
+		]]>
+	</insert>
+	
+	
+	
+	
+	
+	
 </mapper>

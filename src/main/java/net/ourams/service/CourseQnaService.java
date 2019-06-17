@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import net.ourams.dao.CourseQnaDao;
 import net.ourams.vo.PostVo;
 import net.ourams.vo.SubjectVo;
+import net.ourams.vo.fileUpLoadVo;
 
 @Service
 public class CourseQnaService {
@@ -18,7 +19,7 @@ public class CourseQnaService {
 	private CourseQnaDao courseQnaDao;
 	
 
-	public Map<String, Object> selectListPaging( int pageNo){
+	public Map<String, Object> selectListPaging(int pageNo, int courseNo){
 		int listSize = 10 ;
 		int pageNo1 = 1+listSize*(pageNo-1);
 		int pageNo2 = listSize*pageNo;
@@ -28,10 +29,12 @@ public class CourseQnaService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pageNo1", pageNo1);
 		map.put("pageNo2", pageNo2);
+		map.put("courseNo", courseNo);
 		List<PostVo> list = courseQnaDao.selectListPaging(map);
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("list", list);
 		map2.put("maxPage", maxPage);
+		
 		return map2;
 	}
 
@@ -49,7 +52,16 @@ public class CourseQnaService {
 	public int write(PostVo postVo) {
 		System.out.println("#########################");
 		System.out.println(postVo.toString());
-		return courseQnaDao.insert(postVo);		
+		int count = courseQnaDao.insert(postVo);	
+		
+		
+		if (postVo.getFileList() != null) {
+			for (fileUpLoadVo fileVo : postVo.getFileList()) {
+				courseQnaDao.insertFile(fileVo);
+				courseQnaDao.insertPostFile(postVo.getPostNo(), fileVo.getFileNo());
+			}
+		}
+		return  count;
 	}
 
 	public List<SubjectVo> getsubjectList(int courseNo) {
@@ -87,6 +99,10 @@ public class CourseQnaService {
 	public int update(PostVo postVo) {
 		System.out.println(postVo.toString());
 		return courseQnaDao.update(postVo);
+	}
+
+	public List<fileUpLoadVo> getFileList(PostVo postVo) {
+		return courseQnaDao.selectFileListByPostNo(postVo);
 	}
 
 	

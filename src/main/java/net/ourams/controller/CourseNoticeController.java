@@ -24,6 +24,7 @@ import net.ourams.interceptor.AuthUser;
 import net.ourams.service.CourseReplyService;
 import net.ourams.service.PostService;
 import net.ourams.service.UserService;
+import net.ourams.util.JSONResult;
 import net.ourams.util.S3Util;
 import net.ourams.vo.PostVo;
 import net.ourams.vo.ReplyVo;
@@ -163,8 +164,9 @@ public class CourseNoticeController {
 		postVo.setPostTitle(resJSON.getPostTitle());
 		postVo.setCategory(resJSON.getCategory());
 		postVo.setUserName(authUser.getUserName());
-		
-		if(resJSON.getSelectedDate() == null ) {
+		postVo.setFileList(resJSON.getFileList());
+		System.out.println(resJSON.toString());
+		if(resJSON.getSelectedDate() == "" ) {
 			postService.write(postVo);
 			System.out.println(coursePath);
 
@@ -323,5 +325,29 @@ public class CourseNoticeController {
 	public int commentDelete(@RequestParam("reply") int reply) {
 		return courseReplyService.commentDelete(reply);
 	}
+	
+	
+
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/getFileList", method = RequestMethod.POST)
+	public JSONResult getFileList(@PathVariable("coursePath") String coursePath,
+			@RequestBody PostVo postVo) {
+		System.out.println("getFileList 실행");
+		System.out.println(postVo.toString());
+
+		List<fileUpLoadVo> fileList = postService.getFileList(postVo);
+
+		JSONResult jsonResult;
+		if (fileList != null) {
+			jsonResult = JSONResult.success(fileList);
+		} else {
+			jsonResult = JSONResult.error(null);
+		}
+
+		return jsonResult;
+	}
+	
+	
 
 }

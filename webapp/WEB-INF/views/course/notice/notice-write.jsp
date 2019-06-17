@@ -389,12 +389,15 @@ rhd
 	<!--===================================================-->
 	<!-- blog-edit 에서 스크립트 페이지 찾기 sample page 안에 있음  -->
 	<script>
+	
+		var fileList = [];
+		
 		$(document)
 				.on(
 						'nifty.ready',
 						function() {
 
-							var fileList = [];
+							
 
 							$("#dropzone")
 									.dropzone(
@@ -405,8 +408,7 @@ rhd
 													console.log(fileVo);
 													fileList.push(fileVo);
 													console.log(fileList);
-													console
-															.log(fileList.length);
+													console.log(fileList.length);
 												}
 											});
 
@@ -487,7 +489,13 @@ rhd
 							postResult["category"] = cate;
 							postResult["postContent"] = markstr;
 							postResult["selectedDate"] = selectedDate;
-
+							console.log(fileList);
+							
+							if(fileList.length != 0){
+								postResult["fileList"] = fileList;
+							}
+							
+							console.log(postResult);
 							console.log(markstr);
 							console.log(cate);
 							console.log(postTitle);

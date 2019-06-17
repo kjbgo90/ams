@@ -92,7 +92,7 @@
 		                        subjectNo
 		                FROM post p join users u
 		                ON p.userNo = u.userNo
-		                where postType = 2)pu
+		                where postType = 2 and courseNo = #{courseNo})pu
 		                left join subject s 
 		                on pu.subjectno = s.subjectno 
 		                order by pu.postNo desc) a
@@ -112,6 +112,7 @@
 			    hit, 
 			    regDate, 
 			    userNo, 
+			    subjectNo,
                 subjectTitle
         FROM(
 				select postNo, 
@@ -142,10 +143,13 @@
 
 	<!-- 글저장 -->
 	<insert id="insert" parameterType="PostVo">
+		<selectKey keyProperty="postNo" resultType="int" order="BEFORE">
+			select seq_post_no.nextval from dual
+		</selectKey>
 		<![CDATA[
 			insert into post(postNo,postType,userNo,courseNo,regDate,postTitle,postContent,hit,subjectNo)
 			values (
-					seq_post_no.nextval,
+					#{postNo},
 					2,
 					#{userNo},	
 					1,	
@@ -207,5 +211,44 @@
 		]]>
 	</update>
 	
+	
+	<insert id="insertFile" parameterType="fileUpLoadVo">
+		<selectKey keyProperty="fileNo" resultType="int" order="BEFORE">
+			select seq_datafile_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into datafile values( #{fileNo},
+										 #{fileName},
+										 #{saveName},
+										 #{fileSize},
+										 sysdate,
+										 #{filepath})
+		]]>
+	</insert>
+	
+	
+	<insert id="insertPostFile" parameterType="map">
+		<![CDATA[
+			insert into postfile values( seq_postfile_no.nextval,
+											   #{postNo},
+											   #{fileNo} )
+		]]>
+	</insert>
 
+
+
+	<select id="selectFileListByPostNo" parameterType="PostVo" resultType="fileUpLoadVo">
+		<![CDATA[
+			select postFileNo,
+				   postNo,
+				   a.fileNo,
+				   fileName,
+				   filepath,
+				   saveName,
+				   fileSize
+			from postfile a join datafile d on a.fileNo = d.fileNo
+			where postNo = #{postNo}
+		]]>
+	</select>
+	
 </mapper>

@@ -117,7 +117,7 @@
 					<div class="panel blog blog-details">
 						<div class="panel-body">
 							<div class="blog-title media-block">
-
+							<input id="postNo" type="hidden" name="postNo" value="${PostVo.postNo}">
 								
 
 								
@@ -143,10 +143,9 @@
 									<div class="col-sm-5 toolbar-right">
 					                            <!--Details Information-->
 					                            <p class="mar-no"><small class="text-muted">${PostVo.regDate}</small></p>
-					                            <a href="#">
-					                                <strong>Holiday.zip</strong>
-					                                <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-					                            </a>
+					                            <div id="fileList">
+					                            
+					                            </div>
 					                        </div>
 								</div>
 								
@@ -177,7 +176,7 @@
 								<div class="pad-ver text-right col-sm-8">
 
 									<!--Save draft button-->
-									<button id="mail-send-btn" type="button" class="btn btn-default"  onclick="location.href='${pageContext.request.contextPath }/${coursePath}/qna/modifyform?postNo=${PostVo.postNo}' ">
+									<button id="mail-send-btn" type="button" class="btn btn-default"  onclick="location.href='${pageContext.request.contextPath }/${coursePath}/qna/modifyform?postNo=${PostVo.postNo}&subjectNo=${PostVo.subjectNo}' ">
 										<i class=" icon-xs icon-fw"></i>수정
 									</button>
 
@@ -309,6 +308,42 @@
 	<!--=================================================-->
 	
 	<script type="text/javascript">
+	$(document).ready(function() {
+		var postNo = $("[name=postNo]").val();
+		console.log(postNo);
+		
+		$.ajax({
+
+			url : "${pageContext.request.contextPath }/${coursePath}/qna/getFileList",
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify({postNo : postNo}),
+
+			dataType : "json",
+			success : function(response) {
+				/*성공시 처리해야될 코드 작성*/
+				if (response.result === "success") {
+					console.log(response.data);
+					
+					for(var i=0; i<response.data.length; i++){
+						fileListRender(response.data[i]);
+					}
+				} else {
+					
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	});
+	
+	
+	
+	
+	
+	
+	
 	/* comment 등록하는 스크립트 */
 	$("#btn-comment-regist").on("click", function(){
 		var replyContent = $("#commentContent").val();
@@ -371,6 +406,23 @@
 		
 		$("#commentDiv").append(str);
 	}
+	
+
+	function fileListRender(fileUpLoadVo){
+		var str = "";
+		
+		str += "<a href=" + fileUpLoadVo.filepath + ">";
+		str += "<strong>" + fileUpLoadVo.fileName + "</strong>";
+		
+		str += "<i class='demo-psi-paperclip icon-lg icon-fw'></i></a>";
+		
+		
+		$("#fileList").append(str);
+		
+   
+	}
+	
+	
 </script>
 
 

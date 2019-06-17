@@ -1,5 +1,7 @@
 package net.ourams.vo;
 
+import java.util.List;
+
 public class PostVo {
 	private int postNo;
 	private int postType;
@@ -19,13 +21,16 @@ public class PostVo {
 	public int pageNo;
 	private String selectedDate;
 	private int replyCount;
+	private List<fileUpLoadVo> fileList;
 	
 	public PostVo() {
 	}
 
+	
 	public PostVo(int postNo, int postType, int userNo, int courseNo, String regDate, int communityNo, int scheduleNo,
 			String postTitle, String postContent, int hit, String category, String userName, int rnum, int subjectNo,
-			String subjectTitle, int pageNo, String selectedDate, int replyCount) {
+			String subjectTitle, int pageNo, String selectedDate, int replyCount, List<fileUpLoadVo> fileList) {
+		super();
 		this.postNo = postNo;
 		this.postType = postType;
 		this.userNo = userNo;
@@ -44,7 +49,9 @@ public class PostVo {
 		this.pageNo = pageNo;
 		this.selectedDate = selectedDate;
 		this.replyCount = replyCount;
+		this.fileList = fileList;
 	}
+
 
 	public int getPageNo() {
 		return pageNo;
@@ -190,14 +197,27 @@ public class PostVo {
 		this.replyCount = replyCount;
 	}
 
+	
+	
+	public List<fileUpLoadVo> getFileList() {
+		return fileList;
+	}
+
+
+	public void setFileList(List<fileUpLoadVo> fileList) {
+		this.fileList = fileList;
+	}
+
+
 	@Override
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", postType=" + postType + ", userNo=" + userNo + ", courseNo=" + courseNo
 				+ ", regDate=" + regDate + ", communityNo=" + communityNo + ", scheduleNo=" + scheduleNo
 				+ ", postTitle=" + postTitle + ", postContent=" + postContent + ", hit=" + hit + ", category="
 				+ category + ", userName=" + userName + ", rnum=" + rnum + ", subjectNo=" + subjectNo
-				+ ", subjectTitle=" + subjectTitle + ", pageNo=" + pageNo + ", selectedDate=" + selectedDate + ""
-				+ ", replyCount=" + replyCount + "]";
+				+ ", subjectTitle=" + subjectTitle + ", pageNo=" + pageNo + ", selectedDate=" + selectedDate
+				+ ", replyCount=" + replyCount + ", fileList=" + fileList + "]";
 	}
+
 
 }

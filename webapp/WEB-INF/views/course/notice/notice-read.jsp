@@ -119,10 +119,10 @@
 					<div class="panel blog blog-details">
 						<div class="panel-body">
 							<div class="blog-title media-block">
-
+							<input id="postNo" type="hidden" name="postNo" value="${PostVo.postNo}">
 
 								<div class="mar-btm pad-btm bord-btm">
-									<h1 class="page-header"  style="font-size: 25px;">
+									<h1 class="page-header" style="font-size: 25px;">
 										<span class="label label-normal label-info">${PostVo.category}</span> ${PostVo.postTitle}
 									</h1>
 								</div>
@@ -145,8 +145,9 @@
 										<p class="mar-no">
 											<small class="text-muted">${PostVo.regDate}</small>
 										</p>
-										<a href="#"> <strong>Holiday.zip</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i>
-										</a>
+										<div id="fileList">
+										
+										</div>
 									</div>
 								</div>
 
@@ -155,15 +156,11 @@
 							<div class="blog-content">
 
 								<div class="blog-body">
-									<blockquote>
-										${PostVo.postContent}
-									</blockquote>
+									<blockquote>${PostVo.postContent}</blockquote>
 
 								</div>
 							</div>
-							<div class="blog-footer">
-								
-							</div>
+							<div class="blog-footer"></div>
 							<div class="row">
 								<div class="pad-ver text-reft class col-sm-4">
 
@@ -182,21 +179,20 @@
 									</button>
 
 									<!--Discard button-->
-									<button id="mail-send-btn" type="button" class="btn btn-primary"  onclick="location.href='${pageContext.request.contextPath }/${coursePath}/notice/delete?postNo=${PostVo.postNo}' ">
+									<button id="mail-send-btn" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/notice/delete?postNo=${PostVo.postNo}' ">
 										<i class=" icon-xs icon-fw"></i>삭제
 									</button>
 								</div>
 							</div>
-							<br>
-							<br>
-							
-							
-							
+							<br> <br>
+
+
+
 							<!-- Comment form -->
 							<!--===================================================-->
 							<hr class="new-section-sm bord-no">
 							<p class="text-lg text-main text-bold text-uppercase">Leave a comment</p>
-							
+
 							<div class="row">
 
 								<div class="col-md-12">
@@ -208,9 +204,8 @@
 							<button id="btn-comment-regist" type="button" class="btn btn-primary pull-right">
 								<i class=" icon-xs icon-fw "></i>댓글등록
 							</button>
-							
-							<br>
-							<br>
+
+							<br> <br>
 							<!--===================================================-->
 							<!-- End Comment form -->
 
@@ -223,19 +218,19 @@
 							<!--===================================================-->
 							<div class="comments media-block" id="commentDiv">
 								<c:forEach items="${replylist}" var="replylist">
-								<div class="commentContent">
-									<c:if test="${replylist.userNo eq authUser.userNo}">
-										<i class="btn btn-danger fa fa-trash pull-right btnCommentDel" data-reply="${replylist.reply}"></i>
-									</c:if>
-									<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/${replylist.logoPath}"></a>
-									<div class="media-body">
-										<div class="comment-header">
-											<a href="#" class="media-heading box-inline text-main text-bold">${replylist.userName}</a>
-											<p class="text-muted text-sm">${replylist.regDate} </p>
+									<div class="commentContent">
+										<c:if test="${replylist.userNo eq authUser.userNo}">
+											<i class="btn btn-danger fa fa-trash pull-right btnCommentDel" data-reply="${replylist.reply}"></i>
+										</c:if>
+										<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/${replylist.logoPath}"></a>
+										<div class="media-body">
+											<div class="comment-header">
+												<a href="#" class="media-heading box-inline text-main text-bold">${replylist.userName}</a>
+												<p class="text-muted text-sm">${replylist.regDate}</p>
+											</div>
+											<p>${replylist.replyContent}</p>
 										</div>
-										<p>${replylist.replyContent}</p>
 									</div>
-								</div>
 								</c:forEach>
 							</div>
 							<!--===================================================-->
@@ -314,68 +309,135 @@
 
 </body>
 <script type="text/javascript">
+
+	$(document)
+			.ready(
+					function() {
+						var postNo = $("[name=postNo]").val();
+						console.log(postNo);
+
+						$
+								.ajax({
+
+									url : "${pageContext.request.contextPath }/${coursePath}/notice/getFileList",
+									type : "post",
+									contentType : "application/json",
+									data : JSON.stringify({
+										postNo : postNo
+									}),
+
+									dataType : "json",
+									success : function(response) {
+										/*성공시 처리해야될 코드 작성*/
+										if (response.result === "success") {
+											console.log(response.data);
+
+											for (var i = 0; i < response.data.length; i++) {
+												fileListRender(response.data[i]);
+											}
+										} else {
+
+										}
+									},
+									error : function(XHR, status, error) {
+										console.error(status + " : " + error);
+									}
+								});
+					});
+
 	/* comment 등록하는 스크립트 */
-	$("#btn-comment-regist").on("click", function(){
-		var replyContent = $("#commentContent").val();
-		var postNo = '${PostVo.postNo}';
-		console.log(postNo);
-		
-		$.ajax({
-			url : "${pageContext.request.contextPath }/${coursePath}/notice/comment/regist",
-			type : "post",
-			data : {postNo : postNo, replyContent : replyContent},
-			dataType : "json",
-			success : function(replyVo) {
-				console.log(replyVo);
-				$("#commentContent").val("");
-				replyRender(replyVo);
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-		});
-	});
-	
+	$("#btn-comment-regist")
+			.on(
+					"click",
+					function() {
+						var replyContent = $("#commentContent").val();
+						var postNo = '${PostVo.postNo}';
+						console.log(postNo);
+
+						$
+								.ajax({
+									url : "${pageContext.request.contextPath }/${coursePath}/notice/comment/regist",
+									type : "post",
+									data : {
+										postNo : postNo,
+										replyContent : replyContent
+									},
+									dataType : "json",
+									success : function(replyVo) {
+										console.log(replyVo);
+										$("#commentContent").val("");
+										replyRender(replyVo);
+									},
+									error : function(XHR, status, error) {
+										console.error(status + " : " + error);
+									}
+								});
+					});
+
 	/* comment 삭제하는 스크립트 */
-	$("#commentDiv").on("click", ".btnCommentDel", function(){
-		var $this = $(this);
-		var reply = $this.data("reply");
-		
-		console.log(reply);
-		$.ajax({
-			url : "${pageContext.request.contextPath }/${coursePath}/notice/comment/delete",
-			type : "post",
-			data : {reply : reply},
-			dataType : "json",
-			success : function(result) {
-				console.log(result);
-				$this.parent(".commentContent").remove();
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-		});
-		
-	});
-	
-	
-	function replyRender(replyVo){
+	$("#commentDiv")
+			.on(
+					"click",
+					".btnCommentDel",
+					function() {
+						var $this = $(this);
+						var reply = $this.data("reply");
+
+						console.log(reply);
+						$
+								.ajax({
+									url : "${pageContext.request.contextPath }/${coursePath}/notice/comment/delete",
+									type : "post",
+									data : {
+										reply : reply
+									},
+									dataType : "json",
+									success : function(result) {
+										console.log(result);
+										$this.parent(".commentContent")
+												.remove();
+									},
+									error : function(XHR, status, error) {
+										console.error(status + " : " + error);
+									}
+								});
+
+					});
+
+	function replyRender(replyVo) {
 		var str = "";
-		
+
 		str += "<div class='commentContent'>";
 		str += "	<i class='btn btn-danger fa fa-trash pull-right btnCommentDel' data-reply='" + replyVo.reply + "'></i>";
 		str += "	<a class='media-left' href='#''><img class='img-circle img-sm' alt='Profile Picture' src='${pageContext.request.contextPath }/" + replyVo.logoPath + "'></a>";
 		str += "	<div class='media-body'>";
 		str += "		<div class='comment-header'>";
-		str += "			<a href='#' class='media-heading box-inline text-main text-bold'>" + replyVo.userName + "</a>";
+		str += "			<a href='#' class='media-heading box-inline text-main text-bold'>"
+				+ replyVo.userName + "</a>";
 		str += "			<p class='text-muted text-sm'>" + replyVo.regDate + "</p>";
 		str += "		</div>";
 		str += "		<p>" + replyVo.replyContent + "</p>";
 		str += "	</div>";
 		str += "</div>"
-		
+
 		$("#commentDiv").append(str);
 	}
+	
+	function fileListRender(fileUpLoadVo){
+		var str = "";
+		
+		str += "<a href=" + fileUpLoadVo.filepath + ">";
+		str += "<strong>" + fileUpLoadVo.fileName + "</strong>";
+		
+		str += "<i class='demo-psi-paperclip icon-lg icon-fw'></i></a>";
+		
+		
+		$("#fileList").append(str);
+		
+   
+	}
+	
+	
 </script>
 
 </html>

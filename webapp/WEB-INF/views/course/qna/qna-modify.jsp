@@ -177,9 +177,9 @@
 
 												<!--Bootstrap Datepicker : Inline-->
 												<!--===================================================-->
-												<p class="text-main text-bold text-uppercase" style="margin-left: 10px;">
+												<!-- <p class="text-main text-bold text-uppercase" style="margin-left: 10px;">
 													공지등록 &nbsp; <input id="demo-checkbox-addons" class="magic-checkbox" type="checkbox"> <label for="demo-checkbox-addons"></label>
-												</p>
+												</p> -->
 												<div id="demo-dp-inline">
 													<input id="select-day" type="hidden" value="">
 													<div></div>
@@ -255,8 +255,8 @@
 														<option>공지</option>
 														<option>긴급</option>
 													</select> -->
-													<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle category" type="button" >
-														과목선택 <i class="dropdown-caret"></i>
+													<button data-toggle="dropdown" id="subjectNo" class="btn btn-primary dropdown-toggle category" type="button" value="${subjectNo}" >
+														${subjectTitle} <i class="dropdown-caret"></i>
 													</button>
 													
 													<ul class="dropdown-menu" id="subjectList">
@@ -270,7 +270,7 @@
 
 											</div>
 										</div>
-										<input id="subjectNo" name="subjectNo" type="hidden" value="">
+										<!-- <input id="subjectNo" name="subjectNo" type="hidden" value="">-->
 
 
 										<%-- <div class="input-group mar-btm">
@@ -472,7 +472,10 @@
 									'code');
 							/* var cate = $(".category .btn:first-child").val(); */
 							
+							//과목카테고리 선택해줄때
+							
 							var subjectNo = $('#subjectNo').val();
+							console.log("selected subjectNo" + subjectNo);
 							var postTitle = $('#postTitle').val();
 							var selectedDate = $('#select-day').val();
 							var postResult = {};
@@ -487,11 +490,9 @@
 							console.log(postTitle);
 							console.log(selectedDate);
 							//카테고리, 제목, 본문,  달력날자
-							console
-									.log("${pageContext.request.contextPath}/${coursePath}/qna/update");
+							console.log("${pageContext.request.contextPath}/${coursePath}/qna/update");
 
-							$
-									.ajax({
+							$.ajax({
 										url : "${pageContext.request.contextPath}/${coursePath}/qna/update", //컨트롤주소
 										type : "post",
 										//dataType: "json",          // ajax 통신으로 받는 타입
