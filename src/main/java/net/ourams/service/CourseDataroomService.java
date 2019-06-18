@@ -2,6 +2,7 @@ package net.ourams.service;
 
 import java.util.List;
 
+import org.eclipse.jdt.internal.compiler.ast.AND_AND_Expression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -117,6 +118,29 @@ public class CourseDataroomService {
 	public int selectFolderVo(int dataRoomNo) {
 		int no = courseDataroomDao.selectFolderVo(dataRoomNo);
 		return no;
+	}
+	
+	
+	//download
+	public CourseDataroomVo downloadFile(CourseDataroomVo vo) {
+		CourseDataroomVo vo2 = courseDataroomDao.downloadFile(vo);
+		return vo2;
+	}
+	
+	
+	//폴더 삭제할때 안에 파일이나 폴더를 보고 삭제한다 
+	public boolean deleteFolder(CourseDataroomVo vo) {
+		if(courseDataroomDao.deleteBeforeCountFile(vo)==0&&courseDataroomDao.deleteBeforeCountFolder(vo)==0) {
+			courseDataroomDao.deleteDataRoom(vo);
+			return true;
+		}
+		return false;
+	}
+	
+	//파일 삭제 
+	public int deleteFile(CourseDataroomVo vo) {
+		int count = courseDataroomDao.deleteFile(vo);
+		return count; 
 	}
 	
 }

@@ -131,10 +131,7 @@
 					</ol>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<!--End breadcrumb-->
-
 				</div>
-
-
 
 				<!--Page content-->
 				<!--===================================================-->
@@ -147,11 +144,8 @@
 									<div class="bord-btm pad-btm">
 										<button data-target="#lg-modal" data-toggle="modal"
 											class="btn btn-warning">UPLOAD</button>
-
 									</div>
-
-									<p
-										class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Folders</p>
+									<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Folders</p>
 									<div class="list-group bg-trans pad-btm bord-btm">
 										<div id="fileTree">
 											<ul id="fileTreeList">
@@ -159,12 +153,8 @@
 											</ul>
 										</div>
 									</div>
-
-
-									<p
-										class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Tags</p>
+									<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Tags</p>
 									<ul id="tagList" class="list-inline mar-hor">
-
 									</ul>
 								</div>
 								<div class="fluid file-panel">
@@ -172,8 +162,8 @@
 
 										<!-- 바뀌게 만들기  -->
 										<ol id="changeFolder" class="breadcrumb">
-											<li><a href="#">Home</a></li>
-											<li><a href="#">App Views</a></li>
+											<li><a>Home</a></li>
+											<li><a>App Views</a></li>
 											<li class="active">File Manager</li>
 										</ol>
 									</div>
@@ -209,8 +199,6 @@
 							</div>
 						</div>
 					</div>
-
-
 				</div>
 				<!--===================================================-->
 				<!--End page content-->
@@ -249,8 +237,6 @@
 						<h4 class="modal-title" id="myLargeModalLabel">UPLOAD</h4>
 					</div>
 					<div class="modal-body">
-
-
 						<div class="panel">
 							<div class="panel-heading">
 								<h3 class="panel-title">UPLOAD FILE AND INSERT TAG</h3>
@@ -289,8 +275,6 @@
 									</div>
 								</div>
 								<!-- 위에 저장된 파일들의 정보들을 가져와서 리스트들을 뽑아보자  -->
-
-
 								<div class="bord-btm pad-btm">
 									<button id="insertTagFileUpLoad" data-target="#lg-modal"
 										type="submit" data-toggle="modal" class="btn tbn-default">UPLOAD</button>
@@ -298,7 +282,6 @@
 
 								<!--===================================================-->
 								<!-- End Dropzonejs -->
-
 							</div>
 						</div>
 					</div>
@@ -332,11 +315,8 @@
 		<!--===================================================-->
 		<!--End Small Bootstrap Modal-->
 
-
-
 		<!--===================================================-->
 		<!-- END OF CONTAINER -->
-
 
 		<!-- /content -->
 		<!--===================================================-->
@@ -347,21 +327,16 @@
 		<!--===================================================-->
 		<!--END ASIDE-->
 
-
 		<!--MAIN NAVIGATION-->
 		<!--===================================================-->
 		<c:import url="/WEB-INF/views/includes/navigation.jsp"></c:import>
 		<!--===================================================-->
 		<!--END MAIN NAVIGATION-->
 
-
 		<!--===================================================-->
 		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 		<!--===================================================-->
 		<!-- END FOOTER -->
-
-
-
 	</div>
 
 
@@ -415,7 +390,7 @@
 							var courseNo = 1
 							var dataRoomNo = 1
 							$("#dataRoomNoByInput").val(dataRoomNo);
-
+							
 							//2. 폴더하고 파일리스트 뽑아주는것 
 							strList = "";
 							$.ajax({
@@ -432,7 +407,7 @@
 											var no = list[0].dataRoomNo;
 
 											strFolderListAtFirst(dataRoomNo);
-
+												
 											for (var i = 0; i < list.length; i++) {
 												console.log(list.length);
 												strFolderList(list[i]);
@@ -531,8 +506,7 @@
 														.data("datatagno");
 												console.log(dataTagNo);
 
-												$
-														.ajax({
+												$.ajax({
 															url : "${pageContext.request.contextPath }/dataroom/SelectTagOnByDataTagNo",
 															type : "post",
 															data : {
@@ -570,7 +544,7 @@
 																				+ " : "
 																				+ error);
 															}
-														});
+												});
 
 							});
 
@@ -817,62 +791,128 @@
 											console.error(status + " : "
 													+ error);
 										}
-									});
+							});
 						});
 
+		
+		//삭제할 수 있게 만들자! 
 		$("#deleteAnybody").on("click",function() {
 							console.log("delete anybody ")
-							//안에 폴더가 있으면 경고창 넣고 삭제하시겠습니까?라고 물어보기
-
-							var checkfilelength = $('input:checkbox[name="checkingFileBox"]').length
-							console.log(checkfilelength);
-							var checkingfileList = $('input:checkbox[name="checkingFileBox"]');
-							console.log(checkingfileList);
+						
 							var checkedfilelength = $('input:checkbox[name="checkingFileBox"]:checked').length
 							console.log(checkedfilelength);
-							var chekedfileList = $('input:checkbox[name="checkingFileBox"]:checked');
-							console.log(chekedfileList);
+
+							for(i=0;i<checkedfilelength;i++){
+					        	console.log( i + "번째 파일 : " + $("input[name='checkingFileBox']").eq(i).attr("value") );
+					        	var fileNo = $("input[name='checkingFileBox']").eq(i).attr("value");
+					        	
+					        	
+					        	$.ajax({
+									url : "${pageContext.request.contextPath }/dataroom/deleteFile",
+									type : "post",
+									data : {
+										fileNo:fileNo
+									},
+									dataType : "json",
+									success : function() {
+										console.log(dataRoomNo +"번째 삭제 ~")
+										
+									},
+									error : function(XHR, status, error) {
+										console.error(status + " : "
+												+ error);
+									} 
+								});
+					        	
+					        	
+					        	
+					        }
 							
-							var checkfolderlength = $('input:checkbox[name="checkingFolderBox"]').length
-							console.log(checkfolderlength);
-							var checkingfolderList = $('input:checkbox[name="checkingFolderBox"]');
-							console.log(checkingfolderList);
 							var checkedfolderlength = $('input:checkbox[name="checkingFolderBox"]:checked').length
 							console.log(checkedfolderlength);
-							var chekedfolderList = $('input:checkbox[name="checkingFolderBox"]:checked');
-							console.log(chekedfolderList);
 							
-							//체크박스에 폴더가 있을 시에 폴더안에 데이터들이 있으면 삭제 불가능하게 만들자 
-							/*
-							if(){
-								
-							}
-							*/
+							 for(i=0;i<checkedfolderlength;i++){
+						        	console.log( i + "번째 폴더 : " + $("input[name='checkingFolderBox']").eq(i).attr("value") );
+						        	var dataRoomNo = $("input[name='checkingFolderBox']").eq(i).attr("value");
+
+									//체크박스에 폴더가 있을 시에 폴더안에 데이터들이 있으면 삭제 불가능하게 만들자 
+						        	
+						        	/* 
+						        	$.ajax({
+										url : "${pageContext.request.contextPath }/dataroom/deleteFolder",
+										type : "post",
+										data : {
+											dataRoomNo:dataRoomNo
+										},
+										dataType : "json",
+										success : function(boolean) {
+											if(boolean == 'true'){
+												
+												
+											}
+											
+										},
+										error : function(XHR, status, error) {
+											console.error(status + " : "
+													+ error);
+										} 
+									});*/
+									
+									
+						        	
+						        }
+
+							//삭제된후에 같은 데이터룸의 리스트들을 다시 뽑아와야한다.
 
 		});
 
+		
+		//다운로드 파일들 
 		$("#downloadFile").on("click", function() {
 			console.log("download this  ")
 			//파일말고 폴더를 클릭했을 때에는 파일만 다운로드 가능하게 만들거나 폴더에 있는 모든 리스트들을 다운받기 
 			//alert 경고 표시 
 			
-
-			var checkfilelength = $('input:checkbox[name="checkingFileBox"]').length
-			console.log(checkfilelength);
-			var checkingfileList = $('input:checkbox[name="checkingFileBox"]');
-			console.log(checkingfileList);
-			var checkedfilelength = $('input:checkbox[name="checkingFileBox"]:checked').length
+			var checkingFolderBox = $('input:checkbox[name="checkingFolderBox"]:checked').length
 			console.log(checkedfilelength);
-			var chekedfileList = $('input:checkbox[name="checkingFileBox"]:checked').val();
-			console.log(chekedfileList);
 			
-			
-			var checkedfolderlength = $('input:checkbox[name="checkingFolderBox"]:checked').length
-			console.log(checkedfolderlength);
-			var chekedfolderList = $('input:checkbox[name="checkingFolderBox"]:checked').val();
-			console.log(chekedfolderList);
-			if(chekedfolderList != 0){
+			if(checkingFolderBox == 0){
+				
+				var checkedfilelength = $('input:checkbox[name="checkingFileBox"]:checked').length
+				
+				console.log(checkedfilelength);
+				
+		        for(i=0;i<checkedfilelength;i++){
+		        	var fileNo = $('input:checkbox[name="checkingFileBox"]:checked').eq(i).attr("value") 
+		        	console.log(fileNo);
+		        	
+		        	window.open("${pageContext.request.contextPath }/dataroom/downloadFile?fileNo="+fileNo);
+		        	
+		        	console.log(fileNo +"open");
+		        	/* console.log( i + "번째 폴더 : " + $('input:checkbox[name="checkingFileBox"]:checked').eq(i).attr("value") );
+		        	var fileNo = $('input:checkbox[name="checkingFileBox"]:checked').eq(i).attr("value") 
+		        	console.log(fileNo);
+		        	$.ajax({
+						url : "${pageContext.request.contextPath }/dataroom/downloadFile",
+						type : "post",
+						data : {
+							fileNo:fileNo
+						},
+						dataType : "json",
+						success : function() {
+							console.log("다운로드중~")
+							
+						},
+						error : function(XHR, status, error) {
+							console.error(status + " : "
+									+ error);
+						} 
+					});*/
+		        }console.log(fileNo +"close");
+				
+			}else{
 				console.log("don't download !!");
+				alert("폴더는 다운로드 받을 수 없습니다.");
 			}
 
 		});
@@ -1075,8 +1115,8 @@
 			// list 찾기 !!
 			strList += "<li>";
 			strList += "	<div class='file-control'>";
-			strList += "		<input id="+"dataRoomList"+CourseDataroomVo.dataRoomNo+" class='magic-checkbox' value="+CourseDataroomVo.dataRoomNo+" name='checkingFolderBox' type='checkbox'> ";
-			strList += "		<label for="+"dataRoomList"+CourseDataroomVo.dataRoomNo+"></label>";
+			strList += "		<input id="+"2dataRoomList"+CourseDataroomVo.dataRoomNo+" class='magic-checkbox' value="+CourseDataroomVo.dataRoomNo+" name='checkingFolderBox' type='checkbox'> ";
+			strList += "		<label for="+"2dataRoomList"+CourseDataroomVo.dataRoomNo+"></label>";
 			strList += "	</div>";
 			strList += "	<div class='file-settings'>";
 			strList += "	</div>";
@@ -1161,7 +1201,7 @@
 												dataType : "json",
 												contentType : "application/json; charset=UTF-8",
 												success : function() {
-
+													window.location.replace("${pageContext.request.contextPath }/dataroom/form")
 												},
 												error : function(XHR, status,
 														error) {
@@ -1171,6 +1211,13 @@
 									});
 								}
 							}
+		});
+		
+		
+		
+		
+		$("#changeFolder").on("click","li",function(){
+			
 		});
 	</script>
 

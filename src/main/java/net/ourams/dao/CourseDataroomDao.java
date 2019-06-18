@@ -85,4 +85,41 @@ public class CourseDataroomDao {
 		return list;
 	}
 	
+	
+	public CourseDataroomVo downloadFile(CourseDataroomVo vo) {
+		CourseDataroomVo vo2 = sqlSession.selectOne("courseDataRoom.downloadFile", vo);
+		return vo2;
+	}
+	
+	
+	
+	//삭제하기전에 폴더안에 파일 데이터있는지 확인하기 
+	public int deleteBeforeCountFile(CourseDataroomVo vo) {
+		int count = sqlSession.selectOne("courseDataRoom.deleteBeforeCountFile", vo);
+		return count;
+	}
+	
+
+	
+	//삭제하기전에 폴더안에 폴더 데이터있는지 확인하기 
+	public int deleteBeforeCountFolder(CourseDataroomVo vo) {
+		int count = sqlSession.selectOne("courseDataRoom.deleteBeforeCountFolder", vo);
+		return count;
+	}
+	
+	
+	
+	
+	//폴더 삭제 
+	public int deleteDataRoom(CourseDataroomVo vo) {
+		int count = sqlSession.selectOne("courseDataRoom.deleteDataRoom", vo);
+		return count;
+	}
+	
+	
+	//파일 삭제 
+	public int deleteFile(CourseDataroomVo vo) {
+		int count = sqlSession.selectOne("courseDataRoom.deleteFile", vo);
+		return count;
+	}
 }

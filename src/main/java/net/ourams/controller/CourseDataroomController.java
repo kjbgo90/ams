@@ -1,9 +1,16 @@
 package net.ourams.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +29,7 @@ import net.ourams.vo.CourseDataroomVo;
 @Controller
 @RequestMapping("/dataroom")
 public class CourseDataroomController {
-
+	
 	@Autowired
 	private S3Util s3Util;
 
@@ -166,7 +173,44 @@ public class CourseDataroomController {
 		return pRoomNo;
 	}
 	
-
+	@ResponseBody
+	@RequestMapping(value = "/downloadFile", method = RequestMethod.GET)
+	public String  downloadFile(@RequestParam("fileNo") int fileNo,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		System.out.println("****************************************");
+		
+		System.out.println("download file");
+		
+		System.out.println(fileNo);
+		CourseDataroomVo vo2 = new CourseDataroomVo();
+		vo2.setFileNo(fileNo);
+		CourseDataroomVo vo = CourseDataroomService.downloadFile(vo2);
+		
+		System.out.println("****************************************");
+		System.out.println(vo);
+		System.out.println("****************************************");
+		
+		s3Util.cvplFileDownload(request, response ,vo);
+		 
+		return "";
+	}
 	
 	
+	@ResponseBody
+	@RequestMapping(value = "/deleteFolder" , method = RequestMethod.POST)
+	public boolean deleteFolder(@RequestParam("dataRoomNo") int dataRoomNo) {
+		CourseDataroomVo vo = new CourseDataroomVo();
+		vo.setDataRoomNo(dataRoomNo);
+		return CourseDataroomService.deleteFolder(vo);
+	}
+	
+	
+	@RequestMapping(value = "/deleteFile", method = RequestMethod.POST)
+	public int deleteFile(@RequestParam("dataRoomNo") int fileNo){
+		System.out.println(fileNo);
+		CourseDataroomVo vo = new CourseDataroomVo();
+		vo.setDataRoomNo(fileNo);
+		return CourseDataroomService.deleteFile(vo);
+	}
 }

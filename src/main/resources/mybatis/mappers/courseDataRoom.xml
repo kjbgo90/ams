@@ -4,7 +4,7 @@
 <mapper namespace="courseDataRoom">
 
 	<!-- 왼쪽 폴더 리스트들 틀림 -->
-	<select id="selectFolderVo"  resultType="int">
+	<select id="selectFolderVo" resultType="int">
 		<![CDATA[
 		select 	pRoomNo 
 		from dataRoom where dataroomno = #{dataRoomNo}
@@ -12,9 +12,9 @@
 		]]>
 	</select>
 
-
 	<insert id="insertFolder" parameterType="CourseDataRoomVo">
-		<selectKey keyProperty="dataRoomNo" resultType="int" order="BEFORE">
+		<selectKey keyProperty="dataRoomNo" resultType="int"
+			order="BEFORE">
 			select seq_dataroom_no.nextval from dual
 		</selectKey>
 		<![CDATA[
@@ -27,9 +27,6 @@
 		]]>
 	</insert>
 
-
-
-
 	<!--처음 코스 전용 자료실 페이지 들어가면 오른쪽에 있는 파일리스트들 -->
 	<select id="selectFolderListAtFirst"
 		parameterType="CourseDataRoomVo" resultType="CourseDataRoomVo">
@@ -39,7 +36,7 @@
 		where proomno=  (select dataroomno from dataroom where courseno=#{courseNo} and proomno=0)
 		]]>
 	</select>
-	
+
 	<select id="selectFileListAtFirst"
 		parameterType="CourseDataRoomVo" resultType="CourseDataRoomVo">
 		<![CDATA[
@@ -58,7 +55,7 @@
 		on dr.fileno=d.fileno where dr.dataroomno = #{dataRoomNo}
 		]]>
 	</select>
-	
+
 	<select id="selectFolderClickedByFolder"
 		resultType="CourseDataRoomVo">
 		<![CDATA[
@@ -78,7 +75,8 @@
 	</select>
 
 	<!-- 2.태그중에 하나를 클릭해서 datatagno를 가져온다 -->
-	<select id="SelectTagOnByDataTagNo" parameterType="CourseDataRoomVo" resultType="CourseDataRoomVo">
+	<select id="SelectTagOnByDataTagNo"
+		parameterType="CourseDataRoomVo" resultType="CourseDataRoomVo">
 		<![CDATA[
 		select 	df.fileno as fileNo, 
 				df.savename as saveName, 
@@ -107,7 +105,8 @@
 	<!-- dataroomno를 받은 상태에서 폴더를 업로드한다 태그도 추가하고 -->
 
 	<insert id="insertFileUpLoad" parameterType="CourseDataRoomVo">
-		<selectKey keyProperty="fileNo" resultType="int" order="BEFORE">
+		<selectKey keyProperty="fileNo" resultType="int"
+			order="BEFORE">
 			select seq_datafile_no.nextval from dual
 		</selectKey>
 		<![CDATA[
@@ -123,7 +122,8 @@
 	</insert>
 
 	<insert id="insertDataRoomFile" parameterType="CourseDataRoomVo">
-		<selectKey keyProperty="dataRoomFileNo" resultType="int" order="BEFORE">
+		<selectKey keyProperty="dataRoomFileNo" resultType="int"
+			order="BEFORE">
 			select seq_dataroomfile_no.nextval from dual
 		</selectKey>
 		<![CDATA[
@@ -177,4 +177,38 @@
 	select dataRoomNo, dataRoomName, pRoomNo from dataRoom where dataRoomNo=#{pRoomNo}
 	]]>
 	</select>
+
+
+	<!-- download file -->
+	<select id="downloadFile" parameterType="CourseDataRoomVo"
+		resultType="CourseDataRoomVo">
+	<![CDATA[
+	select fileno, filename, savename, filesize, regdate, filepath from datafile where fileno=#{fileNo}
+	]]>
+	</select>
+
+	<select id="deleteBeforeCountFile" parameterType="CourseDataRoomVo"
+		resultType="int">
+	<![CDATA[
+	select count(*) from dataroomfile where dataroomno=#{dataRoomNo}
+	]]>
+	</select>
+
+	<select id="deleteBeforeCountFolder" parameterType="CourseDataRoomVo"
+		resultType="int">
+	<![CDATA[
+	select count(*) from dataroom where proomno=#{dataRoomNo}
+	]]>
+	</select>
+
+
+	<delete id="deleteDataRoom" parameterType="CourseDataRoomVo">
+		delete from dataroom where dataroomno=#{dataRoomNo}
+	</delete>
+
+	<delete id="deleteFile" parameterType="CourseDataRoomVo" >
+		delete from datafile where fileno=#{fileNo}
+	</delete>
+
+
 </mapper>
