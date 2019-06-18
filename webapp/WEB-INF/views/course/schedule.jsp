@@ -85,12 +85,18 @@
 					        <div class="panel-body">
 					            <div class="fixed-fluid">
 					                <div class="fixed-sm-200 pull-sm-left fixed-right-border">
-					                    <div class="form-group">
+					                	<div class="form-group">
 					                        <input type="text" id="schedule_title" placeholder="일정 이름" class="form-control" value="">
 					                    </div>
 					                    <button class="btn btn-block btn-purple btn-lg" id="schedule_search_btn">일정 검색</button>
 					                    
 					                    <hr>
+					                    <p class="text-muted text-sm text-uppercase"><strong>오늘의 일정</strong></p>
+					                    <div class="input-group pad-all bord-btm">
+					                 		<div id="today-schedule">
+					                 		
+					                 		</div>
+					            		</div>
 					
 					                    <!-- Draggable Events -->
 					                    <!-- ============================================ -->
@@ -104,14 +110,6 @@
 					                        <div id="person" class="fc-event fc-list" data-class="info">개인 일정</div>
 					                         -->
 					                    </div>
-					                    <hr>
-					                   <p class="text-muted text-sm text-uppercase">오늘의 일정</p>
-					                    <div class="input-group pad-all bord-btm">
-					                		<input type="text" placeholder="조회 일자" class="form-control">
-					               			<span class="input-group-btn">
-					                    		<button class="btn btn-primary add-tooltip" data-original-title="search" type="button"><i class="demo-pli-check icon-lg icon-fw"></i></button>
-					                 		</span>
-					            		</div>
 					                    <!-- ============================================ -->
 					                </div>
 					                <div class="fluid">
@@ -131,7 +129,6 @@
             </div>
             <!--===================================================-->
             <!--END CONTENT CONTAINER-->
-
 
             
             <!--ASIDE-->
@@ -234,7 +231,7 @@
 							</select>
 							<!--===================================================-->
 						</div>
-						<div id="panel-body">
+						<div class="panel-body">
 							<button class="btn btn-primary pull-right" id="schedule-register">등록</button>
 						</div>
 					</div>
@@ -247,66 +244,158 @@
 	
 	<!--schedule-info-modal-->
 	<!--===================================================-->
-		<div id="schedule-info-modal" class="modal fade" tabindex="-1">
-			<div class="modal-dialog modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<i class="pci-cross pci-circle"></i>
-						</button>
-						<h4 class="modal-info-title" id="myLargeModalLabel">일정 상세 정보</h4>
-					</div>
-					<div class="modal-body">
-						 <div class="panel">
-					            <!-- Striped Table -->
-					            <!--===================================================-->
-					            <div class="panel-body">
-					                <div class="table-responsive">
-					                    <table class="table table-striped">
-					                        <thead>
-					                            <tr>
-					                                <th>항목</th>
-					                                <th>내용</th>
-					                            </tr>
-					                        </thead>
-					                        <tbody>
-					                            <tr>
-					                                <td><a class="btn-link">일정이름</a></td>
-					                                <td><span id="schedule-info-title"></span></td>
-					                            </tr>
-					                            <tr>
-					                                <td><a class="btn-link">카테고리</a></td>
-					                                <td><span id="schedule-info-category"></span></td>
-					                            </tr>
-					                            <tr></tr><tr class="function-per-category"></tr>
-					                            <tr>
-					                                <td><a class="btn-link">태그된 사람</a></td>
-					                                <td>
-					                                	<ul class="list-inline mar-hor col-center" id="schedule-info-tag">
-															<li class="tag tag-xs">
-																<a href="#"><i class="demo-pli-tag" data-range="channel"></i>channel</a>
-															</li>
-														</ul>
-					                                </td>
-					                            </tr>
-					                        </tbody>
-					                    </table>
-					                </div>
-					            </div>
-					            <div class="form-group" id="panel-body">
+	<div id="schedule-info-modal" class="modal fade" tabindex="-1">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<i class="pci-cross pci-circle"></i>
+					</button>
+					<h4 class="modal-info-title" id="myLargeModalLabel">일정 상세 정보</h4>
+				</div>
+				<div class="modal-body">
+					<div class="panel">
+						<!-- Striped Table -->
+						<!--===================================================-->
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>항목</th>
+											<th>내용</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><a class="btn-link">일정이름</a></td>
+											<td><span id="schedule-info-title"></span></td>
+										</tr>
+										<tr>
+											<td><a class="btn-link">카테고리</a></td>
+											<td><span id="schedule-info-category"></span></td>
+										</tr>
+										<tr></tr>
+										<tr class="function-per-category"></tr>
+										<tr>
+											<td><a class="btn-link">태그된 사람</a></td>
+											<td>
+												<ul class="list-inline mar-hor col-center"
+													id="schedule-info-tag">
+													<li class="tag tag-xs"><a href="#"><i class="demo-pli-tag" data-range="channel"></i>channel</a></li>
+												</ul>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- <div class="form-group" id="panel-body">
 									<button class="btn btn-danger col-sm-2" id="schedule-delete">삭제</button>
 									<button class="btn btn-primary col-sm-2" id="schedule-modify">수정</button>
-								</div>
-					            <!--===================================================-->
-					            <!-- End Striped Table -->
-					        </div>
+								</div> -->
+						<div class="form-group text-right" style="padding-left: 20px;" id="panel-body">
+							<!--Save draft button-->
+							<button id="schedule-delete" type="button" class="btn btn-default">
+								<i class="-unread icon-lg icon-fw"></i> 삭제
+							</button>
+
+							<!--Discard button-->
+							<button id="schedule-modify-form" type="submit" class="btn btn-primary"  data-target="#schedule-modify-modal" data-toggle="modal">
+								<i class="icon-lg icon-fw"></i> 수정
+							</button>
+						</div>
+						<!--===================================================-->
+						<!-- End Striped Table -->
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	<!--===================================================-->
 	<!--End Large Bootstrap Modal-->
     
+    
+    <!--schedule-modify-modal-->
+	<!--===================================================-->
+	<div id="schedule-modify-modal" class="modal fade" tabindex="-1">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<i class="pci-cross pci-circle"></i>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">일정 수정</h4>
+				</div>
+				<div class="modal-body">
+					<div class="panel">
+						<div class="panel-heading">
+							<h3 class="panel-title">일정 이름</h3>
+						</div>
+						<div class="panel-body">
+							<input id="schedule-modify-title" type="text" class="form-control" placeholder="Title">
+						</div>
+						<div class="panel-heading">
+							<h3 class="panel-title">기간</h3>
+						</div>
+						<div class="panel-body">
+							<div id="dp-range">
+								<div class="input-daterange input-group" id="datepicker"
+									style="width: 407px;">
+									<input type="text" class="form-control" id="schedule-modify-start"
+										name="start" /> <span class="input-group-addon">to</span> <input
+										type="text" class="form-control" id="schedule-modify-end" name="end" />
+								</div>
+							</div>
+						</div>
+						<div class="panel-heading">
+							<h3 class="panel-title">메모</h3>
+						</div>
+						<div class="panel-body">
+							<input id="schedule-modify-memo" type="text" class="form-control"
+								placeholder="memo">
+						</div>
+						<div class="panel-heading">
+							<h3 class="panel-title">카테고리</h3>
+						</div>
+						<div class="panel-body">
+							<div class="radio" id="schedule-modify-category">
+								<input id="demo-radio-1" class="magic-radio" type="radio"
+									name="memberType" value="notice"> <label
+									for="demo-radio-1">공지사항</label> <input id="demo-radio-2"
+									class="magic-radio" type="radio" name="memberType"
+									value="assignment"> <label for="demo-radio-2">과제</label>
+								<input id="demo-radio-3" class="magic-radio" type="radio"
+									name="memberType" value="course"> <label
+									for="demo-radio-3">코스일정</label> <input id="demo-radio-4"
+									class="magic-radio" type="radio" name="memberType" value="team">
+								<label for="demo-radio-4">팀별일정</label> <input id="demo-radio-5"
+									class="magic-radio" type="radio" name="memberType"
+									value="personal"> <label for="demo-radio-5">개인일정</label>
+							</div>
+							 <div id="check">
+					                    
+					         </div>
+						</div>
+						<div class="panel-heading">
+							<h3 class="panel-title">공유</h3>
+						</div>
+						<div class="panel-body">
+							<!--===================================================-->
+							<select id="schedule-modify-tag" class="tag_muti" data-placeholder="Choose a User…" multiple tabindex="4">
+									
+							</select>
+							<!--===================================================-->
+						</div>
+						<div class="panel-body">
+							<button class="btn btn-primary pull-right" id="schedule-modify">변경</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--===================================================-->
 	
 
     
@@ -391,8 +480,26 @@
 			});
 		});
 		
+		//load today schedule
 		$("document").ready(function(){
-			console.log()
+			var today = $(".fc-today").data("date");
+			console.log("today: " + today);
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath }/${coursePath}/schedule/today?today="+today,
+				type : "post",
+				dataType : "json",
+				success : function(result) {
+					$("#today-schedule").empty();
+					for(var i=0; i<result.length; i++){
+						console.log(result[i])
+						render_scheudule(result[i], "today-schedule");
+					}
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
 		})
 		
 		$("#page-content").on("click", ".fc-day-grid-event", function(){
@@ -485,9 +592,11 @@
 			})
 		});
 	
+		// click date for registration(schedule)
 		$("#page-content").on("click", ".fc-day-number", function(){
 			var date = $(this).data("date");
 			console.log(date);
+			$(".modal-title").text("일정 등록");
 			$("#schedule-start").val(date);
 			$("#schedule-end").val(date);
 		});
@@ -512,7 +621,7 @@
 					$("#demo-external-events").empty();
 					for(var i=0; i<result.length; i++){
 						console.log(result[i])
-						render_searchedScheudule(result[i]);
+						render_scheudule(result[i],"demo-external-events");
 					}
 				},
 				error : function(XHR, status, error) {
@@ -521,7 +630,7 @@
 			})
 		});
 		
-		// add event - schedule calendar modal
+		// date picker - schedule register modal
 		$('#dp-range .input-daterange').datepicker({
 	        format: "yyyy-mm-dd",
 	        todayBtn: "linked",
@@ -538,6 +647,9 @@
 			
 			var tagList = [];
 			tagList = $("#schedule-tag").val();
+			if($.inArray("${authUser.userNo}",tagList) == -1 ){
+				tagList.push(${authUser.userNo});
+			}
 			
 			var scheduledto = {
 				scheduleName: $("#schedule-title").val(),
@@ -545,7 +657,7 @@
 				endDate: $("#schedule-end").val(),
 				scheduleMemo: $("#schedule-memo").val(),
 				eventColor: $("input:radio[name=memberType]:checked").val(),
-			};
+			};	
 			
 			multiParam.push(tagList);
 			multiParam.push(scheduledto);
@@ -577,7 +689,7 @@
 			}
 			
 			if(tagList == null){
-				console.log("태그 없음")
+				console.log("태그 없음");
 			}else{
 				console.log("태그 있음");
 				send_mail();
@@ -585,9 +697,9 @@
 		});
 		
 		
-		// modify schedule
-		$("#schedule-modify").on("click", function(){
-			console.log("-------------------------수정-------------------------");
+		// rendering-modify-scheduleForm
+		$("#schedule-modify-form").on("click", function(){
+			console.log("-------------------------수정 폼 로드-------------------------");
 			
 			var category = $.trim($("#schedule-info-category").text());
 			var authUserNo = ${authUser.userNo};
@@ -596,7 +708,12 @@
 				var writerNo = $("#schedule-info-team-writer").data("writerNo");
 				if(authUserNo == writerNo){
 					console.log("팀별 일정, 수정 권한 있음");
+					//hide modify-modal
+					$("#schedule-info-modal").modal("hide");
+					//show schedule-modal and set value with selected schedule
+					render_modify(team);
 					
+					$("#schedule-modal").modal("show");
 				}else{
 					callNoty('warning', 'pli-exclamation', 'center-center', 0, '알림', '해당 글 작성자만 게시글을 수정할 수 있습니다..', 'zoomIn', 'fadeOut', 'btnx');
 				}
@@ -605,6 +722,10 @@
 				if(authUserNo == writerNo){
 					console.log("개인 일정, 수정 권한 있음")
 					
+					$("#schedule-info-modal").modal("hide");
+					render_modify(personal);
+					
+					$("#schedule-modal").modal("show");
 				}else{
 					callNoty('warning', 'pli-exclamation', 'center-center', 0, '알림', '해당 글 작성자만 게시글을 수정할 수 있습니다..', 'zoomIn', 'fadeOut', 'btnx');
 				}
@@ -612,7 +733,48 @@
 			
 		});
 		
-		
+		// modify schedule
+		$("#schedule-modify").on("click", function(){
+			console.log("-------------------------수정-------------------------");
+			
+			var multiParam = Array();
+			
+			var tagList = [];
+			tagList = $("#schedule-tag").val();
+			if($.inArray("${authUser.userNo}",tagList) == -1 ){
+				tagList.push(${authUser.userNo});
+			}
+			
+			var scheduledto = {
+				scheduleNo: $("#schedule-modify-title").data("scheduleNo"),
+				scheduleName: $("#schedule-modify-title").val(),
+				startDate: $("#schedule-modify-start").val(),
+				endDate: $("#schedule-modify-end").val(),
+				scheduleMemo: $("#schedule-modify-memo").val(),
+				eventColor: $("input:radio[name=memberType]:checked").val(),
+			};	
+			
+			multiParam.push(tagList);
+			multiParam.push(scheduledto);
+			console.log(multiParam);
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/${coursePath}/schedule/modify",
+				type: "post",
+				contentType : "application/json",
+				data : JSON.stringify(multiParam),
+
+				dataType : "json",
+				success : function(scheduledto) {
+					console.log('변경 완료');
+					reflashSchedule();
+					$("#schedule-modal").modal("hide");
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+		});
 		
 		// delete schedule
 		$("#schedule-delete").on("click", function(){
@@ -795,28 +957,6 @@
 			})
 		}
 		
-		// ajax 수정 
-		function ajax_modify(){ 
-			var scheduledto = {
-					scheduleNo : $("#schedule-info-title").data("scheduleNo")
-			}
-			
-			$.ajax({
-				url : "${pageContext.request.contextPath}/${coursePath}/schedule/delete",
-				type: "post",
-				contentType : "application/json",
-				data : JSON.stringify(scheduledto),
-
-				dataType : "json",
-				success : function(result) {
-					reflashSchedule();
-				},
-				error : function(XHR, status, error) {
-					console.error(status + " : " + error);
-				}
-			})
-		}
-		
 		//send mail
 		function send_mail(){
 			$.ajax({
@@ -841,16 +981,39 @@
 		/*=================================================== rendering html form =================================================== */
 		
 		
-		function modify_form(){
+		function parsing_duration(duration){
+			var result = duration.split(' ~ ');
 			
+			return result;
 		};
 		
+		function render_modify(category){
+			//show schedule-modal and set value with selected schedule
+			$("#schedule-modify-title").val($("#schedule-info-title").text());
+			$("#schedule-modify-title").data("scheduleNo", $("#schedule-info-title").data("scheduleNo"));
+			
+			if(category == team){
+				var duration = ($("#schedule-info-team-duration").text()).split(' ~ ');
+				$("#schedule-modify-start").val(duration[0]);
+				$("#schedule-modify-end").val(duration[1]);
+				$("#schedule-modify-memo").val($("#schedule-info-team-content").text());
+				$("input:radio[name='memberType']:radio[value='team']").attr("checked",true);
+			}else{
+				var duration = ($("#schedule-info-personal-duration").text()).split(' ~ ');
+				$("#schedule-modify-start").val(duration[0]);
+				$("#schedule-modify-end").val(duration[1]);
+				$("#schedule-modify-memo").val($("#schedule-info-personal-content").text());
+				$("input:radio[name='memberType']:radio[value='personal']").attr("checked",true);
+			}
+			
+		}
+		
 		// searchedScheudle rendering
-		function render_searchedScheudule(scheduledto){
+		function render_scheudule(scheduledto, id){
 			var str = "";
 			str += "<div id='user-define' class='fc-event fc-list' data-class='"+scheduledto.eventColor+"'>"+ scheduledto.scheduleName +"</div>"
 			
-			$("#demo-external-events").append(str);			
+			$("#" + id).append(str);			
 		}
 		
 		function tag(userName){

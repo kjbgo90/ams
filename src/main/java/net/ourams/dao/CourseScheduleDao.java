@@ -1,6 +1,7 @@
 package net.ourams.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class CourseScheduleDao {
 		return sqlSession.selectList("courseSchedule.loadSchedule", courseNo);
 	}
 	
-	public List<CourseScheduleVo> loadTodaySchedule(String coursePath, String today){
-		return sqlSession.selectList("courseSchedule.loadTodaySchedule", coursePath);
+	public List<CourseScheduleVo> loadTodaySchedule(Map<String, Object> map){
+		return sqlSession.selectList("courseSchedule.loadTodaySchedule", map);
 	}
 	
  	public List<CourseScheduleVo> loadCourseSchedule(CourseScheduleVo vo){
@@ -52,6 +53,10 @@ public class CourseScheduleDao {
 	
 	public List<CourseScheduleVo> searchSchedule(CourseScheduleVo vo){
 		return sqlSession.selectList("courseSchedule.searchSchedule", vo);
+	}
+	
+	public int modifySchedule(Map<String, Object> map) {
+		return sqlSession.update("courseSchedule.modifySchedule", map);
 	}
 	
 	public int deleteSchedule(CourseScheduleVo vo) {

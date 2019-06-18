@@ -17,6 +17,32 @@
 		]]>
 	</select>
 	
+	<select id="loadTodaySchedule" parameterType="map" resultType="CourseScheduleVo">
+		<![CDATA[
+			SELECT scheduleNo,
+				   scheduleName,
+				   scheduleMemo,
+				   startDate,
+				   endDate,
+				   eventColor,
+				   courseNo,
+				   userNo
+			FROM (
+				SELECT scheduleNo,
+				   	   scheduleName,
+				 	   scheduleMemo,
+				  	   startDate,
+				  	   endDate,
+				   	   eventColor,
+				       courseNo,
+				       userNo 
+				       FROM schedule 
+				       where startdate <= to_date(#{today} , 'yyyy/mm/dd') AND endDate >= to_Date(#{today}, 'yyyy/mm/dd')
+			)
+			WHERE courseNo = #{courseNo} 
+		]]>
+	</select>
+	
 	<select id="loadCourseSchedule" parameterType="CourseScheduleVo" resultType="CourseScheduleVo">
 		<![CDATA[
 			SELECT scheduleNo,
@@ -133,6 +159,17 @@
 			ORDER BY eventColor DESC
 		]]>
 	</select>
+	
+	<update id="modifySchedule" parameterType="map">
+		<![CDATA[
+			UPDATE schedule
+			SET scheduleName = #{scheduleName},
+				scheduleMemo = #{scheduleMemo},
+				startDate = #{startDate},
+				endDate = #{endDate},
+			WHERE scheduleNo = # {scheduleNo}
+		]]>
+	</update>
 	
 	<delete id="deleteSchedule" parameterType="CourseScheduleVo">
 		<![CDATA[

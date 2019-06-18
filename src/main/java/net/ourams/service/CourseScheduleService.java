@@ -86,11 +86,11 @@ public class CourseScheduleService {
 		
 		public List<CourseScheduleVo> loadTodaySchedule(String coursePath, String today){
 			int courseNo = csDao.findCourseNo(coursePath);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("courseNo", courseNo);
+			map.put("today", today);
 			
-			List<CourseScheduleVo> list = new ArrayList();
-			list = csDao.loadTodaySchedule(coursePath, today);
-			
-			return list;
+			return csDao.loadTodaySchedule(map);
 		}
 		
 		public List<String> loadTag(int courseNo){
@@ -268,6 +268,25 @@ public class CourseScheduleService {
 		
 		public List<CourseScheduleVo> searchSchedule(CourseScheduleVo vo){
 			return csDao.searchSchedule(vo);
+		}
+		
+		public void modifySchedule(List<Object> multiParam) {
+			HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(1);
+			
+			if(map.get("eventColor").equals("notice")) {
+				map.put("eventColor", "warning");
+			}else if(map.get("eventColor").equals("assign")) {
+				map.put("eventColor", "pink");
+			}else if(map.get("eventColor").equals("course")) {
+				map.put("eventColor", "dark");
+			}else if(map.get("eventColor").equals("team")) {
+				map.put("eventColor", "purple");
+			}else {
+				map.put("eventColor", "info");
+			}
+			
+			csDao.modifySchedule(map);
+			
 		}
 		
 		public int deleteSchedule(CourseScheduleVo vo) {

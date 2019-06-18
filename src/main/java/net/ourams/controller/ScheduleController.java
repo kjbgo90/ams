@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.ourams.interceptor.Auth;
@@ -84,11 +85,11 @@ public class ScheduleController {
 		return list;
 	}
 	
-	//load today schedule
+	//load today schedule (@Pathvariable: get from URL, @RequestParam: get from parameter after URL)
 	@ResponseBody
 	@RequestMapping(value="/today", method=RequestMethod.POST)
-	public List<CourseScheduleVo> loadTodaySchedule(@PathVariable("coursePath") String coursePath, String today){
-		System.out.println("today's event");
+	public List<CourseScheduleVo> loadTodaySchedule(@PathVariable("coursePath") String coursePath, @RequestParam("today") String today){
+		System.out.println(today + " event");
 		
 		List<CourseScheduleVo> list = service.loadTodaySchedule(coursePath, today);
 
@@ -138,9 +139,10 @@ public class ScheduleController {
 	
 	@ResponseBody
 	@RequestMapping(value="/modify", method=RequestMethod.POST)
-	public int modifySchedule(@RequestBody CourseScheduleVo vo){
+	public void modifySchedule(@RequestBody List<Object> multiParam){
+		System.out.println("modify: " + multiParam);
 		
-		return 0;
+		service.modifySchedule(multiParam);
 	}
 	
 	@ResponseBody 
