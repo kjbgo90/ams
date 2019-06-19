@@ -115,15 +115,14 @@
 
 						<div class="row">
 							<h4 class="text-main pad-btm bord-btm">  select class</h4>
-							
+							<br>
 							<div class="col-lg-6">
 								<div class="panel">
 
 									<!--Carousel-->
 									<!--===================================================-->
-									<div id="demo-carousel" class="carousel slide"
-										cdata-ride="carousel">
-
+									<div id="demo-carousel" class="carousel slide" cdata-ride="carousel">
+									
 										<!--Indicators-->
 										<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 										<ol class="carousel-indicators out">
@@ -133,7 +132,7 @@
 											<li data-slide-to="2" data-target="#demo-carousel"></li>
 										</ol>
 										<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-
+												
 										<div class="carousel-inner text-center">
 
 											<!--Item 1-->
