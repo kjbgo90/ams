@@ -4,17 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import net.ourams.service.CourseMainService;
 import net.ourams.vo.UserVo;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
-
-	@Autowired
-	private CourseMainService courseMainService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -36,13 +31,12 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		// 3. @Auth 가 있으면 session 있는지 체크
 		HttpSession session = request.getSession();
 		String oldUrl = request.getRequestURL().toString();
-		String coursePath = oldUrl.split("/")[4];
 		
 		if (session == null) {
 
 			// 세션이 없으면 로그인 폼으로 리다이렉트, @Auth있고 세션 없는 경우
 			// ams가 앞에 붙으면 4번 없으면 3번을 쓰면 됨
-			response.sendRedirect(request.getContextPath() + "/user/loginform?coursePath=" + coursePath);
+			response.sendRedirect(request.getContextPath() + "/user/loginform?url=" + oldUrl);
 			return false;
 		}
 
@@ -52,15 +46,15 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 			// 세션은 있는데 autUser가 없는 경우
 			// ams가 앞에 붙으면 4번 없으면 3번을 쓰면 됨니다.
-			response.sendRedirect(request.getContextPath() + "/user/loginform?coursePath=" + coursePath);
+			response.sendRedirect(request.getContextPath() + "/user/loginform?url=" + oldUrl);
 			return false;
 		}
 		// 5. @CoursePathCheck가 있고 authUser가 세션에 있는경우 코스패스가 가능한지 여부와 유저의 등록을 체크
-		if (courseMainService.checkService(coursePath, authUser.getUserNo()) == false) {
-
-			response.sendRedirect(request.getContextPath() + "/" + coursePath + "/404page");
-			return false;
-		}
+//		if (courseMainService.checkService(coursePath, authUser.getUserNo()) == false) {
+//
+//			response.sendRedirect(request.getContextPath() + "/" + coursePath + "/404page");
+//			return false;
+//		}
 
 		// 6. 모든 조건을 만족한 사용자는 요청한 곳으로 보낸다.
 		return true;

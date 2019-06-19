@@ -11,4 +11,9 @@ public class UserController {
 	public String loginForm() {
 		return "user/login-form";
 	}
+	
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public String index() {
+		return "main/index";
+	}
 }

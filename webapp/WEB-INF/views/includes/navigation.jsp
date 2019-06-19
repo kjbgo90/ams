@@ -5,6 +5,8 @@
 	pageContext.setAttribute("newLine", "\n");
 %>
 
+<!DOCTYPE html>
+<html>
 <!--MAIN NAVIGATION-->
 <!--===================================================-->
 <nav id="mainnav-container">
@@ -46,13 +48,12 @@
 						<div id="profile-nav" class="collapse list-group bg-trans">
 							<a href="#" class="list-group-item"> <i class="demo-pli-male icon-lg icon-fw"></i> Profile</a> 
 							<a href="#" class="list-group-item"> <i class="demo-pli-gear icon-lg icon-fw"></i> MyPage</a> 
-							<a href="${pageContext.request.contextPath }/user/logout?coursePath=${coursePath}" class="list-group-item"> <i class="demo-pli-unlock icon-lg icon-fw"></i> Logout</a>
+							<a href="${pageContext.request.contextPath }/user/logout" class="list-group-item"> <i class="demo-pli-unlock icon-lg icon-fw"></i> Logout</a>
 						</div>
 					</div>
-
 					<ul id="mainnav-menu" class="list-group">
 						<!--Category name-->
-						<li class="list-header">자바 웹개발자 고급과정</li>
+						<li class="list-header" id="courseNaviCourseName"></li>
 						
 						<!--Menu list-->
 						<li><a href="${pageContext.request.contextPath }/${coursePath}/main"> <i class="pli-home"></i><span class="menu-title"> 강의실</span></a></li>
@@ -82,5 +83,26 @@
 
 	</div>
 </nav>
+
+<script src="${pageContext.request.contextPath }/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	$.ajax({
+		url : "${pageContext.request.contextPath }/${coursePath}/main/loadnav",		
+		type : "post",
+		success : function(courseVo){
+			$("#courseNaviCourseName").html(courseVo.courseName);
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	}); 
+});	
+
+</script>
+
+</html>
 <!--===================================================-->
 <!--END MAIN NAVIGATION-->
