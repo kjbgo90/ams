@@ -7,11 +7,13 @@
 
 <div class="container-fluid bord-all bg-gray-dark mar-all panel" id="room42">
 	<div class="row">
-		<div class="col-lg-2 col-lg-offset-8 text-center bord-all bg-light icon-wrap-xs btn btn-default">출입구</div>
+		<div class="col-lg-2 col-lg-offset-8 icon-wrap-xs">
+			<button data-toggle="button" class="btn btn-lg btn-default btn-active-info text-center" type="button" aria-pressed="false" id="enter">출입구</button>
+		</div>
 	</div>
 	<br>
 	<div class="row">
-		<div class="col-lg-2 col-lg-offset-5 text-center bord-all bg-light icon-wrap-xs add-tooltip" data-original-title="강사님" id="seatTeacher"><img class="img-circle img-sm btn btn-circle pad-no seatSel"></div>
+		<div class="col-lg-2 col-lg-offset-5 text-center bord-all bg-light icon-wrap-xs add-tooltip" data-original-title="강사님" id="seat99"><img class="img-circle img-sm btn btn-circle pad-no seatSel"></div>
 	</div>
 	<br><br><br>
 	<div class="row">

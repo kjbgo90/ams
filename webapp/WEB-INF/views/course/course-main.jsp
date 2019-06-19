@@ -40,15 +40,14 @@
 
 <!--=================================================-->
 
-
 <!--Pace - Page Load Progress Par [OPTIONAL]-->
 <link href="${pageContext.request.contextPath }/assets/css/pace.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath }/assets/js/pace.js"></script>
 
-
 <!--Bootstrap Validator [ OPTIONAL ]-->
 <link href="${pageContext.request.contextPath }/assets/css/bootstrapValidator.css" rel="stylesheet">
 
+<link href="${pageContext.request.contextPath }/assets/css/check.jaebong.css" rel="stylesheet">
 
 <!--=================================================
 
@@ -127,40 +126,98 @@
 							<div class="panel">
 								<div class="panel-heading">
 									<br>
-									<h3 class="panel-title text-2x">${courseVo.courseName }</h3>
+									<h3 class="panel-title text-2x text-main text-bold">${courseVo.courseName }</h3>
 								</div>
 								<hr>
 								<h3 class="panel-title text-right">R${courseVo.lecRoomNo } 강의실</h3>
 								<c:import url="/WEB-INF/views/course/lectureroom/r${courseVo.lecRoomNo }.jsp"></c:import>
 								<br> 
-								
 								<input type="hidden" id="authUserSeatNo" value="">
+								
 								<div id="data">
 								</div>
+								<button class="btn btn-default" id="btnTest">버튼</button>
 							</div>
 						</div>
 
 						<div class="col-lg-2">
 							<div class="panel">
 								<div class="panel-heading text-center">
-									<h3 class="panel-title">FeedbackButton</h3>
+									<h3 class="panel-title text-bold">Feedback</h3>
 								</div>
-								<div class="panel-body text-center">
-									<button class="btn btn-pink btn-labeled btn-rounded icon-lg ion-locked" id="btnPink">나만질문</button>
-									<br> <br>
-									<button class="btn btn-dark btn-labeled btn-rounded icon-lg fa fa-quora" id="btnDark">공개질문</button>
-									<br> <br>
-									<button class="btn btn-danger btn-labeled btn-rounded icon-lg fa fa-venus-mars" id="btnDanger">화장실좀</button>
-									<br> <br>
-									<button class="btn btn-mint btn-labeled btn-rounded icon-lg ion-ios-color-wand" id="btnMint">와주세요</button>
-									<br> <br>
-									<button class="btn btn-purple btn-labeled btn-rounded icon-lg ion-ios-timer-outline" id="btnPurple">휴식시간</button>
-									<br> <br>
-									<button class="btn btn-primary btn-labeled btn-rounded icon-lg ion-no-smoking" id="btnPrimary">담배타임</button>
-									<br> <br>
-									<button class="btn btn-info btn-labeled btn-rounded icon-lg ion-coffee" id="btnInfo">커피사옴</button>
-									<br> <br>
-								</div>
+								<br>
+								<c:if test="${authUser.userType eq 1 }">
+								
+								<div id="teacher-menu-carousel" class="carousel slide" data-interval="false" data-ride="carousel">
+					
+					                <!--Indicators-->
+					                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+					                <ol class="carousel-indicators out">
+					                    <li data-slide-to="0" data-target="#teacher-menu-carousel" class="active"></li>
+					                    <li data-slide-to="1" data-target="#teacher-menu-carousel"></li>
+					                </ol>
+					                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+					
+					                <div class="carousel-inner text-center">
+					
+					                    <!--Item 1-->
+					                    <div class="item active">
+					                        <div class="panel-body text-left" style="white-space: normal;">
+												<label class="control-labe"><span class="text-main text-bold mar-no">현재 진행중인 과목</span></label>
+												<p class="text" id="nowSubjectTitle"></p>
+												<br>
+												<label class="control-labe"><span class="text-main text-bold mar-no">챕터 선택</span></label>
+												<div class="select">
+													<select class="form-control" id="chapterSelector" disabled="disabled">
+													</select>
+												</div>
+												<br><br><br>
+												<label class="control-labe"><span class="text-main text-bold mar-no">질문 내용</span></label>
+												<textarea placeholder="질문 내용을 입력해주세요." rows="10" class="form-control" id="questionContent" disabled="disabled"></textarea>
+											</div>
+											<div class="panel-footer text-center">
+												<button class="media btn btn-info btn-labeled btn-rounded btn-sm" data-target='#feedbackQuestion-modal' data-toggle='modal' id="feedbackQuestionButton" disabled="disabled">
+													<div class="media-left">
+														<span class="icon-wrap icon-wrap-xs icon-circle alert-icon">
+															<i class="fa fa-quora icon-2x"></i>
+														</span>
+													</div>
+													<div class="media-body text-center" style="padding-top: 4px;">
+														<p class="alert-message text-bold">Feedback</p>
+														<p class="alert-message text-bold">Question</p>
+													</div>
+												</button>
+											</div>
+					                    </div>
+					
+					                    <!--Item 2-->
+					                    <div class="item">
+					                        <h4 class="text-main">Second slide label</h4>
+					                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+					                    </div>
+					                    
+					                </div>
+					            </div>
+								
+								</c:if>
+								<c:if test="${authUser.userType eq 2 }">
+									<div class="panel-body text-center" id="feedbackButtonPanel">
+										<button class="btn btn-pink btn-labeled btn-rounded icon-lg ion-locked" disabled="disabled" id="btnPink">나만질문</button>
+										<br> <br>
+										<button class="btn btn-dark btn-labeled btn-rounded icon-lg fa fa-question-circle-o" disabled="disabled" id="btnDark">공개질문</button>
+										<br> <br>
+										<button class="btn btn-danger btn-labeled btn-rounded icon-lg fa fa-venus-mars" disabled="disabled" id="btnDanger">화장실좀</button>
+										<br> <br>
+										<button class="btn btn-mint btn-labeled btn-rounded icon-lg ion-ios-color-wand" disabled="disabled" id="btnMint">와주세요</button>
+										<br> <br>
+										<button class="btn btn-purple btn-labeled btn-rounded icon-lg ion-ios-timer-outline" disabled="disabled" id="btnPurple">휴식시간</button>
+										<br> <br>
+										<button class="btn btn-primary btn-labeled btn-rounded icon-lg ion-no-smoking" disabled="disabled" id="btnPrimary">담배타임</button>
+										<br> <br>
+										<button class="btn btn-info btn-labeled btn-rounded icon-lg ion-coffee" disabled="disabled" id="btnInfo">커피사옴</button>
+										<br> <br>
+									</div>
+								</c:if>
 							</div>
 						</div>
 					</div>
@@ -297,6 +354,59 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="modal fade" id="feedbackQuestion-modal" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal" aria-hidden="true">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+
+				<!--Modal header-->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<i class="pci-cross pci-circle"></i>
+					</button>
+					<h4 class="modal-title">Feedback Question</h4>
+				</div>
+				<!--Modal body-->
+				<div class="modal-body container-fluid" style="height: 400px;">
+					<div class="panel">
+						<div class="panel-body">
+							<div class="row">
+								<div id="feedback-question-pie" class="pie pie-title-center col-xs-6" data-percent="33.92">
+									<span class="pie-value text-thin text-2x"></span>
+								</div>
+								<div class="col-xs-6 text-center" style="width: 250px; height: 200px; overflow: auto;" id="fbaList">
+									<!-- fbaList -->
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-xs-6">
+									<label class="control-labe"><span class="text-main text-bold mar-no">과목명</span></label>
+									<p class="text" id="fbqSubjectTitle"></p>
+								</div>
+								<div class="col-xs-6">
+									<label class="control-labe"><span class="text-main text-bold mar-no">챕터</span></label>
+									<p class="text" id="fbqChapterContent"></p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<label class="control-labe"><span class="text-main text-bold mar-no">질문 내용</span></label>
+									<textarea readonly="readonly" rows="2" class="form-control" id="fbqContent"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--Modal footer-->
+				<div class="modal-footer">
+					<button data-dismiss="modal" class="btn btn-default" type="button">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<!--===================================================-->
 	<!--End Default Bootstrap Modal-->
 
@@ -334,6 +444,10 @@
 
 	<!-- sockjs -->
 	<script src="${pageContext.request.contextPath }/assets/plugins/sockjs/dist/sockjs.js"></script>
+	
+	<!-- easy-pie-chart -->
+	<script src="${pageContext.request.contextPath }/assets/plugins/easy-pie-chart/jquery.easypiechart.js"></script>
+
 
 </body>
 
@@ -357,7 +471,12 @@
 			type : "post",
 			success : function(map){
 				console.log(map.teacherUserVo);
-				userRender(map.teacherUserVo, 'Teacher', authUserNo);
+				
+				$("#nowSubjectTitle").html(map.subjectTitle);
+				
+				for(var i = 0; i < map.chapterList.length; i++){
+					$("#chapterSelector").append("<option value='" + map.chapterList[i].chapterNo + "'>" + map.chapterList[i].chapterContent + "</option>");
+				}
 				
 				for(var i = 0; i < map.userList.length; i++){
 					if(map.userList[i].seatNo != 0){
@@ -371,19 +490,60 @@
 						
 						if(map.userList[i].seatNo == 0){
 							console.log(map.userList[i]);
-							callNoty('warning', 'pli-exclamation', 'center-center', 2000, '좌석을 선택해주세요', '빈 좌석 중에서 앉을 좌석을 골라주세요.', 'zoomIn', 'fadeOut', 0);
+							callNoty('warning', 'pli-exclamation', 'center-center', 2000, '좌석을 선택해주세요', '빈 좌석 중에서 앉을 좌석을 골라주세요.', 'zoomIn', 'fadeOut', 'btnclose');
 						}
 					}
 					
 				}
+				
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
 			}
 		}); 
 		
+		
 	});	
-
+	
+	/* 출입구 버튼을 눌렀을때  */
+	$("#enter").on("click", function(){
+		var $this = $(this);
+ 		var aria = $this.attr("aria-pressed");
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath }/${coursePath}/main/enter",
+			type : "post",
+			data : {aria : aria},
+			dataType : "json",
+			success : function(result) {
+				if(result == false){
+					$("#feedbackButtonPanel").children().removeAttr("disabled");
+					$("#chapterSelector").removeAttr("disabled");
+					$("#questionContent").removeAttr("disabled");
+					$("#feedbackQuestionButton").removeAttr("disabled");
+				} else {
+					$("#feedbackButtonPanel").children().attr("disabled", "disabled");
+					$("#chapterSelector").attr("disabled", "disabled");
+					$("#questionContent").attr("disabled", "disabled");
+					$("#feedbackQuestionButton").attr("disabled", "disabled");
+				}
+				
+				msg = {};
+				msg.target = "UserEnter";
+				msg.result = result;
+				msg.sendCourse = "${coursePath}";
+				msg.sendUserName = "${authUser.userName}";
+				msg.seatTarget = "#seat" + $("#authUserSeatNo").val();
+				
+				webSock.send(JSON.stringify(msg));	
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	});
+	
+	/* 강사가 x버튼을 누르면 학생의 백그라운드가 원상복구됨 */
 	$("#container").on("click", ".btnx", function() {
 		var $this = $(this);
 		var seatNo = $this.data("seatno");
@@ -393,6 +553,7 @@
 		
 		msg = {};
 		msg.target = "xbtn";
+		msg.sendCourse = "${coursePath}";
 		msg.seatTarget = seatTarget;
 		
 		webSock.send(JSON.stringify(msg));
@@ -449,7 +610,52 @@
 			}
 		});
 	});
-	
+
+	/* Question 버튼을 클릭했을때 질문이 등록되고 모달창이 나오는 스크립트 */
+	$("#feedbackQuestionButton").on("click", function(){
+		var chapterNo = $("#chapterSelector").val();
+		var fbqContent = $("#questionContent").val();
+		
+		console.log(chapterNo + " : " + fbqContent);
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath }/${coursePath}/feedback/question/regist",
+			type : "post",
+			data : {chapterNo : chapterNo, fbqContent : fbqContent},
+			dataType : "json",
+			success : function(map) {
+				$("#fbqSubjectTitle").empty();
+				$("#fbqSubjectTitle").html(map.fbqVo.subjectTitle);
+				$("#fbqChapterContent").empty();
+				$("#fbqChapterContent").html(map.fbqVo.chapterContent);
+				$("#fbqContent").empty();
+				$("#fbqContent").html(map.fbqVo.fbqContent);
+				
+				$("#fbaList").empty();
+				
+				for(var i = 0; i < map.fbaList.length; i++){
+					fbaRender(map.fbaList[i]);
+					/* 대답을 해야하는 학생일 경우 */
+					if(map.fbaList[i].fbaType == 0){
+						msg = {};
+						msg.target = "feedbackQuestion";
+						msg.sendCourse = "${coursePath}";
+						msg.sendFbqNo = map.fbaList[i].fbqNo;
+						msg.sendFbqChapterContent = map.fbqVo.chapterContent;
+						msg.sendFbqContent = map.fbqVo.fbqContent;
+						msg.sendFbaUserNo = map.fbaList[i].userNo;
+						
+						webSock.send(JSON.stringify(msg));
+					}
+				}	
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+	});
 	
 	$("#btnPink").on("click", function(){
 		msg = {};
@@ -474,7 +680,7 @@
 		msg.sendCourse = "${coursePath}";
 		msg.msgType = "public";
 		msg.notyColor = "dark";
-		msg.notyIcon = "fa fa-quora";
+		msg.notyIcon = "fa fa-question-circle-o";
 		msg.notyTitle = "공개적인 질문";
 		msg.notyContent = "${authUser.userName}" + " 학생이 공개적인 질문을 하였습니다.";
 		
@@ -556,6 +762,93 @@
 		webSock.send(JSON.stringify(msg));
 	});
 	
+	/* 피드백 대답에서 yes를 누른 경우 */
+	$("#container").on("click", "#btnYes", function() {
+		$this = $(this);
+		var fbqNo = $this.data("fbqno");
+		var fbaType = 1;
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath }/${coursePath}/feedback/answer/update",
+			type : "post",
+			data : {fbqNo : fbqNo, fbaType : fbaType},
+			dataType : "json",
+			success : function(result) {
+				console.log(result);
+				if(result == 1){
+					msg = {};
+					msg.target = "feedbackAnswer";
+					msg.sendCourse = "${coursePath}";
+					msg.sendUserNo = "${authUser.userNo}";
+					msg.sendFbaType = fbaType;
+							
+					webSock.send(JSON.stringify(msg));
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	});
+	
+	/* 피드백 대답에서 no를 누른 경우 */
+	$("#container").on("click", "#btnNo", function() {
+		$this = $(this);
+		var fbqNo = $this.data("fbqno");
+		var fbaType = 2;
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath }/${coursePath}/feedback/answer/update",
+			type : "post",
+			data : {fbqNo : fbqNo, fbaType : fbaType},
+			dataType : "json",
+			success : function(result) {
+				if(result == 1){
+					msg = {};
+					msg.target = "feedbackAnswer";
+					msg.sendCourse = "${coursePath}";
+					msg.sendUserNo = "${authUser.userNo}";
+					msg.sendFbaType = fbaType;
+							
+					webSock.send(JSON.stringify(msg));
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	});
+	
+	$('#feedback-question-pie').easyPieChart({
+        barColor :'#8465d4',
+        scaleColor: false,
+        trackColor : 'rgba(0,0,0,.1)',
+        lineWidth : 7,
+        size : 200,
+        onStep: function(from, to, percent) {
+            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
+        }
+    });
+	
+	
+	
+	$('#toggle-no').click(function() {
+		$('.circle-loader').toggleClass('load-complete-no');
+		$('.checkmark-no').toggle();
+	});
+	
+	$('[data-toggle="tooltip"]').tooltip({container: 'body'});
+	
+	$("#fbaList").on("mouseenter", ".add-tooltip", function(){
+		$this = $(this);
+		$this.tooltip({container: 'body'});
+		$this.tooltip("show");
+		
+	});
+	$("#fbaList").on("mouseleave", ".add-tooltip", function(){
+		$this = $(this);
+		$this.tooltip("hide");
+	});
 
 	// 서버로부터 메시지를 받았을 때
 	function onMessage(msg) {
@@ -563,44 +856,102 @@
 		console.log(obj);
 		var target = obj.target;
 		
-		/* feedback Button을 눌렀을 경우 일어나는 이벤트 */
-		if(target == "feedbackButton"){
-			var seatTarget = "#seat" + obj.sendUserSeatNo;
-			var bgColor = "bg-" + obj.notyColor;
-			
-			/* 코스패스가 같은 경우에만 반응이 일어난다 */
-			if(obj.sendCourse == "${coursePath}"){
+		/* 코스패스가 같은 경우에만 반응이 일어난다 */
+		if(obj.sendCourse == "${coursePath}"){
+			/* feedback Button을 눌렀을 경우 일어나는 이벤트 */
+			if(target == "feedbackButton"){
+				var seatTarget = "#seat" + obj.sendUserSeatNo;
+				var bgColor = "bg-" + obj.notyColor;
 				
 				/* 강사계정에만 알람창이 간다 */
 				if("${courseVo.teacherNo}" == "${authUser.userNo}"){
 					callNoty(obj.notyColor, obj.notyIcon, 'top-right', 0, obj.notyTitle, obj.notyContent, 'zoomIn', 'fadeOut', obj.sendUserSeatNo);
 				}
-				
+					
 				/* msgType이 private인 경우 강사와 보낸사람만 해당 좌석 백그라운드를 바꾼다. */
 				if(obj.msgType == "private"){
 					if("${courseVo.teacherNo}" == "${authUser.userNo}" || obj.sendUserNo == "${authUser.userNo}"){
-						
+							
 						$(seatTarget).removeClass("bg-light bg-pink bg-dark bg-danger bg-mint bg-purple bg-primary bg-info");
 						$(seatTarget).addClass(bgColor);
 					}
 				}
-				
+					
 				/* msgType이 public인 경우 모든 사람들 화면에서 해당 좌석 백그라운드를 바꾼다. */
 				else {
 					$(seatTarget).removeClass("bg-light bg-pink bg-dark bg-danger bg-mint bg-purple bg-primary bg-info");
 					$(seatTarget).addClass(bgColor);
 				}
+				
+			}
+		
+			/* 강사쪽에서 x버튼을 눌렀을때 백그라운드 색을 초기화 시켜주는 이벤트 */
+			if(target == "xbtn"){
+				var seatTarget = obj.seatTarget;
+				
+				$(seatTarget).removeClass("bg-light bg-pink bg-dark bg-danger bg-mint bg-purple bg-primary bg-info");
+				$(seatTarget).addClass("bg-light");
+			}
+		
+			/* 출입구 버튼을 유저가 눌렀을 때 해당 유저를 활성화/비활성화 시켜주는 이벤트 */
+			if(target == "UserEnter"){
+				var seatTarget = obj.seatTarget;
+				var result = obj.result;
+				
+				/* 들어옴 */
+				if(result == false){
+					$(seatTarget).children(".seatImg").removeClass("disabled");
+					if("${authUser.userName}" != obj.sendUserName){
+						
+						callNoty("default", "ion-alert", "bottom-left", 1000, "강의실에 들어옴", obj.sendUserName + "님께서 들어오셨습니다.", "zoomIn", "fadeOut", "btnexit");
+					}
+				} else {
+				/* 나감 */	
+					$(seatTarget).children(".seatImg").addClass("disabled");
+					if("${authUser.userName}" != obj.sendUserName){
+						callNoty("default", "ion-alert", "bottom-right", 1000, "강의실에서 나감", obj.sendUserName + "님께서 나가셨습니다.", "zoomIn", "fadeOut", "btnexit");
+					}
+				}
+			}
+			
+			/* 강사가 피드백 질문을 등록했을때 접속중인 학생들에게 질문이 감 */
+			if(target == "feedbackQuestion"){
+				var fbqNo = obj.sendFbqNo;
+				var fbqContent = obj.sendFbqContent;
+				var chapterContent = obj.sendFbqChapterContent;
+				var userNo = obj.sendFbaUserNo;
+				
+				if("${authUser.userNo}" == userNo){
+					callFba("dark", "fa fa-question", "center-center", chapterContent, fbqContent, fbqNo);
+				}
+			}
+			
+			/* feedbackQuestion에 학생이 대답을 하였을 경우 체크표시로 바꾸어 준다 */
+			if(target == "feedbackAnswer"){
+				var sendUserNo = obj.sendUserNo;
+				var sendFbaType = obj.sendFbaType;
+				var circleloader = "#cl" + sendUserNo;
+				var checkmark = "#cm" + sendUserNo;
+				
+				if("${authUser.userNo}" == "${courseVo.teacherNo}"){
+					if(sendFbaType == 1){
+						$(circleloader).toggleClass('load-complete');
+						$(circleloader).children('.checkmark').toggle();
+					}
+					
+					if(sendFbaType == 2){
+						$(checkmark).removeClass('checkmark');
+						$(checkmark).addClass('checkmark-no');
+						$(circleloader).toggleClass('load-complete-no');
+						$(circleloader).children('.checkmark-no').toggle();
+					}
+						
+				}
 			}
 		}
 		
-		if(target == "xbtn"){
-			var seatTarget = obj.seatTarget;
-			
-			$(seatTarget).removeClass("bg-light bg-pink bg-dark bg-danger bg-mint bg-purple bg-primary bg-info");
-			$(seatTarget).addClass("bg-light");
-		}
 	}
-
+	
 	// 서버와 연결을 끊었을 때
 	function onClose(evt) {
 		$("#data").append("연결 끊김");
@@ -636,22 +987,79 @@
 		});
 	}
 	
+	function callFba(color, icon, position, chapterContent, fbqContent, fbqNo){
+		var notyContent = "";
+		
+		notyContent += "<div class='media-left'>";
+		notyContent += "	<span class='icon-wrap icon-wrap-xs icon-circle alert-icon'>";
+		notyContent += "		<i class='" + icon + " icon-2x'></i>";
+		notyContent += "	</span>";
+		notyContent += "</div>";
+		notyContent += "<div class='media-body'>";
+		notyContent += "	<h4 class='alert-title'>Feedback Answer</h4>";
+		notyContent += "	<p class='alert-message text-bold'>" + chapterContent + "</p>";
+		notyContent += "	<p class='alert-message'>" + fbqContent + "</p>";
+		notyContent += "</div>";
+		notyContent += "<div class=row>";
+		notyContent += "	<button class='btn btn-success col-xs-3 col-xs-offset-5' id='btnYes' data-fbqno='" + fbqNo + "' data-dismiss='alert'>YES</button>";
+		notyContent += "	<button class='btn btn-danger col-xs-3 col-xs-offset-1' id='btnNo' data-fbqno='" + fbqNo + "' data-dismiss='alert'>NO</button>";
+		notyContent += "</div>";
+		
+		$.niftyNoty({
+			type : color,
+			container : 'floating',
+			floating    : {
+                position    : position,
+                animationIn : 'flipInY',
+                animationOut: 'zoomOutDown'
+            },
+            html : notyContent,
+            closeBtn    : false,
+			timer : 0
+		});
+	}
+	
 	/* 유저 정보를 이용해서 유저를 강의실 jsp에 그려주는 함수 */
 	function userRender(userVo, seat, authUserNo){
 		var seatTarget = "#seat" + seat;
+		var str = "";
 		
 		$(seatTarget).empty();
 		$(seatTarget).attr('data-original-title', userVo.userName);
-		if(seat == 'Teacher'){
+		if(seat == 99){
 			$(seatTarget).attr('data-original-title', userVo.userName + " 강사님");
 		}
 		if(userVo.userNo == authUserNo){
 			$(seatTarget).attr('data-original-title', "나");
 		}
 		
-		var str = "<img class='img-circle img-sm btn btn-circle pad-no seatImg' data-target='#profile-modal' data-toggle='modal' data-userno='" + userVo.userNo + "' src='${pageContext.request.contextPath }" + userVo.logoPath + "'>";
-		
+		if(userVo.accessStat == 0){
+			str = "<img class='img-circle img-sm btn btn-circle pad-no seatImg disabled' data-target='#profile-modal' data-toggle='modal' data-userno='" + userVo.userNo + "' src='${pageContext.request.contextPath }" + userVo.logoPath + "'>";
+		}else if(userVo.accessStat == 1){
+			str = "<img class='img-circle img-sm btn btn-circle pad-no seatImg' data-target='#profile-modal' data-toggle='modal' data-userno='" + userVo.userNo + "' src='${pageContext.request.contextPath }" + userVo.logoPath + "'>";
+		}
 		$(seatTarget).append(str);
+	}
+	
+	function fbaRender(fbaVo){
+		var str = "";
+		
+		str += "<div class='add-tooltip' data-toggle='tooltip' data-original-title='" + fbaVo.userName + "' style='width: 115px; float: left;'>";
+		
+		if(fbaVo.fbaType == 99){
+			str += "<img alt='Profile Picture' class='img-xs img-circle mar-btm' style='opacity: 0.5;' src='${pageContext.request.contextPath }" + fbaVo.logoPath + "'>";
+			str += "<span class='text'>미응답</span>";
+		}
+		else if(fbaVo.fbaType == 0){
+			str += "<img alt='Profile Picture' class='img-xs img-circle mar-btm' src='${pageContext.request.contextPath }" + fbaVo.logoPath + "'>&nbsp;&nbsp;&nbsp;";
+			str += "<div class='circle-loader' id='cl" + fbaVo.userNo + "'>";
+			str += "	<div class='checkmark draw' id='cm" + fbaVo.userNo + "' style='display: none;'></div>";
+			str += "</div>";
+		}
+		
+		str += "</div>";
+		
+		$("#fbaList").append(str);
 	}
 </script>
 

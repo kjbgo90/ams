@@ -103,7 +103,7 @@
 			UPDATE 	 schedule 
 			SET 	 scheduleName = #{subjectTitle},
 					 startDate = #{startDate},
-					 endDate = #{endDate},
+					 endDate = TO_DATE(#{endDate}, 'yyyy/mm/dd hh24:mi:ss'),
 					 scheduleMemo = #{scheduleMemo}
 			WHERE 	 scheduleNo = #{scheduleNo}
 		]]>
@@ -113,6 +113,24 @@
 		<![CDATA[
 			UPDATE 	 courseregist 
 			SET 	 seatNo = #{seatNo}
+			WHERE 	 userNo = #{userNo}
+				AND	 courseNo = #{courseNo}
+		]]>
+	</update>
+	
+	<update id="updateCourseregistAccessStatTo1ByMap" parameterType="map">
+		<![CDATA[
+			UPDATE 	 courseregist 
+			SET 	 accessStat = 1
+			WHERE 	 userNo = #{userNo}
+				AND	 courseNo = #{courseNo}
+		]]>
+	</update>
+	
+	<update id="updateCourseregistAccessStatTo0ByMap" parameterType="map">
+		<![CDATA[
+			UPDATE 	 courseregist 
+			SET 	 accessStat = 0
 			WHERE 	 userNo = #{userNo}
 				AND	 courseNo = #{courseNo}
 		]]>
@@ -133,6 +151,17 @@
 		]]>
 	</select>
 	
+	<select id="selectNowSubjectVoByCourseNo" parameterType="int" resultType="SubjectVo">
+		<![CDATA[
+			SELECT  subjectNo, 
+					subjectTitle 
+			FROM    subject sj JOIN schedule sd
+			    ON  sj.scheduleNo = sd.scheduleNo
+			WHERE   sj.courseNo = #{courseNo}
+			    AND sysdate BETWEEN sd.startDate AND sd.endDate
+		]]>
+	</select>
+	
 	<insert id="insertScheduleBySubjectVo" parameterType="SubjectVo">
 		<selectKey keyProperty="scheduleNo" resultType="int" order="BEFORE">
 			SELECT seq_schedule_no.nextval FROM dual
@@ -150,7 +179,7 @@
 	    							#{scheduleNo},
 	    							#{subjectTitle}, 
 	    							#{startDate},
-	    							#{endDate},
+	    							TO_DATE(#{endDate}, 'yyyy/mm/dd hh24:mi:ss'),
 	    							'dark',
 	    							#{courseNo},
 	    							#{userNo},
@@ -215,20 +244,6 @@
 		]]>
 	</delete>
 	
-	<select id="selectUserListByCourseNo" parameterType="int" resultType="UserVo">
-		<![CDATA[
-			SELECT 		u.userNo,
-       					userName,
-       					userType,
-       					logoPath,
-       					NVL(seatNo, 0) as seatNo
-			FROM   		users u JOIN courseregist c
-				ON		u.userNo = c.userNo
-			WHERE  		courseNo = #{courseNo}
-			
-		]]>
-	</select>
-	
 	<select id="selectUserVoByUserNo" parameterType="int" resultType="UserVo">
 		<![CDATA[
 			SELECT userNo,
@@ -244,4 +259,125 @@
 			where userNo = #{userNo}
 		]]>
 	</select>
+	
+	<select id="selectUserListByCourseNo" parameterType="int" resultType="UserVo">
+		<![CDATA[
+			SELECT 		u.userNo,
+       					userName,
+       					userType,
+       					logoPath,
+       					NVL(seatNo, 0) as seatNo,
+       					accessStat
+			FROM   		users u JOIN courseregist c
+				ON		u.userNo = c.userNo
+			WHERE  		courseNo = #{courseNo}
+			
+		]]>
+	</select>
+	
+	<select id="selectUserListByCourseNoAndUserType" parameterType="int" resultType="UserVo">
+		<![CDATA[
+			SELECT 		u.userNo,
+       					userName,
+       					userType,
+       					logoPath,
+       					NVL(seatNo, 0) as seatNo,
+       					accessStat
+			FROM   		users u JOIN courseregist c
+				ON		u.userNo = c.userNo
+			WHERE  		courseNo = #{courseNo}
+				AND 	UserType = 2
+		]]>
+	</select>
+	
+	<select id="selectUserListByCourseNoAndAccessStat0" parameterType="int" resultType="UserVo">
+		<![CDATA[
+			SELECT 		u.userNo
+			FROM   		users u JOIN courseregist c
+				ON		u.userNo = c.userNo
+			WHERE  		courseNo = #{courseNo}
+				AND		accessStat = 0
+				AND		userType = 2
+			
+		]]>
+	</select>
+	
+	<select id="selectUserCountByCourseNo" parameterType="int" resultType="int">
+		<![CDATA[
+			SELECT 	COUNT(registNo)
+			FROM   	courseregist c JOIN users u
+				ON 	c.userNo = u.userNo
+			where  	courseNo = #{courseNo}
+				AND accessStat = 1
+				AND userType = 2
+		]]>
+	</select>
+	
+	<insert id="insertFbqByFbqVo" parameterType="FbqVo">
+		<selectKey keyProperty="fbqNo" resultType="int" order="BEFORE">
+			SELECT seq_fbq_no.nextval FROM dual
+		</selectKey>
+		<![CDATA[
+			INSERT INTO feedbackquestion(	fbqNo,
+	    									fbqContent,
+	    									fbqCount,
+	    									chapterNo,
+	    									teacherNo)
+			VALUES (
+	    									#{fbqNo},
+	    									#{fbqContent}, 
+	    									#{fbqCount},
+	    									#{chapterNo},
+	    									#{teacherNo})
+		]]>
+	</insert>
+	
+	<insert id="insertFbaByFbqNo" parameterType="FbaVo">
+		<selectKey keyProperty="fbaNo" resultType="int" order="BEFORE">
+			SELECT seq_fba_no.nextval FROM dual
+		</selectKey>
+		<![CDATA[
+			INSERT INTO feedbackanswer(		fbaNo,
+	    									fbqNo,
+	    									userNo)
+			VALUES (
+	    									#{fbaNo},
+	    									#{fbqNo},
+	    									#{userNo})
+		]]>
+	</insert>
+	
+	<select id="selectFbaListByFbqNo" parameterType="int" resultType="FbaVo">
+		<![CDATA[
+			SELECT 		fbaNo,
+						fbaType,
+						fbqNo,
+						f.userNo,
+						userName,
+						logoPath
+			FROM   		feedbackanswer f JOIN users u
+				ON		f.userNo = u.userNo
+			WHERE  		fbqNo = #{fbqNo}
+			ORDER BY 	userNo
+		]]>
+	</select>
+	
+	<update id="updateFbaAbsenseUsers" parameterType="map">
+		<![CDATA[
+			UPDATE 	 feedbackanswer 
+			SET 	 fbaType = 99
+			WHERE 	 userNo = #{userNo}
+				AND	 fbqNo = #{fbqNo}
+		]]>
+	</update>
+	
+	<update id="updateFbaByFbaVo" parameterType="FbaVo">
+		<![CDATA[
+			UPDATE 	 feedbackanswer 
+			SET 	 fbaType = #{fbaType}
+			WHERE 	 userNo = #{userNo}
+				AND	 fbqNo = #{fbqNo}
+		]]>
+	</update>
+	
 </mapper>

@@ -10,6 +10,7 @@ public class UserVo {
 	private String phoneNumber;
 	private int seatNo;
 	private int postCnt;
+	private int accessStat;
 
 	public UserVo() {
 	}
@@ -26,7 +27,7 @@ public class UserVo {
 	}
 
 	public UserVo(int userNo, String email, String password, String userName, int userType, String logoPath,
-			String phoneNumber, int seatNo, int postCnt) {
+			String phoneNumber, int seatNo, int postCnt, int accessStat) {
 		this.userNo = userNo;
 		this.email = email;
 		this.password = password;
@@ -36,6 +37,7 @@ public class UserVo {
 		this.phoneNumber = phoneNumber;
 		this.seatNo = seatNo;
 		this.postCnt = postCnt;
+		this.accessStat = accessStat;
 	}
 
 	public int getUserNo() {
@@ -110,11 +112,19 @@ public class UserVo {
 		this.postCnt = postCnt;
 	}
 
+	public int getAccessStat() {
+		return accessStat;
+	}
+
+	public void setAccessStat(int accessStat) {
+		this.accessStat = accessStat;
+	}
+
 	@Override
 	public String toString() {
 		return "UserVo [userNo=" + userNo + ", email=" + email + ", password=" + password + ", userName=" + userName
 				+ ", userType=" + userType + ", logoPath=" + logoPath + ", phoneNumber=" + phoneNumber + ", seatNo="
-				+ seatNo + ", postCnt=" + postCnt + "]";
+				+ seatNo + ", postCnt=" + postCnt + ", accessStat=" + accessStat + "]";
 	}
 
 }

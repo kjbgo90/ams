@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import net.ourams.vo.ChapterVo;
 import net.ourams.vo.CourseRegistVo;
 import net.ourams.vo.CourseVo;
+import net.ourams.vo.FeedbackAnswerVo;
+import net.ourams.vo.FeedbackQuestionVo;
 import net.ourams.vo.SubjectVo;
 import net.ourams.vo.UserVo;
 
@@ -111,5 +113,76 @@ public class CourseMainDao {
 		return sqlSession.selectOne("course.selectUserVoByUserNo", userNo);
 	}
 
+	public int updateEnterUser(int courseNo, int userNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("courseNo", courseNo);
+		map.put("userNo", userNo);
+		
+		return sqlSession.update("course.updateCourseregistAccessStatTo1ByMap", map);
+	}
 	
+	public int updateExitUser(int courseNo, int userNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("courseNo", courseNo);
+		map.put("userNo", userNo);
+		
+		return sqlSession.update("course.updateCourseregistAccessStatTo0ByMap", map);
+	}
+
+	public SubjectVo selectNowSubjectVoByCourseNo(int courseNo) {
+		return sqlSession.selectOne("course.selectNowSubjectVoByCourseNo", courseNo);
+	}
+
+	public int selectUserCountByCourseNo(int courseNo) {
+		return sqlSession.selectOne("course.selectUserCountByCourseNo", courseNo);
+	}
+
+	public int insertFbqByFbqVo(FeedbackQuestionVo fbqVo) {
+		return sqlSession.insert("course.insertFbqByFbqVo", fbqVo);
+	}
+
+	public List<UserVo> selectUserListByCourseNoAndAccessStat0(int courseNo) {
+		return sqlSession.selectList("course.selectUserListByCourseNoAndAccessStat0", courseNo);
+	}
+
+	public int insertFbaByFbqNo(int fbqNo, List<UserVo> userList) {
+		int result = 0;
+		FeedbackAnswerVo fbaVo = new FeedbackAnswerVo();
+		fbaVo.setFbqNo(fbqNo);
+		
+		for(int i = 0; i < userList.size(); i++) {
+			fbaVo.setUserNo(userList.get(i).getUserNo());
+			result += sqlSession.insert("course.insertFbaByFbqNo", fbaVo);
+		}
+		
+		return result;
+	}
+
+	public List<FeedbackAnswerVo> getFbaListByFbqNo(int fbqNo) {
+		return sqlSession.selectList("course.selectFbaListByFbqNo", fbqNo);
+	}
+
+	public int updateFbaAbsenseUsers(int fbqNo, List<UserVo> absenseUserList) {
+		int result = 0;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("fbqNo", fbqNo);
+		
+		
+		for(int i = 0; i < absenseUserList.size(); i++) {
+			map.put("userNo", absenseUserList.get(i).getUserNo());
+			result += sqlSession.update("course.updateFbaAbsenseUsers", map);
+		}
+		
+		return result;
+	}
+
+	public List<UserVo> selectUserListByCourseNoAndUserType(int courseNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("course.selectUserListByCourseNoAndUserType", courseNo);
+	}
+
+	public int updateFbaByFbaVo(FeedbackAnswerVo fbaVo) {
+		return sqlSession.update("course.updateFbaByFbaVo", fbaVo);
+	}
+
 }

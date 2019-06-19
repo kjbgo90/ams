@@ -11,6 +11,8 @@
 		<typeAlias alias="CourseRegistVo" type="net.ourams.vo.CourseRegistVo" />
 		<typeAlias alias="CourseVo" type="net.ourams.vo.CourseVo" />
 		<typeAlias alias="fileUploadVo" type="net.ourams.vo.fileUpLoadVo" />
+		<typeAlias alias="FbaVo" type="net.ourams.vo.FeedbackAnswerVo" />
+		<typeAlias alias="FbqVo" type="net.ourams.vo.FeedbackQuestionVo" />
 		<typeAlias alias="PostVo" type="net.ourams.vo.PostVo" />
 		<typeAlias alias="ReplyVo" type="net.ourams.vo.ReplyVo" />
 		<typeAlias alias="SubjectVo" type="net.ourams.vo.SubjectVo" />

@@ -12,6 +12,8 @@ import net.ourams.dao.CourseMainDao;
 import net.ourams.dao.UserDao;
 import net.ourams.vo.ChapterVo;
 import net.ourams.vo.CourseVo;
+import net.ourams.vo.FeedbackAnswerVo;
+import net.ourams.vo.FeedbackQuestionVo;
 import net.ourams.vo.SubjectVo;
 import net.ourams.vo.UserVo;
 
@@ -91,15 +93,21 @@ public class CourseMainService {
 	/* subjectVo를 가지고 해당 서브젝트와 스케줄 정보를 수정하고 수정된 정보를 보내주는 서비스 */
 	@Transactional
 	public SubjectVo subjectEdit(SubjectVo subjectVo) {
+		String endDate = subjectVo.getEndDate();
+		endDate = endDate + " 18:00:00";
 		
+		subjectVo.setEndDate(endDate);
 		courseMDao.editSubjectBySubjectVo(subjectVo);
-		
 		
 		return courseMDao.selectSubjectBySubjectNo(subjectVo.getSubjectNo());
 	}
 
 	@Transactional
 	public void writeSubjectAndSchedule(SubjectVo inputSubjectVo, String coursePath) {
+		String endDate = inputSubjectVo.getEndDate();
+		endDate = endDate + " 18:00:00";
+		System.out.println(endDate);
+		inputSubjectVo.setEndDate(endDate);
 		
 		// 코스패스를 이용해서 해당 코스의 코스 넘버를 가지고옴
 		int courseNo = courseMDao.selectCourseVoByCoursePath(coursePath).getCourseNo();
@@ -137,17 +145,23 @@ public class CourseMainService {
 		return courseMDao.deleteChapterByChapterNo(chapterNo);
 	}
 
-	public Map<String, Object> getUserList(String coursePath) {
+	public Map<String, Object> getUserListAndChapterList(String coursePath) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		CourseVo courseVo = courseMDao.selectCourseVoByCoursePath(coursePath);
 		
 		int courseNo = courseVo.getCourseNo();
 		int teacherNo = courseVo.getTeacherNo();
-		
+		SubjectVo subjectVo = courseMDao.selectNowSubjectVoByCourseNo(courseNo);
 		UserVo teacherUserVo = userDao.selecteUser(teacherNo);
+		
+		if(subjectVo != null) {
+			map.put("chapterList", courseMDao.selectChapterList(subjectVo.getSubjectNo()));
+		}
 		
 		map.put("userList", courseMDao.selectUserListByCourseNo(courseNo));
 		map.put("teacherUserVo", teacherUserVo);
+		map.put("subjectTitle", subjectVo.getSubjectTitle());
 		
 		return map;
 	}
@@ -173,6 +187,66 @@ public class CourseMainService {
 
 	public UserVo getUserInfo(int userNo) {
 		return courseMDao.selectUserVoByUserNo(userNo);
+	}
+
+	public int userEnterRoom(boolean aria, UserVo authUser, String coursePath) {
+		int result;
+		CourseVo courseVo = courseMDao.selectCourseVoByCoursePath(coursePath);
+		
+		if(aria == false) {
+			result = courseMDao.updateEnterUser(courseVo.getCourseNo(), authUser.getUserNo());
+		} else {
+			result = courseMDao.updateExitUser(courseVo.getCourseNo(), authUser.getUserNo());
+		}
+		
+		return result;
+	}
+
+	@Transactional
+	public Map<String, Object> registFbqAndGetFbqVoAndUserInfo(UserVo authUser, int chapterNo, String fbqContent, String coursePath) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		CourseVo courseVo = courseMDao.selectCourseVoByCoursePath(coursePath);
+		
+		/* 코스레지스트 테이블에서 courseNo와 accessStat = 1(현재 접속중), userType=2(학생)인 사람들의 count를 가져옴 */
+		int fbqCount = courseMDao.selectUserCountByCourseNo(courseVo.getCourseNo());
+		
+		ChapterVo chapterVo = courseMDao.selectChapterByChapterNo(chapterNo);
+		
+		/* 해당코스 모든 학생 리스트를 불러온다. */
+		List<UserVo> userList = courseMDao.selectUserListByCourseNoAndUserType(courseVo.getCourseNo());
+		
+		
+		FeedbackQuestionVo fbqVo = new FeedbackQuestionVo();
+		fbqVo.setFbqContent(fbqContent);
+		fbqVo.setFbqCount(fbqCount);
+		fbqVo.setChapterNo(chapterNo);
+		fbqVo.setTeacherNo(authUser.getUserNo());
+		fbqVo.setChapterContent(chapterVo.getChapterContent());
+		fbqVo.setSubjectTitle(courseMDao.selectSubjectBySubjectNo(chapterVo.getSubjectNo()).getSubjectTitle());
+		
+		/* feedbackQuestion테이블에 값을 넣어줌 */
+		courseMDao.insertFbqByFbqVo(fbqVo);
+		
+		/* 유저리스트를 가져와서 FeedbackAnswer에 학생들을 넣어준다.(해당코스 모든학생) */
+		courseMDao.insertFbaByFbqNo(fbqVo.getFbqNo(), userList);
+		
+		/* 자리에 없는 학생들을 체크해서 업데이트 해준다. */
+		List<UserVo> absenseUserList = courseMDao.selectUserListByCourseNoAndAccessStat0(courseVo.getCourseNo());
+		courseMDao.updateFbaAbsenseUsers(fbqVo.getFbqNo(), absenseUserList);
+		
+		List<FeedbackAnswerVo> fbaList = courseMDao.getFbaListByFbqNo(fbqVo.getFbqNo());
+		System.out.println(fbaList.toString());
+		System.out.println(fbqVo.toString());
+		
+		map.put("fbqVo", fbqVo);
+		map.put("fbaList", fbaList);
+		
+		return map;
+	}
+
+	public int updateFba(FeedbackAnswerVo fbaVo) {
+		return courseMDao.updateFbaByFbaVo(fbaVo);
 	}
 
 	

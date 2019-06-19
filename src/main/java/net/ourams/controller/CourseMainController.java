@@ -17,6 +17,7 @@ import net.ourams.interceptor.AuthUser;
 import net.ourams.service.CourseMainService;
 import net.ourams.vo.ChapterVo;
 import net.ourams.vo.CourseVo;
+import net.ourams.vo.FeedbackAnswerVo;
 import net.ourams.vo.SubjectVo;
 import net.ourams.vo.UserVo;
 
@@ -31,10 +32,9 @@ public class CourseMainController {
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String courseMain(@PathVariable("coursePath") String coursePath,
 							 Model model) {		
-		CourseVo courseVo = courseMService.getCourseVo(coursePath);
 		
 		model.addAttribute("coursePath", coursePath);
-		model.addAttribute("courseVo", courseVo);
+		model.addAttribute("courseVo", courseMService.getCourseVo(coursePath));
 		
 		return "course/course-main";
 	}
@@ -43,7 +43,24 @@ public class CourseMainController {
 	@ResponseBody
 	@RequestMapping(value = "/main/loadpage", method = RequestMethod.POST)
 	public Map<String, Object> userListCall(@PathVariable("coursePath") String coursePath){
-		return courseMService.getUserList(coursePath);
+		return courseMService.getUserListAndChapterList(coursePath);
+	}
+	
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/main/loadnav", method = RequestMethod.POST)
+	public CourseVo loadNavigation(@PathVariable("coursePath") String coursePath){
+		return courseMService.getCourseVo(coursePath);
+	}
+	
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/main/enter", method = RequestMethod.POST)
+	public boolean userEnter(@AuthUser UserVo authUser,
+							 @RequestParam("aria") boolean aria,
+							 @PathVariable("coursePath") String coursePath) {
+		courseMService.userEnterRoom(aria, authUser, coursePath);
+		return aria;
 	}
 	
 	@Auth
@@ -176,5 +193,34 @@ public class CourseMainController {
 	public int deleteChapter(@RequestParam("chapterNo") int chapterNo) {
 		
 		return courseMService.deleteChapter(chapterNo);
+	}
+	
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/feedback/question/regist", method = RequestMethod.POST)
+	public Map<String, Object> fbqRegist(@AuthUser UserVo authUser,
+										 @RequestParam("chapterNo") int chapterNo,
+										 @RequestParam("fbqContent") String fbqContent,
+										 @PathVariable("coursePath") String coursePath){
+		
+		return courseMService.registFbqAndGetFbqVoAndUserInfo(authUser, chapterNo, fbqContent, coursePath);
+	}
+	
+	@Auth
+	@ResponseBody
+	@RequestMapping(value="/feedback/answer/update", method = RequestMethod.POST)
+	public int fbaUpdate(@AuthUser UserVo authUser,
+			 			 @RequestParam("fbqNo") int fbqNo,
+			 			 @RequestParam("fbaType") int fbaType) {
+		
+		FeedbackAnswerVo fbaVo = new FeedbackAnswerVo();
+		
+		fbaVo.setFbqNo(fbqNo);
+		fbaVo.setFbaType(fbaType);
+		fbaVo.setUserNo(authUser.getUserNo());
+		System.out.println(fbaVo.toString());
+		
+		
+		return courseMService.updateFba(fbaVo);
 	}
 }
