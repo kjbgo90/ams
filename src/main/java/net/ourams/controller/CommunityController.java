@@ -5,27 +5,55 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import net.ourams.interceptor.Auth;
-import net.ourams.interceptor.AuthUser;
 import net.ourams.util.S3Util;
-import net.ourams.vo.UserVo;
 import net.ourams.vo.fileUpLoadVo;
 
 @Controller
-@RequestMapping(value = "/{coursePath}/community")
+@RequestMapping(value = "/community")
 public class CommunityController {
 
 	@Autowired
 	private S3Util s3Util;
 
 	private String bucketName = "net.ourams.assignment";
+	
+
+	// community registration form
+	@RequestMapping(value = "/regform", method = RequestMethod.GET)
+	public String scheduleForm() {
+		System.out.println("regform");
+		return "community/community-register";
+	}
+
+	// community main list	
+	@RequestMapping(value = "/mainform", method = RequestMethod.GET)
+	public String mainForm() {
+		System.out.println("mainform");
+		return "community/community-main";
+	}
+
+	// community category detail list
+	@RequestMapping(value = "/selectform", method = RequestMethod.GET)
+	public String selectForm() {
+		System.out.println("selectform");
+		return "community/community-list";
+	}
+
+	// community category detail list
+	@RequestMapping(value = "/read", method = RequestMethod.GET)
+	public String communityRead() {
+		System.out.println("read");
+		return "community/community-read";
+	}
+
+	
+	
 
 	// 테스트용
 	@RequestMapping(value = "/init", method = RequestMethod.GET)
@@ -40,7 +68,7 @@ public class CommunityController {
 
 		return "redirect:/dataroom/form";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public fileUpLoadVo fileUpload(@RequestParam("file") MultipartFile file, Model model) {
@@ -75,15 +103,6 @@ public class CommunityController {
 		return vo;
 	}
 
-	// community registration form
-	@Auth
-	@RequestMapping("/regForm")
-	public String scheduleForm(@PathVariable("coursePath") String coursePath, Model model, @AuthUser UserVo authUser) {
-		System.out.println("community registration page");
-
-		model.addAttribute("coursePath", coursePath);
-		model.addAttribute("authUser", authUser);
-
-		return "course/community/register-place";
-	}
+	
+	
 }
