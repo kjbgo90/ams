@@ -16,6 +16,7 @@
 		<typeAlias alias="SubjectVo" type="net.ourams.vo.SubjectVo" />
 		<typeAlias alias="UserVo" type="net.ourams.vo.UserVo" />
 		<typeAlias alias="SubmitVo" type="net.ourams.vo.SubmitVo" />
+		<typeAlias alias="myPageVo" type="net.ourams.vo.MyPageVo" />
 	</typeAliases>
 
 	<mappers>

@@ -102,8 +102,8 @@
 						<!-- Simple Toolbar -->
 						<!---------------------------------->
 						<div class="text-center pad-btm">
-							<h3>Timeline</h3>
-							<p>Super Simple Responsive Timeline.</p>
+							<h3>My page</h3>
+							<p>Where there is a will there is a way.</p>
 						</div>
 						<hr class="new-section-sm bord-no">
 						<!---------------------------------->
@@ -114,7 +114,8 @@
 					<div id="page-content">
 
 						<div class="row">
-							<h4 class="text-main pad-btm bord-btm">java 고급 과정</h4>
+							<h4 class="text-main pad-btm bord-btm">  select class</h4>
+							
 							<div class="col-lg-6">
 								<div class="panel">
 
@@ -138,8 +139,7 @@
 											<!--Item 1-->
 											<div class="item active">
 												<h4 class="text-main">java 고급과정</h4>
-												<p>Nulla vitae elit libero, a pharetra augue mollis
-													interdum.</p>
+												<p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
 												<p>
 													<a href="">이동하기</a>
 												</p>
@@ -148,8 +148,7 @@
 											<!--Item 2-->
 											<div class="item">
 												<h4 class="text-main">자율 주행 차</h4>
-												<p>Lorem ipsum dolor sit amet, consectetur adipiscing
-													elit.</p>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscingelit.</p>
 												<p>
 													<a href="">이동하기</a>
 												</p>
@@ -198,71 +197,10 @@
 
 									</div>
 								</div>
-								<div class="demorow">
-									<div class="col-lg-5">
-										<div class="panel">
-											<div class="panel-heading">
-												<h3 class="panel-title">과제 제출률</h3>
-											</div>
-											<div class="panel-body">
-
-												<!--Data Percent-->
-												<!--===================================================-->
-												<div id="demo-pie-7-1" class="demo-pie pie-title-center"
-													data-percent="39">
-													<span class="pie-value text-thin text-2x"></span>
-												</div>
-												<!--===================================================-->
-												<!-- End Data Percent -->
-												<div class="panel-heading"></div>
-												<div class="panel-body"></div>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-7 blog">
-										<!-- Panel  Blog -->
-										<!--===================================================-->
-										<div class="panel">
-											<div class="blog-header bg-warning pad-all">
-												<blockquote class="bq-sm bq-open bq-close mar-no">과제
-													제출률이 현저히 낮습니다!!</blockquote>
-											</div>
-											<div class="blog-content">
-												<div class="blog-title media-block">
-													<div class="media-right textright">
-														<a href="#"
-															class="btn btn-icon demo-pli-paperclip icon-lg add-tooltip"
-															data-original-title="Add file" data-container="body"></a>
-													</div>
-													<div class="media-body">
-														<a href="#" class="btn-link">
-															<h2>최근 과제 1</h2>
-														</a>
-													</div>
-												</div>
-												<div class="blog-body">
-													<p>최근 과제 내용~~</p>
-												</div>
-											</div>
-											<div class="blog-footer">
-												<div class="media-left">17 Days ago</div>
-												<div class="media-body text-right">
-													<span class="mar-rgt"><i
-														class="demo-pli-heart-2 icon-fw"></i>75</span> <i
-														class="demo-pli-speech-bubble-5 icon-fw"></i>2
-												</div>
-											</div>
-											<br> <br>
-											<button id="demo-update-interval"
-												class="btn btn-block  btn-primary">Update Chart</button>
-											<br> <br>
-
-										</div>
-									</div>
-								</div>
+								
 								<div class="panel">
 									<div class="panel-heading">
-										<h3 class="panel-title">최근 제출 현황</h3>
+										<h3 class="panel-title"> 제출 현황</h3>
 									</div>
 									<div class="panel-body">
 
@@ -270,12 +208,12 @@
 											cellspacing="0" width="100%">
 											<thead>
 												<tr>
-													<th>Name</th>
-													<th>Position</th>
-													<th class="min-tablet">Office</th>
-													<th class="min-tablet">Extn.</th>
-													<th class="min-desktop">Start date</th>
-													<th class="min-desktop">Salary</th>
+													<th>과제</th>
+													<th>과제내용</th>
+													<th>첨부 파일 </th>
+													<th>제출 기한</th>
+													<th>제출 여부</th>
+													<th>점수 여부</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -308,49 +246,160 @@
 										<br> <br>
 									</div>
 								</div>
+									<h4>Community</h4>
+								<!--===================================================-->
+								<!-- End Timeline -->
 								<div class="panel">
 									<div class="panel-heading">
-										<h3 class="panel-title">공지 사항</h3>
+										<h3 class="panel-title">Enable title text</h3>
+									</div>
+									<div class="pad-all">
+										<div id="demo-gallery-3" style="display: none;">
+
+											<a href="#"> 
+											<img alt="The winding road" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile1.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile1.jpg"
+												data-description="The winding road description"
+												style="display: none">
+											</a> 
+											<a href="#"> 
+											<img alt="Pancake" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile2.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile2.jpg"
+												data-description="A pancake is a flat cake, often thin and round, prepared from a starch-based batter"
+												style="display: none">
+											</a> 
+											<a href="#"> 
+											<img alt="Foreshore" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile3.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile3.jpg"
+												data-description="The part of a shore between high- and low-water marks, or between the water and cultivated or developed land."
+												style="display: none">
+											</a> 
+											<a href="#"> 
+											<img alt="Yellow Flowers" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile4.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile4.jpg"
+												data-description="Those are yellow flowers"
+												style="display: none">
+											</a> 
+											<a href="#"> 
+											<img alt="Waterfall" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile5.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile5.jpg"
+												data-description="A waterfall is a place where water flows over a vertical drop or a series of steep drops in the course of a stream or river."
+												style="display: none">
+											</a> 
+											<a href="#"> <img alt="Pumpkin"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile6.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile6.jpg"
+												data-description="A pumpkin is a cultivar of a squash plant, most commonly of Cucurbita pepo, that is round, with smooth, slightly ribbed skin, and deep yellow to orange coloration."
+												style="display: none">
+											</a> 
+											<a href="#"> <img alt="In the jungle"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile7.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile7.jpg"
+												data-description="This is my car" style="display: none">
+											</a> 
+											<a href="#"> <img alt="Note"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile8.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile8.jpg"
+												data-description="This is a note" style="display: none">
+											</a> 
+											<a href="#"> <img alt="Off-Road Motorcycle"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile9.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile9.jpg"
+												data-description="This is a motorcycle"
+												style="display: none">
+											</a> 
+											<a href="#"> <img alt="Adventure"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile10.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile10.jpg"
+												data-description="River Adventure Camping"
+												style="display: none">
+											</a> 
+											<a href="#"> <img alt="The winding road"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile1.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile1.jpg"
+												data-description="The winding road description"
+												style="display: none">
+											</a> 
+											<a href="#"> <img alt="Pancake"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile2.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile2.jpg"
+												data-description="A pancake is a flat cake, often thin and round, prepared from a starch-based batter"
+												style="display: none">
+											</a> 
+											<a href="#"> <img alt="Foreshore"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile3.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile3.jpg"
+												data-description="The part of a shore between high- and low-water marks, or between the water and cultivated or developed land."
+												style="display: none">
+											</a> 
+											<a href="#"> <img alt="Yellow Flowers"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile4.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile4.jpg"
+												data-description="Those are yellow flowers"
+												style="display: none">
+											</a> 
+											<a href="#"> <img alt="Waterfall"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile5.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile5.jpg"
+												data-description="A waterfall is a place where water flows over a vertical drop or a series of steep drops in the course of a stream or river."
+												style="display: none">
+											</a> 
+											<a href="#"> <img alt="Pumpkin"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile6.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile6.jpg"
+												data-description="A pumpkin is a cultivar of a squash plant, most commonly of Cucurbita pepo, that is round, with smooth, slightly ribbed skin, and deep yellow to orange coloration."
+												style="display: none">
+											</a> 
+											<a href="#"> <img alt="In the jungle"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile7.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile7.jpg"
+												data-description="This is my car" style="display: none">
+											</a> 
+											<a href="#"> <img alt="Note"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile8.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile8.jpg"
+												data-description="This is a note" style="display: none">
+											</a> 
+											<a href="#"> <img alt="Off-Road Motorcycle"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile9.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile9.jpg"
+												data-description="This is a motorcycle"
+												style="display: none">
+											</a>
+										</div>
+									</div>
+								</div>
+								
+								<div class="panel">
+									<div class="panel-heading">
+										<h3 class="panel-title">최근 공지 사항</h3>
 									</div>
 									<div class="panel-body">
 
-
-										<table id="" class="table table-striped table-bordered"
-											cellspacing="0" width="100%">
+										<!-- 공지사항 리스트 딱 세개만 뽑자 최근 거만  -->
+										<table id="" class="table table-striped table-bordered" cellspacing="0" width="100%">
 											<thead>
 												<tr>
-													<th>Name</th>
-													<th>Position</th>
-													<th class="min-tablet">Office</th>
-													<th class="min-tablet">Extn.</th>
-													<th class="min-desktop">Start date</th>
-													<th class="min-desktop">Salary</th>
+													<th>등록일</th>
+													<th>제목</th>
+													<th>글쓴이</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr>
-													<td>Tiger Nixon</td>
-													<td>System Architect</td>
-													<td>Edinburgh</td>
-													<td>61</td>
 													<td>2011/04/25</td>
-													<td>$320,800</td>
+													<td>System Architect</td>
+													<td>Tiger Nixon</td>
 												</tr>
 												<tr>
-													<td>Tiger Nixon</td>
-													<td>System Architect</td>
-													<td>Edinburgh</td>
-													<td>61</td>
 													<td>2011/04/25</td>
-													<td>$320,800</td>
+													<td>Edinburgh</td>
+													<td>Tiger Nixon</td>
 												</tr>
 												<tr>
-													<td>Tiger Nixon</td>
-													<td>System Architect</td>
-													<td>Edinburgh</td>
-													<td>61</td>
 													<td>2011/04/25</td>
-													<td>$320,800</td>
+													<td>61</td>
+													<td>Tiger Nixon</td>
 												</tr>
 											</tbody>
 										</table>
@@ -367,21 +416,31 @@
 
 									<!-- Timeline header -->
 									<div class="timeline-header">
-										<div class="timeline-header-title bg-primary">Now</div>
+										<div class="timeline-header-title bg-primary">
+											Now
+										</div>
 									</div>
 									<div class="timeline-entry">
 										<div class="timeline-stat">
 											<div class="timeline-icon"></div>
-											<div class="timeline-time">3 Hours ago</div>
+											<div class="timeline-time">
+												3 Hours ago
+											</div>
 										</div>
 										<div class="timeline-label">
 											<p class="mar-no pad-btm">
-												<a href="#" class="btn-link">Lisa D.</a> commented on <a
-													href="#" class="text-semibold"><i>The Article</i></a>
+												<a href="#" class="btn-link">
+													Lisa D.
+												</a> 
+													commented on 
+												<a href="#" class="text-semibold">
+													<i>The Article</i>
+												</a>
 											</p>
-											<blockquote class="bq-sm bq-open mar-no">Lorem
-												ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-												nonummy nibh euismod tincidunt.</blockquote>
+											<blockquote class="bq-sm bq-open mar-no">
+												Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+												nonummy nibh euismod tincidunt.
+											</blockquote>
 										</div>
 									</div>
 									<div class="timeline-entry">
@@ -399,13 +458,33 @@
 									<div class="timeline-entry">
 										<div class="timeline-stat">
 											<div class="timeline-icon"></div>
-											<div class="timeline-time">13:27</div>
+											<div class="timeline-time">
+												13:27
+											</div>
 										</div>
 										<div class="timeline-label">
-											<img class="img-xs img-circle" src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png"
-												alt="Profile picture"> <a href="#" class="btn-link">Michael
-												Both</a> Like <a href="#" class="text-semibold"><i>The
-													Article.</i></a>
+											<img class="img-xs img-circle" src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png" alt="Profile picture"> 
+											<a href="#" class="btn-link">Michael Both</a> 
+												Like 
+											<a href="#" class="text-semibold">
+												<i>The Article.</i>
+											</a>
+										</div>
+									</div>
+									<div class="timeline-entry">
+										<div class="timeline-stat">
+											<div class="timeline-icon"></div>
+											<div class="timeline-time">
+												13:27
+											</div>
+										</div>
+										<div class="timeline-label">
+											<img class="img-xs img-circle" src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png" alt="Profile picture"> 
+											<a href="#" class="btn-link">Michael Both</a> 
+												Like 
+											<a href="#" class="text-semibold">
+												<i>The Article.</i>
+											</a>
 										</div>
 									</div>
 									<div class="timeline-entry">
@@ -419,110 +498,82 @@
 									</div>
 								</div>
 								<br> <br> <br> <br>
-								<!--===================================================-->
-								<!-- End Timeline -->
+								
 								<div class="panel">
-									<div class="panel-heading">
-										<h3 class="panel-title">Enable title text</h3>
-									</div>
-									<div class="pad-all">
-										<div id="demo-gallery-3" style="display: none;">
-
-											<a href="#"> <img alt="The winding road"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile1.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile1.jpg"
-												data-description="The winding road description"
-												style="display: none">
-											</a> <a href="#"> <img alt="Pancake"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile2.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile2.jpg"
-												data-description="A pancake is a flat cake, often thin and round, prepared from a starch-based batter"
-												style="display: none">
-											</a> <a href="#"> <img alt="Foreshore"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile3.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile3.jpg"
-												data-description="The part of a shore between high- and low-water marks, or between the water and cultivated or developed land."
-												style="display: none">
-											</a> <a href="#"> <img alt="Yellow Flowers"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile4.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile4.jpg"
-												data-description="Those are yellow flowers"
-												style="display: none">
-											</a> <a href="#"> <img alt="Waterfall"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile5.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile5.jpg"
-												data-description="A waterfall is a place where water flows over a vertical drop or a series of steep drops in the course of a stream or river."
-												style="display: none">
-											</a> <a href="#"> <img alt="Pumpkin"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile6.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile6.jpg"
-												data-description="A pumpkin is a cultivar of a squash plant, most commonly of Cucurbita pepo, that is round, with smooth, slightly ribbed skin, and deep yellow to orange coloration."
-												style="display: none">
-											</a> <a href="#"> <img alt="In the jungle"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile7.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile7.jpg"
-												data-description="This is my car" style="display: none">
-											</a> <a href="#"> <img alt="Note"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile8.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile8.jpg"
-												data-description="This is a note" style="display: none">
-											</a> <a href="#"> <img alt="Off-Road Motorcycle"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile9.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile9.jpg"
-												data-description="This is a motorcycle"
-												style="display: none">
-											</a> <a href="#"> <img alt="Adventure"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile10.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile10.jpg"
-												data-description="River Adventure Camping"
-												style="display: none">
-											</a> <a href="#"> <img alt="The winding road"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile1.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile1.jpg"
-												data-description="The winding road description"
-												style="display: none">
-											</a> <a href="#"> <img alt="Pancake"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile2.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile2.jpg"
-												data-description="A pancake is a flat cake, often thin and round, prepared from a starch-based batter"
-												style="display: none">
-											</a> <a href="#"> <img alt="Foreshore"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile3.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile3.jpg"
-												data-description="The part of a shore between high- and low-water marks, or between the water and cultivated or developed land."
-												style="display: none">
-											</a> <a href="#"> <img alt="Yellow Flowers"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile4.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile4.jpg"
-												data-description="Those are yellow flowers"
-												style="display: none">
-											</a> <a href="#"> <img alt="Waterfall"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile5.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile5.jpg"
-												data-description="A waterfall is a place where water flows over a vertical drop or a series of steep drops in the course of a stream or river."
-												style="display: none">
-											</a> <a href="#"> <img alt="Pumpkin"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile6.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile6.jpg"
-												data-description="A pumpkin is a cultivar of a squash plant, most commonly of Cucurbita pepo, that is round, with smooth, slightly ribbed skin, and deep yellow to orange coloration."
-												style="display: none">
-											</a> <a href="#"> <img alt="In the jungle"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile7.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile7.jpg"
-												data-description="This is my car" style="display: none">
-											</a> <a href="#"> <img alt="Note"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile8.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile8.jpg"
-												data-description="This is a note" style="display: none">
-											</a> <a href="#"> <img alt="Off-Road Motorcycle"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile9.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile9.jpg"
-												data-description="This is a motorcycle"
-												style="display: none">
-											</a>
-										</div>
-									</div>
-								</div>
+					                        <div class="panel-heading">
+					                            <h3 class="panel-title">Newsfeed</h3>
+					                        </div>
+					                        <div class="nano" style="height:360px">
+					                            <div class="nano-content">
+					                                <div class="panel-body bord-btm">
+					                                    <p class="text-bold text-main text-sm">#68464</p>
+					                                    <p class="pad-btm">To achieve this, it would be necessary to have uniform grammar, pronunciation and more common words. </p>
+					                                    <a href="#" class="task-footer">
+					                                        <span class="box-inline">
+					                                            <label class="label label-warning">Feature Request</label>
+					                                            <label class="label label-danger">Bug</label>
+					                                        </span>
+					                                    </a>
+					                                </div>
+					                                <div class="panel-body bord-btm">
+					                                    <p class="text-bold text-main text-sm">#45684</p>
+					                                    <p class="pad-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+					                                    <a href="#" class="task-footer">
+					                                        <span class="box-inline">
+					                                            <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span>
+					                                            <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
+					                                        </span>
+					                                        <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
+					                                    </a>
+					                                </div>
+					                                <div class="panel-body bord-btm">
+					                                     <p class="text-bold text-main text-sm">#84564</p>
+					                                     <div class="task-img">
+					                                         <img class="img-responsive" src="img/shared-img-2.jpg" alt="Image">
+					                                     </div>
+					                                     <p class="pad-btm">No one rejects, dislikes, or avoids pleasure itself, because it is pleasure.</p>
+					                                     <a href="#" class="task-footer">
+					                                         <span class="box-inline">
+					                                             <span class="pad-rgt"><i class="demo-pli-heart-2"></i> 54K</span>
+					                                         </span>
+					                                         <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>03:08</span>
+					                                     </a>
+					                                 </div>
+					                                <div class="panel-body bord-btm">
+					                                     <p class="text-bold text-main text-sm">#23255</p>
+					                                     <p class="pad-btm">The new common language will be more simple and regular than the existing European languages.</p>
+					                                     <a href="#" class="task-footer">
+					                                         <span class="box-inline">
+					                                             <img class="img-xs img-circle" src="img/profile-photos/8.png" alt="task-user">
+					                                             Brenda Fuller
+					                                         </span>
+					                                     </a>
+					                                 </div>
+					                                <div class="panel-body bord-btm">
+					                                    <p class="text-bold text-main text-sm">#34522</p>
+					                                    <p class="pad-btm">To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it?</p>
+					                                    <a href="#" class="task-footer">
+					                                        <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
+					                                    </a>
+					                                </div>
+					                                <div class="panel-body bord-btm">
+					                                    <p class="text-bold text-main text-sm">#45684</p>
+					                                    <p class="pad-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+					                                    <a href="#" class="task-footer">
+					                                        <span class="box-inline">
+					                                            <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span>
+					                                            <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
+					                                        </span>
+					                                        <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
+					                                    </a>
+					                                </div>
+					                            </div>
+					                        </div>
+					                        <div class="panel-footer text-right">
+					                            <button class="btn btn-sm btn-Default">Load more</button>
+					                            <button class="btn btn-sm btn-primary">View all</button>
+					                        </div>
+					                    </div>
 							</div>
 						</div>
 					</div>

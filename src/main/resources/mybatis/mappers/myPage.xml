@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="myPage">
+
+
+<!-- 왼쪽 폴더 리스트들 틀림 -->
+	<select id="secectCourse" resultType="myPageVo" parameterType="myPageVo">
+		<![CDATA[
+			select 	cr.courseNo as CourseNo, 
+					c.courseName as CourseName
+			from courseRegist cr join course c 
+			on cr.courseNo=c.courseNo 
+			where userNo= #{userNo}
+		]]>
+	</select>
+
+
+</mapper>
+
