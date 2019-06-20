@@ -136,7 +136,6 @@
 								
 								<div id="data">
 								</div>
-								<button class="btn btn-default" id="btnTest">버튼</button>
 							</div>
 						</div>
 
@@ -147,58 +146,71 @@
 								</div>
 								<br>
 								<c:if test="${authUser.userType eq 1 }">
-								
-								<div id="teacher-menu-carousel" class="carousel slide" data-interval="false" data-ride="carousel">
-					
-					                <!--Indicators-->
-					                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-					                <ol class="carousel-indicators out">
-					                    <li data-slide-to="0" data-target="#teacher-menu-carousel" class="active"></li>
-					                    <li data-slide-to="1" data-target="#teacher-menu-carousel"></li>
-					                </ol>
-					                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-					
-					                <div class="carousel-inner text-center">
-					
-					                    <!--Item 1-->
-					                    <div class="item active">
-					                        <div class="panel-body text-left" style="white-space: normal;">
-												<label class="control-labe"><span class="text-main text-bold mar-no">현재 진행중인 과목</span></label>
-												<p class="text" id="nowSubjectTitle"></p>
-												<br>
-												<label class="control-labe"><span class="text-main text-bold mar-no">챕터 선택</span></label>
-												<div class="select">
-													<select class="form-control" id="chapterSelector" disabled="disabled">
-													</select>
+
+									<div id="teacher-menu-carousel" class="carousel slide" data-interval="false" data-ride="carousel">
+
+										<!--Indicators-->
+										<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+										<ol class="carousel-indicators out">
+											<li data-slide-to="0" data-target="#teacher-menu-carousel" class="active"></li>
+											<li data-slide-to="1" data-target="#teacher-menu-carousel"></li>
+										</ol>
+										<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+										<div class="carousel-inner text-center">
+
+											<!--Item 1-->
+											<div class="item active">
+												<div class="panel-body text-left" style="white-space: normal;">
+													<label class="control-label"><span class="text-main text-bold mar-no">현재 진행중인 과목</span></label>
+													<p class="text" id="nowSubjectTitle"></p>
+													<br> <label class="control-label"><span class="text-main text-bold mar-no">챕터 선택</span></label>
+													<div class="select">
+														<select class="form-control" id="chapterSelector" disabled="disabled">
+														</select>
+													</div>
+													<br>
+													<br>
+													<br> <label class="control-label"><span class="text-main text-bold mar-no">질문 내용</span></label>
+													<textarea placeholder="질문 내용을 입력해주세요." rows="10" class="form-control" id="questionContent" disabled="disabled"></textarea>
 												</div>
-												<br><br><br>
-												<label class="control-labe"><span class="text-main text-bold mar-no">질문 내용</span></label>
-												<textarea placeholder="질문 내용을 입력해주세요." rows="10" class="form-control" id="questionContent" disabled="disabled"></textarea>
+												<div class="panel-footer text-center">
+													<button class="media btn btn-info btn-labeled btn-rounded btn-sm" data-target='#feedbackQuestion-modal' data-toggle='modal' id="feedbackQuestionButton" disabled="disabled">
+														<div class="media-left">
+															<span class="icon-wrap icon-wrap-xs icon-circle alert-icon"> <i class="fa fa-quora icon-2x"></i>
+															</span>
+														</div>
+														<div class="media-body text-center" style="padding-top: 4px;">
+															<p class="alert-message text-bold">Feedback</p>
+															<p class="alert-message text-bold">Question</p>
+														</div>
+													</button>
+												</div>
 											</div>
-											<div class="panel-footer text-center">
-												<button class="media btn btn-info btn-labeled btn-rounded btn-sm" data-target='#feedbackQuestion-modal' data-toggle='modal' id="feedbackQuestionButton" disabled="disabled">
-													<div class="media-left">
-														<span class="icon-wrap icon-wrap-xs icon-circle alert-icon">
-															<i class="fa fa-quora icon-2x"></i>
-														</span>
+
+											<!--Item 2-->
+											<div class="item">
+												<div class="panel-body text-left" style="white-space: normal;">
+													<label class="control-label"><span class="text-main text-bold mar-no">과목 선택</span></label>
+													<div class="select">
+														<select class="form-control" id="subjectSelector" disabled="disabled">
+														</select>
 													</div>
-													<div class="media-body text-center" style="padding-top: 4px;">
-														<p class="alert-message text-bold">Feedback</p>
-														<p class="alert-message text-bold">Question</p>
+													<br>
+													<label class="control-label"><span class="text-main text-bold mar-no">질문 리스트</span></label>
+													<div class="list-group" id="questionList">
+														<c:forEach items="${SCListMap.subjectList }" var="vo">
+															<a href="#" class="list-group-item subjectPick subject${vo.subjectNo }" data-subjectno="${vo.subjectNo }"> <span class="text-main text-semibold subTitle">${vo.subjectTitle }</span><br>
+																<small class="text-muted subDate">${vo.startDate } - ${vo.endDate }</small>
+															</a>
+														</c:forEach>
 													</div>
-												</button>
+												</div>
 											</div>
-					                    </div>
-					
-					                    <!--Item 2-->
-					                    <div class="item">
-					                        <h4 class="text-main">Second slide label</h4>
-					                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-					                    </div>
-					                    
-					                </div>
-					            </div>
-								
+
+										</div>
+									</div>
+
 								</c:if>
 								<c:if test="${authUser.userType eq 2 }">
 									<div class="panel-body text-center" id="feedbackButtonPanel">
@@ -371,7 +383,7 @@
 					<div class="panel">
 						<div class="panel-body">
 							<div class="row">
-								<div id="feedback-question-pie" class="pie pie-title-center col-xs-6" data-percent="33.92">
+								<div id="feedback-question-pie" class="pie pie-title-center col-xs-6" data-percent="0">
 									<span class="pie-value text-thin text-2x"></span>
 								</div>
 								<div class="col-xs-6 text-center" style="width: 250px; height: 200px; overflow: auto;" id="fbaList">
@@ -773,17 +785,17 @@
 			type : "post",
 			data : {fbqNo : fbqNo, fbaType : fbaType},
 			dataType : "json",
-			success : function(result) {
-				console.log(result);
-				if(result == 1){
-					msg = {};
-					msg.target = "feedbackAnswer";
-					msg.sendCourse = "${coursePath}";
-					msg.sendUserNo = "${authUser.userNo}";
-					msg.sendFbaType = fbaType;
+			success : function(percent) {
+				console.log(percent);
+				
+				msg = {};
+				msg.target = "feedbackAnswer";
+				msg.sendCourse = "${coursePath}";
+				msg.sendUserNo = "${authUser.userNo}";
+				msg.sendFbaType = fbaType;
+				msg.sendUpdatePercent = percent;
 							
-					webSock.send(JSON.stringify(msg));
-				}
+				webSock.send(JSON.stringify(msg));
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
@@ -802,16 +814,17 @@
 			type : "post",
 			data : {fbqNo : fbqNo, fbaType : fbaType},
 			dataType : "json",
-			success : function(result) {
-				if(result == 1){
-					msg = {};
-					msg.target = "feedbackAnswer";
-					msg.sendCourse = "${coursePath}";
-					msg.sendUserNo = "${authUser.userNo}";
-					msg.sendFbaType = fbaType;
+			success : function(percent) {
+				console.log(percent);
+				
+				msg = {};
+				msg.target = "feedbackAnswer";
+				msg.sendCourse = "${coursePath}";
+				msg.sendUserNo = "${authUser.userNo}";
+				msg.sendFbaType = fbaType;
+				msg.sendUpdatePercent = percent;
 							
-					webSock.send(JSON.stringify(msg));
-				}
+				webSock.send(JSON.stringify(msg));
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
@@ -829,8 +842,6 @@
             $(this.el).find('.pie-value').text(Math.round(percent) + '%');
         }
     });
-	
-	
 	
 	$('#toggle-no').click(function() {
 		$('.circle-loader').toggleClass('load-complete-no');
@@ -932,11 +943,13 @@
 				var sendFbaType = obj.sendFbaType;
 				var circleloader = "#cl" + sendUserNo;
 				var checkmark = "#cm" + sendUserNo;
+				var percent = obj.sendUpdatePercent;
 				
 				if("${authUser.userNo}" == "${courseVo.teacherNo}"){
 					if(sendFbaType == 1){
 						$(circleloader).toggleClass('load-complete');
 						$(circleloader).children('.checkmark').toggle();
+						$('#feedback-question-pie').data('easyPieChart').update(percent);
 					}
 					
 					if(sendFbaType == 2){
@@ -944,6 +957,7 @@
 						$(checkmark).addClass('checkmark-no');
 						$(circleloader).toggleClass('load-complete-no');
 						$(circleloader).children('.checkmark-no').toggle();
+						$('#feedback-question-pie').data('easyPieChart').update(percent);
 					}
 						
 				}
@@ -1054,6 +1068,18 @@
 			str += "<img alt='Profile Picture' class='img-xs img-circle mar-btm' src='${pageContext.request.contextPath }" + fbaVo.logoPath + "'>&nbsp;&nbsp;&nbsp;";
 			str += "<div class='circle-loader' id='cl" + fbaVo.userNo + "'>";
 			str += "	<div class='checkmark draw' id='cm" + fbaVo.userNo + "' style='display: none;'></div>";
+			str += "</div>";
+		}
+		else if(fbaVo.fbaType == 1){
+			str += "<img alt='Profile Picture' class='img-xs img-circle mar-btm' src='${pageContext.request.contextPath }" + fbaVo.logoPath + "'>&nbsp;&nbsp;&nbsp;";
+			str += "<div class='circle-loader load-complete' id='cl" + fbaVo.userNo + "'>";
+			str += "	<div class='checkmark draw' id='cm" + fbaVo.userNo + "' style='display: block;'></div>";
+			str += "</div>";
+		}
+		else if(fbaVo.fbaType == 2){
+			str += "<img alt='Profile Picture' class='img-xs img-circle mar-btm' src='${pageContext.request.contextPath }" + fbaVo.logoPath + "'>&nbsp;&nbsp;&nbsp;";
+			str += "<div class='circle-loader load-complete-no' id='cl" + fbaVo.userNo + "'>";
+			str += "	<div class='checkmark-no draw' id='cm" + fbaVo.userNo + "' style='display: block;'></div>";
 			str += "</div>";
 		}
 		

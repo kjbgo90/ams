@@ -181,8 +181,14 @@ public class CourseMainDao {
 		return sqlSession.selectList("course.selectUserListByCourseNoAndUserType", courseNo);
 	}
 
-	public int updateFbaByFbaVo(FeedbackAnswerVo fbaVo) {
-		return sqlSession.update("course.updateFbaByFbaVo", fbaVo);
+	public int updateFbaAndFbqByFbaVo(FeedbackAnswerVo fbaVo) {
+		sqlSession.update("course.updateFbaTypeByFbaVo", fbaVo);
+		
+		return sqlSession.update("course.updateFbqPercentByFbaVo", fbaVo);
+	}
+
+	public double selectFbqPercentByFbqNo(int fbqNo) {
+		return sqlSession.selectOne("course.selectFbqPercentByFbqNo", fbqNo);
 	}
 
 }

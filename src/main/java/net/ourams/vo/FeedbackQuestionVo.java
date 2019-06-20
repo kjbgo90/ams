@@ -7,19 +7,23 @@ public class FeedbackQuestionVo {
 	private int fbqCount;
 	private int chapterNo;
 	private int teacherNo;
+	private double percent;
+	private int courseNo;
 	private String subjectTitle;
 	private String chapterContent;
 
 	public FeedbackQuestionVo() {
 	}
 
-	public FeedbackQuestionVo(int fbqNo, String fbqContent, int fbqCount, int chapterNo, int teacherNo,
-			String subjectTitle, String chapterContent) {
+	public FeedbackQuestionVo(int fbqNo, String fbqContent, int fbqCount, int chapterNo, int teacherNo, double percent,
+			int courseNo, String subjectTitle, String chapterContent) {
 		this.fbqNo = fbqNo;
 		this.fbqContent = fbqContent;
 		this.fbqCount = fbqCount;
 		this.chapterNo = chapterNo;
 		this.teacherNo = teacherNo;
+		this.percent = percent;
+		this.courseNo = courseNo;
 		this.subjectTitle = subjectTitle;
 		this.chapterContent = chapterContent;
 	}
@@ -80,11 +84,27 @@ public class FeedbackQuestionVo {
 		this.chapterContent = chapterContent;
 	}
 
+	public double getPercent() {
+		return percent;
+	}
+
+	public void setPercent(double percent) {
+		this.percent = percent;
+	}
+
+	public int getCourseNo() {
+		return courseNo;
+	}
+
+	public void setCourseNo(int courseNo) {
+		this.courseNo = courseNo;
+	}
+
 	@Override
 	public String toString() {
 		return "FeedbackQuestionVo [fbqNo=" + fbqNo + ", fbqContent=" + fbqContent + ", fbqCount=" + fbqCount
-				+ ", chapterNo=" + chapterNo + ", teacherNo=" + teacherNo + ", subjectTitle=" + subjectTitle
-				+ ", chapterContent=" + chapterContent + "]";
+				+ ", chapterNo=" + chapterNo + ", teacherNo=" + teacherNo + ", percent=" + percent + ", courseNo="
+				+ courseNo + ", subjectTitle=" + subjectTitle + ", chapterContent=" + chapterContent + "]";
 	}
 
 }

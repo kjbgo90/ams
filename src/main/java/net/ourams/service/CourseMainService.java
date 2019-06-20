@@ -224,6 +224,7 @@ public class CourseMainService {
 		fbqVo.setTeacherNo(authUser.getUserNo());
 		fbqVo.setChapterContent(chapterVo.getChapterContent());
 		fbqVo.setSubjectTitle(courseMDao.selectSubjectBySubjectNo(chapterVo.getSubjectNo()).getSubjectTitle());
+		fbqVo.setCourseNo(courseVo.getCourseNo());
 		
 		/* feedbackQuestion테이블에 값을 넣어줌 */
 		courseMDao.insertFbqByFbqVo(fbqVo);
@@ -245,8 +246,10 @@ public class CourseMainService {
 		return map;
 	}
 
-	public int updateFba(FeedbackAnswerVo fbaVo) {
-		return courseMDao.updateFbaByFbaVo(fbaVo);
+	public double updateFbaAndFbqPercent(FeedbackAnswerVo fbaVo) {
+		courseMDao.updateFbaAndFbqByFbaVo(fbaVo);
+		
+		return courseMDao.selectFbqPercentByFbqNo(fbaVo.getFbqNo());
 	}
 
 	

@@ -209,7 +209,7 @@ public class CourseMainController {
 	@Auth
 	@ResponseBody
 	@RequestMapping(value="/feedback/answer/update", method = RequestMethod.POST)
-	public int fbaUpdate(@AuthUser UserVo authUser,
+	public double fbaUpdate(@AuthUser UserVo authUser,
 			 			 @RequestParam("fbqNo") int fbqNo,
 			 			 @RequestParam("fbaType") int fbaType) {
 		
@@ -221,6 +221,6 @@ public class CourseMainController {
 		System.out.println(fbaVo.toString());
 		
 		
-		return courseMService.updateFba(fbaVo);
+		return courseMService.updateFbaAndFbqPercent(fbaVo);
 	}
 }

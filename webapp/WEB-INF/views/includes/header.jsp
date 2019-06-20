@@ -11,7 +11,7 @@
 		<!--Brand logo & name-->
 		<!--================================-->
 		<div class="navbar-header">
-			<a href="${pageContext.request.contextPath }/course/main" class="navbar-brand text-center"> <img src="${pageContext.request.contextPath }/assets/img/logo.png" alt="Nifty Logo" class="brand-icon"></a>
+			<a href="${pageContext.request.contextPath }/index" class="navbar-brand text-center"> <img src="${pageContext.request.contextPath }/assets/img/logo.svg" alt="Nifty Logo" class="brand-icon"></a>
 		</div>
 		<!--================================-->
 		<!--End brand logo & name-->

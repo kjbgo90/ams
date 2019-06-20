@@ -322,13 +322,15 @@
 	    									fbqContent,
 	    									fbqCount,
 	    									chapterNo,
-	    									teacherNo)
+	    									teacherNo,
+	    									courseNo)
 			VALUES (
 	    									#{fbqNo},
 	    									#{fbqContent}, 
 	    									#{fbqCount},
 	    									#{chapterNo},
-	    									#{teacherNo})
+	    									#{teacherNo},
+	    									#{courseNo})
 		]]>
 	</insert>
 	
@@ -371,7 +373,7 @@
 		]]>
 	</update>
 	
-	<update id="updateFbaByFbaVo" parameterType="FbaVo">
+	<update id="updateFbaTypeByFbaVo" parameterType="FbaVo">
 		<![CDATA[
 			UPDATE 	 feedbackanswer 
 			SET 	 fbaType = #{fbaType}
@@ -379,5 +381,27 @@
 				AND	 fbqNo = #{fbqNo}
 		]]>
 	</update>
+	
+	<update id="updateFbqPercentByFbaVo" parameterType="FbaVo">
+		<![CDATA[
+			UPDATE 	 feedbackquestion
+			SET 	 percent = (((SELECT COUNT(fbaNo) 
+								  FROM   feedbackanswer
+								  WHERE  fbqNo = #{fbqNo}
+								  AND	   fbaType = 1) / 
+								 (SELECT fbqCount 
+								  FROM   feedbackquestion 
+								  WHERE  fbqNo = #{fbqNo})) * 100)
+			WHERE 	 fbqNo = #{fbqNo}
+		]]>
+	</update>
+	
+	<select id="selectFbqPercentByFbqNo" parameterType="int" resultType="double">
+		<![CDATA[
+			SELECT 		percent
+			FROM   		feedbackquestion
+			WHERE  		fbqNo = #{fbqNo}
+		]]>
+	</select>
 	
 </mapper>

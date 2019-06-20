@@ -23,6 +23,7 @@
 
 <!--Nifty Premium Icon [ DEMONSTRATION ]-->
 <link href="${pageContext.request.contextPath }/assets/css/demo/nifty-demo-icons.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/assets/css/premium/icon-sets/icons/line-icons/premium-line-icons.min.css" rel="stylesheet">
 
 <!--Nifty Stylesheet [ REQUIRED ]-->
 <link href="${pageContext.request.contextPath }/assets/css/nifty.css" rel="stylesheet">
@@ -60,17 +61,17 @@
 						<div class="col-lg-10 col-lg-offset-1">
 							<div class="panel panel-body">
 								<div class="panel-body">
-									<div class="col-lg-4" style="position: absolute; width: 300px; margin: 140px 0px 0px 200px;">
+									<div class="col-lg-6 col-lg-offset-1">
 
 										<!-- Panel  Blog -->
 										<!--===================================================-->
 										<div class="panel">
 											<div class="blog-header">
-												<img class="img-responsive align-center" src="${pageContext.request.contextPath }/assets/img/logo.png" alt="Image">
+												<img class="img-responsive" src="${pageContext.request.contextPath }/assets/img/logo2.svg" alt="Image">
 											</div>
 										</div>
 									</div>
-									<div class="cls-content pull-right col-lg-4">
+									<div class="cls-content col-lg-4 col-lg-offset-1">
 										<div class="cls-content-sm panel">
 											<div class="panel-body">
 												<div class="mar-ver pad-btm">
