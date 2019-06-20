@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import net.ourams.dao.CourseMainDao;
 import net.ourams.interceptor.Auth;
 import net.ourams.interceptor.AuthUser;
 import net.ourams.service.CourseReplyService;
@@ -26,6 +27,7 @@ import net.ourams.service.PostService;
 import net.ourams.service.UserService;
 import net.ourams.util.JSONResult;
 import net.ourams.util.S3Util;
+import net.ourams.vo.CourseVo;
 import net.ourams.vo.PostVo;
 import net.ourams.vo.ReplyVo;
 import net.ourams.vo.UserVo;
@@ -41,6 +43,8 @@ public class CourseNoticeController {
 	private UserService userService;
 	@Autowired
 	private CourseReplyService courseReplyService;
+	@Autowired
+	private CourseMainDao mainDao;
 
 	@Autowired
 	private S3Util s3Util;
@@ -108,21 +112,29 @@ public class CourseNoticeController {
 	}
 	
 	
+	//페이징 한것들 
 	@ResponseBody
 	@RequestMapping(value = "/selectPostPaging", method = RequestMethod.POST)
-	public Map<String, Object> selectPostPaging(@RequestParam("pageNo") int pageNo) {
+	public Map<String, Object> selectPostPaging(@PathVariable("coursePath") String coursePath,
+												@RequestParam("pageNo") int pageNo) {
 		System.out.println("selectPostPaging");
-		Map<String, Object> map = postService.selectPostPaging(pageNo);
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
+		System.out.println(courseVo.getCourseNo());
+		Map<String, Object> map = postService.selectPostPaging(courseVo.getCourseNo(), pageNo);
 		return map;
 	}
 
-
+	// 검색해서 페이징 만들어 부렸다 
 	@ResponseBody
 	@RequestMapping(value = "/searchList", method = RequestMethod.POST)
-	public List<PostVo> searchList(@RequestParam("postTitle") String postTitle) {
+	public Map<String, Object> searchList( @PathVariable("coursePath") String coursePath,
+									@RequestParam("pageNo") int pageNo,
+								 	@RequestParam("postTitle") String postTitle) {
 		System.out.println("searchList");
-		List<PostVo> list = postService.searchList(postTitle);
-		return list;
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
+		System.out.println(courseVo.getCourseNo());
+		Map<String, Object> map = postService.searchList(postTitle, courseVo.getCourseNo(), pageNo);
+		return map;
 	}
 	
 	/* 글읽기 */

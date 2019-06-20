@@ -265,34 +265,66 @@
 			//ajax 처리해서 검색 
 			
 			$("#postList").empty("");
+			pageNo = 1;
+			
 			$.ajax({
 				url : "${pageContext.request.contextPath }/${coursePath}/qna/searchList",
 				type : "post",
 				data : {
-					postTitle:postTitle
+					postTitle:postTitle,
+					pageNo:pageNo
 				},
 				dataType : "json",	
-				success : function(list) {
-					if (list.length == 0) {
-						$("#blogList").html("검색된 게시글이 없습니다.");
+				success : function(map) {
+					console.log(map);
+					console.log(map.maxPage);
+					console.log(map.list);
+					console.log(pageNo);
+					
+					paging(pageNo,map.maxPage);
+					
+					if (map.list.length == 0) {
+						$("#blogList").html(
+								"등록된 게시글이 없습니다.");
 					} else {
 						str = "";
-						for (var i = 0; i < list.length; i++) {
+						var currentDate = new Date();
+						currentDate = currentDate.getFullYear() + "/" + pad( (currentDate.getMonth()+1), 2 ) + "/"+ currentDate.getDate() + ""
+						console.log("currentDate", currentDate);
+						
+						for (var i = 0; i < map.list.length; i++) {
 							
-								str+="<tr>"	
-								str+="<td>"+list[i].rnum+"</td>"			
-								str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"'>["+list[i].subjectTitle+"]"+list[i].postTitle+"</a>&nbsp;&nbsp;<div class='label label-warning'>N</div></td>"
-								str+="<td><span class='text-muted'>"+list[i].regDate+"</span></td>"
-								str+="<td>"+list[i].subjectTitle+"</td>"	
-								str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"' class='btn-link'>"+list[i].userName+"</a></td>"				
-								str+="<td>"+list[i].hit+"</td>"	
-								str+="<td><i class='demo-pli-speech-bubble-5 icon-fw'></i>2</td>"
-								str+="</tr>"		
-								
+							
+						str+="<tr>"	
+						str+="<td>"+map.list[i].rnum+"</td>"			
+						str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/qna/read/"+map.list[i].postNo+"'>["+map.list[i].subjectTitle+"]"+map.list[i].postTitle+"</a>"
+						str+=  map.list[i].regDate == currentDate ? "&nbsp;&nbsp; <div class='label label-warning'>N</div>" : ""
+						str+="</td>"
+						str+="<td><span class='text-muted'>"+map.list[i].regDate+"</span></td>"
+						str+="<td>"+map.list[i].subjectTitle+"</td>"	
+						str+="<td><span>"+map.list[i].userName+"</span></td>"				
+						str+="<td>"+map.list[i].hit+"</td>"	
+						str+="<td><i class='demo-pli-speech-bubble-5 icon-fw'></i>"+map.list[i].replyCount+"</td>"
+						str+="</tr>"		
+						
+						/*
+						<tr>
+							<td>${PostVo.rownum}</td>
+							<td><a class="btn-link" href="${pageContext.request.contextPath }/${coursePath}/qna/read/${PostVo.postNo}">${PostVo.postTitle}</a>&nbsp;&nbsp;<div class="label label-warning">N</div></td>
+							<td><span class="text-muted">${PostVo.regDate}</span></td>
+							<td>${PostVo.subjectTitle}</td>
+							<td><a href="#" class="btn-link">${PostVo.userName}</a></td>
+							<td>${PostVo.hit}</td>
+							<td><i class="demo-pli-speech-bubble-5 icon-fw"></i>2</td>
+						</tr>
+						*/
+						
 						}
 						$("#postList").html(str);
 						str = "";
 					}
+					
+					paging(pageNo, map.maxPage);
 					
 				},
 				error : function(XHR, status, error) {

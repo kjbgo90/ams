@@ -387,14 +387,16 @@
 							var dataRoomNoByInput = $('input:checkbox[name="dataRoomNoByInput"]:checked').val();
 
 							console.log(dataRoomNoByInput);
-							var courseNo = 1
+							var courseNo = '${courseNo}';
+							console.log('${coursePath}');
+							console.log('${courseNo}');
 							var dataRoomNo = 1
 							$("#dataRoomNoByInput").val(dataRoomNo);
 							
 							//2. 폴더하고 파일리스트 뽑아주는것 
 							strList = "";
 							$.ajax({
-										url : "${pageContext.request.contextPath }/dataroom/folderList",
+										url : "${pageContext.request.contextPath }/{coursePath}/dataroom/folderList",
 										type : "post",
 										dataType : "json",
 										data : {
@@ -418,7 +420,7 @@
 
 											strList2 = "";
 											$.ajax({
-														url : "${pageContext.request.contextPath }/dataroom/fileList",
+														url : "${pageContext.request.contextPath }/{coursePath}/dataroom/fileList",
 														type : "post",
 														data : {
 															courseNo : courseNo,
@@ -465,7 +467,7 @@
 							//태그 리스트
 							tagList = "";
 							$.ajax({
-										url : "${pageContext.request.contextPath }/dataroom/tagList",
+										url : "${pageContext.request.contextPath }/{coursePath}/dataroom/tagList",
 										type : "post",
 										dataType : "json",
 										success : function(list) {
@@ -507,7 +509,7 @@
 												console.log(dataTagNo);
 
 												$.ajax({
-															url : "${pageContext.request.contextPath }/dataroom/SelectTagOnByDataTagNo",
+															url : "${pageContext.request.contextPath }/{coursePath}/dataroom/SelectTagOnByDataTagNo",
 															type : "post",
 															data : {
 																dataTagNo : dataTagNo
@@ -551,7 +553,7 @@
 							//업로드할때 태그 
 							tagList2 = "";
 							$.ajax({
-										url : "${pageContext.request.contextPath }/dataroom/tagList",
+										url : "${pageContext.request.contextPath }/{coursePath}/dataroom/tagList",
 										type : "post",
 										dataType : "json",
 										success : function(list) {
@@ -606,11 +608,11 @@
 									.val();
 							console.log(dataRoomNoByInput2);
 
-							var courseNo = 1;
+							var courseNo = '${courseNo}';
 							$("#fileList").empty("")
 							strList = "";
 							$.ajax({
-										url : "${pageContext.request.contextPath }/dataroom/folderList",
+										url : "${pageContext.request.contextPath }/{coursePath}/dataroom/folderList",
 										type : "post",
 										dataType : "json",
 										data : {
@@ -632,7 +634,7 @@
 
 											strList2 = "";
 											$.ajax({
-														url : "${pageContext.request.contextPath }/dataroom/fileList",
+														url : "${pageContext.request.contextPath }/{coursePath}/dataroom/fileList",
 														type : "post",
 														data : {
 															courseNo : courseNo,
@@ -690,10 +692,10 @@
 								console.log("-1~~");
 								var dataRoomNo = 1;
 							}
-							var courseNo = 1;
+							var courseNo = '${courseNo}';
 							$
 									.ajax({
-										url : "${pageContext.request.contextPath }/dataroom/folderList",
+										url : "${pageContext.request.contextPath }/{coursePath}/dataroom/folderList",
 										type : "post",
 										dataType : "json",
 										data : {
@@ -716,7 +718,7 @@
 											strList2 = "";
 											$
 													.ajax({
-														url : "${pageContext.request.contextPath }/dataroom/fileList",
+														url : "${pageContext.request.contextPath }/{coursePath}/dataroom/fileList",
 														type : "post",
 														data : {
 															courseNo : courseNo,
@@ -759,7 +761,7 @@
 
 		// 4. 폴더 생성 버튼 클릭시 나오는 버튼 
 		$("#newFolder").on("click",function() {
-							courseNo = 1;
+							var courseNo = '${courseNo}';
 							strList = "";
 							var dataRoomNo = $('input:checkbox[name="dataRoomNoByInput"]:checked').val();
 							if (dataRoomNo == -1) {
@@ -771,7 +773,7 @@
 							console.log(dataRoomName);
 							console.log(courseNo);
 							$.ajax({
-										url : "${pageContext.request.contextPath }/dataroom/insertFolderByDataRoomNo",
+										url : "${pageContext.request.contextPath }/{coursePath}/dataroom/insertFolderByDataRoomNo",
 										type : "post",
 										data : {
 											dataRoomName : dataRoomName,
@@ -808,7 +810,7 @@
 					        	
 					        	
 					        	$.ajax({
-									url : "${pageContext.request.contextPath }/dataroom/deleteFile",
+									url : "${pageContext.request.contextPath }/{coursePath}/dataroom/deleteFile",
 									type : "post",
 									data : {
 										fileNo:fileNo
@@ -886,7 +888,7 @@
 		        	var fileNo = $('input:checkbox[name="checkingFileBox"]:checked').eq(i).attr("value") 
 		        	console.log(fileNo);
 		        	
-		        	window.open("${pageContext.request.contextPath }/dataroom/downloadFile?fileNo="+fileNo);
+		        	window.open("${pageContext.request.contextPath }/{coursePath}/dataroom/downloadFile?fileNo="+fileNo);
 		        	
 		        	console.log(fileNo +"open");
 		        	/* console.log( i + "번째 폴더 : " + $('input:checkbox[name="checkingFileBox"]:checked').eq(i).attr("value") );
@@ -922,7 +924,7 @@
 
 		//집으로 ~~
 		$("#goHome").on("click",function() {
-							var courseNo = 1
+							var courseNo = '${courseNo}';
 							var dataRoomNo = 1
 							console.log("go Home !!");
 
@@ -930,7 +932,7 @@
 
 							strList = "";
 							$.ajax({
-										url : "${pageContext.request.contextPath }/dataroom/folderList",
+										url : "${pageContext.request.contextPath }/{coursePath}/dataroom/folderList",
 										type : "post",
 										dataType : "json",
 										data : {
@@ -954,7 +956,7 @@
 
 											strList2 = "";
 											$.ajax({
-														url : "${pageContext.request.contextPath }/dataroom/fileList",
+														url : "${pageContext.request.contextPath }/{coursePath}/dataroom/fileList",
 														type : "post",
 														data : {
 															courseNo : courseNo,
@@ -1076,7 +1078,7 @@
 			console.log(dataRoomNo);
 
 			$.ajax({
-						url : "${pageContext.request.contextPath }/dataroom/selectFolderVo",
+						url : "${pageContext.request.contextPath }/{coursePath}/dataroom/selectFolderVo",
 						type : "post",
 						data : {
 							dataRoomNo : dataRoomNo
@@ -1143,7 +1145,7 @@
 
 		//파일 업로드 드래그 앤 드롭할때 
 		$("#dropzone").dropzone({
-			url : "${pageContext.request.contextPath }/dataroom/upload",
+			url : "${pageContext.request.contextPath }/{coursePath}/dataroom/upload",
 			success : function(file, fileVo) {
 				console.log(file);
 				console.log(fileVo);
@@ -1195,7 +1197,7 @@
 									}
 
 									$.ajax({
-												url : "${pageContext.request.contextPath }/dataroom/fileUploadInDB",
+												url : "${pageContext.request.contextPath }/{coursePath}/dataroom/fileUploadInDB",
 												type : "post",
 												data : JSON.stringify(jsonData),
 												dataType : "json",

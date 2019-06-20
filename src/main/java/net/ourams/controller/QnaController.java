@@ -78,13 +78,17 @@ public class QnaController {
 		return map;
 	}
 
-	
+	//검색 + 페이징 
 	@ResponseBody
 	@RequestMapping(value = "/searchList", method = RequestMethod.POST)
-	public List<PostVo> searchList(@RequestParam("postTitle") String postTitle) {
+	public Map<String, Object> searchList(	@PathVariable("coursePath") String coursePath, 
+									@RequestParam("pageNo") int pageNo,
+									@RequestParam("postTitle") String postTitle) {
 		System.out.println("searchList");
-		List<PostVo> list = courseQnaService.searchList(postTitle);
-		return list;
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
+		System.out.println(courseVo.getCourseNo());
+		Map<String, Object> map = courseQnaService.searchList(postTitle ,pageNo, courseVo.getCourseNo());
+		return map;
 	}
 	
 	@Auth

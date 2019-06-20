@@ -5,9 +5,81 @@
 
 
 	<!--검색하는 기능  -->
-	<select id="searchList" parameterType="PostVo" resultType="PostVo">
+	<select id="searchList" parameterType="map" resultType="PostVo">
 	<![CDATA[
-	SELECT * FROM post WHERE posttitle LIKE '%'||#{postTitle}||'%'  ORDER BY REGDATE DESC
+	 SELECT  rnum as rnum,
+		        postNo,
+		        postType,
+		        userNo,
+		        courseNo,
+		        regDate,
+		        scheduleNo,
+		        postTitle,
+		        postContent,
+		        hit,
+		        category,
+		        userName,
+		        subjectNo,
+		        subjectTitle,
+                replyCount
+		FROM (
+				SELECT    rownum as rnum, 
+		                a.postNo,
+		                a.postType,
+		                a.userNo,
+		                a.courseNo courseNo,
+		                a.regDate,
+		                a.scheduleNo scheduleNo,
+		                a.postTitle,
+		                a.postContent,
+		                a.hit,
+		                a.category,
+		                a.userName,
+		                a.subjectNo,
+		                a.subjectTitle,
+		                a.replyCount
+		           
+        FROM(
+					SELECT    rownum as rnum, 
+					                pu.postNo,
+					                pu.postType,
+					                pu.userNo,
+					                pu.courseNo courseNo,
+					                pu.regDate,
+					                pu.scheduleNo scheduleNo,
+					                pu.postTitle,
+					                pu.postContent,
+					                pu.hit,
+					                pu.category,
+					                pu.userName,
+					                pu.subjectNo,
+					                s.subjectTitle,
+					                (select count(*) from reply r 
+					        	where r.postNo = pu.postNo) as replyCount
+		        FROM(
+		                SELECT  postNo,
+		                        postType,
+		                        p.userNo userNo,
+		                        courseNo,
+		                        TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,
+		                        scheduleNo,
+		                        postTitle,
+		                        postContent,
+		                        hit,
+		                        category,
+		                        userName,
+		                        subjectNo
+		                FROM users u join post p
+		                ON p.userNo = u.userNo
+		                where p.postType = 2 and p.courseNo = 1)pu
+		                left join subject s 
+		                on pu.subjectno = s.subjectno 
+                        WHERE pu.posttitle LIKE '%'||#{postTitle}||'%' 
+		                order by pu.postNo desc) a
+		                where rownum <= 10 ) 
+		                where rnum >= 1
+		                order by  rnum asc
+                        
 	]]>
 	</select>
 	
@@ -30,7 +102,6 @@
 		        userNo,
 		        courseNo,
 		        regDate,
-		        communityNo,
 		        scheduleNo,
 		        postTitle,
 		        postContent,
@@ -47,7 +118,6 @@
 		                a.userNo,
 		                a.courseNo courseNo,
 		                a.regDate,
-		                a.communityNo,
 		                a.scheduleNo scheduleNo,
 		                a.postTitle,
 		                a.postContent,
@@ -65,7 +135,6 @@
 					                pu.userNo,
 					                pu.courseNo courseNo,
 					                pu.regDate,
-					                pu.communityNo,
 					                pu.scheduleNo scheduleNo,
 					                pu.postTitle,
 					                pu.postContent,
@@ -82,7 +151,6 @@
 		                        p.userNo userNo,
 		                        courseNo,
 		                        TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,
-		                       communityNo,
 		                        scheduleNo,
 		                        postTitle,
 		                        postContent,

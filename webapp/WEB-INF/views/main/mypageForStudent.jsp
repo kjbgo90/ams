@@ -118,8 +118,7 @@
 						<div class="row">
 							<h4 class="text-main pad-btm bord-btm">select class</h4>
 							<div class="col-lg-6">
-								<br>
-								<br>
+								<br> <br>
 								<div class="panel">
 
 									<!--Carousel-->
@@ -130,33 +129,11 @@
 
 											<!--Item 1-->
 											<div class="item active">
-												<h4 class="text-main">java 고급과정</h4>
+												<h4 class="text-main">강좌가 없습니다.</h4>
 												<p>Nulla vitae elit libero, a pharetra augue mollis
 													interdum.</p>
-												<p>
-													<a href="">이동하기</a>
-												</p>
 											</div>
 
-											<!--Item 2-->
-											<div class="item">
-												<h4 class="text-main">자율 주행 차</h4>
-												<p>Lorem ipsum dolor sit amet, consectetur
-													adipiscingelit.</p>
-												<p>
-													<a href="">이동하기</a>
-												</p>
-											</div>
-
-											<!--Item 3-->
-											<div class="item">
-												<h4 class="text-main">c 언어</h4>
-												<p>Praesent commodo cursus magna, vel scelerisque nisl
-													consectetur.</p>
-												<p>
-													<a href="">이동하기</a>
-												</p>
-											</div>
 										</div>
 
 										<!--carousel-control-->
@@ -212,28 +189,7 @@
 											</thead>
 											<tbody>
 												<tr>
-													<td>Tiger Nixon</td>
-													<td>System Architect</td>
-													<td>Edinburgh</td>
-													<td>61</td>
-													<td>2011/04/25</td>
-													<td>$320,800</td>
-												</tr>
-												<tr>
-													<td>Tiger Nixon</td>
-													<td>System Architect</td>
-													<td>Edinburgh</td>
-													<td>61</td>
-													<td>2011/04/25</td>
-													<td>$320,800</td>
-												</tr>
-												<tr>
-													<td>Tiger Nixon</td>
-													<td>System Architect</td>
-													<td>Edinburgh</td>
-													<td>61</td>
-													<td>2011/04/25</td>
-													<td>$320,800</td>
+													<td colspan="6">제출한 과제가 없습니다.</td>
 												</tr>
 											</tbody>
 										</table>
@@ -325,7 +281,34 @@
 
 							</div>
 						</div>
+						<div class="panel">
+							<div class="panel-heading">
+								<h3 class="panel-title">질의 응답</h3>
+							</div>
+							<div class="panel-body">
 
+								<table class="table table-striped table-bordered"
+									cellspacing="0" width="100%">
+									<thead>
+										<tr>
+											<th>번호</th>
+											<th>제목</th>
+											<th>등록일</th>
+											<th>과정</th>
+											<th>글쓴이</th>
+											<th>조회수</th>
+											<th>댓글</th>
+										</tr>
+									</thead>
+									<tbody id="selectQnaList">
+										<tr>
+											<td colspan="7">질문글이 없습니다.</td>
+										</tr>
+									</tbody>
+								</table>
+								<br> <br>
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-lg-6">
 								<h4>Community</h4>
@@ -534,30 +517,21 @@
 							<div class="panel-body">
 
 								<!-- 공지사항 리스트 딱 세개만 뽑자 최근 거만  -->
-								<table id="" class="table table-striped table-bordered"
+								<table class="table table-striped table-bordered"
 									cellspacing="0" width="100%">
 									<thead>
 										<tr>
+											<th>번호</th>
 											<th>등록일</th>
 											<th>제목</th>
 											<th>글쓴이</th>
+											<th>조회수</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody id="selectNotice">
 										<tr>
-											<td>2011/04/25</td>
-											<td>System Architect</td>
-											<td>Tiger Nixon</td>
-										</tr>
-										<tr>
-											<td>2011/04/25</td>
-											<td>Edinburgh</td>
-											<td>Tiger Nixon</td>
-										</tr>
-										<tr>
-											<td>2011/04/25</td>
-											<td>61</td>
-											<td>Tiger Nixon</td>
+											<td colspan="5">공지사항이 없습니다 .</td>
+											
 										</tr>
 									</tbody>
 								</table>
@@ -579,7 +553,7 @@
 
 		<!--MAIN NAVIGATION-->
 		<!--===================================================-->
-		<c:import url="/WEB-INF/views/includes/navigation.jsp"></c:import>
+		<c:import url="/WEB-INF/views/includes/otherNavigation.jsp"></c:import>
 		<!--===================================================-->
 		<!--END MAIN NAVIGATION-->
 
@@ -640,11 +614,7 @@
 						'nifty.ready',
 						function() {
 
-							userNo = $
-							{
-								authUser.userNo
-							}
-							;
+							userNo = '${authUser.userNo}'
 							console.log(userNo);
 
 							var lineSparklines2 = function() {
@@ -714,7 +684,7 @@
 							CourseList = "";
 							$
 									.ajax({
-										url : "${pageContext.request.contextPath }/main/courseList",
+										url : "${pageContext.request.contextPath }/myPage/courseList",
 										type : "post",
 										data : {
 											userNo : userNo
@@ -722,13 +692,9 @@
 										dataType : "json",
 										success : function(list) {
 											console.log(list);
-											console.log(list[0].dataTagNo);
-											var no = list[0].dataTagNo;
+											console.log(list.length);
 
 											for (var i = 0; i < list.length; i++) {
-												console.log(list.length);
-												console
-														.log(list[i].dataTagName)
 												// list 찾기 !!
 
 												CourseList += "<div class='item active'>";
@@ -750,6 +716,114 @@
 													+ error);
 										}
 									});
+							
+							
+							//noticeList 
+							$.ajax({
+								url : "${pageContext.request.contextPath }/myPage/selectNotice",
+								type : "post",
+								data : {
+									userNo : userNo
+								},
+								dataType : "json",	
+								success : function(list) {
+									
+									
+									if (list.length == 0) {
+										$("#blogList").html(
+												"등록된 게시글이 없습니다.");
+									} else {
+										str = "";
+										for (var i = 0; i < list.length; i++) {
+											
+											
+										str+="<tr>"	
+										str+="<td>"+list[i].rnum+"</td>"			
+										str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"'>["+list[i].category+"]"+list[i].postTitle+"</a></td>"
+										str+="<td><span class='text-muted'>"+list[i].regDate+"</span></td>"				
+										str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+" class='btn-link'>"+list[i].userName+"</a></td>"				
+										str+="<td>"+list[i].hit+"</td>"				
+										str+="</tr>"		
+										
+										}
+										$("#selectNotice").html(str);
+										str = "";
+										
+										/*
+										<tr>
+										<td>11</td>
+										<td>2011/04/25</td>
+										<td>Edinburgh</td>
+										<td>Tiger Nixon</td>
+										<td>11</td>
+										</tr>
+										*/
+									}
+									
+									
+								},
+								error : function(XHR, status, error) {
+									console.error(status + " : " + error);
+								}
+							});
+							
+							//qna List 
+							$.ajax({
+								url : "${pageContext.request.contextPath }/myPage/selectQna",
+								type : "post",
+								data : {
+									userNo : userNo
+								},
+								dataType : "json",	
+								success : function(list) {
+									if (list.length == 0) {
+										$("#blogList").html("검색된 게시글이 없습니다.");
+									} else {
+										str = "";
+										for (var i = 0; i < list.length; i++) {
+											
+												str+="<tr>"	
+												str+="<td>"+list[i].rnum+"</td>"			
+												str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"'>["+list[i].subjectTitle+"]"+list[i].postTitle+"</a>&nbsp;&nbsp;<div class='label label-warning'>N</div></td>"
+												str+="<td><span class='text-muted'>"+list[i].regDate+"</span></td>"
+												str+="<td>"+list[i].subjectTitle+"</td>"	
+												str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"' class='btn-link'>"+list[i].userName+"</a></td>"				
+												str+="<td>"+list[i].hit+"</td>"	
+												str+="<td><i class='demo-pli-speech-bubble-5 icon-fw'></i>2</td>"
+												str+="</tr>"	
+												
+												
+											/*<tr>
+												<td>Tiger Nixon</td>
+												<td>System Architect</td>
+												<td>Edinburgh</td>
+												<td>61</td>
+												<td>2011/04/25</td>
+												<td>$320,800</td>
+												<td>$320,800</td>
+											</tr>*/
+												
+										}
+										$("#selectQnaList").html(str);
+										str = "";
+									}
+									
+								},
+								error : function(XHR, status, error) {
+									console.error(status + " : " + error);
+								}
+							});
+							/* 과제 현황 리스트 
+							<tr>
+							<td>Tiger Nixon</td>
+							<td>System Architect</td>
+							<td>Edinburgh</td>
+							<td>61</td>
+							<td>2011/04/25</td>
+							<td>$320,800</td>
+							</tr>*/
+							
+							
 
 						});
 	</script>

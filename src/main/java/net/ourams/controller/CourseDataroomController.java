@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,14 +21,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import net.ourams.dao.CourseMainDao;
+import net.ourams.interceptor.Auth;
+import net.ourams.interceptor.AuthUser;
 import net.ourams.service.CourseDataroomService;
 import net.ourams.util.S3Util;
 import net.ourams.vo.CourseDataroomFileUploadVo;
 import net.ourams.vo.CourseDataroomVo;
+import net.ourams.vo.CourseVo;
+import net.ourams.vo.UserVo;
 
 @Controller
-@RequestMapping("/dataroom")
+@RequestMapping("/{coursePath}/dataroom")
 public class CourseDataroomController {
 	
 	@Autowired
@@ -35,6 +40,8 @@ public class CourseDataroomController {
 
 	@Autowired
 	private CourseDataroomService CourseDataroomService;
+	@Autowired
+	private CourseMainDao mainDao;
 
 	private String bucketName = "net.ourams.upload";
 
@@ -56,8 +63,15 @@ public class CourseDataroomController {
 		return "redirect:/dataroom/form";
 	}
 
-	@RequestMapping("/form")
-	public String dataroomForm() {
+	@Auth
+	@RequestMapping(value = "/form", method = RequestMethod.GET)
+	public String dataroomForm(@PathVariable("coursePath") String coursePath, @AuthUser UserVo authUser, Model model) {
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
+		System.out.println(courseVo.getCourseNo());
+		model.addAttribute("coursePath",coursePath);
+		int courseNo = courseVo.getCourseNo();
+		model.addAttribute("courseNo",courseNo);
+		
 		return "course/course-dataroom";
 	}
 	

@@ -38,9 +38,23 @@ public class CourseQnaService {
 		return map2;
 	}
 
-	public List<PostVo> searchList(String postTitle){
-		List<PostVo> list = courseQnaDao.searchList(postTitle);
-		return list;
+	public  Map<String, Object> searchList(String postTitle, int pageNo, int courseNo){
+		int listSize = 10 ;
+		int pageNo1 = 1+listSize*(pageNo-1);
+		int pageNo2 = listSize*pageNo;
+		int countPage = courseQnaDao.countPost();
+		System.out.println("countPage"+countPage);
+		int maxPage = (int)Math.ceil((double)countPage/listSize);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pageNo1", pageNo1);
+		map.put("pageNo2", pageNo2);
+		map.put("courseNo", courseNo);
+		map.put("postTitle",postTitle);
+		List<PostVo> list = courseQnaDao.searchList(map);
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("list", list);
+		map2.put("maxPage", maxPage);
+		return map2;
 	}
 	
 	public PostVo read(int postNo) {

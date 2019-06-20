@@ -26,8 +26,10 @@ public class PostDao {
 		return list;
 	}
 	
-	public List<PostVo> searchList(String postTitle){
-		List<PostVo> list = sqlSession.selectList("notice.searchList", postTitle);
+	
+	//검색 기능 페이징 함 
+	public List<PostVo> searchList(Map<String, Object> map){
+		List<PostVo> list = sqlSession.selectList("notice.searchList", map);
 		return list;
 	}
 	

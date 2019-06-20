@@ -8,7 +8,6 @@ public class PostVo {
 	private int userNo;
 	private int courseNo;
 	private String regDate;
-	private int communityNo;
 	private int scheduleNo;
 	private String postTitle;
 	private String postContent;
@@ -27,7 +26,7 @@ public class PostVo {
 	}
 
 	
-	public PostVo(int postNo, int postType, int userNo, int courseNo, String regDate, int communityNo, int scheduleNo,
+	public PostVo(int postNo, int postType, int userNo, int courseNo, String regDate, int scheduleNo,
 			String postTitle, String postContent, int hit, String category, String userName, int rnum, int subjectNo,
 			String subjectTitle, int pageNo, String selectedDate, int replyCount, List<fileUpLoadVo> fileList) {
 		super();
@@ -36,7 +35,6 @@ public class PostVo {
 		this.userNo = userNo;
 		this.courseNo = courseNo;
 		this.regDate = regDate;
-		this.communityNo = communityNo;
 		this.scheduleNo = scheduleNo;
 		this.postTitle = postTitle;
 		this.postContent = postContent;
@@ -109,13 +107,6 @@ public class PostVo {
 		this.regDate = regDate;
 	}
 
-	public int getCommunityNo() {
-		return communityNo;
-	}
-
-	public void setCommunityNo(int communityNo) {
-		this.communityNo = communityNo;
-	}
 
 	public int getScheduleNo() {
 		return scheduleNo;
@@ -212,7 +203,7 @@ public class PostVo {
 	@Override
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", postType=" + postType + ", userNo=" + userNo + ", courseNo=" + courseNo
-				+ ", regDate=" + regDate + ", communityNo=" + communityNo + ", scheduleNo=" + scheduleNo
+				+ ", regDate=" + regDate +  ", scheduleNo=" + scheduleNo
 				+ ", postTitle=" + postTitle + ", postContent=" + postContent + ", hit=" + hit + ", category="
 				+ category + ", userName=" + userName + ", rnum=" + rnum + ", subjectNo=" + subjectNo
 				+ ", subjectTitle=" + subjectTitle + ", pageNo=" + pageNo + ", selectedDate=" + selectedDate

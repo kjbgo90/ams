@@ -30,8 +30,10 @@ public class CourseQnaDao {
 		
 		return list;
 	}
-	public List<PostVo> searchList(String postTitle){
-		List<PostVo> list = sqlSession.selectList("qna.searchList", postTitle);
+	
+	//검색하는 기능 페이징도 했음 
+	public List<PostVo> searchList(Map<String, Object> map){
+		List<PostVo> list = sqlSession.selectList("qna.searchList", map);
 		System.out.println(list.toString());
 		return list;
 	}

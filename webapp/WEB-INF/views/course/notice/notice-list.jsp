@@ -268,29 +268,39 @@
 			console.log("search anyOne");
 			var postTitle = $("#searchAnyThing").val();
 			console.log(postTitle);
-			
+			pageNo=1;
 			//ajax 처리해서 검색 
 			$("#postList").empty("");
 			$.ajax({
 				url : "${pageContext.request.contextPath }/${coursePath}/notice/searchList",
 				type : "post",
 				data : {
+					pageNo:pageNo,
 					postTitle:postTitle
 				},
 				dataType : "json",	
-				success : function(list) {
-					if (list.length == 0) {
-						$("#blogList").html("검색된 게시글이 없습니다.");
+				success : function(map) {
+					console.log(map);
+					console.log(map.maxPage);
+					console.log(map.list);
+					console.log(pageNo);
+					
+					paging(pageNo,map.maxPage);
+					
+					if (map.list.length == 0) {
+						$("#blogList").html(
+								"등록된 게시글이 없습니다.");
 					} else {
 						str = "";
-						for (var i = 0; i < list.length; i++) {
+						for (var i = 0; i < map.list.length; i++) {
+							
 							
 						str+="<tr>"	
-						str+="<td>"+list[i].postNo+"</td>"			
-						str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"'>["+list[i].category+"]"+list[i].postTitle+"</a></td>"
-						str+="<td><span class='text-muted'>"+list[i].regDate+"</span></td>"				
-						str+="<td><span>"+list[i].userName+"</span></td>"				
-						str+="<td>"+list[i].hit+"</td>"				
+						str+="<td>"+map.list[i].rnum+"</td>"			
+						str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo+"'>["+map.list[i].category+"]"+map.list[i].postTitle+"</a></td>"
+						str+="<td><span class='text-muted'>"+map.list[i].regDate+"</span></td>"				
+						str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+map.list[i].postNo+" class='btn-link'>"+map.list[i].userName+"</a></td>"				
+						str+="<td>"+map.list[i].hit+"</td>"				
 						str+="</tr>"		
 						
 						}
@@ -298,11 +308,15 @@
 						str = "";
 					}
 					
+					paging(pageNo, map.maxPage);
+					
 				},
 				error : function(XHR, status, error) {
 					console.error(status + " : " + error);
 				}
 			});
+			
+			
 			
 		});
 		

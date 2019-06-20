@@ -18,7 +18,7 @@ public class PostService {
 	@Autowired
 	private PostDao postDao;
 	
-	public Map<String, Object> selectPostPaging( int pageNo){
+	public Map<String, Object> selectPostPaging(int courseNo, int pageNo){
 		int listSize = 10 ;
 		int pageNo1 = 1+listSize*(pageNo-1);
 		int pageNo2 = listSize*pageNo;
@@ -26,6 +26,7 @@ public class PostService {
 		System.out.println("countPage"+countPage);
 		int maxPage = (int)Math.ceil((double)countPage/listSize);
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("courseNo", courseNo);
 		map.put("pageNo1", pageNo1);
 		map.put("pageNo2", pageNo2);
 		List<PostVo> list = postDao.selectPaging(map);
@@ -34,6 +35,29 @@ public class PostService {
 		map2.put("maxPage", maxPage);
 		return map2;
 	}
+	
+
+	public  Map<String, Object> searchList(String postTitle,int courseNo, int pageNo){
+		int listSize = 10 ;
+		int pageNo1 = 1+listSize*(pageNo-1);
+		int pageNo2 = listSize*pageNo;
+		int countPage = postDao.countPost();
+		System.out.println("countPage"+countPage);
+		int maxPage = (int)Math.ceil((double)countPage/listSize);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("courseNo", courseNo);
+		map.put("pageNo1", pageNo1);
+		map.put("pageNo2", pageNo2);
+		map.put("postTitle", postTitle);
+		List<PostVo> list = postDao.searchList(map);
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("list", list);
+		map2.put("maxPage", maxPage);
+		
+		return map2;
+	}
+	
+	
 	public PostVo read(int postNo) {
 		postDao.updateHit(postNo);
 		PostVo PostVo = postDao.selectNotice(postNo);
@@ -76,10 +100,6 @@ public class PostService {
 		return postDao.update(postVo); 
 	}
 
-	public List<PostVo> searchList(String postTitle){
-		List<PostVo> list = postDao.searchList(postTitle);
-		return list;
-	}
 	
 	@Transactional
 	public int writePostSchedule(PostVo postVo) {

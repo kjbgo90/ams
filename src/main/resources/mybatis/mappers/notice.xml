@@ -7,9 +7,51 @@
 
 
 	<!--검색하는 기능  -->
-	<select id="searchList" parameterType="PostVo" resultType="PostVo">
+	<select id="searchList" parameterType="map" resultType="PostVo">
 	<![CDATA[
-	SELECT * FROM post WHERE posttitle LIKE '%'||#{postTitle}||'%'  ORDER BY REGDATE DESC
+
+select   					B.rnum as rnum ,
+        	      					B.postNo as postNo,
+				        			B.postType as postType,
+				        			B.userNo as userNo,
+				        			B.courseNo as courseNo,
+				        			B.regDate as regDate,
+				        			B.scheduleNo as scheduleNo,
+				        			B.postTitle as postTitle,
+				        			B.postContent as postContent,
+				        			B.hit as hit,
+				        			B.category as category,
+				        			B.userName as userName
+		from(select   rownum as rnum, 
+        	      					A.postNo,
+				        			A.postType,
+				        			A.userNo,
+				        			A.courseNo,
+				        			A.regDate,
+				        			A.scheduleNo,
+				        			A.postTitle,
+				        			A.postContent,
+				        			A.hit,
+				        			A.category,
+				        			A.userName
+   		     from (SELECT 				
+   		     						p.postNo,
+				        			p.postType,
+				        			u.userNo,
+				        			p.courseNo,
+				        			TO_CHAR(p.regDate, 'yyyy/mm/dd') as regDate,
+				        			p.scheduleNo,
+				        			p.postTitle,
+				        			p.postContent,
+				        			p.hit,
+				        			p.category,
+				        			u.userName
+							FROM users u join (select * from post where  posttitle LIKE '%'||#{postTitle}||'%' ) p 
+							ON p.userNo = u.userNo
+							where p.postType = 1 and p.courseno=#{courseNo}
+							order by postNo desc ) A
+	  		 where rownum <= #{pageNo2} ) B
+			 where B.rnum >= #{pageNo1}
 	]]>
 	</select>
 	
@@ -26,7 +68,6 @@
 				        			B.userNo as userNo,
 				        			B.courseNo as courseNo,
 				        			B.regDate as regDate,
-				        			B.communityNo as communityNo,
 				        			B.scheduleNo as scheduleNo,
 				        			B.postTitle as postTitle,
 				        			B.postContent as postContent,
@@ -39,7 +80,6 @@
 				        			A.userNo,
 				        			A.courseNo,
 				        			A.regDate,
-				        			A.communityNo,
 				        			A.scheduleNo,
 				        			A.postTitle,
 				        			A.postContent,
@@ -52,7 +92,6 @@
 				        			u.userNo,
 				        			p.courseNo,
 				        			TO_CHAR(p.regDate, 'yyyy/mm/dd') as regDate,
-				        			p.communityNo,
 				        			p.scheduleNo,
 				        			p.postTitle,
 				        			p.postContent,
@@ -61,7 +100,7 @@
 				        			u.userName
 							FROM post p join users u
 							ON p.userNo = u.userNo
-							where p.postType = 1
+							where p.postType = 1 and p.courseno=#{courseNo}
 							order by postNo desc ) A
 	  		 where rownum <= #{pageNo2} ) B
 		where B.rnum >= #{pageNo1}

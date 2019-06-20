@@ -5,8 +5,9 @@
 <mapper namespace="myPage">
 
 
-<!-- 왼쪽 폴더 리스트들 틀림 -->
-	<select id="secectCourse" resultType="myPageVo" parameterType="myPageVo">
+	<!-- 왼쪽 폴더 리스트들 틀림 -->
+	<select id="secectCourse" resultType="myPageVo"
+		parameterType="myPageVo">
 		<![CDATA[
 			select 	cr.courseNo as CourseNo, 
 					c.courseName as CourseName
@@ -15,6 +16,42 @@
 			where userNo= #{userNo}
 		]]>
 	</select>
+
+
+	<!-- 1 이면 공지사항 2이면 QNA -->
+	<select id="secectPost" resultType="PostVo" parameterType="PostVo">
+		<![CDATA[
+				select 	rownum,
+       					postno,
+      					posttype,
+       					posttitle,
+       					postcontent,
+       					userno,
+       					courseno,
+       					regdate,
+       					scheduleno,
+       					hit,
+       					category,
+       					subjectno
+				from (		select	postno,
+      								posttype,
+       								posttitle,
+       								postcontent,
+       								userno,
+       								courseno,
+       								regdate,
+       								scheduleno,
+       								hit,
+       								category,
+       								subjectno
+							from post 
+							where userno=#{userNo} and posttype=#{postType}
+							order by regdate desc)
+				where rownum <=#{rnum}
+		]]>
+	</select>
+
+
 
 
 </mapper>
