@@ -63,7 +63,7 @@
 						<li><a href="${pageContext.request.contextPath }/${coursePath}/qna/list"> <i class="pli-question"></i><span class="menu-title"> 질의응답</span></a></li>
 						<li><a href="${pageContext.request.contextPath }/${coursePath}/notice/list"> <i class="pli-speaker"></i><span class="menu-title"> 공지사항</span></a></li>
 						<hr>
-						<li><a href="${pageContext.request.contextPath }/${coursePath}/community/list"> <i class="pli-hello"></i><span class="menu-title">커뮤니티</span></a></li>
+						<li><a href="${pageContext.request.contextPath }/community/mainform"> <i class="pli-hello"></i><span class="menu-title">커뮤니티</span></a></li>
 						
 						<c:if test="${authUser.userType eq 1 }">
 							<!--Category name-->

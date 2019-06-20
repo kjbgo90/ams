@@ -129,66 +129,22 @@
 							<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">
 								LIKE<i class="icon-lg icon-fw demo-pli-map-marker-2"></i>
 							</p>
+							
 							<ul class="list-inline mar-hor">
-								<li class="tag tag-sm"><a href="#">화돈</a></li>
-								<span class="mar-rgt">&nbsp;&nbsp;&nbsp;<i class="demo-pli-heart-2 icon-fw"></i>519
-								</span>
-								<br>
-								<li class="tag tag-sm"><a href="#">바나프레소</a></li>
-								<span class="mar-rgt">&nbsp;&nbsp;&nbsp;<i class="demo-pli-heart-2 icon-fw"></i>300
-								</span>
-								<br>
-								<li class="tag tag-sm"><a href="#">스타벅스</a></li>
-								<span class="mar-rgt">&nbsp;&nbsp;&nbsp;<i class="demo-pli-heart-2 icon-fw"></i>222
-								</span>
-								<br>
-								<li class="tag tag-sm"><a href="#">홍콩반점</a></li>
-								<span class="mar-rgt">&nbsp;&nbsp;&nbsp;<i class="demo-pli-heart-2 icon-fw"></i>220
-								</span>
-								<br>
-								<li class="tag tag-sm"><a href="#">언더그라운드</a></li>
-								<span class="mar-rgt">&nbsp;&nbsp;&nbsp;<i class="demo-pli-heart-2 icon-fw"></i>194
-								</span>
-								<br>
-								<li class="tag tag-sm"><a href="#">폴바셋</a></li>
-								<span class="mar-rgt">&nbsp;&nbsp;&nbsp;<i class="demo-pli-heart-2 icon-fw"></i>184
-								</span>
-								<br>
-								<li class="tag tag-sm"><a href="#">깐부치킨</a></li>
-								<span class="mar-rgt">&nbsp;&nbsp;&nbsp;<i class="demo-pli-heart-2 icon-fw"></i>163
-								</span>
-								<br>
-								<li class="tag tag-sm"><a href="#">돈까스집</a></li>
-								<span class="mar-rgt">&nbsp;&nbsp;&nbsp;<i class="demo-pli-heart-2 icon-fw"></i>133
-								</span>
-								<br>
-								<li class="tag tag-sm"><a href="#">고봉민 김밥</a></li>
-								<span class="mar-rgt">&nbsp;&nbsp;&nbsp;<i class="demo-pli-heart-2 icon-fw"></i>77
-								</span>
-								<br>
-								<li class="tag tag-sm"><a href="#">곰탕<a></li>
-								<span class="mar-rgt">&nbsp;&nbsp;&nbsp;<i class="demo-pli-heart-2 icon-fw"></i>55
-								</span>
-								<br>
+							<c:forEach items="${getlikedList}" var="List">
+								<li class="tag tag-sm" style="back"><a href="#">${List.cpostTitle}</a></li>
+								<span class="mar-rgt">&nbsp;&nbsp;&nbsp;<i class="demo-psi-heart-2 icon-fw"></i>${List.liked}</span>
+								<br>								
+								</c:forEach>
 							</ul>
 							<hr>
 							<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">BEST POST</p>
 							<div class="list-group bg-trans pad-btm bord-btm">
+							<c:forEach items="${getlikedList}" var="List">
 								<div class="list-group-item list-item-sm">
-									<a href="#" class="btn-link">Lorem ipsum dolor sit amet</a><small class="box-block">6 Hours ago</small>
-								</div>
-								<div class="list-group-item list-item-sm">
-									<a href="#" class="btn-link">Consectetuer adipiscing elit</a><small class="box-block">2 days ago</small>
-								</div>
-								<div class="list-group-item list-item-sm">
-									<a href="#" class="btn-link">Sed diam nonummy nibh </a><small class="box-block">7 days ago</small>
-								</div>
-								<div class="list-group-item list-item-sm">
-									<a href="#" class="btn-link">Laoreet dolore magna aliquam erat volutpat.</a><small class="box-block">2 weeks ago</small>
-								</div>
-								<div class="list-group-item list-item-sm">
-									<a href="#" class="btn-link">Ut wisi enim ad minim veniam</a><small class="box-block">3 weeks ago</small>
-								</div>
+									<a href="#" class="btn-link">${List.cpostTitle}</a><small class="box-block">${List.regDate}</small>
+								</div>							
+								</c:forEach>
 							</div>
 
 
@@ -218,7 +174,7 @@
 							</div>
 							<hr>
 							<br> &nbsp;
-							<button class="btn btn-dark btn-circle ">
+							<button class="btn btn-dark btn-circle" onclick="location.href='${pageContext.request.contextPath }/community/regform' ">
 								<i class="demo-psi-pen-5 icon-2x"></i>
 							</button>
 							<br>
@@ -229,33 +185,34 @@
 
 								<!-- Panel  Blog -->
 								<!--===================================================-->
-								<div class="panel sm">
-									<div class="blog-header">
-										<img class="img-responsive" src="${pageContext.request.contextPath }/assets/img/shared-img-5.jpg" alt="Image">
-									</div>
-									<div class="blog-content">
-										<div class="blog-title media-block">
-											<div class="media-body">
-												<a href="#" class="btn-link">
-													<h2>Far far away, behind the word mountains</h2>
-												</a>
+								<c:forEach items="${communityList}" var="List">
+									<div class="panel sm">
+										<div class="blog-header">
+											<img class="img-responsive" src="${pageContext.request.contextPath }/assets/img/shared-img-5.jpg" alt="Image">
+										</div>
+										<div class="blog-content">
+											<div class="blog-title media-block">
+												<div class="media-body">
+													<a href="#" class="btn-link">
+														<h2>${List.cpostTitle}</h2>
+													</a>
+												</div>
+											</div>
+											<div class="blog-body">
+												<p>${List.cpostContent}</p>
 											</div>
 										</div>
-										<div class="blog-body">
-											<p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
-											<p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
-											<p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
+										<div class="blog-footer">
+											<div class="media-left">
+												<span class="label label-success">${List.regDate}</span>
+											</div>
+											<div class="media-body text-right">
+												<span class="mar-rgt"><i class="demo-pli-heart-2 icon-fw"></i>${List.liked}</span> <i class="demo-pli-speech-bubble-5 icon-fw"></i>23
+											</div>
 										</div>
+
 									</div>
-									<div class="blog-footer">
-										<div class="media-left">
-											<span class="label label-success">Today</span>
-										</div>
-										<div class="media-body text-right">
-											<span class="mar-rgt"><i class="demo-pli-heart-2 icon-fw"></i>519</span> <i class="demo-pli-speech-bubble-5 icon-fw"></i>23
-										</div>
-									</div>
-								</div>
+								</c:forEach>
 								<!--===================================================-->
 
 

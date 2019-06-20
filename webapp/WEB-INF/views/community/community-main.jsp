@@ -126,7 +126,7 @@
 							<!-- Upcoming Tasklist -->
 							<!---------------------------------->
 							<div>
-								<a href="#" class="pull-right btn btn-info btn-sm">바로가기</a>
+								<a href="${pageContext.request.contextPath }/community/selectform" class="pull-right btn btn-info btn-sm">바로가기</a>
 								<h4 class="text-main">근처 맛집</h4>
 								<hr>
 								<br>
@@ -157,8 +157,9 @@
 
 									<li id="demo-tasklist-3" class="task-info">
 										<p class="text-bold text-main text-sm">#84564</p> <img class="img-responsive" src="${pageContext.request.contextPath }/assets/img/shared-img-2.jpg" alt="Image">
-										<p class="pad-btm bord-btm">No one rejects, dislikes, or avoids pleasure itself, because it is pleasure.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span class="pad-rgt"><i class="demo-pli-heart-2"></i> 54K</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>03:08</span>
+										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
+												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
+										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
 									</a>
 									</li>
 									<li id="demo-tasklist-2" class="task-info">
@@ -180,7 +181,7 @@
 							<!-- Upcoming Tasklist -->
 							<!---------------------------------->
 							<div>
-								<a href="#" class="pull-right btn btn-info btn-sm">바로가기</a>
+								<a href="${pageContext.request.contextPath }/community/selectform" class="pull-right btn btn-info btn-sm">바로가기</a>
 								<h4 class="text-main header-title m-t-0">카페</h4>
 								<hr>
 								<br>
@@ -189,8 +190,9 @@
 
 									<li id="demo-tasklist-3" class="task-warning">
 										<p class="text-bold text-main text-sm">#84564</p> <img class="img-responsive" src="${pageContext.request.contextPath }/assets/img/shared-img-2.jpg" alt="Image">
-										<p class="pad-btm bord-btm">No one rejects, dislikes, or avoids pleasure itself, because it is pleasure.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span class="pad-rgt"><i class="demo-pli-heart-2"></i> 54K</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>03:08</span>
+										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
+												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
+										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
 									</a>
 									</li>
 									<li id="demo-tasklist-2" class="task-warning">
@@ -234,7 +236,7 @@
 							<!-- Upcoming Tasklist -->
 							<!---------------------------------->
 							<div>
-								<a href="#" class="pull-right btn btn-info btn-sm">바로가기</a>
+								<a href="${pageContext.request.contextPath }/community/selectform" class="pull-right btn btn-info btn-sm">바로가기</a>
 								<h4 class="text-main header-title m-t-0">자유게시글</h4>
 								<hr>
 								<br>
@@ -285,16 +287,12 @@
 
 						</div>
 					</div>
-					<div class="panel">
-						<div class="panel-heading">
-							<h3 class="panel-title">Output</h3>
-						</div>
-						<div class="panel-body">
-							<p>Serializes the sortable's item id's into an array of string.</p>
-							<div id="demo-output" class="well mar-no"></div>
-						</div>
+					<div >&nbsp;&nbsp;&nbsp;
+						<button class="btn btn-dark btn-circle" onclick="location.href='${pageContext.request.contextPath }/community/writeform' ">
+							<i class="demo-psi-pen-5 icon-2x"></i>
+						</button>
 					</div>
-
+					<br><br>
 
 				</div>
 				<!--===================================================-->

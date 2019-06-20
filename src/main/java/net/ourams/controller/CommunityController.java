@@ -1,5 +1,6 @@
 package net.ourams.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import net.ourams.service.CommunityService;
 import net.ourams.util.S3Util;
+import net.ourams.vo.CommunityVo;
 import net.ourams.vo.fileUpLoadVo;
 
 @Controller
 @RequestMapping(value = "/community")
 public class CommunityController {
+	
+	@Autowired
+	private CommunityService communityService;
 
 	@Autowired
 	private S3Util s3Util;
@@ -40,8 +46,12 @@ public class CommunityController {
 
 	// community category detail list
 	@RequestMapping(value = "/selectform", method = RequestMethod.GET)
-	public String selectForm() {
+	public String selectForm(Model model) {
 		System.out.println("selectform");
+		List<CommunityVo> communityList = communityService.getList();
+		List<CommunityVo> getlikedList = communityService.getlikedList();
+		model.addAttribute("communityList",communityList);
+		model.addAttribute("getlikedList",getlikedList);
 		return "community/community-list";
 	}
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="community">
+	
+	<!-- 쿼리문 작성 -->
+	
+	<!-- select 예제 -->
+	<select id="selectList" resultType="CommunityVo">
+		<![CDATA[
+			
+   				SELECT   c.cpostNo, 
+					 c.cpostType, 
+					 u.userNo, 
+                     TO_CHAR(c.regDate, 'yyyy/mm/dd') as regDate,
+					 c.cpostTitle,
+					 c.cpostContent,
+					 c.liked
+			FROM  communitypost c join users u
+			ON c.userNo = u.userNo
+			where c.cpostType = 1
+			
+		]]>
+	</select>
+	
+	
+	<select id="selectLiked" resultType="CommunityVo">
+		<![CDATA[
+			select cpostTitle,TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,liked
+            from (
+                select * 
+                from communitypost 
+                where cposttype = 1
+                order by liked desc
+            )
+            where  rownum <= 10
+            	
+		]]>
+	</select>
+	
+</mapper>
