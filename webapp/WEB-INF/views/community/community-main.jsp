@@ -123,7 +123,7 @@
 						<div class="col-sm-4">
 
 
-							<!-- Upcoming Tasklist -->
+							<!-- Upcoming Tasklist 맛집!!!!!!!!!!!! -->
 							<!---------------------------------->
 							<div>
 								<a href="${pageContext.request.contextPath }/community/selectform" class="pull-right btn btn-info btn-sm">바로가기</a>
@@ -178,7 +178,7 @@
 						<div class="col-sm-4">
 
 
-							<!-- Upcoming Tasklist -->
+							<!-- Upcoming Tasklist 카페!!!!!!!!!!!!!!!!!!!!!!!!!!!111-->
 							<!---------------------------------->
 							<div>
 								<a href="${pageContext.request.contextPath }/community/selectform" class="pull-right btn btn-info btn-sm">바로가기</a>
@@ -233,7 +233,7 @@
 						<div class="col-sm-4">
 
 
-							<!-- Upcoming Tasklist -->
+							<!-- Upcoming Tasklist 자유글!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 							<!---------------------------------->
 							<div>
 								<a href="${pageContext.request.contextPath }/community/selectform" class="pull-right btn btn-info btn-sm">바로가기</a>

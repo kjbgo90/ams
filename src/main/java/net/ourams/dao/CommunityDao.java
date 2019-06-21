@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import net.ourams.vo.CommunityVo;
+import net.ourams.vo.ReplyVo;
 
 @Repository
 public class CommunityDao {
@@ -20,4 +21,10 @@ public class CommunityDao {
 	public List<CommunityVo> likedList() {
 		return sqlSession.selectList("community.selectLiked");
 	}
+
+	public CommunityVo selectNotice(int cpostNo) {
+		return sqlSession.selectOne("community.selectNotice", cpostNo);
+	}
+
+	
 }

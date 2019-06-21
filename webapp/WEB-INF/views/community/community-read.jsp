@@ -45,7 +45,7 @@
 <script src="${pageContext.request.contextPath }/assets/js/pace.js"></script>
 
 <!--Demo [ DEMONSTRATION ]-->
-<link href="${pageContext.request.contextPath }/assets/nifty-demo.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/assets/css/nifty-demo.css" rel="stylesheet">
 <!--=================================================
 
     REQUIRED
@@ -122,9 +122,10 @@
 					<div class="panel blog blog-details">
 						<div class="panel-body">
 							<div class="blog-title media-block">
+							<input id="cpostNo" type="hidden" name="cpostNo" value="${CommunityVo.cpostNo}">
 								<div class="media-body">
 									<h1 class="page-header" style="font-size: 25px;">
-										<span>맛없는데 이름뭐였지?</span>
+										<span>${CommunityVo.cpostTitle}</span>
 									</h1>
 
 									<hr>
@@ -132,11 +133,11 @@
 										<span class="label label-success">5 Days ago</span>
 									</div>
 									<div class="media-left">
-										<a href="#" class="box-inline"><img alt="Profile Picture" class="img-md img-circle" src="${pageContext.request.contextPath }/assets/img/profile-photos/9.png"></a>
+										<a href="#" class="box-inline"><img alt="Profile Picture" class="img-md img-circle" src="${pageContext.request.contextPath }/${WriterVo.logoPath }"></a>
 									</div>
 									<div class="media-body pad-top">
-										<a href="#" class="box-inline"> <span class="text-lg text-semibold text-main">Lucy Moon</span>
-											<p class="text-sm">gerins2314@gmail.com</p>
+										<a href="#" class="box-inline"> <span class="text-lg text-semibold text-main">${WriterVo.userName}</span>
+											<p class="text-sm">${WriterVo.email}</p>
 										</a>
 									</div>
 
@@ -149,10 +150,7 @@
 							<div class="blog-content">
 
 								<div class="blog-body">
-									<p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The
-										bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. "What's happened to me?" he thought. It wasn't a dream. His room, a proper human room although a
-										little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame. It
-										showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather. Drops</p>
+									<p>${CommunityVo.cpostContent}</p>
 								</div>
 							</div>
 							<div>
@@ -161,14 +159,14 @@
 							<div class="blog-footer">
 
 								<div class="media-body text-right">
-									<span class="mar-rgt"><i class="demo-pli-heart-2 icon-fw"></i>519</span> <i class="demo-pli-speech-bubble-5 icon-fw"></i>23
+									<span class="mar-rgt"><i class="demo-pli-heart-2 icon-fw"></i>${CommunityVo.liked}</span> <i class="demo-pli-speech-bubble-5 icon-fw"></i>23
 								</div>
 							</div>
 							<div class="row">
 								<div class="pad-ver text-reft class col-sm-4">
 
 									<!--Send button-->
-									<button id="mail-send-btn" type="button" class="btn btn-primary">
+									<button id="mail-send-btn" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath }/community/selectform' ">
 										<i class=" icon-xs icon-fw"></i>목록
 									</button>
 
@@ -177,12 +175,12 @@
 								<div class="pad-ver text-right col-sm-8">
 
 									<!--Save draft button-->
-									<button id="mail-send-btn" type="button" class="btn btn-default">
+									<button id="mail-send-btn" type="button" class="btn btn-default" onclick="location.href='${pageContext.request.contextPath }/community/modifyform?cpostNo=${CommunityVo.cpostNo}' ">
 										<i class=" icon-xs icon-fw"></i>수정
 									</button>
 
 									<!--Discard button-->
-									<button id="mail-send-btn" type="button" class="btn btn-primary">
+									<button id="mail-send-btn" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath }/community/delete?cpostNo=${CommunityVo.cpostNo}' ">
 										<i class=" icon-xs icon-fw"></i>삭제
 									</button>
 								</div>
@@ -199,7 +197,7 @@
 
 									<div class="col-md-12">
 										<div class="form-group">
-											<textarea class="form-control" rows="9" placeholder="Your comment"></textarea>
+											<textarea class="form-control" rows="9" placeholder="Your comment" id="commentContent"></textarea>
 										</div>
 									</div>
 								</div>
@@ -210,10 +208,6 @@
 							<!--===================================================-->
 							<!-- End Comment form -->
 							<br> <br>
-
-
-
-
 							<hr class="new-section-sm">
 							<p class="text-lg text-main text-bold text-uppercase pad-btm">Comments</p>
 
@@ -221,77 +215,25 @@
 
 							<!-- Comments -->
 							<!--===================================================-->
-							<div class="comments media-block">
-								<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png"></a>
-								<div class="media-body">
-									<div class="comment-header">
-										<a href="#" class="media-heading box-inline text-main text-bold">John Doe</a>
-										<p class="text-muted text-sm">Today 10:41AM - 12/09/2017</p>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p>
-									<a class="btn btn-sm btn-default"><i class="icon-lg demo-pli-like"></i> Like </a>
-								</div>
-							</div>
-							<!--===================================================-->
-							<!-- End Comments -->
-
-
-
-							<!-- Comments -->
-							<!--===================================================-->
-							<div class="comments media-block">
-								<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/assets/img/profile-photos/5.png"></a>
-								<div class="media-body">
-									<div class="comment-header">
-										<a href="#" class="media-heading box-inline text-main text-bold">Donald Brown</a>
-										<p class="text-muted text-sm">Today 08:25AM - 12/009/2017</p>
-									</div>
-									<p>Maecenas ultrices, justo vel imperdiet gravida, urna ligula hendrerit nibh, ac cursus nibh sapien in purus.</p>
-									<a class="btn btn-sm btn-primary"><i class="icon-lg demo-pli-like"></i> 5 Liked </a>
-								</div>
-							</div>
-							<!--===================================================-->
-							<!-- End Comments -->
-
-
-
-							<!-- Comments -->
-							<!--===================================================-->
-							<div class="comments media-block">
-								<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/assets/img/profile-photos/10.png"></a>
-								<div class="media-body">
-									<div class="comment-header">
-										<div>
-											<a href="#" class="media-heading box-inline text-main text-bold">Lisa D</a>
+							<div class="comments media-block" id="commentDiv">
+								<c:forEach items="${replylist}" var="replylist">
+									<div class="commentContent">
+										<c:if test="${replylist.userNo eq authUser.userNo}">
+											<i class="btn btn-danger fa fa-trash pull-right btnCommentDel" data-reply="${replylist.reply}"></i>
+										</c:if>
+										<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/${replylist.logoPath}"></a>
+										<div class="media-body">
+											<div class="comment-header">
+												<a href="#" class="media-heading box-inline text-main text-bold">${replylist.userName}</a>
+												<p class="text-muted text-sm">${replylist.regDate}</p>
+											</div>
+											<p>${replylist.creplyContent}</p>
 										</div>
-										<p class="text-muted text-sm">Today 06:25AM - 12/09/2017</p>
 									</div>
-									<p>Mauris tincidunt tincidunt turpis in porta. Integer fermentum tincidunt auctor. Vestibulum ullamcorper, odio sed rhoncus imperdiet, enim elit sollicitudin orci, eget dictum leo mi nec lectus. Nam commodo turpis id lectus scelerisque vulputate.</p>
-									<a class="btn btn-sm btn-default"><i class="icon-lg demo-pli-like"></i> Like </a>
-
-								</div>
+								</c:forEach>
 							</div>
 							<!--===================================================-->
 							<!-- End Comments -->
-
-
-
-							<!-- Comments -->
-							<!--===================================================-->
-							<div class="comments media-block">
-								<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/assets/img/profile-photos/8.png"></a>
-								<div class="media-body">
-									<div class="comment-header">
-										<a href="#" class="media-heading box-inline text-main text-bold">Kathryn Obrien</a>
-										<p class="text-muted text-sm">Today 05:17AM - 12/09/2017</p>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
-									<a class="btn btn-sm btn-default"><i class="icon-lg demo-pli-like"></i> Like </a>
-								</div>
-							</div>
-							<!--===================================================-->
-							<!-- End Comments -->
-
 						</div>
 					</div>
 
@@ -359,6 +301,79 @@
 	<!--NiftyJS [ RECOMMENDED ]-->
 	<script src="${pageContext.request.contextPath }/assets/js/nifty.js"></script>
 	<!--=================================================-->
+	<script type="text/javascript">
+		/* comment 등록하는 스크립트 */
+		$("#btn-comment-regist").on("click",function() {
+							var creplyContent = $("#commentContent").val();
+							var cpostNo = '${CommunityVo.cpostNo}';
+							console.log(cpostNo);
+
+							$.ajax({
+							url : "${pageContext.request.contextPath}/community/comment/regist",
+							type : "post",
+							data : {
+								cpostNo : cpostNo,
+								creplyContent : creplyContent
+							},
+							dataType : "json",
+							success : function(replyVo) {
+								console.log(replyVo);
+								$("#commentContent").val("");
+								replyRender(replyVo);
+							},
+							error : function(XHR, status, error) {
+								console.error(status + " : "
+										+ error);
+							}
+						});
+			});
+
+		/* comment 삭제하는 스크립트 */
+		$("#commentDiv").on("click",".btnCommentDel",function() {
+							var $this = $(this);
+							var reply = $this.data("reply");
+
+							console.log(reply);
+							$.ajax({
+										url : "${pageContext.request.contextPath }/community/comment/delete",
+										type : "post",
+										data : {
+											reply : reply
+										},
+										dataType : "json",
+										success : function(result) {
+											console.log(result);
+											$this.parent(".commentContent")
+													.remove();
+										},
+										error : function(XHR, status, error) {
+											console.error(status + " : "
+													+ error);
+										}
+									});
+
+						});
+
+		function replyRender(replyVo) {
+			var str = "";
+
+			str += "<div class='commentContent'>";
+			str += "	<i class='btn btn-danger fa fa-trash pull-right btnCommentDel' data-reply='" + replyVo.reply + "'></i>";
+			str += "	<a class='media-left' href='#''><img class='img-circle img-sm' alt='Profile Picture' src='${pageContext.request.contextPath }/" + replyVo.logoPath + "'></a>";
+			str += "	<div class='media-body'>";
+			str += "		<div class='comment-header'>";
+			str += "			<a href='#' class='media-heading box-inline text-main text-bold'>"
+					+ replyVo.userName + "</a>";
+			str += "			<p class='text-muted text-sm'>" + replyVo.regDate
+					+ "</p>";
+			str += "		</div>";
+			str += "		<p>" + replyVo.creplyContent + "</p>";
+			str += "	</div>";
+			str += "</div>"
+
+			$("#commentDiv").append(str);
+		}
+	</script>
 
 
 

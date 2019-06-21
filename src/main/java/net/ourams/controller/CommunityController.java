@@ -1,20 +1,31 @@
 package net.ourams.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import net.ourams.interceptor.Auth;
+import net.ourams.interceptor.AuthUser;
+import net.ourams.service.CommunityReplyService;
 import net.ourams.service.CommunityService;
+import net.ourams.service.UserService;
 import net.ourams.util.S3Util;
+import net.ourams.util.TimeUtile;
 import net.ourams.vo.CommunityVo;
+import net.ourams.vo.ReplyVo;
+import net.ourams.vo.UserVo;
 import net.ourams.vo.fileUpLoadVo;
 
 @Controller
@@ -23,7 +34,11 @@ public class CommunityController {
 	
 	@Autowired
 	private CommunityService communityService;
-
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private	CommunityReplyService communityReplyService;
+	
 	@Autowired
 	private S3Util s3Util;
 
@@ -38,6 +53,7 @@ public class CommunityController {
 	}
 
 	// community main list	
+	@Auth
 	@RequestMapping(value = "/mainform", method = RequestMethod.GET)
 	public String mainForm() {
 		System.out.println("mainform");
@@ -45,21 +61,81 @@ public class CommunityController {
 	}
 
 	// community category detail list
+	@Auth
 	@RequestMapping(value = "/selectform", method = RequestMethod.GET)
-	public String selectForm(Model model) {
+	public String selectForm(Model model) throws ParseException {
 		System.out.println("selectform");
 		List<CommunityVo> communityList = communityService.getList();
 		List<CommunityVo> getlikedList = communityService.getlikedList();
+		for (CommunityVo el : communityList) {
+		    System.out.println(el.getRegDate());
+		    String from = el.getRegDate();
+
+		    SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		    Date to = transFormat.parse(from);
+		    System.out.println(to);
+		    System.out.println(to.getTime());
+		    el.setRegDate(TimeUtile.toDuration(new  Date().getTime() - to.getTime()));
+		};
+		for (CommunityVo el : getlikedList) {
+		    System.out.println(el.getRegDate());
+		    String from = el.getRegDate();
+
+		    SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		    Date to = transFormat.parse(from);
+		    System.out.println(to);
+		    System.out.println(to.getTime());
+		    el.setRegDate(TimeUtile.toDuration(new Date().getTime() - to.getTime()));
+		};
 		model.addAttribute("communityList",communityList);
 		model.addAttribute("getlikedList",getlikedList);
 		return "community/community-list";
 	}
 
+	@ResponseBody
+	@Auth
+	@RequestMapping(value = "/dueDate", method = RequestMethod.POST)
+	public List<CommunityVo> loadDifferentiate() {
+		System.out.println("calculate differentiate...");
+		
+		List<CommunityVo> communityList = communityService.getList();
+		
+		return communityList;
+	}
+	
 	// community category detail list
-	@RequestMapping(value = "/read", method = RequestMethod.GET)
-	public String communityRead() {
+	@Auth
+	@RequestMapping(value = "/read/{cpostNo}", method = RequestMethod.GET)
+	public String communityRead(@PathVariable("cpostNo") int cpostNo,  @AuthUser UserVo authUser, Model model) {
 		System.out.println("read");
+		CommunityVo communityvo = communityService.read(cpostNo);
+		List<ReplyVo> replylist = communityReplyService.getcreplyList(cpostNo);
+		System.out.println(replylist.toString());
+		UserVo writerVo = userService.read(communityvo.getUserNo());
+		model.addAttribute("CommunityVo", communityvo);
+		model.addAttribute("replylist", replylist);
+		model.addAttribute("WriterVo", writerVo);
+		System.out.println(communityvo);
+				
 		return "community/community-read";
+	}
+	
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/comment/regist", method = RequestMethod.POST)
+	public ReplyVo commentRegist(@AuthUser UserVo authUser, @RequestParam("cpostNo") int cpostNo,
+			@RequestParam("creplyContent") String replyContent) {
+		ReplyVo replyVo = communityReplyService.commentRegistAndGetReplyVo(authUser, cpostNo, replyContent);
+		return replyVo;
+	}
+
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/comment/delete", method = RequestMethod.POST)
+	public int commentDelete(@RequestParam("reply") int reply) {
+		return communityReplyService.commentDelete(reply);
 	}
 
 	
@@ -113,6 +189,17 @@ public class CommunityController {
 		return vo;
 	}
 
-	
+	public static String toDuration(long duration) {
+
+	    StringBuffer res = new StringBuffer();
+	   
+	    if("".equals(res.toString()))
+	        return "0 seconds ago";
+	    else
+	        return res.toString();
+	}
 	
 }
+
+
+

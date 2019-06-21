@@ -12,13 +12,14 @@
    				SELECT   c.cpostNo, 
 					 c.cpostType, 
 					 u.userNo, 
-                     TO_CHAR(c.regDate, 'yyyy/mm/dd') as regDate,
+                     regDate,
 					 c.cpostTitle,
 					 c.cpostContent,
 					 c.liked
 			FROM  communitypost c join users u
 			ON c.userNo = u.userNo
 			where c.cpostType = 1
+			order by c.cpostNo desc
 			
 		]]>
 	</select>
@@ -26,7 +27,7 @@
 	
 	<select id="selectLiked" resultType="CommunityVo">
 		<![CDATA[
-			select cpostTitle,TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,liked
+			select cpostTitle,regDate,liked
             from (
                 select * 
                 from communitypost 
@@ -35,6 +36,23 @@
             )
             where  rownum <= 10
             	
+		]]>
+	</select>
+	
+	
+	
+	<!-- no로 글조회 -->
+	<select id="selectNotice" parameterType="int" resultType="CommunityVo">
+		<![CDATA[
+			select cpostNo, 
+					   cpostTitle, 
+					   cpostContent,
+					   liked, 
+					   TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,  
+					   userNo
+			     from communitypost
+			     where cpostNo = #{cpostNo}     
+			     
 		]]>
 	</select>
 	

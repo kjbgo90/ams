@@ -29,6 +29,7 @@
 		<mapper resource="mybatis/mappers/notice.xml" />
 		<mapper resource="mybatis/mappers/qna.xml" />
 		<mapper resource="mybatis/mappers/reply.xml" />
+		<mapper resource="mybatis/mappers/creply.xml" />
 		<mapper resource="mybatis/mappers/courseSchedule.xml" />
 		<mapper resource="mybatis/mappers/courseDataRoom.xml" />
 		<mapper resource="mybatis/mappers/myPage.xml" />

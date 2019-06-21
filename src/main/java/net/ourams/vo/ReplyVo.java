@@ -4,11 +4,14 @@ package net.ourams.vo;
 public class ReplyVo {
 	private int reply;
 	private int postNo;
+	private int cpostNo;
 	private int userNo;
 	private String regDate;
 	private String replyContent;
+	private String creplyContent;
 	private String userName;
 	private String logoPath;
+	private int creplyno;
 	
 	
 	public ReplyVo() {
@@ -16,18 +19,25 @@ public class ReplyVo {
 
 
 
+	
 
-	public ReplyVo(int reply, int postNo, int userNo, String regDate, String replyContent, String userName,
-			String logoPath) {
+
+	public ReplyVo(int reply, int postNo, int cpostNo, int userNo, String regDate, String replyContent,
+			String creplyContent, String userName, String logoPath, int creplyno) {
 		super();
 		this.reply = reply;
 		this.postNo = postNo;
+		this.cpostNo = cpostNo;
 		this.userNo = userNo;
 		this.regDate = regDate;
 		this.replyContent = replyContent;
+		this.creplyContent = creplyContent;
 		this.userName = userName;
 		this.logoPath = logoPath;
+		this.creplyno = creplyno;
 	}
+
+
 
 
 
@@ -123,11 +133,58 @@ public class ReplyVo {
 
 
 
+	public int getCpostNo() {
+		return cpostNo;
+	}
+
+
+
+	public void setCpostNo(int cpostNo) {
+		this.cpostNo = cpostNo;
+	}
+
+
+
+	public String getCreplyContent() {
+		return creplyContent;
+	}
+
+
+
+	public void setCreplyContent(String creplyContent) {
+		this.creplyContent = creplyContent;
+	}
+	
+	
+
+
+
+	public int getCreplyno() {
+		return creplyno;
+	}
+
+
+
+
+
+
+	public void setCreplyno(int creplyno) {
+		this.creplyno = creplyno;
+	}
+
+
+
+
+
+
 	@Override
 	public String toString() {
-		return "ReplyVo [reply=" + reply + ", postNo=" + postNo + ", userNo=" + userNo + ", regDate=" + regDate
-				+ ", replyContent=" + replyContent + ", userName=" + userName + ", logoPath=" + logoPath + "]";
+		return "ReplyVo [reply=" + reply + ", postNo=" + postNo + ", cpostNo=" + cpostNo + ", userNo=" + userNo
+				+ ", regDate=" + regDate + ", replyContent=" + replyContent + ", creplyContent=" + creplyContent
+				+ ", userName=" + userName + ", logoPath=" + logoPath + ", creplyno=" + creplyno + "]";
 	}
+
+
 
 
 

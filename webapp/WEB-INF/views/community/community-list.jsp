@@ -129,21 +129,21 @@
 							<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">
 								LIKE<i class="icon-lg icon-fw demo-pli-map-marker-2"></i>
 							</p>
-							
+
 							<ul class="list-inline mar-hor">
-							<c:forEach items="${getlikedList}" var="List">
-								<li class="tag tag-sm" style="back"><a href="#">${List.cpostTitle}</a></li>
-								<span class="mar-rgt">&nbsp;&nbsp;&nbsp;<i class="demo-psi-heart-2 icon-fw"></i>${List.liked}</span>
-								<br>								
+								<c:forEach items="${getlikedList}" var="List">
+									<li class="tag tag-sm" style=""><a href="#">${List.cpostTitle}</a></li>
+									<span class="mar-rgt">&nbsp;&nbsp;&nbsp;<i class="demo-psi-heart-2 icon-fw"></i>${List.liked}</span>
+									<br>
 								</c:forEach>
 							</ul>
 							<hr>
 							<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">BEST POST</p>
 							<div class="list-group bg-trans pad-btm bord-btm">
-							<c:forEach items="${getlikedList}" var="List">
-								<div class="list-group-item list-item-sm">
-									<a href="#" class="btn-link">${List.cpostTitle}</a><small class="box-block">${List.regDate}</small>
-								</div>							
+								<c:forEach items="${getlikedList}" var="List">
+									<div class="list-group-item list-item-sm">
+										<a href="#" class="btn-link">${List.cpostTitle}</a><small class="box-block">${List.regDate}</small>
+									</div>
 								</c:forEach>
 							</div>
 
@@ -188,12 +188,12 @@
 								<c:forEach items="${communityList}" var="List">
 									<div class="panel sm">
 										<div class="blog-header">
-											<img class="img-responsive" src="${pageContext.request.contextPath }/assets/img/shared-img-5.jpg" alt="Image">
+											<img class="img-responsive" src="${pageContext.request.contextPath}/assets/img/shared-img-5.jpg" alt="Image">
 										</div>
 										<div class="blog-content">
 											<div class="blog-title media-block">
 												<div class="media-body">
-													<a href="#" class="btn-link">
+													<a href="${pageContext.request.contextPath }/community/read/${List.cpostNo}" class="btn-link">
 														<h2>${List.cpostTitle}</h2>
 													</a>
 												</div>
@@ -466,7 +466,42 @@
 	<!--NiftyJS [ RECOMMENDED ]-->
 	<script src="${pageContext.request.contextPath }/assets/js/nifty.js"></script>
 	<!--=================================================-->
-
+	<script type="text/javascript">
+		$("document").ready(function() {
+			var currentDate =  new Date();
+			resultDate = new Date(currentDate);
+			console.log("안녕: " + currentDate);
+			/* currentDate = currentDate.getFullYear() + "/" + pad( (currentDate.getMonth()+1), 2 ) + "/"+ currentDate.getDate() + ""
+			console.log("currentDate", currentDate);  */
+			timegap = (currentDate - resultDate)/(60*60*1000);
+			var curYear = resultDate.getFullYear();
+			var curMonth = (resultDate.getMonth() + 1);
+			var curDay = resultDate.getDate();
+			//console.log(timegap);
+			console.log("-------------------------------");
+			$.ajax({
+				url : "${pageContext.request.contextPath }/community/dueDate",
+				type : "post",
+				dataType : "json",	
+				success : function(list) {
+					console.log(list);
+					
+				
+					/* for(var i=0; i<list.length; i++){
+						var differentiate = (list[i].regDate - resultDate)/(60*60*1000);
+						console.log(differentiate);
+					} */
+					
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			
+			
+			
+		});
+	</script>
 
 
 </body>

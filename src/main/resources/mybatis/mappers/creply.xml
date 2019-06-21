@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="creply">
+
+	<select id="selectreplyList" parameterType="int" resultType="ReplyVo">
+		<![CDATA[
+				   
+          select creplyno,
+                   cpostNo, 
+                   userNo,
+                   regDate,
+                   creplyContent,
+                   userName,
+                   logoPath
+            from (                           
+            
+            
+                SELECT  creplyno,
+                        cpostNo,
+						r.userNo userNo,
+                        regDate,
+						creplyContent,
+				        u.userName userName,
+                        u.logoPath logoPath
+                        
+				        FROM communityreply r join users u
+                        on r.userNo = u.userNo )
+                        where cpostNo = #{postNo}
+                        order by creplyno ASC
+                        
+		]]>
+	</select>
+
+	<insert id="insertReplyByReplyVo" parameterType="ReplyVo">
+		<selectKey keyProperty="creplyno" resultType="int" order="BEFORE">
+			SELECT seq_creply_no.nextval FROM dual
+		</selectKey>
+		<![CDATA[
+			INSERT INTO communityreply(		creplyno,
+	    							cpostNo,
+	    							creplyContent,
+	    							regDate,
+	    							userNo)
+			VALUES (
+	    							#{creplyno},
+	    							#{cpostNo}, 
+	    							#{creplyContent},
+	    							sysdate,
+	    							#{userNo})
+		]]>
+	</insert>
+	
+	<select id="selectReplyByReplyNo" parameterType="int" resultType="ReplyVo">
+		<![CDATA[
+				   
+            select creplyno,
+                   cpostNo, 
+                   userNo,
+                   regDate,
+                   creplyContent,
+                   userName,
+                   logoPath
+            from (                           
+            
+            
+                SELECT  creplyno,
+                        cpostNo,
+						r.userNo userNo,
+						TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,
+						creplyContent,
+				        u.userName userName,
+                        u.logoPath logoPath
+                        
+				        FROM communityreply r join users u
+                        on r.userNo = u.userNo )
+                        where creplyno = #{reply}
+                        
+		]]>
+	</select>
+	
+	<delete id="deleteReplyByReply" parameterType="int">
+		<![CDATA[
+			DELETE FROM communityreply
+			WHERE creplyno = #{creplyno}
+		]]>
+	</delete>
+</mapper>
