@@ -303,12 +303,12 @@
 	<!--=================================================-->
 	<script type="text/javascript">
 		/* comment 등록하는 스크립트 */
-		$("#btn-comment-regist").on("click",function() {
+		$("#btn-comment-regist").on("click", function() {
 							var creplyContent = $("#commentContent").val();
 							var cpostNo = '${CommunityVo.cpostNo}';
-							console.log(cpostNo);
+							console.log("게시글 no: " + cpostNo + ", 댓글 내용: " + creplyContent);
 
-							$.ajax({
+						$.ajax({
 							url : "${pageContext.request.contextPath}/community/comment/regist",
 							type : "post",
 							data : {
@@ -317,7 +317,6 @@
 							},
 							dataType : "json",
 							success : function(replyVo) {
-								console.log(replyVo);
 								$("#commentContent").val("");
 								replyRender(replyVo);
 							},

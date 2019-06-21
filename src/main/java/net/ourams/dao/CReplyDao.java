@@ -16,7 +16,6 @@ public class CReplyDao {
 
 	public List<ReplyVo> selectreplyList(int cpostNo) {
 		List<ReplyVo> replyList = sqlSession.selectList("creply.selectreplyList",cpostNo);
-		System.out.println("DDDD");
 		System.out.println(replyList.toString());
 		return replyList;
 	}

@@ -25,7 +25,7 @@ public class CommunityReplyService {
 		
 		cReplyDao.insertReplyByReplyVo(registReplyVo);
 		
-		return cReplyDao.selectReplyByReplyNo(registReplyVo.getReply());
+		return cReplyDao.selectReplyByReplyNo(registReplyVo.getCreplyno());
 	}
 
 

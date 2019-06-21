@@ -131,6 +131,7 @@ public class CommunityController {
 	public ReplyVo commentRegist(@AuthUser UserVo authUser, @RequestParam("cpostNo") int cpostNo,
 			@RequestParam("creplyContent") String replyContent) {
 		ReplyVo replyVo = communityReplyService.commentRegistAndGetReplyVo(authUser, cpostNo, replyContent);
+		System.out.println("replyVo : " + replyVo);
 		return replyVo;
 	}
 
