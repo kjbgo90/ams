@@ -67,7 +67,7 @@
                 SELECT  creplyno,
                         cpostNo,
 						r.userNo userNo,
-						TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,
+						regDate,
 						creplyContent,
 				        u.userName userName,
                         u.logoPath logoPath

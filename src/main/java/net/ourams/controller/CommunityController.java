@@ -47,8 +47,16 @@ public class CommunityController {
 
 	// community main list
 	@RequestMapping(value = "/mainform", method = RequestMethod.GET)
-	public String mainForm() {
+	public String mainForm(Model model) {
 		System.out.println("mainform");
+		List<CommunityVo> MainEatList = communityService.getMainEatList();
+		List<CommunityVo> MaincafeList = communityService.getMaincafeList();
+		List<CommunityVo> MainList = communityService.getMainList();
+		
+		
+		model.addAttribute("MainEatList", MainEatList);
+		model.addAttribute("MaincafeList", MaincafeList);
+		model.addAttribute("MainList", MainList);
 		return "community/community-main";
 	}
 
@@ -64,9 +72,9 @@ public class CommunityController {
 	// community category detail list
 	@Auth
 	@RequestMapping(value = "/selectform", method = RequestMethod.GET)
-	public String selectForm(Model model) throws ParseException {
-		System.out.println("selectform");
-		List<CommunityVo> communityList = communityService.getList();
+	public String selectForm(Model model, @RequestParam("cpostType") int cpostType) throws ParseException {
+		System.out.println("selectform(Type: "+cpostType+")");
+		List<CommunityVo> communityList = communityService.getList(cpostType);
 		List<CommunityVo> getlikedList = communityService.getlikedList();
 		for (CommunityVo el : communityList) {
 			System.out.println(el.getRegDate());
@@ -78,8 +86,7 @@ public class CommunityController {
 			System.out.println(to);
 			System.out.println(to.getTime());
 			el.setRegDate(TimeUtile.toDuration(new Date().getTime() - to.getTime()));
-		}
-		;
+		};
 		for (CommunityVo el : getlikedList) {
 			System.out.println(el.getRegDate());
 			String from = el.getRegDate();
@@ -94,19 +101,23 @@ public class CommunityController {
 		;
 		model.addAttribute("communityList", communityList);
 		model.addAttribute("getlikedList", getlikedList);
+	
 		return "community/community-list";
 	}
 
-	@ResponseBody
-	@Auth
-	@RequestMapping(value = "/dueDate", method = RequestMethod.POST)
-	public List<CommunityVo> loadDifferentiate() {
-		System.out.println("calculate differentiate...");
-
-		List<CommunityVo> communityList = communityService.getList();
-
-		return communityList;
-	}
+	/*
+	 * @ResponseBody
+	 * 
+	 * @Auth
+	 * 
+	 * @RequestMapping(value = "/dueDate", method = RequestMethod.POST) public
+	 * List<CommunityVo> loadDifferentiate() {
+	 * System.out.println("calculate differentiate...");
+	 * 
+	 * List<CommunityVo> communityList = communityService.getList();
+	 * 
+	 * return communityList; }
+	 */
 
 	// community category detail list
 	@Auth
@@ -188,6 +199,7 @@ public class CommunityController {
 		vo.setFileSize(fileSize);
 		vo.setSaveName(saveName);
 		System.out.println(vo.toString());
+		
 		return vo;
 	}
 	

@@ -126,49 +126,21 @@
 							<!-- Upcoming Tasklist 맛집!!!!!!!!!!!! -->
 							<!---------------------------------->
 							<div>
-								<a href="${pageContext.request.contextPath }/community/selectform" class="pull-right btn btn-info btn-sm">바로가기</a>
+
+								<a href="${pageContext.request.contextPath }/community/selectform?cpostType=1" class="pull-right btn btn-info btn-sm">바로가기</a>
 								<h4 class="text-main">근처 맛집</h4>
 								<hr>
 								<br>
 								<ul id="demo-tasklist-upcoming" class="sortable-list tasklist list-unstyled">
-
-									<li id="demo-tasklist-12" class="task-info">
-										<p class="text-bold text-main text-sm">#34625</p> <img class="img-responsive mar-btm" src="${pageContext.request.contextPath }/assets/img/shared-img-4.jpg" alt="Image">
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-									</a>
-									</li>
-									<li id="demo-tasklist-2" class="task-info">
-										<p class="text-bold text-main text-sm">#45684</p>
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-									</a>
-									</li>
-
-									<li id="demo-tasklist-2" class="task-info">
-										<p class="text-bold text-main text-sm">#45684</p>
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-									</a>
-									</li>
-
-									<li id="demo-tasklist-3" class="task-info">
-										<p class="text-bold text-main text-sm">#84564</p> <img class="img-responsive" src="${pageContext.request.contextPath }/assets/img/shared-img-2.jpg" alt="Image">
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-									</a>
-									</li>
-									<li id="demo-tasklist-2" class="task-info">
-										<p class="text-bold text-main text-sm">#45684</p>
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-									</a>
-									</li>
+									<c:forEach items="${MainEatList}" var="List">
+										<li id="demo-tasklist-12" class="task-info" onclick="location.href='${pageContext.request.contextPath }/community/read/${List.cpostNo}'">
+											<p class="text-bold text-main text-sm "># ${List.cpostNo}</p> <img class="img-responsive mar-btm" src="${pageContext.request.contextPath }/assets/img/shared-img-4.jpg" alt="Image">
+											<p class="text-bold text-main text-sm text-right">${List.cpostTitle}</p>
+											<p class="pad-btm bord-btm">${List.cpostContent}</p> <a href="#" class="task-footer"> <span class="box-inline"> <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> ${List.liked}</span>
+											</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>${List.regDate}</span>
+										</a>
+										</li>
+									</c:forEach>
 								</ul>
 							</div>
 							<!---------------------------------->
@@ -181,48 +153,20 @@
 							<!-- Upcoming Tasklist 카페!!!!!!!!!!!!!!!!!!!!!!!!!!!111-->
 							<!---------------------------------->
 							<div>
-								<a href="${pageContext.request.contextPath }/community/selectform" class="pull-right btn btn-info btn-sm">바로가기</a>
+								<a href="${pageContext.request.contextPath }/community/selectform?cpostType=2" class="pull-right btn btn-info btn-sm">바로가기</a>
 								<h4 class="text-main header-title m-t-0">카페</h4>
 								<hr>
-								<br>
-
+								<br> 
 								<ul id="demo-tasklist-inprogress" class="sortable-list tasklist list-unstyled">
-
-									<li id="demo-tasklist-3" class="task-warning">
-										<p class="text-bold text-main text-sm">#84564</p> <img class="img-responsive" src="${pageContext.request.contextPath }/assets/img/shared-img-2.jpg" alt="Image">
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-									</a>
-									</li>
-									<li id="demo-tasklist-2" class="task-warning">
-										<p class="text-bold text-main text-sm">#45684</p>
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-									</a>
-									</li>
-									<li id="demo-tasklist-2" class="task-warning">
-										<p class="text-bold text-main text-sm">#45684</p>
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-									</a>
-									</li>
-									<li id="demo-tasklist-2" class="task-warning">
-										<p class="text-bold text-main text-sm">#45684</p>
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-									</a>
-									</li>
-									<li id="demo-tasklist-2" class="task-warning">
-										<p class="text-bold text-main text-sm">#45684</p>
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-									</a>
-									</li>
+									<c:forEach items="${MaincafeList}" var="List">
+										<li id="demo-tasklist-3" class="task-warning" onclick="location.href='${pageContext.request.contextPath }/community/read/${List.cpostNo}'">
+											<p class="text-bold text-main text-sm "># ${List.cpostNo}</p> <img class="img-responsive mar-btm" src="${pageContext.request.contextPath }/assets/img/shared-img-2.jpg" alt="Image">
+											<p class="text-bold text-main text-sm text-right">${List.cpostTitle}</p>
+											<p class="pad-btm bord-btm">${List.cpostContent}</p> <a href="#" class="task-footer"> <span class="box-inline"> <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> ${List.liked}</span>
+											</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>${List.regDate}</span>
+										</a>
+										</li>
+									</c:forEach>
 								</ul>
 							</div>
 							<!---------------------------------->
@@ -236,50 +180,20 @@
 							<!-- Upcoming Tasklist 자유글!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 							<!---------------------------------->
 							<div>
-								<a href="${pageContext.request.contextPath }/community/selectform" class="pull-right btn btn-info btn-sm">바로가기</a>
+								<a href="${pageContext.request.contextPath }/community/selectform?cpostType=3" class="pull-right btn btn-info btn-sm">바로가기</a>
 								<h4 class="text-main header-title m-t-0">자유게시글</h4>
 								<hr>
 								<br>
 								<ul id="demo-tasklist-completed" class="sortable-list tasklist list-unstyled">
+								<c:forEach items="${MainList}" var="List">
 									<li id="demo-tasklist-9" class="task-success">
-										<p class="text-bold text-main text-sm">#34625</p> <img class="img-responsive" src="${pageContext.request.contextPath }/assets/img/shared-img-3.jpg" alt="Image">
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
+									<p class="text-bold text-main text-sm "># ${List.cpostNo}</p> <img class="img-responsive mar-btm" src="${pageContext.request.contextPath }/assets/img/shared-img-3.jpg" alt="Image">
+											<p class="text-bold text-main text-sm text-right">${List.cpostTitle}</p>
+											<p class="pad-btm bord-btm">${List.cpostContent}</p> <a href="#" class="task-footer"> <span class="box-inline"> <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> ${List.liked}</span>
+											</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>${List.regDate}</span>
 									</a>
 									</li>
-
-									<li id="demo-tasklist-2" class="task-success">
-										<p class="text-bold text-main text-sm">#45684</p>
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-									</a>
-									</li>
-
-									<li id="demo-tasklist-2" class="task-success">
-										<p class="text-bold text-main text-sm">#45684</p>
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-									</a>
-									</li>
-
-									<li id="demo-tasklist-2" class="task-success">
-										<p class="text-bold text-main text-sm">#45684</p> <img class="img-responsive mar-btm" src="${pageContext.request.contextPath }/assets/img/shared-img.jpg" alt="Image">
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-									</a>
-									</li>
-
-									<li id="demo-tasklist-12" class="task-success">
-										<p class="text-bold text-main text-sm">#34625</p> <img class="img-responsive mar-btm" src="${pageContext.request.contextPath }/assets/img/shared-img.jpg" alt="Image">
-										<p class="pad-btm bord-btm">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> <a href="#" class="task-footer"> <span class="box-inline"> <span
-												class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> 45</span> <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-										</span> <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-									</a>
-									</li>
+									</c:forEach>
 								</ul>
 							</div>
 							<!---------------------------------->
@@ -287,12 +201,13 @@
 
 						</div>
 					</div>
-					<div >&nbsp;&nbsp;&nbsp;
+					<div>
+						&nbsp;&nbsp;&nbsp;
 						<button class="btn btn-dark btn-circle" onclick="location.href='${pageContext.request.contextPath }/community/writeform' ">
 							<i class="demo-psi-pen-5 icon-2x"></i>
 						</button>
 					</div>
-					<br><br>
+					<br> <br>
 
 				</div>
 				<!--===================================================-->
@@ -357,6 +272,9 @@
 	<!--NiftyJS [ RECOMMENDED ]-->
 	<script src="${pageContext.request.contextPath }/assets/js/nifty.js"></script>
 	<!--=================================================-->
+
+
+
 
 
 

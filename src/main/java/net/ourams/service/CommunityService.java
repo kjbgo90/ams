@@ -18,10 +18,26 @@ import net.ourams.vo.fileUpLoadVo;
 public class CommunityService {
 	@Autowired
 	private CommunityDao communityDao;
+	
+	
+	
+	public List<CommunityVo> getMainEatList() {
+		List<CommunityVo> list=communityDao.MainEatList();	
+		return null;
+	}
+	public List<CommunityVo> getMaincafeList() {
+		List<CommunityVo> list=communityDao.MaincafeList();	
+		return list;
+	}
 
-
-	public List<CommunityVo> getList() {
-		List<CommunityVo> list=communityDao.communityList();	
+	
+	public List<CommunityVo> getMainList() {
+		List<CommunityVo> list=communityDao.MainList();	
+		return list;
+	}
+	
+	public List<CommunityVo> getList(int cpostType) {
+		List<CommunityVo> list=communityDao.communityList(cpostType);	
 		return list;
 	}
 	
@@ -86,4 +102,7 @@ public class CommunityService {
 		return communityDao.registerLocationPost(lPostMap);
 		
 	}
+
+
+
 }

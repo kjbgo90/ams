@@ -16,8 +16,19 @@ public class CommunityDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<CommunityVo> communityList() {
-		return sqlSession.selectList("community.selectList");
+	public List<CommunityVo> MainEatList() {
+		return sqlSession.selectList("community.MainEatList");
+	}
+	public List<CommunityVo> MainList() {
+		return sqlSession.selectList("community.MainList");
+	}
+
+	public List<CommunityVo> MaincafeList() {
+		return sqlSession.selectList("community.MaincafeList");
+	}
+	
+	public List<CommunityVo> communityList(int cpostType) {
+		return sqlSession.selectList("community.selectList", cpostType);
 	}
 	
 	public List<CommunityVo> likedList() {
@@ -51,4 +62,7 @@ public class CommunityDao {
 	public LocationVo existLocation(String address) {
 		return sqlSession.selectOne("community.selectLocation", address);
 	}
+
+
+
 }

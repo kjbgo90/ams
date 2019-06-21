@@ -6,7 +6,7 @@
 	<!-- 쿼리문 작성 -->
 	
 	<!-- select 예제 -->
-	<select id="selectList" resultType="CommunityVo">
+	<select id="selectList" parameterType="int" resultType="CommunityVo">
 		<![CDATA[
 			
    				SELECT   c.cpostNo, 
@@ -18,11 +18,72 @@
 					 c.liked
 			FROM  communitypost c join users u
 			ON c.userNo = u.userNo
-			where c.cpostType = 1
+			where c.cpostType = #{cpostType}
 			order by c.cpostNo desc
 			
 		]]>
 	</select>
+	
+	
+	<select id="MainEatList" resultType="CommunityVo">
+		<![CDATA[
+			
+   				SELECT   c.cpostNo, 
+					 c.cpostType, 
+					 u.userNo, 
+                     TO_CHAR(regDate,'hh24:mi') as regDate,
+					 c.cpostTitle,
+					 c.cpostContent,
+					 c.liked
+			FROM  communitypost c join users u
+			ON c.userNo = u.userNo
+			where c.cpostType = 1  and rownum <=5
+			order by c.cpostNo desc
+			
+		]]>
+	</select>
+	
+		
+	<select id="MaincafeList" resultType="CommunityVo">
+		<![CDATA[
+			
+   				SELECT   c.cpostNo, 
+					 c.cpostType, 
+					 u.userNo, 
+                     TO_CHAR(regDate,'hh24:mi') as regDate,
+					 c.cpostTitle,
+					 c.cpostContent,
+					 c.liked
+			FROM  communitypost c join users u
+			ON c.userNo = u.userNo
+			where c.cpostType = 2  and rownum <=5
+			order by c.cpostNo desc
+			
+		]]>
+	</select>
+	<select id="MainList" resultType="CommunityVo">
+		<![CDATA[
+			
+   				SELECT   c.cpostNo, 
+					 c.cpostType, 
+					 u.userNo, 
+                     TO_CHAR(regDate,'hh24:mi') as regDate,
+					 c.cpostTitle,
+					 c.cpostContent,
+					 c.liked
+			FROM  communitypost c join users u
+			ON c.userNo = u.userNo
+			where c.cpostType = 3  and rownum <=5
+			order by c.cpostNo desc
+			
+		]]>
+	</select>
+	
+		
+	
+	
+	
+	
 	
 	
 	<select id="selectLiked" resultType="CommunityVo">
