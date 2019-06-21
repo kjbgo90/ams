@@ -22,18 +22,18 @@ public class CommunityService {
 	
 	
 	public List<CommunityVo> getMainEatList() {
-		List<CommunityVo> list=communityDao.MainEatList();	
-		return null;
+		List<CommunityVo> eatlist =communityDao.MainEatList();	
+		return eatlist;
 	}
 	public List<CommunityVo> getMaincafeList() {
-		List<CommunityVo> list=communityDao.MaincafeList();	
-		return list;
+		List<CommunityVo> cafelist=communityDao.MaincafeList();	
+		return cafelist;
 	}
 
 	
 	public List<CommunityVo> getMainList() {
-		List<CommunityVo> list=communityDao.MainList();	
-		return list;
+		List<CommunityVo> mainlist=communityDao.MainList();	
+		return mainlist;
 	}
 	
 	public List<CommunityVo> getList(int cpostType) {
@@ -49,6 +49,7 @@ public class CommunityService {
 
 
 	public CommunityVo read(int cpostNo) {
+		communityDao.updateHit(cpostNo);
 		CommunityVo communityVo = communityDao.selectNotice(cpostNo);
 		return communityVo;
 	}

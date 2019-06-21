@@ -39,6 +39,11 @@ public class CommunityDao {
 		return sqlSession.selectOne("community.selectNotice", cpostNo);
 	}
 
+
+	public int updateHit(int cpostNo) {
+		return sqlSession.update("community.updateHit", cpostNo);
+	}
+
 	public int registerPost(CommunityVo vo) {
 		return sqlSession.insert("community.insertPost", vo);
 	}

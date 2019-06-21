@@ -174,7 +174,7 @@
 							</div>
 							<hr>
 							<br> &nbsp;
-							<button class="btn btn-dark btn-circle" onclick="location.href='${pageContext.request.contextPath }/community/regform' ">
+							<button class="btn btn-dark btn-circle" onclick="location.href='${pageContext.request.contextPath }/community/writeform' ">
 								<i class="demo-psi-pen-5 icon-2x"></i>
 							</button>
 							<br>
@@ -188,7 +188,7 @@
 								<c:forEach items="${communityList}" var="List">
 									<div class="panel sm">
 										<div class="blog-header">
-											<img class="img-responsive" src="${pageContext.request.contextPath}/assets/img/shared-img-5.jpg" alt="Image">
+											<img class="img-responsive" onclick="location.href='${pageContext.request.contextPath }/community/read/${List.cpostNo}'" src="${pageContext.request.contextPath}/assets/img/shared-img-5.jpg" alt="Image">
 										</div>
 										<div class="blog-content">
 											<div class="blog-title media-block">
@@ -207,7 +207,7 @@
 												<span class="label label-success">${List.regDate}</span>
 											</div>
 											<div class="media-body text-right">
-												<span class="mar-rgt"><i class="demo-pli-heart-2 icon-fw"></i>${List.liked}</span> <i class="demo-pli-speech-bubble-5 icon-fw"></i>23
+												<span class="mar-rgt"><i class="demo-pli-heart-2 icon-fw"></i>${List.liked}</span> <i class="demo-pli-speech-bubble-5 icon-fw"></i>${List.hit}
 											</div>
 										</div>
 

@@ -159,14 +159,14 @@
 							<div class="blog-footer">
 
 								<div class="media-body text-right">
-									<span class="mar-rgt"><i class="demo-pli-heart-2 icon-fw"></i>${CommunityVo.liked}</span> <i class="demo-pli-speech-bubble-5 icon-fw"></i>23
+									<span class="mar-rgt"><i class="demo-pli-heart-2 icon-fw"></i>${CommunityVo.liked}</span> <i class="demo-pli-speech-bubble-5 icon-fw"></i>${CommunityVo.hit}
 								</div>
 							</div>
 							<div class="row">
 								<div class="pad-ver text-reft class col-sm-4">
 
 									<!--Send button-->
-									<button id="mail-send-btn" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath }/community/selectform' ">
+									<button id="mail-send-btn" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath }/community/selectform?cpostType=${CommunityVo.cpostType}' ">
 										<i class=" icon-xs icon-fw"></i>목록
 									</button>
 

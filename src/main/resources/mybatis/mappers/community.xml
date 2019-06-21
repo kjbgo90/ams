@@ -15,7 +15,8 @@
                      regDate,
 					 c.cpostTitle,
 					 c.cpostContent,
-					 c.liked
+					 c.liked,
+					 c.hit
 			FROM  communitypost c join users u
 			ON c.userNo = u.userNo
 			where c.cpostType = #{cpostType}
@@ -34,7 +35,8 @@
                      TO_CHAR(regDate,'hh24:mi') as regDate,
 					 c.cpostTitle,
 					 c.cpostContent,
-					 c.liked
+					 c.liked,
+					 c.hit
 			FROM  communitypost c join users u
 			ON c.userNo = u.userNo
 			where c.cpostType = 1  and rownum <=5
@@ -53,7 +55,8 @@
                      TO_CHAR(regDate,'hh24:mi') as regDate,
 					 c.cpostTitle,
 					 c.cpostContent,
-					 c.liked
+					 c.liked,
+					 c.hit
 			FROM  communitypost c join users u
 			ON c.userNo = u.userNo
 			where c.cpostType = 2  and rownum <=5
@@ -70,7 +73,8 @@
                      TO_CHAR(regDate,'hh24:mi') as regDate,
 					 c.cpostTitle,
 					 c.cpostContent,
-					 c.liked
+					 c.liked,
+					 c.hit
 			FROM  communitypost c join users u
 			ON c.userNo = u.userNo
 			where c.cpostType = 3  and rownum <=5
@@ -80,12 +84,6 @@
 	</select>
 	
 		
-	
-	
-	
-	
-	
-	
 	<select id="selectLiked" resultType="CommunityVo">
 		<![CDATA[
 			select cpostTitle,regDate,liked
@@ -108,12 +106,23 @@
 					   cpostContent,
 					   liked, 
 					   TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,  
-					   userNo
+					   userNo,
+					   hit
 			     from communitypost
 			     where cpostNo = #{cpostNo}     
 			     
 		]]>
 	</select>
+	
+	
+	
+	<update id="updateHit" parameterType="int">
+		<![CDATA[
+			update communitypost 
+			set hit = hit+1
+			where cpostNo = #{cpostNo}
+		]]>
+	</update>
 	
 	<select id="selectLocation" parameterType="String" resultType="LocationVo">
 		<![CDATA[
@@ -135,7 +144,8 @@
 				 userNo,
 				 cpostType,
 				 regDate,
-				 liked)
+				 liked,
+				 hit)
 			VALUES
 				(#{cpostNo},
 				 #{cpostTitle},
@@ -143,7 +153,8 @@
 				 #{userNo},
 				 #{cpostType},
 				 SYSDATE,
-				 0
+				 0,
+				 #{hit}
 				)
 		]]>
 	</insert>
@@ -215,5 +226,7 @@
 				 #{fileNo})
 		]]>
 	</insert>
+	
+	
 
 </mapper>

@@ -20,13 +20,15 @@ public class CommunityVo {
 	private String businessName;
 	private String latitude;
 	private String longitude;
+	private int hit;
 	
 	public CommunityVo() {
 		
 	}
 
 	public CommunityVo(int cpostNo, int cpostType, int userNo, String regDate, String cpostTitle, String cpostContent,
-			int liked, int rnum, int pageNo, List<fileUpLoadVo> fileList) {
+			int liked, int rnum, int pageNo, List<fileUpLoadVo> fileList, String categoryName, int locationNo,
+			int cfileNo, String address, String businessName, String latitude, String longitude, int hit) {
 		super();
 		this.cpostNo = cpostNo;
 		this.cpostType = cpostType;
@@ -38,6 +40,14 @@ public class CommunityVo {
 		this.rnum = rnum;
 		this.pageNo = pageNo;
 		this.fileList = fileList;
+		this.categoryName = categoryName;
+		this.locationNo = locationNo;
+		this.cfileNo = cfileNo;
+		this.address = address;
+		this.businessName = businessName;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.hit = hit;
 	}
 
 	public int getCpostNo() {
@@ -178,13 +188,25 @@ public class CommunityVo {
 		this.cfileNo = cfileNo;
 	}
 
+	
+	public int getHit() {
+		return hit;
+	}
+
+	public void setHit(int hit) {
+		this.hit = hit;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "CommunityVo [cpostNo=" + cpostNo + ", cpostType=" + cpostType + ", userNo=" + userNo + ", regDate="
 				+ regDate + ", cpostTitle=" + cpostTitle + ", cpostContent=" + cpostContent + ", liked=" + liked
-				+ ", rnum=" + rnum + ", pageNo=" + pageNo + ", fileList=" + fileList + "]";
+				+ ", rnum=" + rnum + ", pageNo=" + pageNo + ", fileList=" + fileList + ", categoryName=" + categoryName
+				+ ", locationNo=" + locationNo + ", cfileNo=" + cfileNo + ", address=" + address + ", businessName="
+				+ businessName + ", latitude=" + latitude + ", longitude=" + longitude + ", hit=" + hit + "]";
 	}
-	
+
 	public String locationInfo() {
 		return "location info [address=" + address + ", businessName=" + businessName + ", latitude=" + latitude + ", longitude=" + longitude +"]";
 	}
