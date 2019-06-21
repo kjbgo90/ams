@@ -20,6 +20,7 @@
 		<typeAlias alias="SubmitVo" type="net.ourams.vo.SubmitVo" />
 		<typeAlias alias="myPageVo" type="net.ourams.vo.MyPageVo" />
 		<typeAlias alias="CommunityVo" type="net.ourams.vo.CommunityVo" />
+		<typeAlias alias="LocationVo" type="net.ourams.vo.LocationVo" />
 	</typeAliases>
 
 	<mappers>

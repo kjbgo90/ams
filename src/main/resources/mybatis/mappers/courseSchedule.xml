@@ -290,4 +290,13 @@
 			WHERE userNo = #{userNo}
 		]]>
 	</select>
+	
+	<select id="findEmail" parameterType="int" resultType="String">
+		<![CDATA[
+			SELECT email
+			FROM users
+			WHERE userNo = #{userNo}
+		]]>
+	</select>
+	
 </mapper>

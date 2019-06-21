@@ -100,8 +100,10 @@
 					
 					                    <!-- Draggable Events -->
 					                    <!-- ============================================ -->
-					                    <p class="text-muted text-sm text-uppercase"></p>
-					                    <div id="demo-external-events">
+					                    <br/>
+					                    <p class="text-muted text-sm text-uppercase" id="searched_number"><strong>검색된 일정</strong></p>
+					                    <div class="input-group pad-all bord-btm">
+					                    	<div id="demo-external-events">
 					                    	<!-- 
 					                        <div id="notice" class="fc-event fc-list" data-class="warning">공지사항</div>
 					                        <div id="assign" class="fc-event fc-list" data-class="pink">과제</div>
@@ -109,6 +111,7 @@
 					                        <div id="team" class="fc-event fc-list" data-class="purple">팀별 일정</div>
 					                        <div id="person" class="fc-event fc-list" data-class="info">개인 일정</div>
 					                         -->
+					                        </div>
 					                    </div>
 					                    <!-- ============================================ -->
 					                </div>
@@ -290,10 +293,6 @@
 								</table>
 							</div>
 						</div>
-						<!-- <div class="form-group" id="panel-body">
-									<button class="btn btn-danger col-sm-2" id="schedule-delete">삭제</button>
-									<button class="btn btn-primary col-sm-2" id="schedule-modify">수정</button>
-								</div> -->
 						<div class="form-group text-right" style="padding-left: 20px;" id="panel-body">
 							<!--Save draft button-->
 							<button id="schedule-delete" type="button" class="btn btn-default">
@@ -493,7 +492,7 @@
 					$("#today-schedule").empty();
 					for(var i=0; i<result.length; i++){
 						console.log(result[i])
-						render_scheudule(result[i], "today-schedule");
+						render_schedule(result[i], "today-schedule");
 					}
 				},
 				error : function(XHR, status, error) {
@@ -509,89 +508,19 @@
 					scheduleNo: $(this).find($(".fc-title")).data("no") 
 			};
 			
-			$.ajax({
-				url : "${pageContext.request.contextPath}/${coursePath}/schedule/selected",
-				type: "post",
-				contentType : "application/json",
-				data : JSON.stringify(scheduledto),
-
-				dataType : "json",
-				success : function(result) {
-					var temp = $.trim(result.category);
-					
-					if(temp == "과제"){
-						assignment();	
-						$("#schedule-info-assign-duration").text(result.startDate + " ~ " + result.endDate);
-						$("#schedule-info-assign-content").text(result.content);
-						$("#schedule-info-assign-courseName").text(result.courseName);
-						$("#schedule-info-assign-subjectName").text(result.subjectTitle);
-						$("#schedule-info-assign-chapterName").text(result.chapterContent);
-						$("#schedule-info-assign-teacherName").text(result.teacherName);
-						$("#schedule-info-tag").empty();
-						tag("channel");
-					}else if(temp == "공지사항"){
-						notice();
-						$("#schedule-info-notice-content").html(result.content);
-						if(result.typeCategory == "긴급"){
-							$("#schedule-info-notice-category").text(result.typeCategory).css('background-color', '#FAA732');
-						}else{
-							$("#schedule-info-notice-category").text(result.typeCategory)
-						}
-						$("#schedule-info-notice-hit").text(result.hit);
-						$("#schedule-info-notice-courseName").text(result.courseName);
-						$("#schedule-info-notice-writer").text(result.writer);
-						$("#schedule-info-notice-regDate").text(result.regDate);
-						$("#schedule-info-tag").empty();
-						tag("channel")
-					}else if(temp == "코스 일정"){
-						course();
-						$("#schedule-info-course-duration").text(result.startDate + " ~ " + result.endDate);
-						$("#schedule-info-course-content").text(result.content);
-						$("#schedule-info-course-courseName").text(result.courseName);
-						$("#schedule-info-course-roomNo").text(result.roomNo);
-						$("#schedule-info-course-teacher").text(result.teacherName);
-						$("#schedule-info-course-link").text(result.coursePath);
-						$("#schedule-info-tag").empty();
-						tag("channel")
-					}else if(temp =="팀별 일정"){
-						team();
-						console.log(result.writerNo)
-						$("#schedule-info-team-duration").text(result.startDate + " ~ " + result.endDate);
-						$("#schedule-info-team-content").text(result.content);
-						$("#schedule-info-team-courseName").text(result.courseName);
-						$("#schedule-info-team-writer").text(result.writer);
-						$("#schedule-info-team-writer").data("writerNo", result.writerNo);
-						$("#schedule-info-title").data("scheduleNo", result.scheduleNo);
-						$("#schedule-info-course-link").text(result.coursePath);
-						$("#schedule-info-tag").empty();
-					}else{
-						personal();
-						$("#schedule-info-personal-duration").text(result.startDate + " ~ " + result.endDate);
-						$("#schedule-info-personal-content").text(result.content);
-						$("#schedule-info-personal-courseName").text(result.courseName);
-						$("#schedule-info-personal-writer").text(result.writer);
-						$("#schedule-info-personal-writer").data("writerNo", result.writerNo);
-						$("#schedule-info-title").data("scheduleNo", result.scheduleNo);
-						$("#schedule-info-personal-link").text(result.coursePath);
-						$("#schedule-info-tag").empty();
-					}
-					
-					$("#schedule-info-title").text(result.title);
-					$("#schedule-info-category").text(result.category);
-					
-					var tagList = load_tag(scheduledto.scheduleNo);
-					//$("#schedule-info-tag").empty();
-						
-					for(var i=0; i<tagList.length; i++){
-							tag(tagList[i])
-					}
-				},
-				error : function(XHR, status, error) {		
-					console.error(status + " : " + error);
-				}
-			})
+			selectedSchedule(scheduledto);
 		});
-	
+		
+		// searched schedule detail info
+		$("#page-content").on("click", ".fc-event", function(){
+			var scheduledto = {
+					scheduleNo: $(this).data("scheduleno")
+			}			
+			
+			console.log(scheduledto)
+			selectedSchedule(scheduledto);
+		});
+		
 		// click date for registration(schedule)
 		$("#page-content").on("click", ".fc-day-number", function(){
 			var date = $(this).data("date");
@@ -618,10 +547,12 @@
 
 				dataType : "json",
 				success : function(result) {
+					$("#searched_number").empty();
+					$("#searched_number").html("<strong>검색된 일정("+ result.length +")</strong>")
 					$("#demo-external-events").empty();
 					for(var i=0; i<result.length; i++){
 						console.log(result[i])
-						render_scheudule(result[i],"demo-external-events");
+						render_schedule(result[i],"demo-external-events");
 					}
 				},
 				error : function(XHR, status, error) {
@@ -669,6 +600,7 @@
 	    			$("#check").text("해당 카테고리는 여기서 등록할 수 없습니다.");
 					$("#check").css("color", "red");
 				}else{
+					/*
 					$.ajax({
 						url : "${pageContext.request.contextPath}/${coursePath}/schedule/register",
 						type: "post",
@@ -685,6 +617,7 @@
 							console.error(status + " : " + error);
 						}
 					})
+					*/
 				}
 			}
 			
@@ -692,7 +625,7 @@
 				console.log("태그 없음");
 			}else{
 				console.log("태그 있음");
-				send_mail();
+				send_mail(tagList, scheduledto);
 			}
 		});
 		
@@ -882,6 +815,92 @@
 		   
 		}
 		
+		//load selected schedule
+		function selectedSchedule(scheduledto){
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/${coursePath}/schedule/selected",
+				type: "post",
+				contentType : "application/json",
+				data : JSON.stringify(scheduledto),
+
+				dataType : "json",
+				success : function(result) {
+					var temp = $.trim(result.category);
+					
+					if(temp == "과제"){
+						assignment();	
+						$("#schedule-info-assign-duration").text(result.startDate + " ~ " + result.endDate);
+						$("#schedule-info-assign-content").text(result.content);
+						$("#schedule-info-assign-courseName").text(result.courseName);
+						$("#schedule-info-assign-subjectName").text(result.subjectTitle);
+						$("#schedule-info-assign-chapterName").text(result.chapterContent);
+						$("#schedule-info-assign-teacherName").text(result.teacherName);
+						$("#schedule-info-tag").empty();
+						tag("channel");
+					}else if(temp == "공지사항"){
+						notice();
+						$("#schedule-info-notice-content").html(result.content);
+						if(result.typeCategory == "긴급"){
+							$("#schedule-info-notice-category").text(result.typeCategory).css('background-color', '#FAA732');
+						}else{
+							$("#schedule-info-notice-category").text(result.typeCategory)
+						}
+						$("#schedule-info-notice-hit").text(result.hit);
+						$("#schedule-info-notice-courseName").text(result.courseName);
+						$("#schedule-info-notice-writer").text(result.writer);
+						$("#schedule-info-notice-regDate").text(result.regDate);
+						$("#schedule-info-tag").empty();
+						tag("channel")
+					}else if(temp == "코스 일정"){
+						course();
+						$("#schedule-info-course-duration").text(result.startDate + " ~ " + result.endDate);
+						$("#schedule-info-course-content").text(result.content);
+						$("#schedule-info-course-courseName").text(result.courseName);
+						$("#schedule-info-course-roomNo").text(result.roomNo);
+						$("#schedule-info-course-teacher").text(result.teacherName);
+						$("#schedule-info-course-link").text(result.coursePath);
+						$("#schedule-info-tag").empty();
+						tag("channel")
+					}else if(temp =="팀별 일정"){
+						team();
+						console.log(result.writerNo)
+						$("#schedule-info-team-duration").text(result.startDate + " ~ " + result.endDate);
+						$("#schedule-info-team-content").text(result.content);
+						$("#schedule-info-team-courseName").text(result.courseName);
+						$("#schedule-info-team-writer").text(result.writer);
+						$("#schedule-info-team-writer").data("writerNo", result.writerNo);
+						$("#schedule-info-title").data("scheduleNo", result.scheduleNo);
+						$("#schedule-info-course-link").text(result.coursePath);
+						$("#schedule-info-tag").empty();
+					}else{
+						personal();
+						$("#schedule-info-personal-duration").text(result.startDate + " ~ " + result.endDate);
+						$("#schedule-info-personal-content").text(result.content);
+						$("#schedule-info-personal-courseName").text(result.courseName);
+						$("#schedule-info-personal-writer").text(result.writer);
+						$("#schedule-info-personal-writer").data("writerNo", result.writerNo);
+						$("#schedule-info-title").data("scheduleNo", result.scheduleNo);
+						$("#schedule-info-personal-link").text(result.coursePath);
+						$("#schedule-info-tag").empty();
+					}
+					
+					$("#schedule-info-title").text(result.title);
+					$("#schedule-info-category").text(result.category);
+					
+					var tagList = load_tag(scheduledto.scheduleNo);
+					//$("#schedule-info-tag").empty();
+						
+					for(var i=0; i<tagList.length; i++){
+							tag(tagList[i])
+					}
+				},
+				error : function(XHR, status, error) {		
+					console.error(status + " : " + error);
+				}
+			})
+		}
+		
 		//Reflash Schedule
 		function reflashSchedule() {
 			scheduleArray =[];
@@ -958,9 +977,11 @@
 		}
 		
 		//send mail
-		function send_mail(){
+		function send_mail(tagList, scheduledto){
+			console.log(tagList)
+			console.log(scheduledto)
 			$.ajax({
-				url : "${pageContext.request.contextPath}/${coursePath}/schedule/alarm",
+				url : "${pageContext.request.contextPath}/${coursePath}/schedule/alarm?tagList="+tagList+"&scheduledto="+scheduledto,
 				type: "post",
 				contentType : "application/json",
 
@@ -1009,9 +1030,9 @@
 		}
 		
 		// searchedScheudle rendering
-		function render_scheudule(scheduledto, id){
+		function render_schedule(scheduledto, id){
 			var str = "";
-			str += "<div id='user-define' class='fc-event fc-list' data-class='"+scheduledto.eventColor+"'>"+ scheduledto.scheduleName +"</div>"
+			str += "<div id='user-define' class='fc-event fc-list' data-class='"+scheduledto.eventColor+"' data-scheduleNo='"+scheduledto.scheduleNo+"' data-target='#schedule-info-modal' data-toggle='modal'>"+ scheduledto.scheduleName +"</div>"
 			
 			$("#" + id).append(str);			
 		}

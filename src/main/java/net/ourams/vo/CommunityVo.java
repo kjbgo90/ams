@@ -13,6 +13,13 @@ public class CommunityVo {
 	private int rnum;
 	public int pageNo;
 	private List<fileUpLoadVo> fileList;
+	private String categoryName;
+	private int locationNo;
+	private int cfileNo;
+	private String address;
+	private String businessName;
+	private String latitude;
+	private String longitude;
 	
 	public CommunityVo() {
 		
@@ -113,6 +120,64 @@ public class CommunityVo {
 		this.fileList = fileList;
 	}
 
+	
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public int getLocationNo() {
+		return locationNo;
+	}
+
+	public void setLocationNo(int locationNo) {
+		this.locationNo = locationNo;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	
+	public String getBusinessName() {
+		return businessName;
+	}
+
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public int getCfileNo() {
+		return cfileNo;
+	}
+
+	public void setCfileNo(int cfileNo) {
+		this.cfileNo = cfileNo;
+	}
+
 	@Override
 	public String toString() {
 		return "CommunityVo [cpostNo=" + cpostNo + ", cpostType=" + cpostType + ", userNo=" + userNo + ", regDate="
@@ -120,11 +185,8 @@ public class CommunityVo {
 				+ ", rnum=" + rnum + ", pageNo=" + pageNo + ", fileList=" + fileList + "]";
 	}
 	
-	
-	
-	
-	
-	
-	
+	public String locationInfo() {
+		return "location info [address=" + address + ", businessName=" + businessName + ", latitude=" + latitude + ", longitude=" + longitude +"]";
+	}
 	
 }

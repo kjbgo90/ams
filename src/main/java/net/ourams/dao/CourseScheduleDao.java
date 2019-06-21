@@ -115,4 +115,8 @@ public class CourseScheduleDao {
 	public String findWriter(int userNo) {
 		return sqlSession.selectOne("courseSchedule.findWriter", userNo);
 	}
+	
+	public String findEmail(String userNo) {
+		return sqlSession.selectOne("courseSchedule.findEmail", userNo);
+	}
 }

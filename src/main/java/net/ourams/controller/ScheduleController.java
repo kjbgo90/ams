@@ -2,6 +2,7 @@ package net.ourams.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -156,14 +157,24 @@ public class ScheduleController {
 	// mailSending 코드
 	
 	@RequestMapping(value = "/alarm", method=RequestMethod.POST)
-	public void mailSending(HttpServletRequest request) {
+	public void mailSending(HttpServletRequest request, @RequestParam("scheduledto") CourseScheduleVo vo, 
+							@RequestParam("tagList") ArrayList list) {
 
-		String setfrom = "rnalstn0507@gmail.com";
+		System.out.println("List: " + list);
+		System.out.println("vo: " + vo);
+		
+		List<String> mailList = service.mailSending(list);
+		System.out.println(mailList);
+		
+		
+		
 		/*
+		String setfrom = "rnalstn0507@gmail.com";
+		
 		 * String tomail = request.getParameter("tomail"); // 받는 사람 이메일 String title =
 		 * request.getParameter("[Academy Management Service]"); // 제목 String content =
 		 * request.getParameter("새로운 이벤트가 등록 되었습니다."); // 내용
-		 */
+		 
 
 		String tomail = "rnalstn0507@gmail.com";
 		String title = "[Academy Management Service]";
@@ -182,6 +193,7 @@ public class ScheduleController {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		*/
 	}
 
 }

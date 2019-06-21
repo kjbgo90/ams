@@ -297,6 +297,16 @@ public class CourseScheduleService {
 			else 
 				return 0;
 		}
+		
+		public List<String> mailSending(List list){
+			List<String> mailList = new ArrayList<String>();
+			
+			for(int i=0; i<list.size(); i++) {
+				mailList.add(csDao.findEmail((String)(list.get(i))));
+			}
+			
+			return mailList;
+		}
 }
 
 		

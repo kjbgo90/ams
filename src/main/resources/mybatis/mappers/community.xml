@@ -38,9 +38,7 @@
             	
 		]]>
 	</select>
-	
-	
-	
+
 	<!-- no로 글조회 -->
 	<select id="selectNotice" parameterType="int" resultType="CommunityVo">
 		<![CDATA[
@@ -56,4 +54,105 @@
 		]]>
 	</select>
 	
+	<select id="selectLocation" parameterType="String" resultType="LocationVo">
+		<![CDATA[
+			SELECT locationNo
+			FROM location
+			where address = #{address}
+		]]>
+	</select>
+	
+	<insert id="insertPost" parameterType="CommunityVo">
+		<selectKey keyProperty="cpostNo" resultType="int" order="BEFORE">
+			select seq_cpost_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			INSERT INTO COMMUNITYPOST
+				(cpostNo,
+				 cpostTitle,
+				 cpostContent,
+				 userNo,
+				 cpostType,
+				 regDate,
+				 liked)
+			VALUES
+				(#{cpostNo},
+				 #{cpostTitle},
+				 #{cpostContent},
+				 #{userNo},
+				 #{cpostType},
+				 SYSDATE,
+				 0
+				)
+		]]>
+	</insert>
+	
+	<insert id="insertLocation" parameterType="CommunityVo">
+		<selectKey keyProperty="locationNo" resultType="int" order="BEFORE">
+			select seq_location_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			INSERT INTO LOCATION
+				(businessName,
+				 address,
+				 longitude,
+				 latitude,
+				 locationNo)
+			VALUES
+				(#{businessName},
+				 #{address},
+				 #{longitude},
+				 #{latitude},
+				 #{locationNo})
+		]]>
+	</insert>
+	
+	<insert id="insertLocationPost" parameterType="map">
+		<![CDATA[
+			INSERT INTO LOCATIONPOST
+				(locationPostNo,
+				 locationNo,
+				 cpostNo)
+			VALUES
+				(seq_locationpost_no.nextval,
+				#{locationNo},
+				#{cpostNo})
+		]]>
+	</insert>
+	
+	<insert id="insertFile" parameterType="fileUpLoadVo">
+		<selectKey keyProperty="fileNo" resultType="int" order="BEFORE">
+			select seq_datafile_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			INSERT INTO DATAFIlE
+				(fileNo,
+				 fileName,
+				 saveName,
+				 fileSize,
+				 regDate,
+				 filepath)
+			VALUES
+				(#{fileNo},
+				 #{fileName},
+				 #{saveName},
+				 #{fileSize},
+				 SYSDATE,
+				 #{filepath})
+		]]>
+	</insert>
+	
+	<insert id="insertCommunityFile" parameterType="map">
+		<![CDATA[
+			INSERT INTO COMMUNITYFILE
+				(cfileNo,
+				 cpostNo,
+				 fileNo)
+			VALUES
+				(seq_cfile_no.nextval,
+				 #{cpostNo},
+				 #{cfileNo})
+		]]>
+	</insert>
+
 </mapper>
