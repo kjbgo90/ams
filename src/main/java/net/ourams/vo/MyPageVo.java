@@ -21,7 +21,8 @@ public class MyPageVo {
 	//기본 생성자 
 	public MyPageVo() {}
 	
-	//생성자
+	
+	
 	public MyPageVo(int registNo, int userNo, int seatNo, int accessStat, int courseNo, String courseName,
 			String startDate, String endDate, int teacherNo, int managerNo, String coursePath) {
 		this.registNo = registNo;
@@ -36,6 +37,9 @@ public class MyPageVo {
 		this.managerNo = managerNo;
 		this.coursePath = coursePath;
 	}
+
+
+
 	public int getRegistNo() {
 		return registNo;
 	}
@@ -103,6 +107,8 @@ public class MyPageVo {
 		this.coursePath = coursePath;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "MyPageVo [registNo=" + registNo + ", userNo=" + userNo + ", seatNo=" + seatNo + ", AccessStat="
@@ -110,6 +116,7 @@ public class MyPageVo {
 				+ ", endDate=" + endDate + ", teacherNo=" + teacherNo + ", managerNo=" + managerNo + ", coursePath="
 				+ coursePath + "]";
 	}
+
 	
 	
 	

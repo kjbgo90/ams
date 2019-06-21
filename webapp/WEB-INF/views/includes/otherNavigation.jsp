@@ -65,22 +65,18 @@
 					</div>
 					<ul id="mainnav-menu" class="list-group">
 						<!--Category name-->
-						<li class="list-header" id="courseNaviCourseName"></li>
-						<!--Category name-->
-						<li class="list-header">MyPage</li>
-
+						<li class="list-header"><a>MyPage</a></li>
+						<li class="list-divider"></li>
 						<!--Menu list item-->
-
-						<li><a href="">Dashboard 1</a></li>
-						<li><a href="">Dashboard 2</a></li>
-						<li><a href="">Dashboard 3</a></li>
+						<li><a>Select Class</a></li>
+						<li><a href="">과제 관리</a></li>
+						<li><a href="">개인정보 수정</a></li>
 
 
 
 						<!--Menu list item-->
 
 						<li class="list-header">Community</li>
-						<li><a href="">Dark version of aside</a></li>
 						<li class="list-divider"></li>
 						<li><a href="">Fixed Navbar</a></li>
 						<li><a href="">Fixed Footer</a></li>

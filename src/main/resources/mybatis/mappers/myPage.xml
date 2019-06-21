@@ -16,12 +16,20 @@
 			where userNo= #{userNo}
 		]]>
 	</select>
+	
+	<select id="selectCoursePath" resultType="PostVo"
+		parameterType="PostVo">
+		<![CDATA[
+			select * from course where courseno=#{courseNo}
+		]]>
+	</select>
 
 
 	<!-- 1 이면 공지사항 2이면 QNA -->
-	<select id="secectPost" resultType="PostVo" parameterType="PostVo">
+	<select id="selectNotice" resultType="PostVo" parameterType="PostVo">
 		<![CDATA[
-				select 	rownum,
+        select 	        rownum as rnum,
+                        a.username as username,
        					postno,
       					posttype,
        					posttitle,
@@ -31,27 +39,114 @@
        					regdate,
        					scheduleno,
        					hit,
-       					category,
-       					subjectno
-				from (		select	postno,
-      								posttype,
-       								posttitle,
-       								postcontent,
-       								userno,
-       								courseno,
-       								regdate,
-       								scheduleno,
-       								hit,
-       								category,
-       								subjectno
-							from post 
-							where userno=#{userNo} and posttype=#{postType}
-							order by regdate desc)
-				where rownum <=#{rnum}
+       					category
+		from ( SELECT 				
+   		     						p.postNo,
+				        			p.postType,
+				        			u.userNo,
+				        			p.courseNo,
+				        			TO_CHAR(p.regDate, 'yyyy/mm/dd') as regDate,
+				        			p.scheduleNo,
+				        			p.postTitle,
+				        			p.postContent,
+				        			p.hit,
+				        			p.category,
+				        			u.userName
+							FROM users u join post p 
+							ON p.userNo = u.userNo
+							where p.postType = 1 and p.userno = #{userNo}
+							order by postNo desc ) a 
+        where rownum <=#{rnum}
+
 		]]>
 	</select>
+	
+	<!-- 1 이면 공지사항 2이면 QNA -->
+	<select id="selectQna" resultType="PostVo" parameterType="PostVo">
+		<![CDATA[
+				
+
+SELECT    rownum as rnum, 
+		                a.postNo postno,
+		                a.postType postType,
+		                a.userNo userNo,
+		                a.courseNo courseNo,
+		                a.regDate regDate,
+		                a.scheduleNo scheduleNo,
+		                a.postTitle postTitle,
+		                a.postContent postContent,
+		                a.hit hit,
+		                a.category category,
+		                a.userName userName,
+		                a.subjectNo subjectNo,
+		                a.subjectTitle subjectTitle,
+		                a.replyCount replyCount
+		           
+        FROM(
+					SELECT    rownum as rnum, 
+					                pu.postNo,
+					                pu.postType,
+					                pu.userNo,
+					                pu.courseNo courseNo,
+					                pu.regDate,
+					                pu.scheduleNo scheduleNo,
+					                pu.postTitle,
+					                pu.postContent,
+					                pu.hit,
+					                pu.category,
+					                pu.userName,
+					                pu.subjectNo,
+					                s.subjectTitle,
+					                (select count(*) from reply r 
+					        	where r.postNo = pu.postNo) as replyCount
+		        FROM(
+		                SELECT  postNo,
+		                        postType,
+		                        p.userNo userNo,
+		                        courseNo,
+		                        TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,
+		                        scheduleNo,
+		                        postTitle,
+		                        postContent,
+		                        hit,
+		                        category,
+		                        userName,
+		                        subjectNo
+		                FROM users u join post p
+		                ON p.userNo = u.userNo
+		                where p.postType = 2 and p.userno= #{userNo})pu
+		                left join subject s 
+		                on pu.subjectno = s.subjectno 
+		                order by pu.postNo desc) a
+		                where rownum <= #{rnum}
+		]]>
+	</select>
+	
+	
+	<select id="selectTimelineList" parameterType="TimelineVo" resultType="TimelineVo">
+	<![CDATA[
+	select  rownum 
+        timelineno,
+        timelinecontent, 
+        regdate, 
+        userno 
+	from(
+    	select  tl.timelineno,
+       	 	    tl.timelinecontent, 
+         	  	tl.regdate, 
+            	tlu.userno 
+   	 	from timeline tl join timelineuser tlu 
+    	on tl.timelineno = tlu.timelineno
+    	where tlu.userno=#{userNo}
+    	order by timelineno desc) a
+	where rownum <= #{rnum}
 
 
+	]]>
+	</select>
+	
+	
+	
 
 
 </mapper>

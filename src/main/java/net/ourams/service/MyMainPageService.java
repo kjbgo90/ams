@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.ourams.dao.MyMainPageDao;
+import net.ourams.vo.CourseVo;
 import net.ourams.vo.MyPageVo;
 import net.ourams.vo.PostVo;
+import net.ourams.vo.TimelineVo;
 
 @Service
 public class MyMainPageService {
@@ -22,18 +24,28 @@ public class MyMainPageService {
 
 	// post type = 2
 	public List<PostVo> selectQna(PostVo vo) {
-		vo.setPostType(2);
+		
 		vo.setRnum(3);
-		List<PostVo> list = myMainPageDao.selectPost(vo);
+		List<PostVo> list = myMainPageDao.selectQna(vo);
 		return list;
 	}
 	
 	// post type = 1
-		public List<PostVo> selectNotice(PostVo vo) {
-			vo.setPostType(1);
+	public List<PostVo> selectNotice(PostVo vo) {
 			vo.setRnum(3);
-			List<PostVo> list = myMainPageDao.selectPost(vo);
+			List<PostVo> list = myMainPageDao.selectNotice(vo);
 			return list;
-		}
+	}
+		
+	public PostVo selectCoursePath(PostVo vo1) {
+		PostVo vo = myMainPageDao.selectCoursePath(vo1);
+		return vo;
+	}
+	
+	public List<TimelineVo> selectTimelineList(TimelineVo vo){
+		vo.setRnum(4);
+		List<TimelineVo> list = myMainPageDao.selectTimelineList(vo);
+		return list;
+	}
 
 }

@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import net.ourams.interceptor.Auth;
 import net.ourams.interceptor.AuthUser;
 import net.ourams.service.MyMainPageService;
+import net.ourams.vo.CourseVo;
 import net.ourams.vo.MyPageVo;
 import net.ourams.vo.PostVo;
+import net.ourams.vo.TimelineVo;
 import net.ourams.vo.UserVo;
 
 
@@ -81,9 +83,6 @@ public class MyMainPageControllder {
 		return list;
 	}
 	
-	
-	
-
 	@RequestMapping(value = "/editForm")
 	public String editForm() {
 		System.out.println("start main");
@@ -91,5 +90,15 @@ public class MyMainPageControllder {
 		return "main/editForm";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/selectTimelineList", method = RequestMethod.POST)
+	public List<TimelineVo> selectTimelineList(@Param("userNo") int userNo){
+		System.out.println("selectTimelineList start");
+		TimelineVo vo = new TimelineVo();
+		vo.setUserNo(userNo);
+		List<TimelineVo> list = myMainPageService.selectTimelineList(vo);
+		System.out.println(list.toString());
+		return list; 
+	}
 	
 }

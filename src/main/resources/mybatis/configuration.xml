@@ -22,6 +22,7 @@
 		<typeAlias alias="CommunityVo" type="net.ourams.vo.CommunityVo" />
 		<typeAlias alias="LocationVo" type="net.ourams.vo.LocationVo" />
 		<typeAlias alias="StatisticVo" type="net.ourams.vo.StatisticVo" />
+		<typeAlias alias="TimelineVo" type="net.ourams.vo.TimelineVo" />
 	</typeAliases>
 
 	<mappers>

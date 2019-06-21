@@ -21,15 +21,17 @@ public class PostVo {
 	private String selectedDate;
 	private int replyCount;
 	private List<fileUpLoadVo> fileList;
+	private String coursePath;
 	
 	public PostVo() {
 	}
 
 	
-	public PostVo(int postNo, int postType, int userNo, int courseNo, String regDate, int scheduleNo,
-			String postTitle, String postContent, int hit, String category, String userName, int rnum, int subjectNo,
-			String subjectTitle, int pageNo, String selectedDate, int replyCount, List<fileUpLoadVo> fileList) {
-		super();
+
+
+	public PostVo(int postNo, int postType, int userNo, int courseNo, String regDate, int scheduleNo, String postTitle,
+			String postContent, int hit, String category, String userName, int rnum, int subjectNo, String subjectTitle,
+			int pageNo, String selectedDate, int replyCount, List<fileUpLoadVo> fileList, String coursePath) {
 		this.postNo = postNo;
 		this.postType = postType;
 		this.userNo = userNo;
@@ -48,7 +50,24 @@ public class PostVo {
 		this.selectedDate = selectedDate;
 		this.replyCount = replyCount;
 		this.fileList = fileList;
+		this.coursePath = coursePath;
 	}
+
+
+
+
+	public String getCoursePath() {
+		return coursePath;
+	}
+
+
+
+
+	public void setCoursePath(String coursePath) {
+		this.coursePath = coursePath;
+	}
+
+
 
 
 	public int getPageNo() {

@@ -205,7 +205,7 @@
 
 								<!-- Timeline -->
 								<!--===================================================-->
-								<div class="timeline">
+								<div class="timeline" id="selectTimelineList">
 
 									<!-- Timeline header -->
 									<div class="timeline-header">
@@ -214,67 +214,11 @@
 									<div class="timeline-entry">
 										<div class="timeline-stat">
 											<div class="timeline-icon"></div>
-											<div class="timeline-time">3 Hours ago</div>
+											<div class="timeline-time"></div>
 										</div>
 										<div class="timeline-label">
-											<p class="mar-no pad-btm">
-												<a href="#" class="btn-link"> Lisa D. </a> commented on <a
-													href="#" class="text-semibold"> <i>The Article</i>
-												</a>
-											</p>
-											<blockquote class="bq-sm bq-open mar-no">Lorem
-												ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-												nonummy nibh euismod tincidunt.</blockquote>
+											<span>게시글이 없습니다.</span>
 										</div>
-									</div>
-									<div class="timeline-entry">
-										<div class="timeline-stat">
-											<div class="timeline-icon"></div>
-											<div class="timeline-time">15:45</div>
-										</div>
-										<div class="timeline-label">
-											<p class="text-main text-semibold">Lorem ipsum dolor sit
-												amet</p>
-											<span>Lorem ipsum dolor sit amet, consectetuer
-												adipiscing elit, sed diam nonummy nibh euismod tincidunt.</span>
-										</div>
-									</div>
-									<div class="timeline-entry">
-										<div class="timeline-stat">
-											<div class="timeline-icon"></div>
-											<div class="timeline-time">13:27</div>
-										</div>
-										<div class="timeline-label">
-											<img class="img-xs img-circle"
-												src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png"
-												alt="Profile picture"> <a href="#" class="btn-link">Michael
-												Both</a> Like <a href="#" class="text-semibold"> <i>The
-													Article.</i>
-											</a>
-										</div>
-									</div>
-									<div class="timeline-entry">
-										<div class="timeline-stat">
-											<div class="timeline-icon"></div>
-											<div class="timeline-time">13:27</div>
-										</div>
-										<div class="timeline-label">
-											<img class="img-xs img-circle"
-												src="${pageContext.request.contextPath }/assets/img/profile-photos/2.png"
-												alt="Profile picture"> <a href="#" class="btn-link">Michael
-												Both</a> Like <a href="#" class="text-semibold"> <i>The
-													Article.</i>
-											</a>
-										</div>
-									</div>
-									<div class="timeline-entry">
-										<div class="timeline-stat">
-											<div class="timeline-icon"></div>
-											<div class="timeline-time">11:27</div>
-										</div>
-										<div class="timeline-label">Lorem ipsum dolor sit amet,
-											consectetuer adipiscing elit, sed diam nonummy nibh euismod
-											tincidunt.</div>
 									</div>
 								</div>
 								<br> <br>
@@ -609,10 +553,7 @@
 	<!--Custom script [ DEMONSTRATION ]-->
 	<!--===================================================-->
 	<script>
-		$(document)
-				.on(
-						'nifty.ready',
-						function() {
+		$(document).on('nifty.ready',function() {
 
 							userNo = '${authUser.userNo}'
 							console.log(userNo);
@@ -648,24 +589,13 @@
 							});
 
 							// 전부다 새로고침 해버리기 
-							$('#demo-update-interval')
-									.on(
-											'click',
-											function() {
-												$('.demo-pie')
-														.each(
-																function() {
-																	// 여기서 임의의 숫자를 넣어주고 있다 여기서 숫자를 바꿔서 넣자 
-																	var newVal = Math
-																			.floor(100 * Math
-																					.random());
-																	$(this)
-																			.data(
-																					'easyPieChart')
-																			.update(
-																					newVal);
-																});
-											});
+							$('#demo-update-interval').on('click',function() {
+								$('.demo-pie').each(function() {
+								// 여기서 임의의 숫자를 넣어주고 있다 여기서 숫자를 바꿔서 넣자 
+									var newVal = Math.floor(100 * Math.random());
+									$(this).data('easyPieChart').update(newVal);
+								});
+							});
 
 							$('#demo-pie-7-1').easyPieChart(
 									{
@@ -682,8 +612,7 @@
 
 							//코스 리스트 뽑아서 나열 하자~ 
 							CourseList = "";
-							$
-									.ajax({
+							$.ajax({
 										url : "${pageContext.request.contextPath }/myPage/courseList",
 										type : "post",
 										data : {
@@ -735,16 +664,16 @@
 									} else {
 										str = "";
 										for (var i = 0; i < list.length; i++) {
+											courseNo = list[i].courseNo
+											str+="<tr>"	
+											str+="<td>"+list[i].rnum+"</td>"	
+											str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/"+list[i].coursePath+"/notice/read/"+list[i].postNo+"'>["+list[i].category+"]"+list[i].postTitle+"</a></td>"
+											str+="<td><span class='text-muted'>"+list[i].regDate+"</span></td>"				
+											str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+" class='btn-link'>"+list[i].userName+"</a></td>"				
+											str+="<td>"+list[i].hit+"</td>"				
+											str+="</tr>"
 											
 											
-										str+="<tr>"	
-										str+="<td>"+list[i].rnum+"</td>"			
-										str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"'>["+list[i].category+"]"+list[i].postTitle+"</a></td>"
-										str+="<td><span class='text-muted'>"+list[i].regDate+"</span></td>"				
-										str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+" class='btn-link'>"+list[i].userName+"</a></td>"				
-										str+="<td>"+list[i].hit+"</td>"				
-										str+="</tr>"		
-										
 										}
 										$("#selectNotice").html(str);
 										str = "";
@@ -781,6 +710,8 @@
 									} else {
 										str = "";
 										for (var i = 0; i < list.length; i++) {
+											
+											
 											
 												str+="<tr>"	
 												str+="<td>"+list[i].rnum+"</td>"			
@@ -824,9 +755,62 @@
 							</tr>*/
 							
 							
+							$.ajax({
+								url : "${pageContext.request.contextPath }/myPage/selectTimelineList",
+								type : "post",
+								data : {
+									userNo : userNo
+								},
+								dataType : "json",
+								success : function(list) {
+									console.log(list);
+									console.log(list.length);
+									
+								
+										timelineStr = "";
+										timelineStr += "<div class='timeline-header'>";
+										timelineStr += "<div class='timeline-header-title bg-primary'>Now</div>";
+										timelineStr += "</div>";
+									
+
+									for (var i = 0; i < list.length; i++) {
+										// list 찾기 !!
+
+										timelineStr += "<div class='timeline-entry'>";
+										timelineStr += "	<div class='timeline-stat'>";
+										timelineStr += "		<div class='timeline-icon'></div>";
+										timelineStr += "		<div class='timeline-time'>"+list[i].regDate+"</div>";
+										timelineStr += "	</div>";
+										timelineStr += "	<div class='timeline-label'>";
+										timelineStr += "		<p class='mar-no pad-btm'>";
+										timelineStr += "		<a href='#' class='btn-link'>알림</a> ";
+										timelineStr += "			commented on <a href='#' class='text-semibold'> <i></i>";
+										timelineStr += "		</a>";
+										timelineStr += "		</p>";
+										timelineStr +=  list[i].timeLineContent
+										timelineStr += "	</div>";
+										timelineStr += "</div>";
+									}
+									$("#selectTimelineList").html(timelineStr);
+
+									timelineStr = "";
+								},
+								error : function(XHR, status, error) {
+									console.error(status + " : "
+											+ error);
+								}
+							});
+							
 
 						});
-	</script>
+		
+		
+	
+		
+		
+		
+	
+		</script>
 
 
 
