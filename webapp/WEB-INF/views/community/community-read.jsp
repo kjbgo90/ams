@@ -219,7 +219,7 @@
 								<c:forEach items="${replylist}" var="replylist">
 									<div class="commentContent">
 										<c:if test="${replylist.userNo eq authUser.userNo}">
-											<i class="btn btn-danger fa fa-trash pull-right btnCommentDel" data-reply="${replylist.reply}"></i>
+											<i class="btn btn-danger fa fa-trash pull-right btnCommentDel" data-reply="${replylist.creplyno}"></i>
 										</c:if>
 										<a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${pageContext.request.contextPath }/${replylist.logoPath}"></a>
 										<div class="media-body">
@@ -357,7 +357,7 @@
 			var str = "";
 
 			str += "<div class='commentContent'>";
-			str += "	<i class='btn btn-danger fa fa-trash pull-right btnCommentDel' data-reply='" + replyVo.reply + "'></i>";
+			str += "	<i class='btn btn-danger fa fa-trash pull-right btnCommentDel' data-reply='" + replyVo.creplyno + "'></i>";
 			str += "	<a class='media-left' href='#''><img class='img-circle img-sm' alt='Profile Picture' src='${pageContext.request.contextPath }/" + replyVo.logoPath + "'></a>";
 			str += "	<div class='media-body'>";
 			str += "		<div class='comment-header'>";
