@@ -65,7 +65,8 @@ public class CommunityService {
 		fuList = vo.getFileList();
 		
 		for(int i=0; i<fuList.size(); i++) {
-			fileNo = communityDao.registerFile(fuList.get(i));
+			communityDao.registerFile(fuList.get(i));
+			fileNo = fuList.get(i).getFileNo();
 			System.out.println("success to register File...");
 			
 			Map<String, Object> cFileMap = new HashMap<String, Object>();

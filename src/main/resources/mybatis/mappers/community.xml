@@ -151,7 +151,7 @@
 			VALUES
 				(seq_cfile_no.nextval,
 				 #{cpostNo},
-				 #{cfileNo})
+				 #{fileNo})
 		]]>
 	</insert>
 
