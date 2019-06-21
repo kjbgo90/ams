@@ -28,6 +28,7 @@
 <script src="${pageContext.request.contextPath }/assets/js/pace.js"></script>
 <!--Dropzone [ OPTIONAL ]-->
 <link href="${pageContext.request.contextPath }/assets/plugins/dropzone/dropzone.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/assets/css/check.jaebong.css" rel="stylesheet">
 <!--=================================================
 
     REQUIRED
@@ -252,7 +253,7 @@
 										<tr>
 											<th>Name</th>
 											<th>File</th>
-											<th>Date</th>
+											<th>Score</th>
 											<th>Detail</th>
 										</tr>
 									</thead>
@@ -272,7 +273,25 @@
 														</td>
 													</c:otherwise>
 												</c:choose>
-												<td>${submitVo.submitDate}</td>
+												<td>
+													<c:if test="${submitVo.scoreCheck eq 'false'}">
+														<div class="circle-loader">
+															<div class="checkmark draw" style='display: none;'></div>
+														</div>
+													</c:if>
+													<c:if test="${authUser.userType eq 2 }">
+														<c:if test="${submitVo.scoreCheck eq 'true'}">
+															<div class="circle-loader load-complete">
+																<div class="checkmark draw" style='display: block;'></div>
+															</div>
+														</c:if>
+													</c:if>
+													<c:if test="${authUser.userType eq 1 }">
+														<c:if test="${submitVo.scoreCheck eq 'true'}">
+															${submitVo.score }
+														</c:if>
+													</c:if>
+												</td>
 												<td><button id="submit-detail" class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal" data-submitno="${submitVo.submitNo}">click</button></td>
 											</tr>
 										</c:forEach>
@@ -663,7 +682,23 @@
 				}
 				str += "	</td>";
 			}
-			str += "	<td>" + submitVo.submitDate + "</td>";
+			str += "<td>";
+			if(submitVo.scoreCheck =="false"){
+				str += "<div class='circle-loader'>";
+				str += "	<div class='checkmark draw' style='display: none;'></div>";
+				str += "</div>";
+			}
+			else if(submitVo.scoreCheck =="true"){
+				if("${authUser.userType}" == 2){
+					str += "<div class='circle-loader load-complete'>";
+					str += "	<div class='checkmark draw' style='display: block;'></div>";
+					str += "</div>";
+				}
+				else if("${authUser.userType}" == 1){
+					str += submitVo.score;
+				}
+			}
+			str += "</td>";
 			str += "	<td><button id='submit-detail' class='btn btn-sm btn-primary' data-target='#demo-default-modal' data-toggle='modal' data-submitno=" + submitVo.submitNo + ">click</button></td>";
 			str += "</tr>";
 			
