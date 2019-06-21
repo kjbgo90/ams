@@ -21,6 +21,7 @@
 		<typeAlias alias="myPageVo" type="net.ourams.vo.MyPageVo" />
 		<typeAlias alias="CommunityVo" type="net.ourams.vo.CommunityVo" />
 		<typeAlias alias="LocationVo" type="net.ourams.vo.LocationVo" />
+		<typeAlias alias="StatisticVo" type="net.ourams.vo.StatisticVo" />
 	</typeAliases>
 
 	<mappers>
@@ -35,5 +36,6 @@
 		<mapper resource="mybatis/mappers/courseDataRoom.xml" />
 		<mapper resource="mybatis/mappers/myPage.xml" />
 		<mapper resource="mybatis/mappers/community.xml" />
+		<mapper resource="mybatis/mappers/statistic.xml" />
 	</mappers>
 </configuration>

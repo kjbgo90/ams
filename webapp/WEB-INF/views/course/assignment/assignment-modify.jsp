@@ -164,7 +164,7 @@
 										<label class="control-label text-left" for="demo-hor-inputpass">subject</label>
 										<div class="">
 											<div class="select">
-												<select id="selectSubject">
+												<select class="form-control"  id="selectSubject">
 													<option value="${assignmentVo.subjectNo}">${assignmentVo.subjectTitle }</option>
 													<c:forEach items="${subjectList}" var="subjectVo">
 														<c:if test="${assignmentVo.subjectNo ne subjectVo.subjectNo }">
@@ -179,7 +179,7 @@
 										<label class="control-label text-left" for="demo-hor-inputpass">chapter</label>
 										<div class="">
 											<div class="select">
-												<select id="selectChapter">
+												<select class="form-control"  id="selectChapter">
 													<option value="${assignmentVo.chapterNo}">${assignmentVo.chapterContent}</option>
 													<c:forEach items="${subjectList}" var="subjectVo">
 														<c:if test="${assignmentVo.subjectNo eq subjectVo.subjectNo }">

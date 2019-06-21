@@ -159,7 +159,7 @@
 										<label class="control-label text-left" for="demo-hor-inputpass">subject</label>
 										<div class="">
 											<div class="select">
-												<select id="selectSubject">
+												<select class="form-control" id="selectSubject">
 													<c:forEach items="${subjectList}" var="subjectVo">
 														<option value="${subjectVo.subjectNo}">${subjectVo.subjectTitle}</option>
 													</c:forEach>
@@ -171,7 +171,7 @@
 										<label class="control-label text-left" for="demo-hor-inputpass">chapter</label>
 										<div class="">
 											<div class="select">
-												<select id="selectChapter">
+												<select class="form-control" id="selectChapter">
 													<c:forEach items="${subjectList[0].chapterList}" var="chapterVo">
 														<option value="${chapterVo.chapterNo}">${chapterVo.chapterContent}</option>
 													</c:forEach>

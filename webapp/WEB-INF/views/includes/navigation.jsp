@@ -72,6 +72,7 @@
 							<!--Menu list-->
 							<li><a href="${pageContext.request.contextPath }/${coursePath}/management"> <i class="pli-management"></i><span class="menu-title"> 과목관리</span></a></li>
 							<li><a href="${pageContext.request.contextPath }/${coursePath}/assignment/enroll"> <i class="pli-speech-bubble-dialog"></i><span class="menu-title"> 과제출제</span></a></li>
+							<li><a href="${pageContext.request.contextPath }/${coursePath}/statistic"> <i class="pli-statistic"></i><span class="menu-title"> 통계</span></a></li>
 						</c:if>
 					</ul>
 					

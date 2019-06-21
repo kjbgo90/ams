@@ -8,6 +8,7 @@ public class SubmitVo {
 	private String submitContent;
 	private String submitDate;
 	private int assignmentNo;
+	private String assignmentTitle;
 	private int userNo;
 	private String userName;
 	private String logoPath;
@@ -21,80 +22,15 @@ public class SubmitVo {
 	public SubmitVo() {
 	}
 
-	public SubmitVo(int submitNo, String submitContent, String submitDate, int assignmentNo, int userNo, int fileNo) {
+	public SubmitVo(int submitNo, String submitContent, String submitDate, int assignmentNo, String assignmentTitle,
+			int userNo, String userName, String logoPath, String email, int fileNo, String fileName,
+			List<fileUpLoadVo> fileList, int score, String scoreCheck) {
+		super();
 		this.submitNo = submitNo;
 		this.submitContent = submitContent;
 		this.submitDate = submitDate;
 		this.assignmentNo = assignmentNo;
-		this.userNo = userNo;
-		this.fileNo = fileNo;
-	}
-
-	public SubmitVo(int submitNo, String submitContent, String submitDate, int assignmentNo, int userNo,
-			String userName, int fileNo, String fileName) {
-		this.submitNo = submitNo;
-		this.submitContent = submitContent;
-		this.submitDate = submitDate;
-		this.assignmentNo = assignmentNo;
-		this.userNo = userNo;
-		this.userName = userName;
-		this.fileNo = fileNo;
-		this.fileName = fileName;
-	}
-
-	public SubmitVo(int submitNo, String submitContent, String submitDate, int assignmentNo, int userNo,
-			String userName, String logoPath, String email, int fileNo, String fileName) {
-		this.submitNo = submitNo;
-		this.submitContent = submitContent;
-		this.submitDate = submitDate;
-		this.assignmentNo = assignmentNo;
-		this.userNo = userNo;
-		this.userName = userName;
-		this.logoPath = logoPath;
-		this.email = email;
-		this.fileNo = fileNo;
-		this.fileName = fileName;
-	}
-
-	public SubmitVo(int submitNo, String submitContent, String submitDate, int assignmentNo, int userNo,
-			String userName, String logoPath, String email, int fileNo, String fileName, List<fileUpLoadVo> fileList) {
-		this.submitNo = submitNo;
-		this.submitContent = submitContent;
-		this.submitDate = submitDate;
-		this.assignmentNo = assignmentNo;
-		this.userNo = userNo;
-		this.userName = userName;
-		this.logoPath = logoPath;
-		this.email = email;
-		this.fileNo = fileNo;
-		this.fileName = fileName;
-		this.fileList = fileList;
-	}
-
-	public SubmitVo(int submitNo, String submitContent, String submitDate, int assignmentNo, int userNo,
-			String userName, String logoPath, String email, int fileNo, String fileName, List<fileUpLoadVo> fileList,
-			int score) {
-		this.submitNo = submitNo;
-		this.submitContent = submitContent;
-		this.submitDate = submitDate;
-		this.assignmentNo = assignmentNo;
-		this.userNo = userNo;
-		this.userName = userName;
-		this.logoPath = logoPath;
-		this.email = email;
-		this.fileNo = fileNo;
-		this.fileName = fileName;
-		this.fileList = fileList;
-		this.score = score;
-	}
-
-	public SubmitVo(int submitNo, String submitContent, String submitDate, int assignmentNo, int userNo,
-			String userName, String logoPath, String email, int fileNo, String fileName, List<fileUpLoadVo> fileList,
-			int score, String scoreCheck) {
-		this.submitNo = submitNo;
-		this.submitContent = submitContent;
-		this.submitDate = submitDate;
-		this.assignmentNo = assignmentNo;
+		this.assignmentTitle = assignmentTitle;
 		this.userNo = userNo;
 		this.userName = userName;
 		this.logoPath = logoPath;
@@ -210,12 +146,21 @@ public class SubmitVo {
 		this.scoreCheck = scoreCheck;
 	}
 
+	public String getAssignmentTitle() {
+		return assignmentTitle;
+	}
+
+	public void setAssignmentTitle(String assignmentTitle) {
+		this.assignmentTitle = assignmentTitle;
+	}
+
 	@Override
 	public String toString() {
 		return "SubmitVo [submitNo=" + submitNo + ", submitContent=" + submitContent + ", submitDate=" + submitDate
-				+ ", assignmentNo=" + assignmentNo + ", userNo=" + userNo + ", userName=" + userName + ", logoPath="
-				+ logoPath + ", email=" + email + ", fileNo=" + fileNo + ", fileName=" + fileName + ", fileList="
-				+ fileList + ", score=" + score + ", scoreCheck=" + scoreCheck + "]";
+				+ ", assignmentNo=" + assignmentNo + ", assignmentTitle=" + assignmentTitle + ", userNo=" + userNo
+				+ ", userName=" + userName + ", logoPath=" + logoPath + ", email=" + email + ", fileNo=" + fileNo
+				+ ", fileName=" + fileName + ", fileList=" + fileList + ", score=" + score + ", scoreCheck="
+				+ scoreCheck + "]";
 	}
 
 }

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="statistic">
+
+	<select id="selectUserListByCourseNo" parameterType="int" resultType="UserVo">
+		<![CDATA[
+			SELECT 		u.userNo,
+       					userName,
+       					userType,
+       					email,
+       					logoPath
+			FROM   		users u JOIN courseregist c
+				ON		u.userNo = c.userNo
+			WHERE  		courseNo = #{courseNo}
+				AND		userType = 2
+			ORDER BY 	userName
+			
+		]]>
+	</select>
+
+	<!-- 전체 과제 리스트 -->
+	<select id="selectAssignmentListByCourseNo" parameterType="int" resultType="AssignmentVo">
+		<![CDATA[
+			select assignmentNo,
+			       assignmentTitle,
+			       assignmentContent,
+			       courseNo,
+			       courseName,
+			       subjectNo,
+			       subjectTitle,
+			       chapterNo,
+			       chapterContent,
+			       teacherNo,
+			       TO_CHAR(startDate, 'yyyy/mm/dd') as startDate,
+			       TO_CHAR(endDate, 'yyyy/mm/dd') as endDate,
+			       email,
+			       userName,
+			       logoPath,
+			       su.scheduleNo scheduleNo
+			from (select assignmentNo,
+			           assignmentTitle,
+			           assignmentContent,
+			           a.courseNo courseNo,
+			           courseName,
+			           a.subjectNo subjectNo,
+			           subjectTitle,
+			           a.chapterNo chapterNo,
+			           chapterContent,
+			           teacherNo,
+			           scheduleNo
+			        from (select courseNo,
+			                   courseName,
+			                   ch.subjectNo subjectNo,
+			                   subjectTitle,
+			                   chapterNo,
+			                   chapterContent
+			            from (select s.courseNo courseNo,
+			                       courseName,
+			                       subjectNo,
+			                       subjectTitle
+			                from course c join subject s on c.courseNo = s.courseNo) cs
+			                join chapter ch on cs.subjectNo = ch.subjectNo) csc
+			                join assignment a on csc.chapterNo = a.chapterNo) acsc
+			        join (select scheduleNo,
+			                   startDate,
+			                   endDate,
+			                   u.userNo userNo,
+			                   email,
+			                   userName,
+			                   logoPath
+			            from schedule s join users u on s.userNo = u.userNo) su on acsc.scheduleNo = su.scheduleNo
+			 where courseNo = #{courseNo}
+			 order by assignmentNo
+		]]>
+	</select>
+	
+	<select id="selectSubmitCountByAssignmentNo" parameterType="int" resultType="StatisticVo">
+		<![CDATA[
+			select count(*) submitCount
+			from submit
+			where assignmentNo = #{assignmentNo}
+		]]>
+	</select>
+	
+	<select id="selectFeedbackQuestionList" parameterType="int" resultType="FbqVo">
+		<![CDATA[
+			select fbqNo,
+			       fbqContent,
+			       courseNo,
+			       f.chapterNo chapterNo,
+			       subjectNo
+			from feedbackquestion f join
+			    (select chapterNo,
+			            c.subjectNo
+			    from chapter c join subject s on c.subjectNo = s.subjectNo) cs
+			    on f.chapterNo = cs.chapterNo
+			where courseNo = #{courseNo}
+			order by subjectNo, chapterNo
+		]]>
+	</select>
+	
+	<select id="selectFeedbackAnswer" parameterType="int" resultType="StatisticVo">
+		<![CDATA[
+			select fbqNo,
+			       fbqContent,
+			       courseNo,
+			       chapterContent,
+			       subjectTitle,
+			       count(case fbaType when 1 then 1 end) yesCount,
+			       count(case fbaType when 2 then 1 end) noCount,
+			       count(case fbaType when 99 then 1 end) nonResponseCount
+			from(   select fbq.fbqNo fbqNo,
+			               fbqContent,
+			               courseNo,
+			               fbaType,
+			               chapterNo
+			        from feedbackquestion fbq join feedbackanswer fba on fbq.fbqNo = fba.fbqNo
+			        where fbq.fbqno = #{fbqNo}) fb 
+			        join
+			        (select chapterNo,
+			                chapterContent,
+			                subjectTitle
+			         from chapter c join subject s on c.subjectNo = s.subjectNo) cs
+			         on fb.chapterNo = cs.chapterNo 
+			group by fbqNo, fbqContent, courseNo, chapterContent, subjectTitle
+		]]>
+	</select>
+	
+	<select id="selectSubjectList" parameterType="int" resultType="SubjectVo">
+		<![CDATA[
+			select subjectNo,
+				   subjectTitle
+			from subject
+			where courseNo = #{courseNo}
+			order by subjectNo
+		]]>
+	</select>
+	
+	<select id="selectQnA" parameterType="int" resultType="StatisticVo">
+		<![CDATA[
+			select s.subjectNo subjectNo,
+				   subjectTitle,
+                   DECODE(COUNT(postType), 0, 0, COUNT(subjectTitle)) qnaCount
+			from subject s left join post p on s.subjectNo = p.subjectNo
+			where s.subjectNo = #{subjectNo}
+			group by s.subjectNo, subjectTitle
+		]]>
+	</select>
+	
+	<select id="selectSubmitByUserNo" parameterType="map" resultType="SubmitVo">
+		<![CDATA[
+			select submitNo,
+				   assignmentTitle,
+				   score
+			from submit s join assignment a on s.assignmentNo = a.assignmentNo
+			where s.assignmentNo = #{assignmentNo} and userNo = #{userNo}
+		]]>
+	</select>
+</mapper>
