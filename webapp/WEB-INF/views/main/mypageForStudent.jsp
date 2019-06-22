@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<title>File Manager | Nifty - Admin Template</title>
+<title>AMS  - MyPage</title>
 
 
 <!--STYLESHEET-->
@@ -720,7 +720,7 @@
 												str+="<td>"+list[i].subjectTitle+"</td>"	
 												str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"' class='btn-link'>"+list[i].userName+"</a></td>"				
 												str+="<td>"+list[i].hit+"</td>"	
-												str+="<td><i class='demo-pli-speech-bubble-5 icon-fw'></i>2</td>"
+												str+="<td><i class='demo-pli-speech-bubble-5 icon-fw'></i>"+list[i].replyCount+"</td>"
 												str+="</tr>"	
 												
 												
