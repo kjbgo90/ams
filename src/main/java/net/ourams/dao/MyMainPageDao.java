@@ -20,10 +20,8 @@ public class MyMainPageDao {
 	// 수강하고 있는 클래스들을 보여줄 거시다
 	public List<MyPageVo> courseList(MyPageVo vo) {
 		List<MyPageVo> list = sqlSession.selectList("myPage.secectCourse", vo);
-
 		return list;
 	}
-	
 	
 	//posttype=? -> notice qna
 	public List<PostVo> selectNotice(PostVo vo){
@@ -31,7 +29,6 @@ public class MyMainPageDao {
 		return list;
 	}
 	
-
 	//posttype=? -> notice qna
 	public List<PostVo> selectQna(PostVo vo){
 		List<PostVo> list = sqlSession.selectList("myPage.selectQna", vo);
@@ -45,6 +42,13 @@ public class MyMainPageDao {
 	
 	public List<TimelineVo> selectTimelineList(TimelineVo vo){
 		List<TimelineVo> list = sqlSession.selectList("myPage.selectTimelineList", vo);
+		return list;
+	}
+	
+	
+
+	public List<TimelineVo> selectTimelineAllList(TimelineVo vo){
+		List<TimelineVo> list = sqlSession.selectList("myPage.selectTimelineAllList", vo);
 		return list;
 	}
 }

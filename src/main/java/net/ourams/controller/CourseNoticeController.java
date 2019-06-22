@@ -177,6 +177,7 @@ public class CourseNoticeController {
 		postVo.setCategory(resJSON.getCategory());
 		postVo.setUserName(authUser.getUserName());
 		postVo.setFileList(resJSON.getFileList());
+		postVo.setCoursePath(coursePath);
 		System.out.println(resJSON.toString());
 		if(resJSON.getSelectedDate() == "" ) {
 			postService.write(postVo);

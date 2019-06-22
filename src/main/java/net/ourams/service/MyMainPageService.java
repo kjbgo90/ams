@@ -25,14 +25,16 @@ public class MyMainPageService {
 	// post type = 2
 	public List<PostVo> selectQna(PostVo vo) {
 		
-		vo.setRnum(3);
+		vo.setRnum(4);
 		List<PostVo> list = myMainPageDao.selectQna(vo);
 		return list;
 	}
 	
+
+	
 	// post type = 1
 	public List<PostVo> selectNotice(PostVo vo) {
-			vo.setRnum(3);
+			vo.setRnum(4);
 			List<PostVo> list = myMainPageDao.selectNotice(vo);
 			return list;
 	}
@@ -45,6 +47,12 @@ public class MyMainPageService {
 	public List<TimelineVo> selectTimelineList(TimelineVo vo){
 		vo.setRnum(4);
 		List<TimelineVo> list = myMainPageDao.selectTimelineList(vo);
+		return list;
+	}
+	
+	
+	public List<TimelineVo> selectTimelineAllList(TimelineVo vo){
+		List<TimelineVo> list = myMainPageDao.selectTimelineAllList(vo);
 		return list;
 	}
 

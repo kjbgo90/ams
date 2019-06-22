@@ -146,6 +146,22 @@ SELECT    rownum as rnum,
 	</select>
 	
 	
+	<select id="selectTimelineAllList" parameterType="TimelineVo" resultType="TimelineVo">
+	<![CDATA[
+	
+    	select  tl.timelineno as timeLineNo,
+       	 	    tl.timelinecontent as timeLineContent, 
+         	  	tl.regdate as regDate, 
+            	tlu.userno as userNo 
+   	 	from timeline tl join timelineuser tlu 
+    	on tl.timelineno = tlu.timelineno
+    	where tlu.userno=#{userNo}
+    	order by timelineno desc
+
+
+	]]>
+	</select>
+	
 	
 
 

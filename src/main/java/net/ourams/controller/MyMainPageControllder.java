@@ -46,6 +46,28 @@ public class MyMainPageControllder {
 		return "main/mypageForStudent";
 	}
 	
+
+	@Auth
+	@RequestMapping(value = "/mytimeline")
+	public String mytimeline( @AuthUser UserVo authUser,
+			Model model) {
+		System.out.println("start main for student");
+		model.addAttribute("authUser", authUser);
+		
+		return "main/myTimeline";
+	}
+	
+
+	@Auth
+	@RequestMapping(value = "/myassignment")
+	public String myassignment( @AuthUser UserVo authUser,
+			Model model) {
+		System.out.println("start main for student");
+		model.addAttribute("authUser", authUser);
+		
+		return "main/myAssignment";
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/courseList", method = RequestMethod.POST)
 	public List<MyPageVo> courseList(@Param("userNo") int userNo){
@@ -83,6 +105,7 @@ public class MyMainPageControllder {
 		return list;
 	}
 	
+	
 	@RequestMapping(value = "/editForm")
 	public String editForm() {
 		System.out.println("start main");
@@ -101,4 +124,16 @@ public class MyMainPageControllder {
 		return list; 
 	}
 	
+	
+	//timeline 모든 리스트 뽑기 !
+	@ResponseBody
+	@RequestMapping(value = "/selectTimelineAllList", method = RequestMethod.POST)
+	public List<TimelineVo> selectTimelineAllList(@Param("userNo") int userNo){
+		System.out.println("selectTimelineList start");
+		TimelineVo vo = new TimelineVo();
+		vo.setUserNo(userNo);
+		List<TimelineVo> list = myMainPageService.selectTimelineAllList(vo);
+		System.out.println(list.toString());
+		return list; 
+	}
 }

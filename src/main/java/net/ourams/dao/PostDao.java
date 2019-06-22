@@ -8,7 +8,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import net.ourams.vo.CourseVo;
 import net.ourams.vo.PostVo;
+import net.ourams.vo.TimelineVo;
+import net.ourams.vo.UserVo;
 import net.ourams.vo.fileUpLoadVo;
 
 
@@ -87,6 +90,32 @@ public class PostDao {
 		return sqlSession.insert("notice.insertPostFile", map);		
 	}
 
+	
 
+	//timeline
+	public int insertTimeline(TimelineVo vo) {
+		sqlSession.insert("notice.insertTimeline", vo);
+		int count = vo.getTimeLineNo();
+		return count;
+	}
+	
+	//timeline
+	public int insertTimelineUser(TimelineVo vo) {
+		int count = sqlSession.insert("notice.insertTimelineUser", vo);
+		return count;
+	}
+	
+	//timeline
+	public CourseVo selectCoursePath(CourseVo vo) {
+		CourseVo vo2 = sqlSession.selectOne("notice.selectCoursePath", vo);
+		return vo2;
+	}
+	
+
+	public List<UserVo> selectListbyCoursePath(CourseVo vo) {
+		System.out.println(vo.toString());
+		List<UserVo> list = sqlSession.selectList("notice.selectListcourse", vo);
+		return list;
+	}
 	
 }

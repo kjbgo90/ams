@@ -122,4 +122,9 @@ public class CourseDataroomDao {
 		int count = sqlSession.selectOne("courseDataRoom.deleteFile", vo);
 		return count;
 	}
+	
+	public CourseDataroomVo selectListAtFirst(CourseDataroomVo vo) {
+		CourseDataroomVo vo2 = sqlSession.selectOne("courseDataRoom.selectListAtFirst", vo);
+		return vo2;
+	}
 }

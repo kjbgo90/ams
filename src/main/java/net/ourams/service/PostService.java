@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import net.ourams.dao.PostDao;
+import net.ourams.vo.CourseVo;
 import net.ourams.vo.PostVo;
+import net.ourams.vo.TimelineVo;
+import net.ourams.vo.UserVo;
 import net.ourams.vo.fileUpLoadVo;
 
 @Service
@@ -67,6 +70,54 @@ public class PostService {
 	public int write(PostVo postVo) {
 		System.out.println(postVo.toString());
 		int count = postDao.insert(postVo);
+		
+	
+		TimelineVo vo = new TimelineVo();
+		vo.setUserNo(postVo.getUserNo());
+		System.out.println(postVo.getUserNo());
+		CourseVo coursevo = new CourseVo();
+		coursevo.setCoursePath(postVo.getCoursePath());
+		CourseVo coursevo2 = postDao.selectCoursePath(coursevo);
+		String coursePath = postVo.getCoursePath();
+		System.out.println("coursePath is" + coursePath);
+		String courseName = coursevo2.getCourseName();
+		System.out.println("courseName is " + courseName);
+		
+		
+		String timeLineContent = "["+courseName+"]"+postVo.getUserName()+"님의 공지사항이 올라왔습니다!</p>";
+		
+		// timeline 테이블에 저장  
+		vo.setTimeLineContent(timeLineContent);
+		
+		
+		postDao.insertTimeline(vo);
+		
+		
+		System.out.println("timeline no is "+vo.getTimeLineNo());
+		
+		
+		int timeLineNo = vo.getTimeLineNo();
+		// 코스 안에 있는 모든 유저들을 등록하자 ! 
+		List<UserVo> list = postDao.selectListbyCoursePath(coursevo);
+		System.out.println(list.toString());
+		for(int i = 0; i < list.size() ; i ++) {
+			int userNo = list.get(i).getUserNo();
+			System.out.println(userNo);
+			System.out.println("user No is "+userNo);
+			TimelineVo vo2 = new TimelineVo();
+			vo2.setUserNo(userNo);
+			vo2.setTimeLineNo(timeLineNo);
+			
+			//timelineuser 테이블에 저장 
+			postDao.insertTimelineUser(vo2);
+			
+		}
+		System.out.println(vo);
+		
+		
+		
+		
+		
 		
 
 		if (postVo.getFileList() != null) {

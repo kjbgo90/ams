@@ -227,4 +227,15 @@ public class CourseDataroomController {
 		vo.setDataRoomNo(fileNo);
 		return CourseDataroomService.deleteFile(vo);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/selectListAtFirst", method = RequestMethod.POST)
+	public CourseDataroomVo selectListAtFirst(@RequestParam("courseNo") int courseNo) {
+		System.out.println("let's start dataroom ");
+		CourseDataroomVo vo = new CourseDataroomVo();
+		vo.setCourseNo(courseNo);
+		vo.setpRoomNo(0);
+		CourseDataroomVo vo2 = CourseDataroomService.selectListAtFirst(vo);
+		return vo2;
+	}
 }

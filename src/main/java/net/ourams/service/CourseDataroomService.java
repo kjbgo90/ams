@@ -143,4 +143,9 @@ public class CourseDataroomService {
 		return count; 
 	}
 	
+	public CourseDataroomVo selectListAtFirst(CourseDataroomVo vo) {
+		CourseDataroomVo vo2 = courseDataroomDao.selectListAtFirst(vo);
+		return vo2;
+	}
+	
 }

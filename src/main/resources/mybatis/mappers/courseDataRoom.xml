@@ -26,6 +26,15 @@
             )
 		]]>
 	</insert>
+	
+	<!--처음 코스 전용 자료실 페이지 들어가면 오른쪽에 있는 파일리스트들 -->
+	<select id="selectListAtFirst"
+		parameterType="CourseDataRoomVo" resultType="CourseDataRoomVo">
+		<![CDATA[
+		select dataroomno from dataroom where courseno=#{courseNo} and proomno=0
+		]]>
+	</select>
+	
 
 	<!--처음 코스 전용 자료실 페이지 들어가면 오른쪽에 있는 파일리스트들 -->
 	<select id="selectFolderListAtFirst"

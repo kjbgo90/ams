@@ -143,8 +143,9 @@ public class QnaController {
 		postVo.setUserName(authUser.getUserName());
 		postVo.setFileList(resJSON.getFileList());
 		courseQnaService.write(postVo);
+		postVo.setCoursePath(coursePath);
 		System.out.println(coursePath);
-
+		
 		return coursePath;
 	}
 	

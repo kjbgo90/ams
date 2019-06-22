@@ -9,12 +9,13 @@ public class CourseVo {
 	private int teacherNo;
 	private int managerNo;
 	private String coursePath;
+	private int userNo;
 
 	public CourseVo() {
 	}
 
 	public CourseVo(int courseNo, String courseName, int lecRoomNo, String startDate, String endDate, int teacherNo,
-			int managerNo, String coursePath) {
+			int managerNo, String coursePath, int userNo) {
 		this.courseNo = courseNo;
 		this.courseName = courseName;
 		this.lecRoomNo = lecRoomNo;
@@ -23,6 +24,15 @@ public class CourseVo {
 		this.teacherNo = teacherNo;
 		this.managerNo = managerNo;
 		this.coursePath = coursePath;
+		this.userNo = userNo;
+	}
+
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
 
 	public int getCourseNo() {
@@ -93,7 +103,7 @@ public class CourseVo {
 	public String toString() {
 		return "CourseVo [courseNo=" + courseNo + ", courseName=" + courseName + ", lecRoomNo=" + lecRoomNo
 				+ ", startDate=" + startDate + ", endDate=" + endDate + ", teacherNo=" + teacherNo + ", managerNo="
-				+ managerNo + ", coursePath=" + coursePath + "]";
+				+ managerNo + ", coursePath=" + coursePath + ", userNo=" + userNo + "]";
 	}
 
 }

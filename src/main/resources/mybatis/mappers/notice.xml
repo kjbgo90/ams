@@ -262,7 +262,44 @@ select   					B.rnum as rnum ,
 	</insert>
 	
 	
+	<select id="selectCoursePath" parameterType="CourseVo" resultType="CourseVo">
+		<![CDATA[
+			select courseNo , courseName from course where coursePath = #{coursePath}
+			
+			
+		]]>
+	</select>
 	
+	<select id="selectListcourse" parameterType="CourseVo" resultType="UserVo">
+		<![CDATA[
+		select userNo 
+		from courseregist 
+		where courseno = (select courseno from course where coursepath = #{coursePath} )
+		]]>
+	</select>
+
+	
+	<insert id="insertTimeline" parameterType="TimelineVo">
+		<selectKey keyProperty="timeLineNo" resultType="int" order="BEFORE">
+			select seq_timeline_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into timeline values (   #{timeLineNo},
+                                			#{timeLineContent},
+                              			   	sysdate
+                            			)
+		]]>
+	</insert>
+	
+	
+	<insert id="insertTimelineUser" parameterType="TimelineVo">
+		<![CDATA[
+				insert into timelineuser values (   seq_timelineuser_no.nextval,
+                                    				#{timeLineNo},
+                                    				#{userNo}
+                                				)
+		]]>
+	</insert>
 	
 	
 	

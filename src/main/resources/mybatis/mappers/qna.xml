@@ -4,7 +4,7 @@
 <mapper namespace="qna">
 
 
-	<!--검색하는 기능  -->
+	<!--검색하는 기능 -->
 	<select id="searchList" parameterType="map" resultType="PostVo">
 	<![CDATA[
 	 SELECT  rnum as rnum,
@@ -82,17 +82,18 @@
                         
 	]]>
 	</select>
-	
-	<!-- 포스트 총 갯수  -->
-	<select id="countPost"  resultType="int">
+
+	<!-- 포스트 총 갯수 -->
+	<select id="countPost" resultType="int">
 	<![CDATA[
  	   select count(*) from post where postType= 2
 	]]>
 	</select>
-	
-	
 
-	<select id="selectListPaging" parameterType="map" resultType="PostVo">
+
+
+	<select id="selectListPaging" parameterType="map"
+		resultType="PostVo">
 		<![CDATA[
 		        
 		                
@@ -172,7 +173,8 @@
 
 
 	<!-- no로 글조회 -->
-	<select id="selectNotice" parameterType="int" resultType="PostVo">
+	<select id="selectNotice" parameterType="int"
+		resultType="PostVo">
 		<![CDATA[
 		SELECT  postNo, 
 			    postTitle, 
@@ -211,7 +213,8 @@
 
 	<!-- 글저장 -->
 	<insert id="insert" parameterType="PostVo">
-		<selectKey keyProperty="postNo" resultType="int" order="BEFORE">
+		<selectKey keyProperty="postNo" resultType="int"
+			order="BEFORE">
 			select seq_post_no.nextval from dual
 		</selectKey>
 		<![CDATA[
@@ -232,7 +235,8 @@
 
 
 	<!-- 과목리스트 -->
-	<select id="selectSubjectAll" parameterType="int" resultType="SubjectVo">
+	<select id="selectSubjectAll" parameterType="int"
+		resultType="SubjectVo">
 		<![CDATA[
 							
 				
@@ -252,20 +256,20 @@
 			and postNo = #{postNo}
 		]]>
 	</delete>
-	
+
 	<delete id="deletereply" parameterType="PostVo">
 		<![CDATA[
 			delete from reply 
 			where postNo = #{postNo}
 		]]>
 	</delete>
-	
+
 	<select id="countReply" parameterType="PostVo" resultType="int">
 	<![CDATA[
 			 select count(*) from reply where postno=#{postNo}
 		]]>
 	</select>
-	
+
 	<!-- 글수정 -->
 	<update id="update" parameterType="PostVo">
 		<![CDATA[
@@ -278,10 +282,11 @@
 		  	and userNo = #{userNo}
 		]]>
 	</update>
-	
-	
+
+
 	<insert id="insertFile" parameterType="fileUpLoadVo">
-		<selectKey keyProperty="fileNo" resultType="int" order="BEFORE">
+		<selectKey keyProperty="fileNo" resultType="int"
+			order="BEFORE">
 			select seq_datafile_no.nextval from dual
 		</selectKey>
 		<![CDATA[
@@ -293,8 +298,8 @@
 										 #{filepath})
 		]]>
 	</insert>
-	
-	
+
+
 	<insert id="insertPostFile" parameterType="map">
 		<![CDATA[
 			insert into postfile values( seq_postfile_no.nextval,
@@ -305,7 +310,8 @@
 
 
 
-	<select id="selectFileListByPostNo" parameterType="PostVo" resultType="fileUpLoadVo">
+	<select id="selectFileListByPostNo" parameterType="PostVo"
+		resultType="fileUpLoadVo">
 		<![CDATA[
 			select postFileNo,
 				   postNo,
@@ -318,5 +324,48 @@
 			where postNo = #{postNo}
 		]]>
 	</select>
-	
+
+
+	<select id="selectCoursePath" parameterType="CourseVo"
+		resultType="CourseVo">
+		<![CDATA[
+			select courseNo , courseName from course where coursePath = #{coursePath}
+		]]>
+	</select>
+
+	<select id="selectListcourse" parameterType="CourseVo"
+		resultType="UserVo">
+		<![CDATA[
+		select userNo 
+		from courseregist 
+		where courseno = (select courseno from course where coursepath = #{coursePath} )
+		]]>
+	</select>
+
+
+
+
+	<insert id="insertTimeline" parameterType="TimelineVo">
+		<selectKey keyProperty="timeLineNo" resultType="int"
+			order="BEFORE">
+			select seq_timeline_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into timeline values (   #{timeLineNo},
+                                			#{timeLineContent},
+                              			   sysdate
+                            			)
+		]]>
+	</insert>
+
+
+	<insert id="insertTimelineUser" parameterType="TimelineVo">
+		<![CDATA[
+				insert into timelineuser values (   seq_timelineuser_no.nextval,
+                                    				#{timeLineNo},
+                                    				#{userNo}
+                                				)
+		]]>
+	</insert>
+
 </mapper>

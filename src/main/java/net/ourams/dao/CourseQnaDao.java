@@ -8,41 +8,42 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import net.ourams.vo.CourseVo;
 import net.ourams.vo.PostVo;
 import net.ourams.vo.SubjectVo;
+import net.ourams.vo.TimelineVo;
+import net.ourams.vo.UserVo;
 import net.ourams.vo.fileUpLoadVo;
 
 @Repository
 public class CourseQnaDao {
 	@Autowired
 	private SqlSession sqlSession;
-	
-	//post 갯수 
+
+	// post 갯수
 	public int countPost() {
 		int count = sqlSession.selectOne("qna.countPost");
 		return count;
 	}
-	
-	/* 글전체리스트 가져오기 기본*/
-	public List<PostVo> selectListPaging(Map<String, Object> map){
+
+	/* 글전체리스트 가져오기 기본 */
+	public List<PostVo> selectListPaging(Map<String, Object> map) {
 		List<PostVo> list = sqlSession.selectList("qna.selectListPaging", map);
 		System.out.println(list.toString());
-		
+
 		return list;
 	}
-	
-	//검색하는 기능 페이징도 했음 
-	public List<PostVo> searchList(Map<String, Object> map){
+
+	// 검색하는 기능 페이징도 했음
+	public List<PostVo> searchList(Map<String, Object> map) {
 		List<PostVo> list = sqlSession.selectList("qna.searchList", map);
 		System.out.println(list.toString());
 		return list;
 	}
 
-
 	public int updateHit(int postNo) {
 		return sqlSession.update("qna.updateHit", postNo);
 	}
-
 
 	/* no로 글가져오기 */
 	public PostVo selectNotice(int postNo) {
@@ -54,17 +55,16 @@ public class CourseQnaDao {
 		return sqlSession.insert("qna.insert", postVo);
 	}
 
-
 	public List<PostVo> selectAll() {
 		List<PostVo> list = sqlSession.selectList("qna.selectAll");
 		return list;
 	}
 
-	/*과목리스트 가져오기*/
+	/* 과목리스트 가져오기 */
 	public List<SubjectVo> selectsubjectAll(int courseNo) {
-		List<SubjectVo> subjectlist = sqlSession.selectList("qna.selectSubjectAll",courseNo);
+		List<SubjectVo> subjectlist = sqlSession.selectList("qna.selectSubjectAll", courseNo);
 		System.out.println("DDDDAAAAOOOO");
-		System.out.println(sqlSession.selectList("qna.selectSubjectAll",courseNo).toString());
+		System.out.println(sqlSession.selectList("qna.selectSubjectAll", courseNo).toString());
 
 		System.out.println(subjectlist.toString());
 		return subjectlist;
@@ -74,11 +74,11 @@ public class CourseQnaDao {
 	public int delete(PostVo postVo) {
 		return sqlSession.delete("qna.delete", postVo);
 	}
-	
+
 	public int deletereply(PostVo postVo) {
 		return sqlSession.delete("qna.deletereply", postVo);
 	}
-	
+
 	public int countReply(PostVo postVo) {
 		return sqlSession.selectOne("qna.countReply", postVo);
 	}
@@ -88,19 +88,46 @@ public class CourseQnaDao {
 	}
 
 	public int insertFile(fileUpLoadVo fileVo) {
-		return sqlSession.insert("qna.insertFile", fileVo);		
+		return sqlSession.insert("qna.insertFile", fileVo);
 	}
 
 	public int insertPostFile(int postNo, int fileNo) {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("postNo", postNo);
 		map.put("fileNo", fileNo);
-		
+
 		return sqlSession.insert("qna.insertPostFile", map);
-		
+
 	}
 
 	public List<fileUpLoadVo> selectFileListByPostNo(PostVo postVo) {
 		return sqlSession.selectList("qna.selectFileListByPostNo", postVo);
+	}
+
+	
+	//timeline
+	public int insertTimeline(TimelineVo vo) {
+		sqlSession.insert("qna.insertTimeline", vo);
+		int count = vo.getTimeLineNo();
+		return count;
+	}
+	
+	//timeline
+	public int insertTimelineUser(TimelineVo vo) {
+		int count = sqlSession.insert("qna.insertTimelineUser", vo);
+		return count;
+	}
+	
+	//timeline
+	public CourseVo selectCoursePath(CourseVo vo) {
+		CourseVo vo2 = sqlSession.selectOne("qna.selectCoursePath", vo);
+		return vo2;
+	}
+	
+
+	public List<UserVo> selectListbyCoursePath(CourseVo vo) {
+		System.out.println(vo.toString());
+		List<UserVo> list = sqlSession.selectList("qna.selectListcourse", vo);
+		return list;
 	}
 }

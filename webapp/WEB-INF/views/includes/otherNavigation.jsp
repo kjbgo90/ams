@@ -23,11 +23,7 @@
                             <span class="brand-text">Nifty</span>
                         </a>
                         <a href="#" class="mainnav-toggle"><i class="pci-cross pci-circle icon-lg"></i></a>
-                    </div>
-                    -->
-
-
-
+                    </div>-->
 		<!--Menu-->
 		<!--================================-->
 		<div id="mainnav-menu-wrap">
@@ -65,13 +61,18 @@
 					</div>
 					<ul id="mainnav-menu" class="list-group">
 						<!--Category name-->
-						<li class="list-header"><a>MyPage</a></li>
+						<li class="list-header"><a
+							href="${pageContext.request.contextPath }/myPage/indexforstudent">MyPage</a></li>
 						<li class="list-divider"></li>
 						<!--Menu list item-->
 						<li><a>Select Class</a></li>
-						<li><a href="">과제 관리</a></li>
-						<li><a href="">개인정보 수정</a></li>
-
+						<li><a
+							href="${pageContext.request.contextPath }/myPage/myassignment">과제
+								관리</a></li>
+						<li><a
+							href="${pageContext.request.contextPath }/myPage/mytimeline">Timeline</a></li>
+						<li><a
+							href="${pageContext.request.contextPath }/myPage/editForm">개인정보수정</a></li>
 
 
 						<!--Menu list item-->
@@ -99,8 +100,7 @@
 	</div>
 </nav>
 
-<script
-	src="${pageContext.request.contextPath }/assets/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath }/assets/js/jquery.min.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
