@@ -17,11 +17,8 @@ public class fileUpLoadVo {
 	public fileUpLoadVo() {
 	}
 
-	
-
 	public fileUpLoadVo(int fileNo, String fileName, String saveName, long fileSize, String regDate, String filepath,
 			int assignmentFileNo, int assignmentNo, int submitFileNo, int submitNo, int postFileNo, int postNo) {
-		super();
 		this.fileNo = fileNo;
 		this.fileName = fileName;
 		this.saveName = saveName;
@@ -35,8 +32,6 @@ public class fileUpLoadVo {
 		this.postFileNo = postFileNo;
 		this.postNo = postNo;
 	}
-
-
 
 	public int getFileNo() {
 		return fileNo;
@@ -118,32 +113,21 @@ public class fileUpLoadVo {
 		this.submitNo = submitNo;
 	}
 
-	
-	
-	
 	public int getPostFileNo() {
 		return postFileNo;
 	}
-
-
 
 	public void setPostFileNo(int postFileNo) {
 		this.postFileNo = postFileNo;
 	}
 
-
-
 	public int getPostNo() {
 		return postNo;
 	}
 
-
-
 	public void setPostNo(int postNo) {
 		this.postNo = postNo;
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -152,7 +136,5 @@ public class fileUpLoadVo {
 				+ assignmentFileNo + ", assignmentNo=" + assignmentNo + ", submitFileNo=" + submitFileNo + ", submitNo="
 				+ submitNo + ", postFileNo=" + postFileNo + ", postNo=" + postNo + "]";
 	}
-
-
 
 }

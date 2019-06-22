@@ -29,6 +29,7 @@ public class CourseAssignmentService {
 
 	/* 전체 과제 selectList */
 	public Map<String, Object> getList(String coursePath) {
+		
 		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
 		List<AssignmentVo> assignmentList = assignmentDao.selectList(courseVo.getCourseNo());
 		List<SubjectVo> subjectList = assignmentDao.selectSubList(courseVo.getCourseNo());
@@ -86,6 +87,7 @@ public class CourseAssignmentService {
 		int count = assignmentDao.countSubmittedAssign(submitVo);
 		if(count == 0) {
 			assignmentDao.insertSubmit(submitVo);
+			
 			
 			if (submitVo.getFileList() != null) {
 				for (fileUpLoadVo fileVo : submitVo.getFileList()) {

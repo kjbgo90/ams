@@ -26,15 +26,15 @@
             )
 		]]>
 	</insert>
-	
+
 	<!--처음 코스 전용 자료실 페이지 들어가면 오른쪽에 있는 파일리스트들 -->
-	<select id="selectListAtFirst"
-		parameterType="CourseDataRoomVo" resultType="CourseDataRoomVo">
+	<select id="selectListAtFirst" parameterType="CourseDataRoomVo"
+		resultType="CourseDataRoomVo">
 		<![CDATA[
 		select dataroomno from dataroom where courseno=#{courseNo} and proomno=0
 		]]>
 	</select>
-	
+
 
 	<!--처음 코스 전용 자료실 페이지 들어가면 오른쪽에 있는 파일리스트들 -->
 	<select id="selectFolderListAtFirst"
@@ -196,15 +196,15 @@
 	]]>
 	</select>
 
-	<select id="deleteBeforeCountFile" parameterType="CourseDataRoomVo"
-		resultType="int">
+	<select id="deleteBeforeCountFile"
+		parameterType="CourseDataRoomVo" resultType="int">
 	<![CDATA[
 	select count(*) from dataroomfile where dataroomno=#{dataRoomNo}
 	]]>
 	</select>
 
-	<select id="deleteBeforeCountFolder" parameterType="CourseDataRoomVo"
-		resultType="int">
+	<select id="deleteBeforeCountFolder"
+		parameterType="CourseDataRoomVo" resultType="int">
 	<![CDATA[
 	select count(*) from dataroom where proomno=#{dataRoomNo}
 	]]>
@@ -212,12 +212,58 @@
 
 
 	<delete id="deleteDataRoom" parameterType="CourseDataRoomVo">
-		delete from dataroom where dataroomno=#{dataRoomNo}
+		delete from dataroom
+		where dataroomno=#{dataRoomNo}
 	</delete>
 
-	<delete id="deleteFile" parameterType="CourseDataRoomVo" >
-		delete from datafile where fileno=#{fileNo}
+	<delete id="deleteFile" parameterType="CourseDataRoomVo">
+		delete
+		from datafile where fileno=#{fileNo}
 	</delete>
 
+
+
+
+	<select id="selectCoursePath" parameterType="CourseVo"
+		resultType="CourseVo">
+		<![CDATA[
+			select courseNo , courseName from course where coursePath = #{coursePath}
+		]]>
+	</select>
+
+	<select id="selectListcourse" parameterType="CourseVo"
+		resultType="UserVo">
+		<![CDATA[
+		select userNo 
+		from courseregist 
+		where courseno = (select courseno from course where coursepath = #{coursePath} )
+		]]>
+	</select>
+
+
+
+
+	<insert id="insertTimeline" parameterType="TimelineVo">
+		<selectKey keyProperty="timeLineNo" resultType="int"
+			order="BEFORE">
+			select seq_timeline_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into timeline values (   #{timeLineNo},
+                                			#{timeLineContent},
+                              			   sysdate
+                            			)
+		]]>
+	</insert>
+
+
+	<insert id="insertTimelineUser" parameterType="TimelineVo">
+		<![CDATA[
+				insert into timelineuser values (   seq_timelineuser_no.nextval,
+                                    				#{timeLineNo},
+                                    				#{userNo}
+                                				)
+		]]>
+	</insert>
 
 </mapper>

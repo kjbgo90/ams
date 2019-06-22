@@ -1423,6 +1423,7 @@
 									var filePath = CourseDataroomVo.filePath;
 									var fileSize = CourseDataroomVo.fileSize;
 									var saveName = CourseDataroomVo.saveName;
+									var coursePath = '${coursePath}' ;
 
 									var jsonData = {
 										fileName : fileName,
@@ -1430,7 +1431,8 @@
 										fileSize : fileSize,
 										saveName : saveName,
 										tagNoList : tagNoList,
-										dataRoomNo : dataRoomNo
+										dataRoomNo : dataRoomNo,
+										coursePath : coursePath
 									}
 
 									$.ajax({

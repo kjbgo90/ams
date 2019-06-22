@@ -55,5 +55,7 @@ public class MyMainPageService {
 		List<TimelineVo> list = myMainPageDao.selectTimelineAllList(vo);
 		return list;
 	}
+	
+	
 
 }

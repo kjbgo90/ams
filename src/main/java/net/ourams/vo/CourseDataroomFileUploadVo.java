@@ -10,35 +10,41 @@ public class CourseDataroomFileUploadVo {
 	private String saveName;
 	private List<Integer> tagNoList;
 	private int dataRoomNo;
-	
+
+	private String coursePath;
+
 	public CourseDataroomFileUploadVo() {
 	}
 
-	
-
 	public CourseDataroomFileUploadVo(String fileName, String filePath, long fileSize, String saveName,
-			List<Integer> tagNoList, int dataRoomNo) {
+			List<Integer> tagNoList, int dataRoomNo, String coursePath) {
+		super();
 		this.fileName = fileName;
 		this.filePath = filePath;
 		this.fileSize = fileSize;
 		this.saveName = saveName;
 		this.tagNoList = tagNoList;
 		this.dataRoomNo = dataRoomNo;
+		this.coursePath = coursePath;
+	}
+	
+	
+
+	public String getCoursePath() {
+		return coursePath;
 	}
 
-
+	public void setCoursePath(String coursePath) {
+		this.coursePath = coursePath;
+	}
 
 	public int getDataRoomNo() {
 		return dataRoomNo;
 	}
 
-
-
 	public void setDataRoomNo(int dataRoomNo) {
 		this.dataRoomNo = dataRoomNo;
 	}
-
-
 
 	public String getFileName() {
 		return fileName;
@@ -80,13 +86,11 @@ public class CourseDataroomFileUploadVo {
 		this.tagNoList = tagNoList;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "CourseDataroomFileUploadVo [fileName=" + fileName + ", filePath=" + filePath + ", fileSize=" + fileSize
-				+ ", saveName=" + saveName + ", tagNoList=" + tagNoList + ", dataRoomNo=" + dataRoomNo + "]";
+				+ ", saveName=" + saveName + ", tagNoList=" + tagNoList + ", dataRoomNo=" + dataRoomNo + ", coursePath="
+				+ coursePath + "]";
 	}
-
 
 }

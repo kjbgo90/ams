@@ -11,8 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import net.ourams.vo.AssignmentVo;
 import net.ourams.vo.ChapterVo;
+import net.ourams.vo.CourseVo;
 import net.ourams.vo.SubjectVo;
 import net.ourams.vo.SubmitVo;
+import net.ourams.vo.TimelineVo;
+import net.ourams.vo.UserVo;
 import net.ourams.vo.fileUpLoadVo;
 
 @Repository
@@ -118,6 +121,35 @@ public class CourseAssignmentDao {
 
 	public List<fileUpLoadVo> selectFileListByAssignmentNo(AssignmentVo assignmentVo) {
 		return sqlSession.selectList("assignment.selectFileListByAssignmentNo", assignmentVo);
+	}
+	
+
+	
+
+	//timeline insert 문 
+	public int insertTimeline(TimelineVo vo) {
+		sqlSession.insert("notice.insertTimeline", vo);
+		int count = vo.getTimeLineNo();
+		return count;
+	}
+	
+	//timelineuser insert 문 
+	public int insertTimelineUser(TimelineVo vo) {
+		int count = sqlSession.insert("notice.insertTimelineUser", vo);
+		return count;
+	}
+	
+	//timeline
+	public CourseVo selectCoursePath(CourseVo vo) {
+		CourseVo vo2 = sqlSession.selectOne("notice.selectCoursePath", vo);
+		return vo2;
+	}
+	
+
+	public List<UserVo> selectListbyCoursePath(CourseVo vo) {
+		System.out.println(vo.toString());
+		List<UserVo> list = sqlSession.selectList("notice.selectListcourse", vo);
+		return list;
 	}
 
 }

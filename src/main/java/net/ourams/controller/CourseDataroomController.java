@@ -1,8 +1,5 @@
 package net.ourams.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -129,12 +125,16 @@ public class CourseDataroomController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/fileUploadInDB", method = RequestMethod.POST)
-	public int fileUploadInDB(@RequestBody CourseDataroomFileUploadVo fileVo) {
+	public int fileUploadInDB( 	@RequestBody CourseDataroomFileUploadVo fileVo ,
+								@AuthUser UserVo authUser) {
 		int count = 0;
+		
+		int userNo = authUser.getUserNo();
+		
 		System.out.println("fileUpLoad!!");
 		System.out.println(fileVo.toString());
 		System.out.println(fileVo.getDataRoomNo());
-		CourseDataroomService.fileUploadInDB(fileVo);
+		CourseDataroomService.fileUploadInDB( fileVo , fileVo.getCoursePath(), userNo);
 		return count;
 	}
 	

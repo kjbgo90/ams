@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import net.ourams.vo.CourseDataroomVo;
+import net.ourams.vo.CourseVo;
+import net.ourams.vo.TimelineVo;
+import net.ourams.vo.UserVo;
 
 @Repository
 public class CourseDataroomDao {
@@ -126,5 +129,34 @@ public class CourseDataroomDao {
 	public CourseDataroomVo selectListAtFirst(CourseDataroomVo vo) {
 		CourseDataroomVo vo2 = sqlSession.selectOne("courseDataRoom.selectListAtFirst", vo);
 		return vo2;
+	}
+	
+
+	
+
+	//timeline
+	public int insertTimeline(TimelineVo vo) {
+		sqlSession.insert("courseDataRoom.insertTimeline", vo);
+		int count = vo.getTimeLineNo();
+		return count;
+	}
+	
+	//timeline
+	public int insertTimelineUser(TimelineVo vo) {
+		int count = sqlSession.insert("courseDataRoom.insertTimelineUser", vo);
+		return count;
+	}
+	
+	//timeline
+	public CourseVo selectCoursePath(CourseVo vo) {
+		CourseVo vo2 = sqlSession.selectOne("courseDataRoom.selectCoursePath", vo);
+		return vo2;
+	}
+	
+
+	public List<UserVo> selectListbyCoursePath(CourseVo vo) {
+		System.out.println(vo.toString());
+		List<UserVo> list = sqlSession.selectList("courseDataRoom.selectListcourse", vo);
+		return list;
 	}
 }

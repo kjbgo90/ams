@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import net.ourams.dao.CourseDataroomDao;
 import net.ourams.vo.CourseDataroomFileUploadVo;
 import net.ourams.vo.CourseDataroomVo;
+import net.ourams.vo.CourseVo;
+import net.ourams.vo.TimelineVo;
+import net.ourams.vo.UserVo;
 
 @Service
 public class CourseDataroomService {
@@ -65,7 +68,7 @@ public class CourseDataroomService {
 		return list;
 	}
 	
-	public int fileUploadInDB(CourseDataroomFileUploadVo fileVo) {
+	public int fileUploadInDB(CourseDataroomFileUploadVo fileVo, String coursePath, int userNo) {
 		System.out.println("help me");
 		
 		CourseDataroomVo vo = new CourseDataroomVo();
@@ -77,6 +80,50 @@ public class CourseDataroomService {
 		vo.setDataRoomNo(fileVo.getDataRoomNo());
 		System.out.println(vo.toString());
 		courseDataroomDao.insertFileUpLoad(vo);
+		
+
+		
+		TimelineVo vo2 = new TimelineVo();
+		vo2.setUserNo(userNo);
+		System.out.println(userNo);
+		CourseVo coursevo = new CourseVo();
+		coursevo.setCoursePath(coursePath);
+		CourseVo coursevo2 = courseDataroomDao.selectCoursePath(coursevo);
+		System.out.println("coursePath is" + coursePath);
+		String courseName = coursevo2.getCourseName();
+		System.out.println("courseName is " + courseName);
+		
+		
+		String timeLineContent = "["+courseName+"]"+coursevo2.getCourseName()+"에 파일이 올라왔습니다!</p>";
+		
+		// timeline 테이블에 저장  
+		vo2.setTimeLineContent(timeLineContent);
+		
+		
+		courseDataroomDao.insertTimeline(vo2);
+		
+		
+		System.out.println("timeline no is "+vo2.getTimeLineNo());
+		
+		
+		int timeLineNo = vo2.getTimeLineNo();
+		// 코스 안에 있는 모든 유저들을 등록하자 ! 
+		List<UserVo> list2 = courseDataroomDao.selectListbyCoursePath(coursevo);
+		System.out.println(list2.toString());
+		for(int i = 0; i < list2.size() ; i ++) {
+			int userNo2 = list2.get(i).getUserNo();
+			System.out.println(userNo2);
+			System.out.println("user No is "+userNo2);
+			TimelineVo vo3 = new TimelineVo();
+			vo3.setUserNo(userNo2);
+			vo3.setTimeLineNo(timeLineNo);
+			
+			//timelineuser 테이블에 저장 
+			courseDataroomDao.insertTimelineUser(vo3);
+			
+		}
+		System.out.println(vo);
+		
 		
 		
 		
