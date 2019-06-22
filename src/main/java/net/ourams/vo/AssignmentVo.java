@@ -24,8 +24,7 @@ public class AssignmentVo {
 	private List<fileUpLoadVo> fileList;
 	private String selectDate;
 
-	public AssignmentVo() {
-	}
+	public AssignmentVo() {}
 
 	public AssignmentVo(int assignmentNo, String assignmentTitle, String assignmentContent, int courseNo,
 			String courseName, int subjectNo, String subjectTitle, int chapterNo, String chapterContent, int teacherNo,

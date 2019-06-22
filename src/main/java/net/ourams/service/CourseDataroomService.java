@@ -94,7 +94,7 @@ public class CourseDataroomService {
 		System.out.println("courseName is " + courseName);
 		
 		
-		String timeLineContent = "["+courseName+"]"+coursevo2.getCourseName()+"에 파일이 올라왔습니다!</p>";
+		String timeLineContent = "<p>["+courseName+"]<a href="+fileVo.getFilePath()+" class='text-semibold text-main mar-no'>"+fileVo.getFileName()+"</a> 파일이 올라왔습니다!</p>";
 		
 		// timeline 테이블에 저장  
 		vo2.setTimeLineContent(timeLineContent);
