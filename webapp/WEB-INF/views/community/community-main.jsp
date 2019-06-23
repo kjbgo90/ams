@@ -136,7 +136,8 @@
 										<li id="demo-tasklist-12" class="task-info" onclick="location.href='${pageContext.request.contextPath }/community/read/${eatList.cpostNo}'">
 											<p class="text-bold text-main text-sm "># ${eatList.cpostNo}</p> <img class="img-responsive mar-btm" src="${pageContext.request.contextPath }/assets/img/shared-img-4.jpg" alt="Image">
 											<p class="text-bold text-main text-sm text-right">${eatList.cpostTitle}</p>
-											<p class="pad-btm bord-btm">${eatList.cpostContent}</p> <a href="#" class="task-footer"> <span class="box-inline"> <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> ${eatList.hit}</span> <span class="pad-rgt"><i class="demo-pli-heart-2 icon-fw"></i> ${eatList.liked}</span>
+											<p class="pad-btm bord-btm">${eatList.cpostContent}</p> <a href="#" class="task-footer"> <span class="box-inline"> <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> ${eatList.replyCount}</span> <span class="pad-rgt"><i class="demo-pli-heart-2 icon-fw"></i>
+														${eatList.liked}</span>
 											</span> <span class="text-sm"><i class="pli-arrow-right-in-circle icon-fw text-main"></i>${eatList.regDate}</span>
 										</a>
 										</li>
@@ -156,13 +157,14 @@
 								<a href="${pageContext.request.contextPath }/community/selectform?cpostType=2" class="pull-right btn btn-info btn-sm">바로가기</a>
 								<h4 class="text-main header-title m-t-0">카페</h4>
 								<hr>
-								<br> 
+								<br>
 								<ul id="demo-tasklist-inprogress" class="sortable-list tasklist list-unstyled">
 									<c:forEach items="${MaincafeList}" var="cafelist">
 										<li id="demo-tasklist-3" class="task-success" onclick="location.href='${pageContext.request.contextPath }/community/read/${cafelist.cpostNo}'">
 											<p class="text-bold text-main text-sm "># ${cafelist.cpostNo}</p> <img class="img-responsive mar-btm" src="${pageContext.request.contextPath }/assets/img/shared-img-2.jpg" alt="Image">
 											<p class="text-bold text-main text-sm text-right">${cafelist.cpostTitle}</p>
-											<p class="pad-btm bord-btm">${cafelist.cpostContent}</p> <a href="#" class="task-footer"> <span class="box-inline"> <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> ${cafelist.hit}</span> <span class="pad-rgt"><i class="demo-pli-heart-2 icon-fw"></i> ${cafelist.liked}</span>
+											<p class="pad-btm bord-btm">${cafelist.cpostContent}</p> <a href="#" class="task-footer"> <span class="box-inline"> <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> ${cafelist.replyCount}</span> <span class="pad-rgt"><i class="demo-pli-heart-2 icon-fw"></i>
+														${cafelist.liked}</span>
 											</span> <span class="text-sm"><i class="pli-arrow-right-in-circle icon-fw text-main"></i>${cafelist.regDate}</span>
 										</a>
 										</li>
@@ -182,12 +184,12 @@
 								<hr>
 								<br>
 								<ul id="demo-tasklist-completed" class="sortable-list tasklist list-unstyled">
-								<c:forEach items="${MainList}" var="mainList">
-										<li id="demo-tasklist-3" class="task-warning" 
->
+									<c:forEach items="${MainList}" var="mainList">
+										<li id="demo-tasklist-3" class="task-warning" onclick="location.href='${pageContext.request.contextPath }/community/read/${mainList.cpostNo}'">
 											<p class="text-bold text-main text-sm "># ${mainList.cpostNo}</p> <img class="img-responsive mar-btm" src="${pageContext.request.contextPath }/assets/img/shared-img-3.jpg" alt="Image">
 											<p class="text-bold text-main text-sm text-right">${mainList.cpostTitle}</p>
-											<p class="pad-btm bord-btm">${mainList.cpostContent}</p> <a href="#" class="task-footer"> <span class="box-inline"> <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i>${mainList.hit}</span> <span class="pad-rgt"><i class="demo-pli-heart-2 icon-fw"></i> ${mainList.liked}</span>
+											<p class="pad-btm bord-btm">${mainList.cpostContent}</p> <a href="#" class="task-footer"> <span class="box-inline"> <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i>${mainList.replyCount}</span> <span class="pad-rgt"><i class="demo-pli-heart-2 icon-fw"></i>
+														${mainList.liked}</span>
 											</span> <span class="text-sm"><i class="pli-arrow-right-in-circle icon-fw text-main"></i>${mainList.regDate}</span>
 										</a>
 										</li>

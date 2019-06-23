@@ -20,7 +20,7 @@ public class CommunityVo {
 	private String businessName;
 	private String latitude;
 	private String longitude;
-	private int hit;
+	private int replyCount;
 	
 	public CommunityVo() {
 		
@@ -28,7 +28,7 @@ public class CommunityVo {
 
 	public CommunityVo(int cpostNo, int cpostType, int userNo, String regDate, String cpostTitle, String cpostContent,
 			int liked, int rnum, int pageNo, List<fileUpLoadVo> fileList, String categoryName, int locationNo,
-			int cfileNo, String address, String businessName, String latitude, String longitude, int hit) {
+			int cfileNo, String address, String businessName, String latitude, String longitude, int replyCount) {
 		super();
 		this.cpostNo = cpostNo;
 		this.cpostType = cpostType;
@@ -47,7 +47,7 @@ public class CommunityVo {
 		this.businessName = businessName;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.hit = hit;
+		this.replyCount = replyCount;
 	}
 
 	public int getCpostNo() {
@@ -189,12 +189,12 @@ public class CommunityVo {
 	}
 
 	
-	public int getHit() {
-		return hit;
+	public int getreplyCount() {
+		return replyCount;
 	}
 
-	public void setHit(int hit) {
-		this.hit = hit;
+	public void setreplyCount(int replyCount) {
+		this.replyCount = replyCount;
 	}
 
 	
@@ -204,7 +204,7 @@ public class CommunityVo {
 				+ regDate + ", cpostTitle=" + cpostTitle + ", cpostContent=" + cpostContent + ", liked=" + liked
 				+ ", rnum=" + rnum + ", pageNo=" + pageNo + ", fileList=" + fileList + ", categoryName=" + categoryName
 				+ ", locationNo=" + locationNo + ", cfileNo=" + cfileNo + ", address=" + address + ", businessName="
-				+ businessName + ", latitude=" + latitude + ", longitude=" + longitude + ", hit=" + hit + "]";
+				+ businessName + ", latitude=" + latitude + ", longitude=" + longitude + ", replyCount=" + replyCount + "]";
 	}
 
 	public String locationInfo() {

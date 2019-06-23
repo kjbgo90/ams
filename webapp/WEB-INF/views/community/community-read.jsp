@@ -159,7 +159,8 @@
 							<div class="blog-footer">
 
 								<div class="media-body text-right">
-									<span class="mar-rgt"><i class="demo-pli-heart-2 icon-fw"></i>${CommunityVo.liked}</span> <i class="demo-pli-speech-bubble-5 icon-fw"></i>${CommunityVo.hit}
+								 	<input id="heartsize" type="hidden" data-heartsize="${CommunityVo.liked}">
+									<span class="mar-rgt"><i id="heartlike" class="demo-pli-heart-2 icon-fw" data-heart="0"></i></span> <i class="demo-pli-speech-bubble-5 icon-fw"></i><span id="replyCount" data-replycount='${CommunityVo.replyCount}'>${CommunityVo.replyCount}</span>
 								</div>
 							</div>
 							<div class="row">
@@ -180,7 +181,7 @@
 									</button>
 
 									<!--Discard button-->
-									<button id="mail-send-btn" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath }/community/delete?cpostNo=${CommunityVo.cpostNo}' ">
+									<button id="mail-send-btn" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath }/community/delete?cpostNo=${CommunityVo.cpostNo}&cpostType=${CommunityVo.cpostType}' ">
 										<i class=" icon-xs icon-fw"></i>삭제
 									</button>
 								</div>
@@ -302,6 +303,64 @@
 	<script src="${pageContext.request.contextPath }/assets/js/nifty.js"></script>
 	<!--=================================================-->
 	<script type="text/javascript">
+			$(document).ready(function(){
+				var heartsize = $("#heartsize").data("heartsize");	
+				$("#heartlike").text(heartsize);
+			});
+			
+			$("#heartlike").on("click", function(){
+				console.log("heartclick");
+				var $this = $(this);
+				var heart = $this.data("heart");
+				console.log(heart);
+				
+				// 좋아요 +1 (하트 빈 상태)
+				if(heart == 0){
+					$("#heartlike").attr("class", "demo-psi-heart-2 icon-fw");
+					$("#heartlike").data("heart", 1);
+					var cpostNo = $("#cpostNo").val();
+					$.ajax({
+						url : "${pageContext.request.contextPath }/community/heartlike?cpostNo="+cpostNo,
+						type : "post",
+						
+						dataType : "json",
+						success : function(count) {
+							var heartsize = $("#heartsize").data("heartsize");
+							heartsize = heartsize+1;
+							$("#heartsize").data("heartsize", heartsize);
+							$("#heartlike").text(heartsize);
+						},
+						error : function(XHR, status, error) {
+							console.error(status + " : " + error);
+						}
+					});
+				} else {
+					// 좋아요 -1 (하트 찬 상태)
+					$("#heartlike").attr("class", "demo-pli-heart-2 icon-fw");
+					$("#heartlike").data("heart", 0);
+					var cpostNo = $("#cpostNo").val();
+					$.ajax({
+						url : "${pageContext.request.contextPath }/community/heartunlike?cpostNo="+cpostNo,
+						type : "post",
+						data : {},
+						dataType : "json",
+						success : function(count) {
+							var heartsize = $("#heartsize").data("heartsize");
+							heartsize = heartsize-1;
+							$("#heartsize").data("heartsize", heartsize);
+							$("#heartlike").text(heartsize);
+						},
+						error : function(XHR, status, error) {
+							console.error(status + " : " + error);
+						}
+					});
+				}
+			});
+	
+	
+	
+	
+	
 		/* comment 등록하는 스크립트 */
 		$("#btn-comment-regist").on("click", function() {
 							var creplyContent = $("#commentContent").val();
@@ -319,6 +378,9 @@
 							success : function(replyVo) {
 								$("#commentContent").val("");
 								replyRender(replyVo);
+								var replyCount = $("#replyCount").data("replycount") + 1;
+								$("#replyCount").data("replycount", replyCount);
+								$("#replyCount").text(replyCount);
 							},
 							error : function(XHR, status, error) {
 								console.error(status + " : "
@@ -344,6 +406,9 @@
 											console.log(result);
 											$this.parent(".commentContent")
 													.remove();
+											var replyCount = $("#replyCount").data("replycount") - 1;
+											$("#replyCount").data("replycount", replyCount);
+											$("#replyCount").text(replyCount);
 										},
 										error : function(XHR, status, error) {
 											console.error(status + " : "

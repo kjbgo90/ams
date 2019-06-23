@@ -187,13 +187,13 @@
 								<!--===================================================-->
 								<c:forEach items="${communityList}" var="List">
 									<div class="panel sm">
-										<div class="blog-header">
-											<img class="img-responsive" onclick="location.href='${pageContext.request.contextPath }/community/read/${List.cpostNo}'" src="${pageContext.request.contextPath}/assets/img/shared-img-5.jpg" alt="Image">
+										<div class="blog-header" >
+											<img class="img-responsive"  value="${cpostType}"  onclick="location.href='${pageContext.request.contextPath }/community/read/${List.cpostNo}'" src="${pageContext.request.contextPath}/assets/img/shared-img-5.jpg" alt="Image">
 										</div>
 										<div class="blog-content">
 											<div class="blog-title media-block">
 												<div class="media-body">
-													<a href="${pageContext.request.contextPath }/community/read/${List.cpostNo}" class="btn-link">
+													<a href="${pageContext.request.contextPath }/community/read/${List.cpostNo}" value="${cpostType}" class="btn-link">
 														<h2>${List.cpostTitle}</h2>
 													</a>
 												</div>
@@ -207,7 +207,7 @@
 												<span class="label label-success">${List.regDate}</span>
 											</div>
 											<div class="media-body text-right">
-												<span class="mar-rgt"><i class="demo-pli-heart-2 icon-fw"></i>${List.liked}</span> <i class="demo-pli-speech-bubble-5 icon-fw"></i>${List.hit}
+												<span class="mar-rgt"><i class="demo-pli-heart-2 icon-fw"></i>${List.liked}</span> <i class="demo-pli-speech-bubble-5 icon-fw"></i>${List.replyCount}
 											</div>
 										</div>
 

@@ -181,7 +181,7 @@
 									</button>
 
 									<!--Discard button-->
-									<button id="mail-send-btn" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/qna/delete?postNo=${PostVo.postNo}' ">
+									<button id="mail-send-btn" type="button" value="" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/qna/delete?postNo=${PostVo.postNo}' ">
 										<i class=" icon-xs icon-fw"></i>삭제
 									</button>
 								</div>

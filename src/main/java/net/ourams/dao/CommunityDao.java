@@ -31,18 +31,22 @@ public class CommunityDao {
 		return sqlSession.selectList("community.selectList", cpostType);
 	}
 	
-	public List<CommunityVo> likedList() {
-		return sqlSession.selectList("community.selectLiked");
+	public List<CommunityVo> likedList(int cpostType) {
+		return sqlSession.selectList("community.selectLiked", cpostType);
 	}
 	
 	public CommunityVo selectNotice(int cpostNo) {
 		return sqlSession.selectOne("community.selectNotice", cpostNo);
 	}
 
-
-	public int updateHit(int cpostNo) {
-		return sqlSession.update("community.updateHit", cpostNo);
+	public int updateliked(int cpostNo) {
+		return sqlSession.update("community.updateliked", cpostNo);
 	}
+	
+	public int updateunliked(int cpostNo) {
+		return sqlSession.update("community.updateunliked", cpostNo);
+	}
+
 
 	public int registerPost(CommunityVo vo) {
 		return sqlSession.insert("community.insertPost", vo);
@@ -66,6 +70,15 @@ public class CommunityDao {
 	
 	public LocationVo existLocation(String address) {
 		return sqlSession.selectOne("community.selectLocation", address);
+	}
+	public int countReply(CommunityVo communityvo) {
+		return sqlSession.selectOne("community.countReply", communityvo);
+	}
+	public int deletereply(CommunityVo communityvo) {
+		return sqlSession.delete("community.deletereply", communityvo);
+	}
+	public int delete(CommunityVo communityvo) {
+		return sqlSession.delete("community.delete", communityvo);
 	}
 
 
