@@ -42,18 +42,27 @@ public class CommunityService {
 	}
 	
 	
-	public List<CommunityVo> getlikedList(){
-		List<CommunityVo> likedlist=communityDao.likedList();	
+	public List<CommunityVo> getlikedList(int cpostType){
+		List<CommunityVo> likedlist=communityDao.likedList(cpostType);	
 		return likedlist;
 	}
 
 
 	public CommunityVo read(int cpostNo) {
-		communityDao.updateHit(cpostNo);
 		CommunityVo communityVo = communityDao.selectNotice(cpostNo);
 		return communityVo;
 	}
+	
+	public int updateliked(int cpostNo) {
+		int count = communityDao.updateliked(cpostNo);
+		return count;
+	}
 
+	public int updateunliked(int cpostNo) {
+		int count= communityDao.updateunliked(cpostNo);
+		return count;
+	}
+	
 	@Transactional
 	public int registerPost(UserVo authUser, CommunityVo vo) {
 		vo.setUserNo(authUser.getUserNo());
@@ -102,6 +111,18 @@ public class CommunityService {
 		
 		return communityDao.registerLocationPost(lPostMap);
 		
+	}
+	public int delete(CommunityVo communityvo) {
+		System.out.println(communityvo.toString());
+		int countReply = communityDao.countReply(communityvo);
+		System.out.println(countReply);
+		if(countReply != 0) {
+		int count1 = communityDao.deletereply(communityvo);
+		System.out.println(count1);
+		}
+		int count2 = communityDao.delete(communityvo);
+		System.out.println(count2);
+		return 0;
 	}
 
 

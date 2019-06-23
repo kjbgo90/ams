@@ -6,9 +6,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,7 +78,7 @@ public class CommunityController {
 	public String selectForm(Model model, @RequestParam("cpostType") int cpostType) throws ParseException {
 		System.out.println("selectform(Type: "+cpostType+")");
 		List<CommunityVo> communityList = communityService.getList(cpostType);
-		List<CommunityVo> getlikedList = communityService.getlikedList();
+		List<CommunityVo> getlikedList = communityService.getlikedList(cpostType);
 		for (CommunityVo el : communityList) {
 			System.out.println(el.getRegDate());
 			String from = el.getRegDate();
@@ -101,23 +104,27 @@ public class CommunityController {
 		;
 		model.addAttribute("communityList", communityList);
 		model.addAttribute("getlikedList", getlikedList);
+		model.addAttribute("cpostType", cpostType);
 	
 		return "community/community-list";
 	}
+	
+	
+	@Auth
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String noticeDelete(@RequestParam("cpostNo") int cpostNo, @RequestParam("cpostType") int cpostType, @ModelAttribute CommunityVo communityvo,
+			@AuthUser UserVo authUser, HttpSession session, Model model) {
+			System.out.println("delete");
+			communityvo.setCpostNo(cpostNo);
+			communityvo.setUserNo(authUser.getUserNo());
+			
+			int count = communityService.delete(communityvo);
+			System.out.println(count);
+			
 
-	/*
-	 * @ResponseBody
-	 * 
-	 * @Auth
-	 * 
-	 * @RequestMapping(value = "/dueDate", method = RequestMethod.POST) public
-	 * List<CommunityVo> loadDifferentiate() {
-	 * System.out.println("calculate differentiate...");
-	 * 
-	 * List<CommunityVo> communityList = communityService.getList();
-	 * 
-	 * return communityList; }
-	 */
+			return "redirect:/community/selectform?cpostType="+cpostType;
+	}
+	
 
 	// community category detail list
 	@Auth
@@ -138,6 +145,22 @@ public class CommunityController {
 
 	@Auth
 	@ResponseBody
+	@RequestMapping(value = "/heartlike", method = RequestMethod.POST)
+	public int heartlike(@RequestParam("cpostNo") int cpostNo) {
+		System.out.println(cpostNo);
+		int count = communityService.updateliked(cpostNo);
+		return count;
+	}
+	
+	@Auth
+	@ResponseBody
+	@RequestMapping(value = "/heartunlike", method = RequestMethod.POST)
+	public int heartunlike(@RequestParam("cpostNo") int cpostNo) {
+		int count = communityService.updateunliked(cpostNo);
+		return count;
+	}
+	@Auth
+	@ResponseBody
 	@RequestMapping(value = "/comment/regist", method = RequestMethod.POST)
 	public ReplyVo commentRegist(@AuthUser UserVo authUser, @RequestParam("cpostNo") int cpostNo,
 			@RequestParam("creplyContent") String replyContent) {
@@ -152,6 +175,8 @@ public class CommunityController {
 	public int commentDelete(@RequestParam("reply") int reply) {
 		return communityReplyService.commentDelete(reply);
 	}
+	
+	
 
 	// 테스트용
 	@RequestMapping(value = "/init", method = RequestMethod.GET)
@@ -184,7 +209,7 @@ public class CommunityController {
 		// 파일사이즈
 		long fileSize = file.getSize();
 		System.out.println("fileSize: " + fileSize);
-
+		
 		// 저장파일명
 		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
 		System.out.println("saveName: " + saveName);
@@ -199,6 +224,9 @@ public class CommunityController {
 		vo.setFileSize(fileSize);
 		vo.setSaveName(saveName);
 		System.out.println(vo.toString());
+		model.addAttribute("vo", vo);
+		
+		
 		
 		return vo;
 	}

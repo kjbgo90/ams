@@ -9,14 +9,15 @@
 	<select id="selectList" parameterType="int" resultType="CommunityVo">
 		<![CDATA[
 			
-   				SELECT   c.cpostNo, 
+   					SELECT   c.cpostNo, 
 					 c.cpostType, 
 					 u.userNo, 
                      regDate,
 					 c.cpostTitle,
 					 c.cpostContent,
 					 c.liked,
-					 c.hit
+                     (select count(*) from communityreply r
+                      where c.cpostNo = r.cpostNo) as replyCount 
 			FROM  communitypost c join users u
 			ON c.userNo = u.userNo
 			where c.cpostType = #{cpostType}
@@ -36,7 +37,8 @@
 					 c.cpostTitle,
 					 c.cpostContent,
 					 c.liked,
-					 c.hit
+					 (select count(*) from communityreply r
+                      where c.cpostNo = r.cpostNo) as replyCount 
 			FROM  communitypost c join users u
 			ON c.userNo = u.userNo
 			where c.cpostType = 1  and rownum <=5
@@ -56,7 +58,8 @@
 					 c.cpostTitle,
 					 c.cpostContent,
 					 c.liked,
-					 c.hit
+					 (select count(*) from communityreply r
+                      where c.cpostNo = r.cpostNo) as replyCount 
 			FROM  communitypost c join users u
 			ON c.userNo = u.userNo
 			where c.cpostType = 2  and rownum <=5
@@ -74,7 +77,8 @@
 					 c.cpostTitle,
 					 c.cpostContent,
 					 c.liked,
-					 c.hit
+					 (select count(*) from communityreply r
+                      where c.cpostNo = r.cpostNo) as replyCount 
 			FROM  communitypost c join users u
 			ON c.userNo = u.userNo
 			where c.cpostType = 3  and rownum <=5
@@ -84,17 +88,16 @@
 	</select>
 	
 		
-	<select id="selectLiked" resultType="CommunityVo">
+	<select id="selectLiked" parameterType="int" resultType="CommunityVo">
 		<![CDATA[
 			select cpostTitle,regDate,liked
             from (
                 select * 
                 from communitypost 
-                where cposttype = 1
+                where cposttype = #{cposttype}
                 order by liked desc
             )
-            where  rownum <= 10
-            	
+            where  rownum <= 10	
 		]]>
 	</select>
 
@@ -104,25 +107,19 @@
 			select cpostNo, 
 					   cpostTitle, 
 					   cpostContent,
+					   cpostType,
 					   liked, 
 					   TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,  
 					   userNo,
-					   hit
-			     from communitypost
+					   (select count(*) from communityreply r
+                      where c.cpostNo = r.cpostNo) as replyCount 
+			     from communitypost c
 			     where cpostNo = #{cpostNo}     
 			     
 		]]>
 	</select>
 	
-	
-	
-	<update id="updateHit" parameterType="int">
-		<![CDATA[
-			update communitypost 
-			set hit = hit+1
-			where cpostNo = #{cpostNo}
-		]]>
-	</update>
+
 	
 	<select id="selectLocation" parameterType="String" resultType="LocationVo">
 		<![CDATA[
@@ -145,7 +142,7 @@
 				 cpostType,
 				 regDate,
 				 liked,
-				 hit)
+				 replyCount)
 			VALUES
 				(#{cpostNo},
 				 #{cpostTitle},
@@ -154,10 +151,54 @@
 				 #{cpostType},
 				 SYSDATE,
 				 0,
-				 #{hit}
+				 #{replyCount}
 				)
 		]]>
 	</insert>
+	
+	<update id="updateliked" parameterType="int" >
+		<![CDATA[
+			update COMMUNITYPOST 
+			set liked = liked+1
+			where cpostNo = #{cpostNo}
+		]]>
+	</update>
+	
+	
+	<update id="updateunliked" parameterType="int">
+		<![CDATA[
+			update COMMUNITYPOST 
+			set liked = liked-1
+			where cpostNo = #{cpostNo}
+		]]>
+	</update>	
+	
+	
+	
+	
+	<select id="countReply" parameterType="communityvo" resultType="int">
+	<![CDATA[
+			 select count(*) from COMMUNITYPOST where cpostNo=#{cpostNo}
+		]]>
+	</select>
+	
+	<delete id="deletereply" parameterType="communityvo">
+		<![CDATA[
+			delete from communityreply 
+			where cpostNo = #{cpostNo}
+		]]>
+	</delete>
+	
+	<!-- 글삭제 -->
+	<delete id="delete" parameterType="communityvo">
+		<![CDATA[
+			delete from COMMUNITYPOST 
+			where userNo = #{userNo}
+			and cpostNo = #{cpostNo}
+		]]>
+	</delete>
+	
+	
 	
 	<insert id="insertLocation" parameterType="CommunityVo">
 		<selectKey keyProperty="locationNo" resultType="int" order="BEFORE">
@@ -226,6 +267,8 @@
 				 #{fileNo})
 		]]>
 	</insert>
+	
+	
 	
 	
 
