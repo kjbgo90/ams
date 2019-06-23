@@ -879,7 +879,7 @@
 					assignmentListStr += "<td>";
 					for (var s = 0; s < SubmitVo.fileList.length; s++) {
 
-						assignmentListStr += "<a href="+SubmitVo.fileList[s].filePath+">"
+						assignmentListStr += "<a href="+SubmitVo.fileList[s].filePath+" class='text-semibold text-main mar-no'>"
 								+ SubmitVo.fileList[s].fileName + "</a><br>";
 
 					}
@@ -911,8 +911,7 @@
 
 				var courseNo = SubmitVo.courseNo;
 
-				$
-						.ajax({
+				$.ajax({
 							url : "${pageContext.request.contextPath }/myPage/selectCoursePath",
 							type : "post",
 							data : {
@@ -928,7 +927,7 @@
 							error : function(XHR, status, error) {
 								console.error(status + " : " + error);
 							}
-						});
+				});
 
 			}
 

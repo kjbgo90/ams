@@ -104,5 +104,82 @@ public class MyMainPageService {
 
 		return list;
 	}
+	
+	public List<SubmitVo> selectAssignmentAllList(SubmitVo vo){
+		List<SubmitVo> list = myMainPageDao.selectAssignmentAllList(vo);
+		
+		
+		
+		return list;
+	}
 
+	public List<Integer> courseNoList(int userNo){
+		List<Integer> list = myMainPageDao.courseNoList(userNo);
+		return list;
+	}
+	
+	
+	public List<AssignmentVo> getAssignmentByTeacherNo(int userNo){
+	      List<AssignmentVo> assignmentList = assignmentDao.selectAssignmentListByTeacherNo(userNo);
+	      List<fileUpLoadVo> fileList = assignmentDao.selectAssignmentFileList();
+	      System.out.println(fileList);
+	      for(AssignmentVo assignmentVo : assignmentList) {
+	         //과제 출제 할 때 넣어놓은 파일들 가져오는 부분
+	         List<fileUpLoadVo> assignmentFileList = new ArrayList<fileUpLoadVo>();
+	         	System.out.println("afileList "+assignmentFileList.toString());
+	         for (fileUpLoadVo fileVo : fileList) {
+	        	 System.out.println("fileVo "+fileVo.toString());
+	            if (assignmentVo.getAssignmentNo() == fileVo.getAssignmentNo()) {
+	            	System.out.println("equal vo ");
+	               assignmentFileList.add(fileVo);
+	            }
+	         }
+	         assignmentVo.setFileList(assignmentFileList);
+	         
+	         //학생들이 제출한 과제 리스트 가져오는 부분
+	         List<SubmitVo> submitList = assignmentDao.selectSubmitList(assignmentVo.getAssignmentNo());
+	         System.out.println("submitToString "+submitList.toString());
+	         List<fileUpLoadVo> submitFileList = assignmentDao.selectSubmitFileList();
+	         System.out.println("submitFileList "+submitFileList.toString());
+	         //제출한 과제 안에 파일들 가져오는 부분
+	         for(SubmitVo submitVo : submitList) {
+	        	 System.out.println("submitVo "+submitVo.toString());
+	            List<fileUpLoadVo> submitFileList2 = new ArrayList<fileUpLoadVo>();
+	            for (fileUpLoadVo fileVo : submitFileList) {
+	            	System.out.println("secont vo "+fileVo.toString());
+	               if (submitVo.getSubmitNo() == fileVo.getSubmitNo()) {
+	            	   System.out.println("second hi ");
+	                  submitFileList2.add(fileVo);
+	               }
+	            }
+	            submitVo.setFileList(submitFileList2);
+	         }
+	         assignmentVo.setSubmitList(submitList);
+	      }
+	      
+	      //assignmentList 강사가 출제한 과제 리스트
+	      //   -> assignmentVo.fileList 강사가 출제할 때 넣은 파일리스트 List<fileUpLoadVo>
+	      //   -> assignmentVo.submitList 한 과제에 대해 학생들이 제출한 submit리스트 List<Submit>
+	      //      -> assignmentVo.submitList[i].fileList 학생이 제출한 submit안에 들어있는 파일 리스트 List<fileUpLoadVo>
+	      
+	      return assignmentList;
+	   }
+	
+	public List<SubmitVo> getSubmitListByUserNo(int userNo){
+	      //로그인한 user가 제출한 과제 리스트 가져오는 부분
+	      List<SubmitVo> submitList = assignmentDao.selectSubmitListByUserNo(userNo);
+	      List<fileUpLoadVo> submitFileList = assignmentDao.selectSubmitFileList();
+	      //제출한 과제 안에 파일들 가져오는 부분
+	      for(SubmitVo submitVo : submitList) {
+	         List<fileUpLoadVo> submitFileList2 = new ArrayList<fileUpLoadVo>();
+	         for (fileUpLoadVo fileVo : submitFileList) {
+	            if (submitVo.getSubmitNo() == fileVo.getSubmitNo()) {
+	               submitFileList2.add(fileVo);
+	            }
+	         }
+	         submitVo.setFileList(submitFileList2);
+	      }
+	      
+	      return submitList;
+	   }
 }

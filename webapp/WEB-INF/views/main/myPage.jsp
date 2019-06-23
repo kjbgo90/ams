@@ -245,7 +245,7 @@
 								</div>
 								<div class="panel">
 									<div class="panel-heading">
-										<h3 class="panel-title">제출 현황</h3>
+										<h3 class="panel-title">출제한 과제들 </h3>
 									</div>
 									<div class="panel-body">
 
@@ -629,10 +629,34 @@
 						'nifty.ready',
 						function() {
 
-							userNo = '${authUser.userNo}'
+							//userNo = '${authUser.userNo}'
+							userNo=2;
 							console.log(userNo);
 
-						
+							
+							
+							$
+							.ajax({
+								url : "${pageContext.request.contextPath }/myPage/getAssignmentByTeacherNo",
+								type : "post",
+								data : {
+									userNo : userNo
+								},
+								dataType : "json",
+								success : function(list) {
+									console.log(list);
+									
+									
+									
+									
+									
+
+								},
+								error : function(XHR, status, error) {
+									console.error(status + " : "
+											+ error);
+								}
+							});
 
 							var lineSparklines2 = function() {
 								$('#demo-sparklines-line-1-1').sparkline(

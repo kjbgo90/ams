@@ -159,4 +159,34 @@ public class MyMainPageControllder {
 		PostVo postVo = myMainPageService.selectCoursePath(vo);
 		return postVo;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/selectAssignmentAllList", method = RequestMethod.POST)
+	public List<SubmitVo> selectAssignmentAllList( @AuthUser UserVo authUser){
+		SubmitVo vo = new SubmitVo();
+		vo.setUserNo(authUser.getUserNo());
+		List<SubmitVo> list = myMainPageService.selectAssignmentAllList(vo);
+		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/courseNoList", method = RequestMethod.POST)
+	public List<Integer> courseNoList(@AuthUser UserVo authUser){
+		List<Integer> list = myMainPageService.courseNoList(authUser.getUserNo());
+		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getAssignmentByTeacherNo", method = RequestMethod.POST)
+	public List<AssignmentVo> getAssignmentByTeacherNo(@RequestParam("userNo") int userNo){
+		List<AssignmentVo> list = myMainPageService.getAssignmentByTeacherNo(userNo);
+		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getSubmitListByUserNo", method = RequestMethod.POST )
+	public List<SubmitVo> getSubmitListByUserNo(@RequestParam("userNo") int userNo){
+		List<SubmitVo> list = myMainPageService.getSubmitListByUserNo(userNo);
+		return list;
+	}
 }

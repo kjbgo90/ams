@@ -23,13 +23,18 @@ public class AssignmentVo {
 	private int fileNo;
 	private List<fileUpLoadVo> fileList;
 	private String selectDate;
-
+	private List<SubmitVo> submitList;
+	
+	
 	public AssignmentVo() {}
+
+	
 
 	public AssignmentVo(int assignmentNo, String assignmentTitle, String assignmentContent, int courseNo,
 			String courseName, int subjectNo, String subjectTitle, int chapterNo, String chapterContent, int teacherNo,
 			String userName, String email, String logoPath, String startDate, String endDate, int scheduleNo,
-			int fileNo, List<fileUpLoadVo> fileList, String selectDate) {
+			int fileNo, List<fileUpLoadVo> fileList, String selectDate, List<SubmitVo> submitList) {
+		super();
 		this.assignmentNo = assignmentNo;
 		this.assignmentTitle = assignmentTitle;
 		this.assignmentContent = assignmentContent;
@@ -49,7 +54,22 @@ public class AssignmentVo {
 		this.fileNo = fileNo;
 		this.fileList = fileList;
 		this.selectDate = selectDate;
+		this.submitList = submitList;
 	}
+
+
+
+	public List<SubmitVo> getSubmitList() {
+		return submitList;
+	}
+
+
+
+	public void setSubmitList(List<SubmitVo> submitList) {
+		this.submitList = submitList;
+	}
+
+
 
 	public int getAssignmentNo() {
 		return assignmentNo;
@@ -203,6 +223,8 @@ public class AssignmentVo {
 		this.selectDate = selectDate;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "AssignmentVo [assignmentNo=" + assignmentNo + ", assignmentTitle=" + assignmentTitle
@@ -211,7 +233,8 @@ public class AssignmentVo {
 				+ ", chapterContent=" + chapterContent + ", teacherNo=" + teacherNo + ", userName=" + userName
 				+ ", email=" + email + ", logoPath=" + logoPath + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", scheduleNo=" + scheduleNo + ", fileNo=" + fileNo + ", fileList=" + fileList + ", selectDate="
-				+ selectDate + "]";
+				+ selectDate + ", submitList=" + submitList + "]";
 	}
 
+	
 }
