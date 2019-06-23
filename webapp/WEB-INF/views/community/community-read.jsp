@@ -153,8 +153,7 @@
 									<p>${CommunityVo.cpostContent}</p>
 								</div>
 							</div>
-							<div>
-								<iframe src="https://www.google.com/maps/embed/v1/place?q=New+York+University&amp;key=AIzaSyBSFRN6WWGYwmFi498qXXsD2UwkbmD74v4" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="width: 100%; height: 200px;"></iframe>
+							<div id="map">
 							</div>
 							<div class="blog-footer">
 
@@ -302,11 +301,23 @@
 
 	<!--NiftyJS [ RECOMMENDED ]-->
 	<script src="${pageContext.request.contextPath }/assets/js/nifty.js"></script>
+	
+	<!-- GMaps -->
+	<script type="text/javascript"
+		src="http://maps.google.com/maps/api/js?key=AIzaSyBSFRN6WWGYwmFi498qXXsD2UwkbmD74v4&libraries=places"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath }/assets/js/gmaps.js"></script>
+		
 	<!--=================================================-->
 	<script type="text/javascript">
 			$(document).ready(function(){
 				var heartsize = $("#heartsize").data("heartsize");	
 				$("#heartlike").text(heartsize);
+			});
+			
+			$(document).ready(function(){
+				var str ='';
+				$("#map").html('<iframe src="https://www.google.com/maps/embed/v1/place?q=@37.4946083, 127.0254167&amp;key=AIzaSyBSFRN6WWGYwmFi498qXXsD2UwkbmD74v4" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="width: 100%; height: 200px;"></iframe>')
 			});
 			
 			$("#cpost-delete").on("click",function(){

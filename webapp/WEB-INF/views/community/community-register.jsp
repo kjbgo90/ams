@@ -197,6 +197,7 @@
 												<ul class="dropdown-menu" id="subjectList">
 													<li data-cposttype="1" id="restaurant"><a href="#">맛집</a></li>
 													<li data-cposttype="2" id="cafe"><a href="#">카페</a></li>
+													<li data-cposttype="3" id="free"><a href="#">자유게시판</a></li>
 												</ul>
 
 											</div>
@@ -589,12 +590,19 @@
 			console.log("-------------------register post-------------------");
 			
 			var category = $(".category .btn:first-child").val();
+			console.log("category: " + category)
 			var postType;
 			
-			if(category == 1) 
+			if(category == "맛집") 
 				postType = 1;
-			else 
+			else if(category == "카페")
 				postType = 2;
+			else if(category == "자유게시판")
+				postType = 3;
+			else 
+				postType = 0;
+			
+			console.log("postType: " + postType);
 			
 			var communityvo = {
 					cpostTitle: $("#post-title").val(),
@@ -609,8 +617,8 @@
 
 			console.log(communityvo);
 			
-			if(communityvo.cpostTitle == "" || communityvo.address == null){
-				alert("제목과 주소 선택은 필수 요소입니다!");
+			if(communityvo.cpostTitle == "" || communityvo.address == null || communityvo.cpostType == 0){
+				alert("카테고리, 제목과 주소 선택은 필수 요소입니다!");
 			}else{
 				$.ajax({
 					url : "${pageContext.request.contextPath}/community/register",
@@ -632,7 +640,6 @@
 					}
 				})
 			}
-			
 		})
 		
 		function searchPlace(input_query, input_map, input_service){
