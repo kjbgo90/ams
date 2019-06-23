@@ -129,6 +129,68 @@
 		]]>
 	</select>
 	
+	<select id="selectHotPlaces" parameterType="int" resultType="CommunityVo">
+		<![CDATA[
+			SELECT cpostNo, 
+				   cpostTitle, 
+				   cpostContent,
+				   liked, 
+				   regDate,  
+				   userNo
+			FROM (SELECT cpostNo, 
+				   		 cpostTitle, 
+				  		 cpostContent,
+				  		 liked, 
+				 		 TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,  
+				   		 userNo 
+				  FROM communityPost
+				  WHERE cpostType = #{cpostType}
+				  ORDER BY liked
+				  DESC)
+			WHERE ROWNUM < 10
+		]]>
+	</select>
+	
+	<select id="selectLocationNo" parameterType="CommunityVo" resultType="int">
+		<![CDATA[
+			SELECT locationNo
+			FROM locationPost
+			WHERE cpostNo = #{cpostNo}
+		]]>
+	</select>
+	
+	<select id="selectBusinessName" parameterType="CommunityVo" resultType="String">
+		<![CDATA[
+			SELECT businessName
+			FROM location
+			WHERE locationNo = #{locationNo}
+		]]>
+	</select>
+	
+	<select id="selectAddress" parameterType="CommunityVo" resultType="String">
+		<![CDATA[
+			SELECT address
+			FROM location
+			WHERE locationNo = #{locationNo}
+		]]>
+	</select>
+	
+	<select id="selectLatitude" parameterType="CommunityVo" resultType="String">
+		<![CDATA[
+			SELECT latitude
+			FROM location
+			WHERE locationNo = #{locationNo}
+		]]>
+	</select>
+	
+	<select id="selectLongitude" parameterType="CommunityVo" resultType="String">
+		<![CDATA[
+			SELECT longitude
+			FROM location
+			WHERE locationNo = #{locationNo}
+		]]>
+	</select>
+	
 	<insert id="insertPost" parameterType="CommunityVo">
 		<selectKey keyProperty="cpostNo" resultType="int" order="BEFORE">
 			select seq_cpost_no.nextval from dual
@@ -188,6 +250,13 @@
 			where cpostNo = #{cpostNo}
 		]]>
 	</delete>
+	
+	<delete id="deleteLocationPost" parameterType="communityvo">
+		<![CDATA[
+			delete from locationPost
+			where cpostNo = #{cpostNo}
+		]]>
+	</delete>	
 	
 	<!-- 글삭제 -->
 	<delete id="delete" parameterType="communityvo">

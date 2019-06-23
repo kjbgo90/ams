@@ -73,7 +73,6 @@ public class CommunityController {
 	}
 	
 	// community category detail list
-	@Auth
 	@RequestMapping(value = "/selectform", method = RequestMethod.GET)
 	public String selectForm(Model model, @RequestParam("cpostType") int cpostType) throws ParseException {
 		System.out.println("selectform(Type: "+cpostType+")");
@@ -242,14 +241,12 @@ public class CommunityController {
 		return communityService.registerPost(authUser, vo);
 	}
 	
-	public static String toDuration(long duration) {
-
-		StringBuffer res = new StringBuffer();
-
-		if ("".equals(res.toString()))
-			return "0 seconds ago";
-		else
-			return res.toString();
+	@ResponseBody
+	@RequestMapping(value="/hotPlaces", method=RequestMethod.POST)
+	public List<CommunityVo> hotPlaces(@RequestParam("cpostType") int cpostType){
+		System.out.println("load hot places...");
+		
+		return communityService.hotPlaces(cpostType);
 	}
-
+	
 }

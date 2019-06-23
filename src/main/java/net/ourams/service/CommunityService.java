@@ -112,16 +112,40 @@ public class CommunityService {
 		return communityDao.registerLocationPost(lPostMap);
 		
 	}
+	
+	public List<CommunityVo> hotPlaces(int cpostType){
+		List<CommunityVo> communityList = communityDao.hotPlaces(cpostType);
+		System.out.println("load hot places ... ");
+		
+		for(int i=0; i<communityList.size(); i++) {
+			communityList.get(i).setLocationNo(communityDao.loadLocationNo(communityList.get(i))); 
+			communityList.get(i).setBusinessName(communityDao.loadBuisnessName(communityList.get(i)));
+			communityList.get(i).setAddress(communityDao.loadAddress(communityList.get(i)));
+			communityList.get(i).setLatitude(communityDao.loadLatitude(communityList.get(i)));
+			communityList.get(i).setLongitude(communityDao.loadLongitude(communityList.get(i)));
+			
+			System.out.println(communityList.get(i).locationInfo());
+		}
+		
+		
+		return communityList;
+				
+	}
+	
+	@Transactional
 	public int delete(CommunityVo communityvo) {
 		System.out.println(communityvo.toString());
 		int countReply = communityDao.countReply(communityvo);
 		System.out.println(countReply);
 		if(countReply != 0) {
 		int count1 = communityDao.deletereply(communityvo);
-		System.out.println(count1);
+		System.out.println("success to delete reply... : " + count1);
 		}
+		int count3 = communityDao.deleteLocationPost(communityvo);
+		System.out.println("success to delete locationPost... : " + count3);
 		int count2 = communityDao.delete(communityvo);
-		System.out.println(count2);
+		System.out.println("success to delete post... : " + count2);
+		
 		return 0;
 	}
 

@@ -71,12 +71,43 @@ public class CommunityDao {
 	public LocationVo existLocation(String address) {
 		return sqlSession.selectOne("community.selectLocation", address);
 	}
+	
+	public List<CommunityVo> hotPlaces(int cpostType){
+		return sqlSession.selectList("community.selectHotPlaces", cpostType);
+	}
+
+	public int loadLocationNo(CommunityVo vo){
+		return sqlSession.selectOne("community.selectLocationNo", vo);
+	}
+	
+	public String loadBuisnessName(CommunityVo vo) {
+		return sqlSession.selectOne("community.selectBusinessName", vo);
+	}
+	
+	public String loadAddress(CommunityVo vo) {
+		return sqlSession.selectOne("community.selectAddress", vo);
+	}
+	
+	public String loadLatitude(CommunityVo vo) {
+		return sqlSession.selectOne("community.selectLatitude", vo);
+	}
+	
+	public String loadLongitude(CommunityVo vo) {
+		return sqlSession.selectOne("community.selectLongitude", vo);
+	}
+	
 	public int countReply(CommunityVo communityvo) {
 		return sqlSession.selectOne("community.countReply", communityvo);
 	}
+	
 	public int deletereply(CommunityVo communityvo) {
 		return sqlSession.delete("community.deletereply", communityvo);
 	}
+	
+	public int deleteLocationPost(CommunityVo communityvo) {
+		return sqlSession.delete("community.deleteLocationPost", communityvo);
+	}
+	
 	public int delete(CommunityVo communityvo) {
 		return sqlSession.delete("community.delete", communityvo);
 	}

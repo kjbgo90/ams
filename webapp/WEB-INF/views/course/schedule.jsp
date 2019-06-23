@@ -579,7 +579,7 @@
 			var tagList = [];
 			tagList = $("#schedule-tag").val();
 			if($.inArray("${authUser.userNo}",tagList) == -1 ){
-				tagList.push(${authUser.userNo});
+				tagList.push( ${authUser.userNo} 	);
 			}
 			
 			var scheduledto = {
