@@ -397,4 +397,76 @@
 		where userNo = #{userNo}
 		]]>
 	</select>
+	
+	
+<select id="selectAssignmentListByTeacherNo" parameterType="int" resultType="AssignmentVo">
+      <![CDATA[
+         select assignmentNo,
+                assignmentTitle,
+                assignmentContent,
+                courseNo,
+                courseName,
+                subjectNo,
+                subjectTitle,
+                chapterNo,
+                chapterContent,
+                teacherNo,
+                TO_CHAR(startDate, 'yyyy/mm/dd') as startDate,
+                TO_CHAR(endDate, 'yyyy/mm/dd') as endDate,
+                email,
+                userName,
+                logoPath,
+                su.scheduleNo scheduleNo
+         from (select assignmentNo,
+                    assignmentTitle,
+                    assignmentContent,
+                    a.courseNo courseNo,
+                    courseName,
+                    a.subjectNo subjectNo,
+                    subjectTitle,
+                    a.chapterNo chapterNo,
+                    chapterContent,
+                    teacherNo,
+                    scheduleNo
+                 from (select courseNo,
+                            courseName,
+                            ch.subjectNo subjectNo,
+                            subjectTitle,
+                            chapterNo,
+                            chapterContent
+                     from (select s.courseNo courseNo,
+                                courseName,
+                                subjectNo,
+                                subjectTitle
+                         from course c join subject s on c.courseNo = s.courseNo) cs
+                         join chapter ch on cs.subjectNo = ch.subjectNo) csc
+                         join assignment a on csc.chapterNo = a.chapterNo) acsc
+                 join (select scheduleNo,
+                            startDate,
+                            endDate,
+                            u.userNo userNo,
+                            email,
+                            userName,
+                            logoPath
+                     from schedule s join users u on s.userNo = u.userNo) su on acsc.scheduleNo = su.scheduleNo
+          where teacherNo = #{userNo}
+          order by assignmentNo desc
+      ]]>
+   </select>
+   
+   <select id="selectSubmitListByUserNo" parameterType="int" resultType="SubmitVo">
+      <![CDATA[
+         select submitNo,
+                submitContent,
+                TO_CHAR(submitDate, 'yyyy-mm-dd') submitDate,
+                s.assignmentNo assignmentNo,
+                assignmentTitle,
+                userNo,
+                score,
+                scoreCheck
+         from submit s join assignment a on s.assignmentNo = a.assignmentNo
+         where userNo = #{userNo}
+         order by submitNo
+      ]]>
+   </select>
 </mapper>

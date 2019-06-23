@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import net.ourams.vo.CourseVo;
 import net.ourams.vo.MyPageVo;
 import net.ourams.vo.PostVo;
+import net.ourams.vo.SubmitVo;
 import net.ourams.vo.TimelineVo;
 
 @Repository
@@ -51,4 +52,16 @@ public class MyMainPageDao {
 		List<TimelineVo> list = sqlSession.selectList("myPage.selectTimelineAllList", vo);
 		return list;
 	}
+	
+	public List<SubmitVo> selectAssignmentAllList(SubmitVo vo){
+		List<SubmitVo> list = sqlSession.selectList("myPage.selectAssignmentAllList", vo);
+		return list;
+	}
+	
+	public List<Integer> courseNoList(int userNo){
+		List<Integer> list = sqlSession.selectList("myPage.courseNoList", userNo);
+		return list;
+	}
+	
+	
 }

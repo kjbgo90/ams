@@ -162,5 +162,12 @@ public class CourseAssignmentDao {
 	public List<CourseVo> selectCourseListByUserNo(int userNo) {
 		return sqlSession.selectList("assignment.selectCourseListByUserNo", userNo);
 	}
+	
+	public List<AssignmentVo> selectAssignmentListByTeacherNo(int userNo) {
+	      return sqlSession.selectList("assignment.selectAssignmentListByTeacherNo", userNo);
+	   }
 
+	public List<SubmitVo> selectSubmitListByUserNo(int userNo) {
+	      return sqlSession.selectList("assignment.selectSubmitListByUserNo", userNo);
+	   }
 }
