@@ -24,4 +24,8 @@ public class UserService {
 		UserVo userVo = userDao.selecteUser(userNo);
 		return userVo;
 	}
+
+	public int joinMemberByUserVo(UserVo joinUserVo) {
+		return userDao.insertUsersByUserVO(joinUserVo);
+	}
 }

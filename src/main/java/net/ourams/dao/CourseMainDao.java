@@ -191,4 +191,13 @@ public class CourseMainDao {
 		return sqlSession.selectOne("course.selectFbqPercentByFbqNo", fbqNo);
 	}
 
+	public List<CourseVo> selectCourseListByUserNo(int userNo) {
+		return sqlSession.selectList("user.selectCourseListByUserNo", userNo);
+	}
+
+	public List<CourseVo> selectCourseListByUserNoAndUserType(int userNo, int userType) {
+		
+		return sqlSession.selectList("user.selectCourseListByUserNoAndUserType", userNo);
+	}
+
 }

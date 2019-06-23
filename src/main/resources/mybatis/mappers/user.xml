@@ -41,4 +41,47 @@
 		]]>
 	</select>
 	
+	<select id="selectCourseListByUserNo" parameterType="int" resultType="CourseVo">
+		<![CDATA[
+			SELECT 	courseName,
+					TO_CHAR(startDate, 'yyyy.mm.dd') as startDate,
+					TO_CHAR(endDate, 'yyyy.mm.dd') as endDate,
+					coursePath
+			FROM   	course c JOIN courseregist cr
+				ON 	c.courseNo = cr.courseNo
+			where  	userNo = #{userNo}
+		]]>
+	</select>
+	
+	<select id="selectCourseListByUserNoAndUserType" parameterType="int" resultType="CourseVo">
+		<![CDATA[
+			SELECT 	courseName,
+					TO_CHAR(startDate, 'yyyy.mm.dd') as startDate,
+					TO_CHAR(endDate, 'yyyy.mm.dd') as endDate,
+					coursePath
+			FROM   	course
+			where  	managerNo = #{userNo}
+		]]>
+	</select>
+	
+	<insert id="insertUsersByUserVo" parameterType="UserVo">
+		<![CDATA[
+			INSERT INTO users( 	    userNo,
+                        			email,
+                        			password,
+                       			 	userName,
+                        			userType,
+                        			logoPath,
+                        			phoneNumber)
+	    						
+			VALUES(					seq_user_no.nextval,
+                        			#{email}, 
+                        			#{password}, 
+                        			#{userName},
+			                        #{userType},
+			                        #{logoPath},
+			                        #{phoneNumber})
+		]]>
+	</insert>
+	
 </mapper>
