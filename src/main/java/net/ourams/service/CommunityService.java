@@ -136,17 +136,21 @@ public class CommunityService {
 	public int delete(CommunityVo communityvo) {
 		System.out.println(communityvo.toString());
 		int countReply = communityDao.countReply(communityvo);
-		System.out.println(countReply);
-		if(countReply != 0) {
-		int count1 = communityDao.deletereply(communityvo);
-		System.out.println("success to delete reply... : " + count1);
-		}
-		int count3 = communityDao.deleteLocationPost(communityvo);
-		System.out.println("success to delete locationPost... : " + count3);
-		int count2 = communityDao.delete(communityvo);
-		System.out.println("success to delete post... : " + count2);
+		System.out.println("exist reply number: " + countReply);
 		
-		return 0;
+		if(countReply != 0) {
+		communityDao.deletereply(communityvo);
+		System.out.println("success to delete all reply...  ");
+		}
+		
+		communityDao.deleteLocationPost(communityvo);
+		System.out.println("success to delete locationPost...  ");
+		communityDao.deleteCommunityFile(communityvo);
+		System.out.println("success to delete communityFile... ");
+		int result = communityDao.delete(communityvo);
+		System.out.println("success to delete post...  ");
+		
+		return result;
 	}
 
 

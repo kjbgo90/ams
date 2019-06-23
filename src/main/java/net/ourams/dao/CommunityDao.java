@@ -108,6 +108,10 @@ public class CommunityDao {
 		return sqlSession.delete("community.deleteLocationPost", communityvo);
 	}
 	
+	public int deleteCommunityFile(CommunityVo communityvo) {
+		return sqlSession.delete("community.deleteCommunityFile", communityvo);
+	}
+	
 	public int delete(CommunityVo communityvo) {
 		return sqlSession.delete("community.delete", communityvo);
 	}

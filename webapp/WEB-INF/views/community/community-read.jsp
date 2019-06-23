@@ -181,7 +181,8 @@
 									</button>
 
 									<!--Discard button-->
-									<button id="mail-send-btn" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath }/community/delete?cpostNo=${CommunityVo.cpostNo}&cpostType=${CommunityVo.cpostType}' ">
+									<!-- location.href='${pageContext.request.contextPath }/community/delete?cpostNo=${CommunityVo.cpostNo}&cpostType=${CommunityVo.cpostType}' -->
+									<button id="cpost-delete" type="button" class="btn btn-primary">
 										<i class=" icon-xs icon-fw"></i>삭제
 									</button>
 								</div>
@@ -307,6 +308,33 @@
 				var heartsize = $("#heartsize").data("heartsize");	
 				$("#heartlike").text(heartsize);
 			});
+			
+			$("#cpost-delete").on("click",function(){
+				console.log("--------------------delete post--------------------");
+				var cpostNo = $("#cpostNo").val();
+				var cpostType = ${CommunityVo.cpostType};
+				var authUser = ${authUser.userNo}; 
+				var writer = ${CommunityVo.userNo};
+				console.log("cpostNo: " + cpostNo + ", cpostType: " + cpostType + ", authUser: " + authUser + ", writer: " + writer);
+				
+				if(authUser != writer){
+					alert("해당 게시글을 작성자만 삭제할 수 있습니다.");
+				}else{
+					$.ajax({
+						url : "${pageContext.request.contextPath }/community/delete?cpostNo="+cpostNo+"&cpostType="+cpostType+"",
+						type : "post",
+						data : {},
+						dataType : "json",
+						success : function(count) {
+							$(location).attr("href", "${pageContext.request.contextPath}/community/selectform?cpostType="+cpostType);
+						},
+						error : function(XHR, status, error) {
+							console.error(status + " : " + error);
+						}
+					});
+				}
+
+			})
 			
 			$("#heartlike").on("click", function(){
 				console.log("heartclick");

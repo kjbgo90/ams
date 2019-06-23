@@ -240,7 +240,7 @@
 	
 	<select id="countReply" parameterType="communityvo" resultType="int">
 	<![CDATA[
-			 select count(*) from COMMUNITYPOST where cpostNo=#{cpostNo}
+			 select count(*) from communityreply where cpostNo=#{cpostNo}
 		]]>
 	</select>
 	
@@ -258,12 +258,18 @@
 		]]>
 	</delete>	
 	
+	<delete id="deleteCommunityFile" parameterType="communityvo">
+		<![CDATA[
+			delete from communityfile
+			where cpostNo = #{cpostNo}
+		]]>
+	</delete>
+	
 	<!-- 글삭제 -->
 	<delete id="delete" parameterType="communityvo">
 		<![CDATA[
 			delete from COMMUNITYPOST 
-			where userNo = #{userNo}
-			and cpostNo = #{cpostNo}
+			where cpostNo = #{cpostNo}
 		]]>
 	</delete>
 	

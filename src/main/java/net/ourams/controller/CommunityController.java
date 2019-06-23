@@ -110,18 +110,15 @@ public class CommunityController {
 	
 	
 	@Auth
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String noticeDelete(@RequestParam("cpostNo") int cpostNo, @RequestParam("cpostType") int cpostType, @ModelAttribute CommunityVo communityvo,
-			@AuthUser UserVo authUser, HttpSession session, Model model) {
-			System.out.println("delete");
-			communityvo.setCpostNo(cpostNo);
-			communityvo.setUserNo(authUser.getUserNo());
+	@ResponseBody
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public int communityPostDelete(@RequestParam("cpostNo") int cpostNo, @RequestParam("cpostType") int cpostType) {
+			System.out.println("delete cpostType: " + cpostType + ", cpostNo: " + cpostNo);
 			
-			int count = communityService.delete(communityvo);
-			System.out.println(count);
+			CommunityVo vo = new CommunityVo();
+			vo.setCpostNo(cpostNo);
 			
-
-			return "redirect:/community/selectform?cpostType="+cpostType;
+			return communityService.delete(vo);
 	}
 	
 
