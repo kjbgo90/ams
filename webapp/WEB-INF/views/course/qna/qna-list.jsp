@@ -137,12 +137,11 @@
 						<hr>
 
 						<div class="row pad-btm">
-								<div class="input-group mar-btm col-xs-12 col-sm-10 col-sm-offset-1 pad-hor "   style="padding-left: 500px;">
-									<input id="searchAnyThing" type="text" placeholder="Search posts..." class="form-control input-sm"> 
-									<span class="input-group-btn">
-										<button id="searchPostTitle"  class="btn btn-primary btn-sm" type="button">검색</button>
-									</span>
-								</div>
+							<div class="input-group mar-btm col-xs-12 col-sm-10 col-sm-offset-1 pad-hor " style="padding-left: 500px;">
+								<input id="searchAnyThing" type="text" placeholder="Search posts..." class="form-control input-sm"> <span class="input-group-btn">
+									<button id="searchPostTitle" class="btn btn-primary btn-sm" type="button">검색</button>
+								</span>
+							</div>
 						</div>
 						<!--Posts Table-->
 						<!--===================================================-->
@@ -162,16 +161,14 @@
 										</tr>
 									</thead>
 									<tbody id="postList">
-										
+
 									</tbody>
 								</table>
 							</div>
 							<br> <br>
 							<div class="row">
 
-								<div id="pager" class="col-sm-7 text-right">
-									
-								</div>
+								<div id="pager" class="col-sm-7 text-right"></div>
 								<div class="col-sm-5 text-right">
 									<button class="btn btn-primary btn-sm" style="margin-right: 50px;" onclick="location.href='${pageContext.request.contextPath }/${coursePath}/qna/writeform' ">글작성</button>
 								</div>
@@ -388,6 +385,7 @@
 								<td><i class="demo-pli-speech-bubble-5 icon-fw"></i>2</td>
 							</tr>
 							*/
+
 							
 							}
 							$("#postList").html(str);

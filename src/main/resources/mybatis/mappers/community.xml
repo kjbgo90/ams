@@ -90,7 +90,7 @@
 		
 	<select id="selectLiked" parameterType="int" resultType="CommunityVo">
 		<![CDATA[
-			select cpostTitle,regDate,liked
+			select cpostTitle,regDate,liked, cpostNo
             from (
                 select * 
                 from communitypost 

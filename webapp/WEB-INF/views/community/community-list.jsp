@@ -142,8 +142,8 @@
 									<!-- Panel  Blog -->
 									<!--===================================================-->
 									<c:forEach items="${communityList}" var="List">
-										<div class="panel sm">
-											<div class="blog-header">
+										<div class="panel sm" id="pagelist">
+											<div class="blog-header" onclick="location.href='${pageContext.request.contextPath }/community/read/${List.cpostNo}' ">
 												<img class="img-responsive"
 													src="${pageContext.request.contextPath}/assets/img/shared-img-5.jpg"
 													alt="Image">
@@ -212,13 +212,13 @@
 										<p
 											class="pad-hor mar-top text-main text-bold text-sm text-uppercase">BEST
 											POST</p>
-										<div class="list-group bg-trans pad-btm bord-btm">
-											<c:forEach items="${getlikedList}" var="List">
+										<div class="list-group bg-trans pad-btm bord-btm" >
+											 <c:forEach items="${getlikedList}" var="List">
 												<div class="list-group-item list-item-sm">
-													<a href="#" class="btn-link">${List.cpostTitle}</a><small
+													<a href="${pageContext.request.contextPath }/community/read/${List.cpostNo}" class="btn-link">${List.cpostTitle}</a><small
 														class="box-block">${List.regDate}</small>
 												</div>
-											</c:forEach>
+											</c:forEach> 
 										</div>
 
 
@@ -469,9 +469,69 @@
 			}
 		}
 		
+		function pagingAjax(pageNo){
+			console.log(pageNo);
+			$.ajax({
+				url : "${pageContext.request.contextPath }/community/selectlist",
+				type : "post",
+				data : {
+					pageNo:pageNo
+				},
+				dataType : "json",	
+				success : function(map) {
+					console.log(map);
+					console.log(map.maxPage);
+					console.log(map.list);
+					console.log(pageNo);
+					
+					paging(pageNo,map.maxPage);
+					
+					if (map.list.length == 0) {
+						$("#blogList").html(
+								"등록된 게시글이 없습니다.");
+					} else {
+						for (var i = 0; i < vo.length; i++) {
+							str+="<div class='blog-header' onclick='location.href='${pageContext.request.contextPath }/community/read/"+ vo[i].cpostNo+"''>"
+							str+="<img class='img-responsive'	src='${pageContext.request.contextPath}/assets/img/shared-img-5.jpg' alt='Image'>"
+							str+="</div>"
+							str+="<div class="blog-content">"
+							str+="<div class="blog-title media-block">"
+							str+="<div class="media-body">"
+							str+="<a href='${pageContext.request.contextPath }/community/read/"+ vo[i].cpostNo} + "'class='btn-link'>"
+							str+="<h2>"+vo[i].cpostTitle+"</h2>"
+							str+="</a>"
+							str+="</div>"
+							str+="</div>"
+							str+="<div class='blog-body'>"
+							str+="<p>"+vo[i].cpostContent+"</p>"
+							str+="</div>"
+							str+="</div>"
+							str+="<div class='blog-footer'>"
+							str+="<div class='media-left'>"
+							str+="<span class='label label-success'>"+vo[i].regDate+"</span>"
+							str+="</div>"
+							str+="<div class='media-body text-right'>"
+							str+="<span class='mar-rgt'>"
+							str+="<i class='demo-pli-heart-2 icon-fw'></i>"+vo[i].liked
+							str+="</span> "
+							str+="<i class='demo-pli-speech-bubble-5 icon-fw'></i>"+vo[i].replyCount
+							str+="</div>"
+							str+="</div>"
+
+						}
+						$("#pagelist").html(str);
+						str = "";
+					}
+					
+					paging(pageNo, map.maxPage);
+					
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
 		
 	</script>
-
 
 </body>
 </html>
