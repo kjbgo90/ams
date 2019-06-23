@@ -62,17 +62,17 @@
 					<ul id="mainnav-menu" class="list-group">
 						<!--Category name-->
 						<li class="list-header"><a
-							href="${pageContext.request.contextPath }/myPage/indexforstudent">MyPage</a></li>
+							href="${pageContext.request.contextPath }/myPage/indexforstudent"> <i class="pli-home"></i><span class="menu-title">MyPage</span></a></li>
 						<li class="list-divider"></li>
 						<!--Menu list item-->
-						<li><a>Select Class</a></li>
+						<li><a><i class="pli-management"></i><span class="menu-title">Select Class</span></a></li>
 						<li><a
-							href="${pageContext.request.contextPath }/myPage/myassignment">과제
-								관리</a></li>
+							href="${pageContext.request.contextPath }/myPage/myassignment"><i class="pli-notepad"></i><span class="menu-title"> 과제
+								관리</span></a></li>
 						<li><a
-							href="${pageContext.request.contextPath }/myPage/mytimeline">Timeline</a></li>
+							href="${pageContext.request.contextPath }/myPage/mytimeline"><i class="pli-calendar-4"></i><span class="menu-title"> Timeline</span></a></li>
 						<li><a
-							href="${pageContext.request.contextPath }/myPage/editForm">개인정보수정</a></li>
+							href="${pageContext.request.contextPath }/myPage/editForm"><i class="pli-question"></i><span class="menu-title">개인정보수정</span></a></li>
 
 
 						<!--Menu list item-->

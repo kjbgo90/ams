@@ -18,14 +18,14 @@ public class SubmitVo {
 	private List<fileUpLoadVo> fileList;
 	private int score;
 	private String scoreCheck;
+	private int courseNo;
 
 	public SubmitVo() {
 	}
 
 	public SubmitVo(int submitNo, String submitContent, String submitDate, int assignmentNo, String assignmentTitle,
 			int userNo, String userName, String logoPath, String email, int fileNo, String fileName,
-			List<fileUpLoadVo> fileList, int score, String scoreCheck) {
-		super();
+			List<fileUpLoadVo> fileList, int score, String scoreCheck, int courseNo) {
 		this.submitNo = submitNo;
 		this.submitContent = submitContent;
 		this.submitDate = submitDate;
@@ -40,6 +40,15 @@ public class SubmitVo {
 		this.fileList = fileList;
 		this.score = score;
 		this.scoreCheck = scoreCheck;
+		this.courseNo = courseNo;
+	}
+
+	public int getCourseNo() {
+		return courseNo;
+	}
+
+	public void setCourseNo(int courseNo) {
+		this.courseNo = courseNo;
 	}
 
 	public int getSubmitNo() {
@@ -160,7 +169,7 @@ public class SubmitVo {
 				+ ", assignmentNo=" + assignmentNo + ", assignmentTitle=" + assignmentTitle + ", userNo=" + userNo
 				+ ", userName=" + userName + ", logoPath=" + logoPath + ", email=" + email + ", fileNo=" + fileNo
 				+ ", fileName=" + fileName + ", fileList=" + fileList + ", score=" + score + ", scoreCheck="
-				+ scoreCheck + "]";
+				+ scoreCheck + ", courseNo=" + courseNo + "]";
 	}
 
 }

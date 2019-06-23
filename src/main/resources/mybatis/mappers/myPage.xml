@@ -164,43 +164,6 @@ SELECT    rownum as rnum,
 	</select>
 
 
-	<select id="" parameterType="" resultType="">
-	<![CDATA[
-    	select  rownum,
-        		submitno, 
-        		submitcontent, 
-        		submitdate, 
-        		userno, 
-        		score, 
-        		scorecheck,
-        		assignmentno,
-        		assignmenttitle,
-        		assignmentcontent,
-        		courseno,
-        		chapterno,
-        		teacherno
-		from(
-    				select  s.submitno, 
-            				s.submitcontent, 
-            				s.submitdate, 
-            				s.userno, 
-            				s.score, 
-            				s.scorecheck,
-            				s.assignmentno,
-            				a.assignmenttitle,
-            				a.assignmentcontent,
-            				a.courseno,
-            				a.chapterno,
-            				a.teacherno
-    				from submit s join assignment a
-    				on s.assignmentno = a.assignmentno
-    				where s.userno = 4 and a.courseno= 1
-    				order by submitdate desc)
-		where rownum <= 3
-		
-		
-	]]>
-	</select>
 
 
 

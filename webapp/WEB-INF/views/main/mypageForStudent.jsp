@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<title>AMS  - MyPage</title>
+<title>AMS - MyPage</title>
 
 
 <!--STYLESHEET-->
@@ -153,21 +153,7 @@
 
 
 								</div>
-								<div class="panel">
-									<div class="panel-heading">
-										<h3 class="panel-title">Line</h3>
-									</div>
-									<div class="pad-all">
-
-										<!--Sparklines Line-->
-										<!--===================================================-->
-										<div id="demo-sparklines-line-1-1"></div>
-										<!--===================================================-->
-										<!-- End Sparklines Line -->
-
-
-									</div>
-								</div>
+								</br>
 
 								<div class="panel">
 									<div class="panel-heading">
@@ -180,14 +166,14 @@
 											<thead>
 												<tr>
 													<th>과제</th>
-													<th>과제내용</th>
 													<th>첨부 파일</th>
 													<th>제출 기한</th>
+													<th>제출한 날짜</th>
 													<th>제출 여부</th>
 													<th>점수 여부</th>
 												</tr>
 											</thead>
-											<tbody>
+											<tbody id="assignmentList">
 												<tr>
 													<td colspan="6">제출한 과제가 없습니다.</td>
 												</tr>
@@ -475,7 +461,7 @@
 									<tbody id="selectNotice">
 										<tr>
 											<td colspan="5">공지사항이 없습니다 .</td>
-											
+
 										</tr>
 									</tbody>
 								</table>
@@ -553,10 +539,52 @@
 	<!--Custom script [ DEMONSTRATION ]-->
 	<!--===================================================-->
 	<script>
-		$(document).on('nifty.ready',function() {
+		$(document)
+				.on(
+						'nifty.ready',
+						function() {
 
 							userNo = '${authUser.userNo}'
 							console.log(userNo);
+
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath }/myPage/selectAssignmentList",
+										type : "post",
+										dataType : "json",
+										success : function(list) {
+											console.log(list);
+											console.log(list.length);
+
+											if (list.length != 0) {
+												assignmentListStr = "";
+												if (list.length > 3) {
+													for (var i = 0; i < 3; i++) {
+														console.log(i);
+														assList(list[i]);
+													}
+													$("#assignmentList").html(
+															assignmentListStr)
+												} else {
+													for (var i = 0; i < list.length; i++) {
+														console.log(i);
+														assList(list[i]);
+													}
+													$("#assignmentList").html(
+															assignmentListStr)
+
+												}
+											} else {
+												console.log("empty!!");
+											}
+
+											assignmentListStr = "";
+										},
+										error : function(XHR, status, error) {
+											console.error(status + " : "
+													+ error);
+										}
+									});
 
 							var lineSparklines2 = function() {
 								$('#demo-sparklines-line-1-1').sparkline(
@@ -589,13 +617,24 @@
 							});
 
 							// 전부다 새로고침 해버리기 
-							$('#demo-update-interval').on('click',function() {
-								$('.demo-pie').each(function() {
-								// 여기서 임의의 숫자를 넣어주고 있다 여기서 숫자를 바꿔서 넣자 
-									var newVal = Math.floor(100 * Math.random());
-									$(this).data('easyPieChart').update(newVal);
-								});
-							});
+							$('#demo-update-interval')
+									.on(
+											'click',
+											function() {
+												$('.demo-pie')
+														.each(
+																function() {
+																	// 여기서 임의의 숫자를 넣어주고 있다 여기서 숫자를 바꿔서 넣자 
+																	var newVal = Math
+																			.floor(100 * Math
+																					.random());
+																	$(this)
+																			.data(
+																					'easyPieChart')
+																			.update(
+																					newVal);
+																});
+											});
 
 							$('#demo-pie-7-1').easyPieChart(
 									{
@@ -612,7 +651,8 @@
 
 							//코스 리스트 뽑아서 나열 하자~ 
 							CourseList = "";
-							$.ajax({
+							$
+									.ajax({
 										url : "${pageContext.request.contextPath }/myPage/courseList",
 										type : "post",
 										data : {
@@ -645,172 +685,256 @@
 													+ error);
 										}
 									});
-							
-							
+
 							//noticeList 
-							$.ajax({
-								url : "${pageContext.request.contextPath }/myPage/selectNotice",
-								type : "post",
-								data : {
-									userNo : userNo
-								},
-								dataType : "json",	
-								success : function(list) {
-									
-									
-									if (list.length == 0) {
-										$("#blogList").html(
-												"등록된 게시글이 없습니다.");
-									} else {
-										str = "";
-										for (var i = 0; i < list.length; i++) {
-											courseNo = list[i].courseNo
-											str+="<tr>"	
-											str+="<td>"+list[i].rnum+"</td>"	
-											str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/"+list[i].coursePath+"/notice/read/"+list[i].postNo+"'>["+list[i].category+"]"+list[i].postTitle+"</a></td>"
-											str+="<td><span class='text-muted'>"+list[i].regDate+"</span></td>"				
-											str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+" class='btn-link'>"+list[i].userName+"</a></td>"				
-											str+="<td>"+list[i].hit+"</td>"				
-											str+="</tr>"
-											
-											
-										}
-										$("#selectNotice").html(str);
-										str = "";
-										
-										/*
-										<tr>
-										<td>11</td>
-										<td>2011/04/25</td>
-										<td>Edinburgh</td>
-										<td>Tiger Nixon</td>
-										<td>11</td>
-										</tr>
-										*/
-									}
-									
-									
-								},
-								error : function(XHR, status, error) {
-									console.error(status + " : " + error);
-								}
-							});
-							
-							//qna List 
-							$.ajax({
-								url : "${pageContext.request.contextPath }/myPage/selectQna",
-								type : "post",
-								data : {
-									userNo : userNo
-								},
-								dataType : "json",	
-								success : function(list) {
-									if (list.length == 0) {
-										$("#blogList").html("검색된 게시글이 없습니다.");
-									} else {
-										str = "";
-										for (var i = 0; i < list.length; i++) {
-											
-											
-											
-												str+="<tr>"	
-												str+="<td>"+list[i].rnum+"</td>"			
-												str+="<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"'>["+list[i].subjectTitle+"]"+list[i].postTitle+"</a>&nbsp;&nbsp;<div class='label label-warning'>N</div></td>"
-												str+="<td><span class='text-muted'>"+list[i].regDate+"</span></td>"
-												str+="<td>"+list[i].subjectTitle+"</td>"	
-												str+="<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"' class='btn-link'>"+list[i].userName+"</a></td>"				
-												str+="<td>"+list[i].hit+"</td>"	
-												str+="<td><i class='demo-pli-speech-bubble-5 icon-fw'></i>"+list[i].replyCount+"</td>"
-												str+="</tr>"	
-												
-												
-											/*<tr>
-												<td>Tiger Nixon</td>
-												<td>System Architect</td>
-												<td>Edinburgh</td>
-												<td>61</td>
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath }/myPage/selectNotice",
+										type : "post",
+										data : {
+											userNo : userNo
+										},
+										dataType : "json",
+										success : function(list) {
+
+											if (list.length == 0) {
+												$("#blogList").html(
+														"등록된 게시글이 없습니다.");
+											} else {
+												str = "";
+												for (var i = 0; i < list.length; i++) {
+													courseNo = list[i].courseNo
+													str += "<tr>"
+													str += "<td>"
+															+ list[i].rnum
+															+ "</td>"
+													str += "<td><a class='btn-link' href='${pageContext.request.contextPath }/"+list[i].coursePath+"/notice/read/"+list[i].postNo+"'>["
+															+ list[i].category
+															+ "]"
+															+ list[i].postTitle
+															+ "</a></td>"
+													str += "<td><span class='text-muted'>"
+															+ list[i].regDate
+															+ "</span></td>"
+													str += "<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+" class='btn-link'>"
+															+ list[i].userName
+															+ "</a></td>"
+													str += "<td>" + list[i].hit
+															+ "</td>"
+													str += "</tr>"
+
+												}
+												$("#selectNotice").html(str);
+												str = "";
+
+												/*
+												<tr>
+												<td>11</td>
 												<td>2011/04/25</td>
-												<td>$320,800</td>
-												<td>$320,800</td>
-											</tr>*/
-												
+												<td>Edinburgh</td>
+												<td>Tiger Nixon</td>
+												<td>11</td>
+												</tr>
+												 */
+											}
+
+										},
+										error : function(XHR, status, error) {
+											console.error(status + " : "
+													+ error);
 										}
-										$("#selectQnaList").html(str);
-										str = "";
-									}
-									
-								},
-								error : function(XHR, status, error) {
-									console.error(status + " : " + error);
-								}
-							});
-							/* 과제 현황 리스트 
-							<tr>
-							<td>Tiger Nixon</td>
-							<td>System Architect</td>
-							<td>Edinburgh</td>
-							<td>61</td>
-							<td>2011/04/25</td>
-							<td>$320,800</td>
-							</tr>*/
-							
-							
-							$.ajax({
-								url : "${pageContext.request.contextPath }/myPage/selectTimelineList",
-								type : "post",
-								data : {
-									userNo : userNo
-								},
-								dataType : "json",
-								success : function(list) {
-									console.log(list);
-									console.log(list.length);
-									
-								
-										timelineStr = "";
-										timelineStr += "<div class='timeline-header'>";
-										timelineStr += "<div class='timeline-header-title bg-primary'>Now</div>";
-										timelineStr += "</div>";
-									
+									});
 
-									for (var i = 0; i < list.length; i++) {
-										// list 찾기 !!
+							//qna List 
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath }/myPage/selectQna",
+										type : "post",
+										data : {
+											userNo : userNo
+										},
+										dataType : "json",
+										success : function(list) {
+											if (list.length == 0) {
+												$("#blogList").html(
+														"검색된 게시글이 없습니다.");
+											} else {
+												str = "";
+												for (var i = 0; i < list.length; i++) {
 
-										timelineStr += "<div class='timeline-entry'>";
-										timelineStr += "	<div class='timeline-stat'>";
-										timelineStr += "		<div class='timeline-icon'></div>";
-										timelineStr += "		<div class='timeline-time'>"+list[i].regDate+"</div>";
-										timelineStr += "	</div>";
-										timelineStr += "	<div class='timeline-label'>";
-										timelineStr += "		<p class='mar-no pad-btm'>";
-										timelineStr += "		<a href='#' class='btn-link'>알림</a> ";
-										timelineStr += "			commented on <a href='#' class='text-semibold'> <i></i>";
-										timelineStr += "		</a>";
-										timelineStr += "		</p>";
-										timelineStr +=  list[i].timeLineContent
-										timelineStr += "	</div>";
-										timelineStr += "</div>";
-									}
-									$("#selectTimelineList").html(timelineStr);
+													str += "<tr>"
+													str += "<td>"
+															+ list[i].rnum
+															+ "</td>"
+													str += "<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"'>["
+															+ list[i].subjectTitle
+															+ "]"
+															+ list[i].postTitle
+															+ "</a>&nbsp;&nbsp;<div class='label label-warning'>N</div></td>"
+													str += "<td><span class='text-muted'>"
+															+ list[i].regDate
+															+ "</span></td>"
+													str += "<td>"
+															+ list[i].subjectTitle
+															+ "</td>"
+													str += "<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"' class='btn-link'>"
+															+ list[i].userName
+															+ "</a></td>"
+													str += "<td>" + list[i].hit
+															+ "</td>"
+													str += "<td><i class='demo-pli-speech-bubble-5 icon-fw'></i>"
+															+ list[i].replyCount
+															+ "</td>"
+													str += "</tr>"
 
-									timelineStr = "";
-								},
-								error : function(XHR, status, error) {
-									console.error(status + " : "
-											+ error);
-								}
-							});
-							
+													/*<tr>
+														<td>Tiger Nixon</td>
+														<td>System Architect</td>
+														<td>Edinburgh</td>
+														<td>61</td>
+														<td>2011/04/25</td>
+														<td>$320,800</td>
+														<td>$320,800</td>
+													</tr>*/
+
+												}
+												$("#selectQnaList").html(str);
+												str = "";
+											}
+
+										},
+										error : function(XHR, status, error) {
+											console.error(status + " : "
+													+ error);
+										}
+									});
+
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath }/myPage/selectTimelineList",
+										type : "post",
+										data : {
+											userNo : userNo
+										},
+										dataType : "json",
+										success : function(list) {
+											console.log(list);
+											console.log(list.length);
+
+											timelineStr = "";
+											timelineStr += "<div class='timeline-header'>";
+											timelineStr += "<div class='timeline-header-title bg-primary'>Now</div>";
+											timelineStr += "</div>";
+
+											for (var i = 0; i < list.length; i++) {
+												// list 찾기 !!
+
+												timelineStr += "<div class='timeline-entry'>";
+												timelineStr += "	<div class='timeline-stat'>";
+												timelineStr += "		<div class='timeline-icon'></div>";
+												timelineStr += "		<div class='timeline-time'>"
+														+ list[i].regDate
+														+ "</div>";
+												timelineStr += "	</div>";
+												timelineStr += "	<div class='timeline-label'>";
+												timelineStr += "		<p class='mar-no pad-btm'>";
+												timelineStr += "		<a href='#' class='btn-link'>알림</a> ";
+												timelineStr += "			commented on <a href='#' class='text-semibold'> <i></i>";
+												timelineStr += "		</a>";
+												timelineStr += "		</p>";
+												timelineStr += list[i].timeLineContent
+												timelineStr += "	</div>";
+												timelineStr += "</div>";
+											}
+											$("#selectTimelineList").html(
+													timelineStr);
+
+											timelineStr = "";
+										},
+										error : function(XHR, status, error) {
+											console.error(status + " : "
+													+ error);
+										}
+									});
 
 						});
-		
-		
-	
-		
-		
-		
-	
-		</script>
+
+		/*
+		<th>과제</th>
+		<th>과제내용</th>
+		<th>첨부 파일</th>
+		<th>제출 기한</th>
+		<th>제출 여부</th>
+		<th>점수 여부</th>
+		 */
+		function assList(SubmitVo) {
+
+			assignmentListStr += "<tr>";
+			assignmentListStr += "<td>" + SubmitVo.assignmentTitle + "</td>";
+
+			if (SubmitVo.fileList != null) {
+				console.log(SubmitVo.fileList);
+
+				if (SubmitVo.fileList.length != 0) {
+					assignmentListStr += "<td>";
+					for (var s = 0; s < SubmitVo.fileList.length; s++) {
+
+						assignmentListStr += "<a href="+SubmitVo.fileList[s].filePath+">"
+								+ SubmitVo.fileList[s].fileName + "</a><br>";
+
+					}
+					assignmentListStr += "</td>";
+				} else {
+					assignmentListStr += "<td>첨부파일이 없습니다.</td>";
+				}
+
+			} else {
+				assignmentListStr += "<td>첨부파일이 없습니다.</td>";
+			}
+
+			assignmentListStr += "<td>" + SubmitVo.assignmentTitle + "</td>";
+			if (SubmitVo.submitNo != 0) {
+				assignmentListStr += "<td>" + SubmitVo.submitDate + "</td>";
+				assignmentListStr += "<td>" + SubmitVo.scoreCheck + "</td>";
+				if (SubmitVo.scoreCheck == 'true') {
+					assignmentListStr += "<td>" + SubmitVo.score + "</td>";
+				} else {
+					assignmentListStr += "<td>미채점</td>";
+				}
+
+			} else {
+				assignmentListStr += "<td> 미제출 </td>";
+
+				//${pageContext.request.contextPath }/"+coursePath+"/assignment/list
+
+				assignmentListStr += "<td colspan ='2'><a href='#'>제출하러 가기</a></td>";
+
+				var courseNo = SubmitVo.courseNo;
+
+				$
+						.ajax({
+							url : "${pageContext.request.contextPath }/myPage/selectCoursePath",
+							type : "post",
+							data : {
+								courseNo : courseNo
+							},
+							dataType : "json",
+							success : function(postVo) {
+								console.log("coursePath")
+								var coursePath = postVo.coursePath;
+								console.log(coursePath);
+
+							},
+							error : function(XHR, status, error) {
+								console.error(status + " : " + error);
+							}
+						});
+
+			}
+
+			assignmentListStr += "</tr>";
+		}
+	</script>
 
 
 

@@ -90,6 +90,21 @@
 		]]>
 	</select>
 	
+	<select id="selectSubmitByUserNo" parameterType="map" resultType="SubmitVo">
+		<![CDATA[
+			select submitNo,
+			       submitContent,
+			       TO_CHAR(submitDate, 'yyyy-mm-dd') submitDate,
+			       s.assignmentNo assignmentNo,
+			       assignmentTitle,
+			       s.userNo userNo,
+			       score,
+			       scoreCheck
+			from submit s join assignment a on s.assignmentNo = a.assignmentNo
+			where s.assignmentNo = #{assignmentNo} and s.userNo = #{userNo}
+		]]>
+	</select>
+	
 	<select id="selectSubmitBySubmitNo" parameterType="int" resultType="SubmitVo">
 		<![CDATA[
 			select submitNo,
@@ -375,4 +390,11 @@
 		]]>
 	</insert>
 	
+	<select id="selectCourseListByUserNo" parameterType="int" resultType="CourseVo">
+		<![CDATA[
+		select courseNo
+		from courseregist 
+		where userNo = #{userNo}
+		]]>
+	</select>
 </mapper>

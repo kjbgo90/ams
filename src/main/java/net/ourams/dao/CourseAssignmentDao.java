@@ -152,4 +152,15 @@ public class CourseAssignmentDao {
 		return list;
 	}
 
+	public SubmitVo selectSubmitByUserNo(int assignmentNo, int userNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("assignmentNo", assignmentNo);
+		map.put("userNo", userNo);
+		return sqlSession.selectOne("assignment.selectSubmitByUserNo", map);
+	}
+
+	public List<CourseVo> selectCourseListByUserNo(int userNo) {
+		return sqlSession.selectList("assignment.selectCourseListByUserNo", userNo);
+	}
+
 }

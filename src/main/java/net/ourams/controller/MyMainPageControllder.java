@@ -8,14 +8,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.ourams.interceptor.Auth;
 import net.ourams.interceptor.AuthUser;
 import net.ourams.service.MyMainPageService;
+import net.ourams.vo.AssignmentVo;
 import net.ourams.vo.CourseVo;
 import net.ourams.vo.MyPageVo;
 import net.ourams.vo.PostVo;
+import net.ourams.vo.SubmitVo;
 import net.ourams.vo.TimelineVo;
 import net.ourams.vo.UserVo;
 
@@ -135,5 +138,25 @@ public class MyMainPageControllder {
 		List<TimelineVo> list = myMainPageService.selectTimelineAllList(vo);
 		System.out.println(list.toString());
 		return list; 
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/selectAssignmentList", method = RequestMethod.POST)
+	public List<SubmitVo> selectAssignmentList(@AuthUser UserVo authUser){
+		System.out.println(" selectAssignmentList  start");
+		List<SubmitVo> list = myMainPageService.selectAssignmentList(authUser.getUserNo());
+		
+		System.out.println(" selectAssignmentList  end");
+		return list; 
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/selectCoursePath" , method = RequestMethod.POST)
+	public PostVo selectCoursePath(@RequestParam("courseNo") int courseNo) {
+		System.out.println("start coursePath");
+		PostVo vo = new PostVo();
+		vo.setCourseNo(courseNo);
+		PostVo postVo = myMainPageService.selectCoursePath(vo);
+		return postVo;
 	}
 }

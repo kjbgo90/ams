@@ -227,42 +227,7 @@
 												</div>
 											</div>
 											<hr>
-											<div class="form-group">
-												<label class="col-lg-3 control-label">Integer</label>
-												<div class="col-lg-7">
-													<input type="number" class="form-control" name="integer"
-														placeholder="Integer">
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-lg-3 control-label">Numeric</label>
-												<div class="col-lg-7">
-													<input type="text" class="form-control" name="numeric"
-														placeholder="Decimal is allowed">
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-lg-3 control-label">Greater than</label>
-												<div class="col-lg-7">
-													<input type="number" class="form-control"
-														name="greaterthan" placeholder="Numbers greater than 50">
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-lg-3 control-label">Less than 25</label>
-												<div class="col-lg-7">
-													<input type="number" class="form-control" name="lessthan"
-														placeholder="Numbers less than 50">
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-lg-3 control-label">Range [1 -
-													100]</label>
-												<div class="col-lg-7">
-													<input type="number" class="form-control" name="range"
-														placeholder="Numbers 1-100">
-												</div>
-											</div>
+										
 										</fieldset>
 										<!--===================================================-->
 
