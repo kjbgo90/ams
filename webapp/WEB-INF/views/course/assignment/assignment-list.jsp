@@ -110,7 +110,7 @@
 													<c:choose>
 														<c:when test="${empty subjectVo.assignmentListBySub }">
 															<div class="text-center" style="padding-top: 40px; font-size: 20px; height: 100px;">
-																<i class="pli-folder-hide icon-lg"></i> 과제함이 비었습니당~
+																<i class="pli-folder-hide icon-lg"></i> 과제함이 비었습니다.
 															</div>
 														</c:when>
 														<c:otherwise>

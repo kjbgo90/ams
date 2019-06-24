@@ -5,6 +5,7 @@ public class StatisticVo {
 	private String assignmentTitle;
 	private double average;
 	private int submitCount;
+	private int score;
 	private String scoreCheck;
 	private int fbqNo;
 	private String fbqContent;
@@ -20,17 +21,21 @@ public class StatisticVo {
 	private int qnaCount;
 	private double qnaPercent;
 	private int subjectNo;
+	private int maxScore;
+	private int minScore;
+	private int fbaType;
 
 	public StatisticVo() {
 	}
 
-	public StatisticVo(String assignmentTitle, double average, int submitCount, String scoreCheck, int fbqNo,
+	public StatisticVo(String assignmentTitle, double average, int submitCount, int score, String scoreCheck, int fbqNo,
 			String fbqContent, int fbqCount, String subjectTitle, String chapterContent, int yesCount, int noCount,
 			int nonResponseCount, double yesPercent, double noPercent, double nonResponsePercent, int qnaCount,
-			double qnaPercent, int subjectNo) {
+			double qnaPercent, int subjectNo, int maxScore, int minScore, int fbaType) {
 		this.assignmentTitle = assignmentTitle;
 		this.average = average;
 		this.submitCount = submitCount;
+		this.score = score;
 		this.scoreCheck = scoreCheck;
 		this.fbqNo = fbqNo;
 		this.fbqContent = fbqContent;
@@ -46,6 +51,9 @@ public class StatisticVo {
 		this.qnaCount = qnaCount;
 		this.qnaPercent = qnaPercent;
 		this.subjectNo = subjectNo;
+		this.maxScore = maxScore;
+		this.minScore = minScore;
+		this.fbaType = fbaType;
 	}
 
 	public String getAssignmentTitle() {
@@ -192,15 +200,47 @@ public class StatisticVo {
 		this.subjectNo = subjectNo;
 	}
 
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public int getMaxScore() {
+		return maxScore;
+	}
+
+	public void setMaxScore(int maxScore) {
+		this.maxScore = maxScore;
+	}
+
+	public int getMinScore() {
+		return minScore;
+	}
+
+	public void setMinScore(int minScore) {
+		this.minScore = minScore;
+	}
+
+	public int getFbaType() {
+		return fbaType;
+	}
+
+	public void setFbaType(int fbaType) {
+		this.fbaType = fbaType;
+	}
+
 	@Override
 	public String toString() {
 		return "StatisticVo [assignmentTitle=" + assignmentTitle + ", average=" + average + ", submitCount="
-				+ submitCount + ", scoreCheck=" + scoreCheck + ", fbqNo=" + fbqNo + ", fbqContent=" + fbqContent
-				+ ", fbqCount=" + fbqCount + ", subjectTitle=" + subjectTitle + ", chapterContent=" + chapterContent
-				+ ", yesCount=" + yesCount + ", noCount=" + noCount + ", nonResponseCount=" + nonResponseCount
-				+ ", yesPercent=" + yesPercent + ", noPercent=" + noPercent + ", nonResponsePercent="
+				+ submitCount + ", score=" + score + ", scoreCheck=" + scoreCheck + ", fbqNo=" + fbqNo + ", fbqContent="
+				+ fbqContent + ", fbqCount=" + fbqCount + ", subjectTitle=" + subjectTitle + ", chapterContent="
+				+ chapterContent + ", yesCount=" + yesCount + ", noCount=" + noCount + ", nonResponseCount="
+				+ nonResponseCount + ", yesPercent=" + yesPercent + ", noPercent=" + noPercent + ", nonResponsePercent="
 				+ nonResponsePercent + ", qnaCount=" + qnaCount + ", qnaPercent=" + qnaPercent + ", subjectNo="
-				+ subjectNo + "]";
+				+ subjectNo + ", maxScore=" + maxScore + ", minScore=" + minScore + ", fbaType=" + fbaType + "]";
 	}
 
 }

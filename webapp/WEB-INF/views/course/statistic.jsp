@@ -103,7 +103,8 @@
 					<div class="col-xs-3">
 						<div class="panel">
 							<p class="pad-hor text-main text-bold text-lg text-uppercase" id="assignTitle" style="padding-top: 15px;">JAVA 웹개발자 고급과정</p>
-							<div class="list-group" id="userList">
+							<div class="nano has-scroll mar-no pad-no" style="height:718px;">
+							<div class="list-group nano-content" id="userList" style="height:718px;">
 								<a class="list-group-item list-item-sm" id="statisticMain" href=""> <span class="media-left" style="padding-top: 4px; padding-right:7px;">
 								<button class="btn btn-dark btn-icon btn-circle"><i class="pli-male-female"></i></button>
 								</span> <span class="media-body text-left" style="padding-top: 12px;"> <span class="text-bold">전체보기</span>
@@ -118,6 +119,7 @@
 									</a> 
 								</c:forEach>
 								
+							</div>
 							</div>
 						</div>
 					</div>
@@ -202,7 +204,7 @@
 									<div class="panel-body pad-no" id="qnaList">
 										<div class="panel col-xs-4" style="text-align: center;">
 											<div class="panel-heading">
-												<h3 class="panel-title">JAVA프로그래밍</h3>
+												<h3 class="panel-title"></h3>
 											</div>
 											<!--Thick-->
 											<!--===================================================-->
@@ -214,7 +216,7 @@
 										</div>
 										<div class="col-xs-4" style="text-align: center;">
 											<div class="panel-heading">
-												<h3 class="panel-title">데이터구조</h3>
+												<h3 class="panel-title"></h3>
 											</div>
 											<!--Thick-->
 											<!--===================================================-->
@@ -226,7 +228,7 @@
 										</div>
 										<div class="col-xs-4" style="text-align: center;">
 											<div class="panel-heading">
-												<h3 class="panel-title">Oracle</h3>
+												<h3 class="panel-title"></h3>
 											</div>
 											<!--Thick-->
 											<!--===================================================-->
@@ -259,7 +261,9 @@
 											<span class="label label-dark pull-right mar-top">YES</span>
 										</h3>
 									</div>
-									<div class="panel-body" id="feedbackList">
+									<div class="nano has-scroll mar-no pad-no" style="height:399px;">
+									<div class="panel-body form-control nano-content" id="feedbackList" style="height:399px;">
+									</div>
 									</div>
 								</div>
 							</div>
@@ -408,7 +412,7 @@
 							        scaleColor: false,
 							        trackColor : 'rgba(0,0,0,.1)',
 							        lineWidth : 10,
-							        size : 130,
+							        size : 107,
 							        onStep: function(from, to, percent) {
 							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
 							        }
@@ -419,7 +423,7 @@
 							        scaleColor: false,
 							        trackColor : 'rgba(0,0,0,.1)',
 							        lineWidth : 10,
-							        size : 130,
+							        size : 107,
 							        onStep: function(from, to, percent) {
 							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
 							        }
@@ -430,7 +434,7 @@
 							        scaleColor: false,
 							        trackColor : 'rgba(0,0,0,.1)',
 							        lineWidth : 10,
-							        size : 130,
+							        size : 107,
 							        onStep: function(from, to, percent) {
 							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
 							        }
@@ -538,6 +542,11 @@
 						
 						$("#qnaList").empty();
 						console.log(response.data.qnaList.length)
+						if(response.data.qnaList.length == 0){
+							var qnaEmpty="";
+							qnaEmpty += "<div class='pad-all mar-all' style='text-align:center; padding-top:63px; padding-bottom:63px;'>질문내역이 없습니다.</div>"
+							$("#qnaList").append(qnaEmpty);
+						}
 						for(var i=0; i<response.data.qnaList.length; i++){
 							renderQnaList(response.data.qnaList[i]);
 							
@@ -547,7 +556,7 @@
 							        scaleColor: false,
 							        trackColor : 'rgba(0,0,0,.1)',
 							        lineWidth : 10,
-							        size : 130,
+							        size : 107,
 							        onStep: function(from, to, percent) {
 							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
 							        }
@@ -558,7 +567,7 @@
 							        scaleColor: false,
 							        trackColor : 'rgba(0,0,0,.1)',
 							        lineWidth : 10,
-							        size : 130,
+							        size : 107,
 							        onStep: function(from, to, percent) {
 							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
 							        }
@@ -569,7 +578,7 @@
 							        scaleColor: false,
 							        trackColor : 'rgba(0,0,0,.1)',
 							        lineWidth : 10,
-							        size : 130,
+							        size : 107,
 							        onStep: function(from, to, percent) {
 							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
 							        }
@@ -606,7 +615,123 @@
 					/*성공시 처리해야될 코드 작성*/
 					if (response.result === "success") {
 						
+						$("#totalAverage").text(response.data.totalAverage);
+						$("#maxAverage").text(response.data.maxScore);
+						$("#minAverage").text(response.data.minScore);
+						$("#max-avg").text(Math.round((response.data.maxScore-response.data.totalAverage)*100)/100);
+						$("#avg-min").text(Math.round((response.data.totalAverage-response.data.minScore)*100)/100);
+						$("#lastAssignmentTitle").text(response.data.lastAssignmentTitle);
+						$("#submitPercent").text(response.data.submitPercent+"%");
+						$("#submitProgress").text(response.data.submitPercent+"% Complete");
+						$("#progress-bar-submit").attr("style", "width:" + response.data.submitPercent + "%;");
+						$("#unsubmitPercent").text(response.data.unsubmitPercent+"%");
+						$("#unsubmitProgress").text(response.data.unsubmitPercent+"% Complete");
+						$("#progress-bar-unsubmit").attr("style", "width:" + response.data.unsubmitPercent + "%;");
+						
+						var score_data = [];
+						
+						$("#reset-graph").empty();
+						var str = "";
+						str += "<div id='demo-morris-line-legend' class='text-center'></div>";
+						str += "<div id='demo-morris-line' style='height: 250px'></div>";
+						$("#reset-graph").append(str);
+						console.log(response.data.asList);
+						for(var i=0; i<response.data.asList.length; i++){
+							score_data.push({'elapsed' : response.data.asList[i].assignmentTitle, 'value' : response.data.asList[i].score});
+						}
+						console.log(response.data.asList);
+						console.log(score_data);
+						
+						Morris.Line({
+							element : 'demo-morris-line',
+							data : score_data,
+							xkey : 'elapsed',
+							ykeys : [ 'value' ],
+							labels : [ '내 점수' ],
+							gridEnabled : true,
+							gridLineColor : 'rgba(0,0,0,.1)',
+							gridTextColor : '#8f9ea6',
+							gridTextSize : '11px',
+							lineColors : [ '#177bbb' ],
+							lineWidth : 2,
+							parseTime : false,
+							resize : true,
+							hideHover : 'auto'
+						});
+						
+						$("#feedbackList").empty();
+						for(var i=0; i<response.data.feedbackList.length; i++){
+							renderFeedbackStudent(response.data.feedbackList[i]);
+						}
+						
+						$("#reset-donut").empty();
+						var resetDonut ="";
+						resetDonut += "<div id='demo-morris-donut' class='morris-donut' style='height: 220px;'></div>";
+						$("#reset-donut").append(resetDonut);
+						
+						Morris.Donut({
+					        element: 'demo-morris-donut',
+					        data: [
+					            {label: 'NO', value: response.data.totalNoPercent},
+					            {label: 'YES', value: response.data.totalYesPercent},
+					            {label: '미응답', value: response.data.totalNonResponsePercent}
+					        ],
+					        colors: [
+					            '#ec407a',
+					            '#03a9f4',
+					            '#d8dfe2'
+					        ],
+					        resize:true
+					    });
+						
+						$("#qnaList").empty();
+						console.log(response.data.qnaList.length)
+						if(response.data.qnaList.length == 0){
+							var qnaEmpty="";
+							qnaEmpty += "<div class='pad-all mar-all' style='text-align:center; padding-top:63px; padding-bottom:63px;'>질문내역이 없습니다.</div>"
+							$("#qnaList").append(qnaEmpty);
+						}
+						
+						for(var i=0; i<response.data.qnaList.length; i++){
+							renderQnaList(response.data.qnaList[i]);
+							
+							if( i == 0){
+								$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
+									barColor :'#ab47bc',
+							        scaleColor: false,
+							        trackColor : 'rgba(0,0,0,.1)',
+							        lineWidth : 10,
+							        size : 107,
+							        onStep: function(from, to, percent) {
+							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
+							        }
+								 });
+							} else if ( i == 1){
+								$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
+									barColor :'#8bc34a',
+							        scaleColor: false,
+							        trackColor : 'rgba(0,0,0,.1)',
+							        lineWidth : 10,
+							        size : 107,
+							        onStep: function(from, to, percent) {
+							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
+							        }
+								 });
+							} else if ( i == 2){
+								$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
+									barColor :'#ffb300',
+							        scaleColor: false,
+							        trackColor : 'rgba(0,0,0,.1)',
+							        lineWidth : 10,
+							        size : 107,
+							        onStep: function(from, to, percent) {
+							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
+							        }
+								 });
+							}
+						}
 					} else {
+						
 					}
 				},
 				error : function(XHR, status, error) {
@@ -620,9 +745,29 @@
 			
 			str += "<div>";
 			str += "<p>Q." + feedbackVo.fbqContent + "<br>Subject: " + feedbackVo.subjectTitle + "<br>Chapter: " + feedbackVo.chapterContent + "</p>";
-			str += "<div class='progress progress-lg'>";
+			str += "<div class='progress progress-lg' style='text-align:center;'>";
 			str += "	<div style='width: " + feedbackVo.yesPercent + "%;' class='progress-bar progress-bar-dark'>" + feedbackVo.yesPercent + "%</div>";
 			str += "	<div style='width: " + feedbackVo.noPercent + "%' class='progress-bar progress-bar-warning'>" + feedbackVo.noPercent + "%</div>";
+			str += "</div>";
+			str += "<br>";
+			str += "</div>";
+
+			$("#feedbackList").append(str);
+		}
+		
+		function renderFeedbackStudent(feedbackVo){
+			var str = "";
+			
+			str += "<div>";
+			str += "<p>Q." + feedbackVo.fbqContent + "<br>Subject: " + feedbackVo.subjectTitle + "<br>Chapter: " + feedbackVo.chapterContent + "</p>";
+			str += "<div class='progress progress-lg' style='text-align:center;'>";
+			if(feedbackVo.nonResponsePercent == 100){
+				str += "	<div style='width: 0%' class='progress-bar progress-bar-dark'></div>";
+				str += "	<div style='width: 0%' class='progress-bar progress-bar-warning'></div>";
+			} else {
+				str += "	<div style='width: " + feedbackVo.yesPercent + "%;' class='progress-bar progress-bar-dark'>YES</div>";
+				str += "	<div style='width: " + feedbackVo.noPercent + "%' class='progress-bar progress-bar-warning'>NO</div>";
+			}
 			str += "</div>";
 			str += "<br>";
 			str += "</div>";

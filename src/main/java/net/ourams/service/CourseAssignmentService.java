@@ -16,6 +16,8 @@ import net.ourams.vo.ChapterVo;
 import net.ourams.vo.CourseVo;
 import net.ourams.vo.SubjectVo;
 import net.ourams.vo.SubmitVo;
+import net.ourams.vo.TimelineVo;
+import net.ourams.vo.UserVo;
 import net.ourams.vo.fileUpLoadVo;
 
 @Service
@@ -29,13 +31,13 @@ public class CourseAssignmentService {
 
 	/* 전체 과제 selectList */
 	public Map<String, Object> getList(String coursePath) {
-		
+
 		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
 		List<AssignmentVo> assignmentList = assignmentDao.selectList(courseVo.getCourseNo());
 		List<SubjectVo> subjectList = assignmentDao.selectSubList(courseVo.getCourseNo());
 		List<fileUpLoadVo> fileList = assignmentDao.selectAssignmentFileList();
-		
-		for(AssignmentVo assignmentVo : assignmentList) {
+
+		for (AssignmentVo assignmentVo : assignmentList) {
 			List<fileUpLoadVo> assignmentFileList = new ArrayList<fileUpLoadVo>();
 			for (fileUpLoadVo fileVo : fileList) {
 				if (assignmentVo.getAssignmentNo() == fileVo.getAssignmentNo()) {
@@ -57,13 +59,12 @@ public class CourseAssignmentService {
 			System.out.println(subjectVo.getSubjectTitle() + " 과제 리스트: " + subjectVo.getAssignmentListBySub());
 		}
 
-		
 		AssignmentVo lastAssignment = assignmentList.get(0);
 
 		List<SubmitVo> submitList = assignmentDao.selectSubmitList(lastAssignment.getAssignmentNo());
 		List<fileUpLoadVo> submitFileList = assignmentDao.selectSubmitFileList();
-		
-		for(SubmitVo submitVo : submitList) {
+
+		for (SubmitVo submitVo : submitList) {
 			List<fileUpLoadVo> submitFileList2 = new ArrayList<fileUpLoadVo>();
 			for (fileUpLoadVo fileVo : submitFileList) {
 				if (submitVo.getSubmitNo() == fileVo.getSubmitNo()) {
@@ -72,7 +73,7 @@ public class CourseAssignmentService {
 			}
 			submitVo.setFileList(submitFileList2);
 		}
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("assignmentList", assignmentList);
 		map.put("subjectList", subjectList);
@@ -83,12 +84,11 @@ public class CourseAssignmentService {
 		return map;
 	}
 
-	public SubmitVo submit(SubmitVo submitVo) {
+	public SubmitVo submit(SubmitVo submitVo, String coursePath) {
 		int count = assignmentDao.countSubmittedAssign(submitVo);
-		if(count == 0) {
+		if (count == 0) {
 			assignmentDao.insertSubmit(submitVo);
-			
-			
+
 			if (submitVo.getFileList() != null) {
 				for (fileUpLoadVo fileVo : submitVo.getFileList()) {
 					assignmentDao.insertFile(fileVo);
@@ -97,6 +97,30 @@ public class CourseAssignmentService {
 			}
 			SubmitVo submitVo2 = assignmentDao.selectSubmitBySubmitNo(submitVo.getSubmitNo());
 			submitVo2.setFileList(submitVo.getFileList());
+
+			AssignmentVo assignmentVo = assignmentDao.selectAssignmentByAssignmentNo(submitVo2.getAssignmentNo());
+			CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
+			String timeLineContent = "[" + courseVo.getCourseName() + "]" + submitVo2.getUserName() + "님이 "
+					+ assignmentVo.getAssignmentTitle() + " 과제를 제출했습니다!</p>";
+
+			TimelineVo timelineVo = new TimelineVo();
+
+			// timeline 테이블에 저장
+			timelineVo.setTimeLineContent(timeLineContent);
+
+			assignmentDao.insertTimeline(timelineVo);
+
+			System.out.println("timeline no is " + timelineVo.getTimeLineNo());
+
+			int timeLineNo = timelineVo.getTimeLineNo();
+
+			TimelineVo vo2 = new TimelineVo();
+			vo2.setUserNo(assignmentVo.getTeacherNo());
+			vo2.setTimeLineNo(timeLineNo);
+
+			// timelineuser 테이블에 저장
+			assignmentDao.insertTimelineUser(vo2);
+
 			return submitVo2;
 		} else {
 			return null;
@@ -107,14 +131,14 @@ public class CourseAssignmentService {
 		SubmitVo submitVo = assignmentDao.selectSubmitBySubmitNo(submitNo);
 		List<fileUpLoadVo> fileList = assignmentDao.selectSubmitFileList();
 		List<fileUpLoadVo> submitFileList = new ArrayList<fileUpLoadVo>();
-		
-		for(fileUpLoadVo fileVo : fileList) {
-			if(fileVo.getSubmitNo() == submitVo.getSubmitNo()) {
+
+		for (fileUpLoadVo fileVo : fileList) {
+			if (fileVo.getSubmitNo() == submitVo.getSubmitNo()) {
 				submitFileList.add(fileVo);
 			}
 		}
 		submitVo.setFileList(submitFileList);
-		
+
 		System.out.println(submitVo);
 		return submitVo;
 	}
@@ -133,8 +157,8 @@ public class CourseAssignmentService {
 		AssignmentVo assignmentVo = assignmentDao.selectAssignmentByAssignmentNo(assignmentNo);
 		List<SubmitVo> submitList = assignmentDao.selectSubmitList(assignmentNo);
 		List<fileUpLoadVo> fileList = assignmentDao.selectSubmitFileList();
-		
-		for(SubmitVo submitVo : submitList) {
+
+		for (SubmitVo submitVo : submitList) {
 			List<fileUpLoadVo> submitFileList = new ArrayList<fileUpLoadVo>();
 			for (fileUpLoadVo fileVo : fileList) {
 				if (submitVo.getSubmitNo() == fileVo.getSubmitNo()) {
@@ -178,7 +202,7 @@ public class CourseAssignmentService {
 	}
 
 	@Transactional
-	public int enrollAssignment(AssignmentVo assignmentVo) {
+	public int enrollAssignment(AssignmentVo assignmentVo, String coursePath) {
 		assignmentDao.insertAssignmentSchedule(assignmentVo);
 		int count = assignmentDao.insertAssignment(assignmentVo);
 
@@ -189,6 +213,36 @@ public class CourseAssignmentService {
 			}
 		}
 
+		assignmentVo = assignmentDao.selectAssignmentByAssignmentNo(assignmentVo.getAssignmentNo());
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
+		String timeLineContent = "[" + courseVo.getCourseName() + "]" + assignmentVo.getAssignmentTitle()
+				+ " 과제가 올라왔습니다!(제출기한: " + assignmentVo.getEndDate() + "까지)</p>";
+
+		TimelineVo timelineVo = new TimelineVo();
+
+		// timeline 테이블에 저장
+		timelineVo.setTimeLineContent(timeLineContent);
+
+		assignmentDao.insertTimeline(timelineVo);
+
+		System.out.println("timeline no is " + timelineVo.getTimeLineNo());
+
+		int timeLineNo = timelineVo.getTimeLineNo();
+		// 코스 안에 있는 모든 유저들을 등록하자 !
+		List<UserVo> list = assignmentDao.selectListbyCoursePath(courseVo);
+		System.out.println(list.toString());
+		for (int i = 0; i < list.size(); i++) {
+			int userNo = list.get(i).getUserNo();
+			System.out.println(userNo);
+			System.out.println("user No is " + userNo);
+			TimelineVo vo2 = new TimelineVo();
+			vo2.setUserNo(userNo);
+			vo2.setTimeLineNo(timeLineNo);
+
+			// timelineuser 테이블에 저장
+			assignmentDao.insertTimelineUser(vo2);
+
+		}
 		return count;
 	}
 
@@ -198,7 +252,7 @@ public class CourseAssignmentService {
 
 	public Map<String, Object> getModifyPage(String coursePath, int assignmentNo) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+
 		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
 		AssignmentVo assignmentVo = assignmentDao.selectAssignmentByAssignmentNo(assignmentNo);
 		List<SubjectVo> subjectList = assignmentDao.selectSubList(courseVo.getCourseNo());
@@ -222,11 +276,11 @@ public class CourseAssignmentService {
 	}
 
 	@Transactional
-	public int modifyAssignment(AssignmentVo assignmentVo) {
+	public int modifyAssignment(AssignmentVo assignmentVo, String coursePath) {
 		assignmentDao.updateAssignmentSchedule(assignmentVo);
 		int count = assignmentDao.updateAssignment(assignmentVo);
 		assignmentDao.deleteAssignmentFile(assignmentVo);
-		
+
 		if (assignmentVo.getFileList() != null) {
 			for (fileUpLoadVo fileVo : assignmentVo.getFileList()) {
 				assignmentDao.insertFile(fileVo);
@@ -234,15 +288,115 @@ public class CourseAssignmentService {
 			}
 		}
 
+		assignmentVo = assignmentDao.selectAssignmentByAssignmentNo(assignmentVo.getAssignmentNo());
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
+		String timeLineContent = "[" + courseVo.getCourseName() + "]" + assignmentVo.getAssignmentTitle()
+				+ " 과제가 수정되었습니다!</p>";
+
+		TimelineVo timelineVo = new TimelineVo();
+
+		// timeline 테이블에 저장
+		timelineVo.setTimeLineContent(timeLineContent);
+
+		assignmentDao.insertTimeline(timelineVo);
+
+		System.out.println("timeline no is " + timelineVo.getTimeLineNo());
+
+		int timeLineNo = timelineVo.getTimeLineNo();
+		// 코스 안에 있는 모든 유저들을 등록하자 !
+		List<UserVo> list = assignmentDao.selectListbyCoursePath(courseVo);
+		System.out.println(list.toString());
+		for (int i = 0; i < list.size(); i++) {
+			int userNo1 = list.get(i).getUserNo();
+			System.out.println(userNo1);
+			System.out.println("user No is " + userNo1);
+			TimelineVo vo2 = new TimelineVo();
+			vo2.setUserNo(userNo1);
+			vo2.setTimeLineNo(timeLineNo);
+
+			// timelineuser 테이블에 저장
+			assignmentDao.insertTimelineUser(vo2);
+
+		}
 		return count;
 	}
 
-	public int saveScore(SubmitVo submitVo) {
-		return assignmentDao.updateSubmitScore(submitVo);
+	@Transactional
+	public int saveScore(SubmitVo submitVo, String coursePath) {
+		int count = assignmentDao.updateSubmitScore(submitVo);
+		SubmitVo submitVo2 = assignmentDao.selectSubmitBySubmitNo(submitVo.getSubmitNo());
+		AssignmentVo assignmentVo = assignmentDao.selectAssignmentByAssignmentNo(submitVo2.getAssignmentNo());
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
+		String timeLineContent = "[" + courseVo.getCourseName() + "]" + assignmentVo.getAssignmentTitle()
+				+ " 과제 성적이 입력되었습니다!</p>";
+
+		TimelineVo timelineVo = new TimelineVo();
+
+		// timeline 테이블에 저장
+		timelineVo.setTimeLineContent(timeLineContent);
+
+		assignmentDao.insertTimeline(timelineVo);
+
+		System.out.println("timeline no is " + timelineVo.getTimeLineNo());
+
+		int timeLineNo = timelineVo.getTimeLineNo();
+		
+		TimelineVo vo2 = new TimelineVo();
+		vo2.setUserNo(submitVo2.getUserNo());
+		vo2.setTimeLineNo(timeLineNo);
+
+		// timelineuser 테이블에 저장
+		assignmentDao.insertTimelineUser(vo2);
+
+		return count;
 	}
 
 	public List<fileUpLoadVo> getFileList(AssignmentVo assignmentVo) {
 		return assignmentDao.selectFileListByAssignmentNo(assignmentVo);
+	}
+
+	@Transactional
+	public int deleteAssignment(int assignmentNo, int userNo, String coursePath) {
+		AssignmentVo assignmentVo = assignmentDao.selectAssignmentByAssignmentNo(assignmentNo);
+
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
+		String timeLineContent = "[" + courseVo.getCourseName() + "]" + assignmentVo.getAssignmentTitle()
+				+ " 과제가 삭제되었습니다!</p>";
+
+		TimelineVo timelineVo = new TimelineVo();
+
+		// timeline 테이블에 저장
+		timelineVo.setTimeLineContent(timeLineContent);
+
+		assignmentDao.insertTimeline(timelineVo);
+
+		System.out.println("timeline no is " + timelineVo.getTimeLineNo());
+
+		int timeLineNo = timelineVo.getTimeLineNo();
+		// 코스 안에 있는 모든 유저들을 등록하자 !
+		List<UserVo> list = assignmentDao.selectListbyCoursePath(courseVo);
+		System.out.println(list.toString());
+		for (int i = 0; i < list.size(); i++) {
+			int userNo1 = list.get(i).getUserNo();
+			System.out.println(userNo1);
+			System.out.println("user No is " + userNo1);
+			TimelineVo vo2 = new TimelineVo();
+			vo2.setUserNo(userNo1);
+			vo2.setTimeLineNo(timeLineNo);
+
+			// timelineuser 테이블에 저장
+			assignmentDao.insertTimelineUser(vo2);
+
+		}
+
+		List<SubmitVo> submitList = assignmentDao.selectSubmitList(assignmentNo);
+		for (SubmitVo submitVo : submitList) {
+			assignmentDao.deleteSubmitFile(submitVo.getSubmitNo());
+			assignmentDao.deleteSubmit(submitVo.getSubmitNo());
+		}
+		assignmentDao.deleteAssignmentFile(assignmentVo);
+		assignmentDao.deleteAssignment(assignmentNo, userNo);
+		return assignmentDao.deleteAssignmentSchedule(assignmentVo.getScheduleNo());
 	}
 
 }
