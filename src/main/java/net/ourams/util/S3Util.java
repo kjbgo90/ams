@@ -77,17 +77,8 @@ public class S3Util {
 	}
 
 	// 파일 업로드
-	public void fileUpload(String bucketName, MultipartFile file) {
+	public void fileUpload(String bucketName, MultipartFile file, String exName ,String saveName ) {
 		try {
-			
-			//확장자
-			String exName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-			System.out.println("exName: " + exName);
-			
-			//저장파일명
-			String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
-			System.out.println("saveName: " + saveName);
-			
 			
 			PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, saveName,
 					file.getInputStream(), new ObjectMetadata());
