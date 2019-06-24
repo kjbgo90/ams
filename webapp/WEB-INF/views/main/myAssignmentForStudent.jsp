@@ -117,36 +117,34 @@
 
 						<h4 class="text-main pad-btm bord-btm">assignment</h4>
 						<br> <br>
-					
 						<div class="panel">
 							<div class="panel-heading">
-								<h3 class="panel-title">출제한 과제들</h3>
+								<h3 class="panel-title">제출 현황</h3>
 							</div>
 							<div class="panel-body">
-
+								<h3 class="panel-title">과제 목록</h3>
 								<table class="table table-striped table-bordered"
 									cellspacing="0" width="100%">
 									<thead>
 										<tr>
-											<th>코스 이름</th>
-											<th>챕터</th>
-											<th>타이틀</th>
-											<th>파일</th>
-											<th>제출일</th>
-											<th>제출 마감일</th>
+											<th>레포트 제목</th>
+											<th>레포트 파일</th>
+											<th>과제 타이틀</th>
+											<th>제출 일자</th>
+											<th>점수 여부</th>
+											<th>점수</th>
 										</tr>
 									</thead>
-									<tbody id="assignmentListForTeacher">
+									<tbody id="assignmentList">
 										<tr>
-											<td colspan="6">출제한 과제가 없습니다.</td>
+											<td colspan="6">제출한 과제가 없습니다.</td>
 										</tr>
 									</tbody>
 								</table>
 								<br> <br>
+
 							</div>
 						</div>
-			
-
 					</div>
 				</div>
 
@@ -214,11 +212,10 @@
 							userNo = '${authUser.userNo}'
 							console.log(userNo);
 
-							
-
+							//qna List 
 							$
 									.ajax({
-										url : "${pageContext.request.contextPath }/myPage/getAssignmentByTeacherNo",
+										url : "${pageContext.request.contextPath }/myPage/getSubmitListByUserNo",
 										type : "post",
 										data : {
 											userNo : userNo
@@ -226,60 +223,87 @@
 										dataType : "json",
 										success : function(list) {
 											console.log(list);
-											assignmentListForTeacherstr = "";
+											assignmentListStr = "";
 											for (var i = 0; i < list.length; i++) {
-												assignmentListForTeacherstr += "<tr>";
-												assignmentListForTeacherstr += "<td>"
-														+ list[i].courseName
-														+ "</td>";
-												assignmentListForTeacherstr += "<td>"
-														+ list[i].chapterContent
-														+ "</td>";
-												assignmentListForTeacherstr += "<td>"
-														+ list[i].assignmentTitle
-														+ "</td>";
-												//첨부 파일 
-												if (list[i].fileList != null) {
-													console
-															.log(list[i].fileList);
-
-													if (list[i].fileList.length != 0) {
-														assignmentListForTeacherstr += "<td>";
-														for (var s = 0; s < list[i].fileList.length; s++) {
-															var sa = s + 1;
-															assignmentListForTeacherstr += "<a href="+list[i].fileList[s].filePath+" class='text-semibold text-main mar-no'>"
-																	+ sa
-																	+ "."
-																	+ list[i].fileList[s].fileName
-																	+ "</a><br>";
-
-														}
-														assignmentListForTeacherstr += "</td>";
-													} else {
-														assignmentListForTeacherstr += "<td>첨부파일이 없습니다.</td>";
-													}
-
-												} else {
-													assignmentListForTeacherstr += "<td>첨부파일이 없습니다.</td>";
-												}
-												assignmentListForTeacherstr += "<td>"
-														+ list[i].startDate
-														+ "</td>";
-												assignmentListForTeacherstr += "<td>"
-														+ list[i].endDate
-														+ "</td>";
-												assignmentListForTeacherstr += "</tr>";
+												assList(list[i]);
 											}
-											$("#assignmentListForTeacher")
-													.html(
-															assignmentListForTeacherstr);
-											assignmentListForTeacherstr = "";
+											$("#assignmentList").html(
+													assignmentListStr);
+											assignmentListStr = "";
 										},
 										error : function(XHR, status, error) {
 											console.error(status + " : "
 													+ error);
 										}
 									});
+							/* 과제 현황 리스트 
+											<th>레포트 제목 </th>
+											<th>레포트 파일</th>
+											<th>과제 타이틀</th>
+											<th>제출 일자</th>
+											<th>점수 여부 </th>
+											<th>점수 </th>
+							<tr>
+							<td>"+list[i].+"</td>
+							<td>"+list[i].+"</td>
+							<td>"+list[i].+"</td>
+							<td>"+list[i].+"</td>
+							<td>"+list[i].+"</td>
+							<td>"+list[i].+"</td>
+							</tr>*/
+
+							function assList(SubmitVo) {
+
+								assignmentListStr += "<tr>";
+								//레포트 제목 
+								assignmentListStr += "<td>"
+										+ SubmitVo.assignmentTitle + "</td>";
+								//첨부 파일 
+								if (SubmitVo.fileList != null) {
+									console.log(SubmitVo.fileList);
+
+									if (SubmitVo.fileList.length != 0) {
+										assignmentListStr += "<td>";
+										for (var s = 0; s < SubmitVo.fileList.length; s++) {
+
+											assignmentListStr += "<a href="+SubmitVo.fileList[s].filePath+" class='text-semibold text-main mar-no'>"
+													+ SubmitVo.fileList[s].fileName
+													+ "</a><br>";
+
+										}
+										assignmentListStr += "</td>";
+									} else {
+										assignmentListStr += "_$ta첨부파일이 없습니다._$tag";
+									}
+
+								} else {
+									assignmentListStr += "_$ta첨부파일이 없습니다._$tag";
+								}
+								//과제 타이틀 
+								assignmentListStr += "_$ta"
+										+ SubmitVo.assignmentTitle + "_$tag";
+								//제출 일자
+								// 과제 채점 여부 , 점수 
+								if (SubmitVo.submitNo != 0) {
+									assignmentListStr += "_$ta"
+											+ SubmitVo.submitDate + "_$tag";
+									assignmentListStr += "_$ta"
+											+ SubmitVo.scoreCheck + "_$tag";
+									if (SubmitVo.scoreCheck == 'true') {
+										assignmentListStr += "_$ta"
+												+ SubmitVo.score + "_$tag";
+									} else {
+										assignmentListStr += "_$ta미채점_$tag";
+									}
+
+								} else {
+
+									//${pageContext.request.contextPath }/"+coursePath+"/assignment/list
+
+								}
+
+								assignmentListStr += "_$tag";
+							}
 
 						});
 	</script>

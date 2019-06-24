@@ -25,8 +25,9 @@
 	</select>
 
 
-	<!-- 1 이면 공지사항 2이면 QNA -->
-	<select id="selectNotice" resultType="PostVo" parameterType="PostVo">
+	<!-- 1 이면 공지사항 2이면 QNA userno -> courseno -->
+	<select id="selectNotice" resultType="PostVo"
+		parameterType="PostVo">
 		<![CDATA[
         select 	        rownum as rnum,
                         a.username as username,
@@ -39,23 +40,38 @@
        					regdate,
        					scheduleno,
        					hit,
+                        coursePath,
        					category
-		from ( SELECT 				
+			from ( SELECT 				
    		     						p.postNo,
 				        			p.postType,
 				        			u.userNo,
 				        			p.courseNo,
-				        			TO_CHAR(p.regDate, 'yyyy/mm/dd') as regDate,
+				        			p.regDate,
 				        			p.scheduleNo,
 				        			p.postTitle,
 				        			p.postContent,
 				        			p.hit,
 				        			p.category,
+                                    p.coursePath,
 				        			u.userName
-							FROM users u join post p 
-							ON p.userNo = u.userNo
-							where p.postType = 1 and p.userno = #{userNo}
-							order by postNo desc ) a 
+					FROM users u join (   
+                        select  pp.postNo,
+                                pp.postType,
+                                pp.postTitle,
+                                pp.courseNo,
+                                pp.postContent,
+                                pp.scheduleNo,
+                                pp.hit,
+                                pp.userNo,
+                                TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,
+                                pp. category,
+                                c.coursePath
+                        from post pp join course c 
+                        on pp.courseno = c.courseno) p 
+					ON p.userNo = u.userNo
+					where p.postType = 1 
+					order by postNo desc ) a 
         where rownum <=#{rnum}
 
 		]]>
@@ -66,6 +82,8 @@
 		parameterType="PostVo">
 		<![CDATA[
 				
+
+        
 
 SELECT    rownum as rnum, 
 		                a.postNo postno,
@@ -81,7 +99,8 @@ SELECT    rownum as rnum,
 		                a.userName userName,
 		                a.subjectNo subjectNo,
 		                a.subjectTitle subjectTitle,
-		                a.replyCount replyCount
+		                a.replyCount replyCount,
+                        a.coursePath as coursePath
 		           
         FROM(
 					SELECT    rownum as rnum, 
@@ -97,6 +116,7 @@ SELECT    rownum as rnum,
 					                pu.category,
 					                pu.userName,
 					                pu.subjectNo,
+                                    pu.coursePath,
 					                s.subjectTitle,
 					                (select count(*) from reply r 
 					        	where r.postNo = pu.postNo) as replyCount
@@ -105,26 +125,132 @@ SELECT    rownum as rnum,
 		                        postType,
 		                        p.userNo userNo,
 		                        courseNo,
-		                        TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,
+		                         regDate,
 		                        scheduleNo,
 		                        postTitle,
 		                        postContent,
 		                        hit,
 		                        category,
 		                        userName,
-		                        subjectNo
-		                FROM users u join post p
+		                        subjectNo,
+                                coursePath
+		                FROM users u join (
+                        select  pp.postNo,
+                                pp.subjectNo,
+                                pp.postType,
+                                pp.postTitle,
+                                pp.courseNo,
+                                pp.postContent,
+                                pp.scheduleNo,
+                                pp.hit,
+                                pp.userNo,
+                                TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,
+                                pp. category,
+                                c.coursePath
+                        from post pp join course c 
+                        on pp.courseno = c.courseno
+                        ) p
 		                ON p.userNo = u.userNo
 		                where p.postType = 2 and p.userno= #{userNo})pu
 		                left join subject s 
 		                on pu.subjectno = s.subjectno 
 		                order by pu.postNo desc) a
 		                where rownum <= #{rnum}
+                        
+                        
 		]]>
 	</select>
 
 
-	<select id="selectTimelineList" parameterType="TimelineVo" resultType="TimelineVo">
+
+
+	<!-- 1 이면 공지사항 2이면 QNA -->
+	<select id="selectQnaAllList" resultType="PostVo"
+		parameterType="PostVo">
+		<![CDATA[
+				
+
+        
+
+SELECT    rownum as rnum, 
+		                a.postNo postno,
+		                a.postType postType,
+		                a.userNo userNo,
+		                a.courseNo courseNo,
+		                a.regDate regDate,
+		                a.scheduleNo scheduleNo,
+		                a.postTitle postTitle,
+		                a.postContent postContent,
+		                a.hit hit,
+		                a.category category,
+		                a.userName userName,
+		                a.subjectNo subjectNo,
+		                a.subjectTitle subjectTitle,
+		                a.replyCount replyCount,
+                        a.coursePath as coursePath
+		           
+        FROM(
+					SELECT    rownum as rnum, 
+					                pu.postNo,
+					                pu.postType,
+					                pu.userNo,
+					                pu.courseNo courseNo,
+					                pu.regDate,
+					                pu.scheduleNo scheduleNo,
+					                pu.postTitle,
+					                pu.postContent,
+					                pu.hit,
+					                pu.category,
+					                pu.userName,
+					                pu.subjectNo,
+                                    pu.coursePath,
+					                s.subjectTitle,
+					                (select count(*) from reply r 
+					        	where r.postNo = pu.postNo) as replyCount
+		        FROM(
+		                SELECT  postNo,
+		                        postType,
+		                        p.userNo userNo,
+		                        courseNo,
+		                         regDate,
+		                        scheduleNo,
+		                        postTitle,
+		                        postContent,
+		                        hit,
+		                        category,
+		                        userName,
+		                        subjectNo,
+                                coursePath
+		                FROM users u join (
+                        select  pp.postNo,
+                                pp.subjectNo,
+                                pp.postType,
+                                pp.postTitle,
+                                pp.courseNo,
+                                pp.postContent,
+                                pp.scheduleNo,
+                                pp.hit,
+                                pp.userNo,
+                                TO_CHAR(regDate, 'yyyy/mm/dd') as regDate,
+                                pp. category,
+                                c.coursePath
+                        from post pp join course c 
+                        on pp.courseno = c.courseno
+                        ) p
+		                ON p.userNo = u.userNo
+		                where p.postType = 2)pu
+		                left join subject s 
+		                on pu.subjectno = s.subjectno 
+		                order by pu.postNo desc) a
+		                where rownum <= #{rnum}
+                        
+                        
+		]]>
+	</select>
+
+
+	<select id="selectTimelineList" parameterType="TimelineVo"
+		resultType="TimelineVo">
 	<![CDATA[
 	select  rownum 
         timelineno,
@@ -147,7 +273,8 @@ SELECT    rownum as rnum,
 	</select>
 
 
-	<select id="selectTimelineAllList" parameterType="TimelineVo" resultType="TimelineVo">
+	<select id="selectTimelineAllList" parameterType="TimelineVo"
+		resultType="TimelineVo">
 	<![CDATA[
 	
     	select  tl.timelineno as timeLineNo,
@@ -166,7 +293,8 @@ SELECT    rownum as rnum,
 
 
 
-	<select id="selectAssignmentAllList" parameterType="SubmitVo" resultType="SubmitVo">
+	<select id="selectAssignmentAllList" parameterType="SubmitVo"
+		resultType="SubmitVo">
 	<![CDATA[
 	
     		select submitNo,
@@ -185,7 +313,7 @@ SELECT    rownum as rnum,
 	]]>
 	</select>
 
-<select id="courseNoList" parameterType="int" resultType="int">
+	<select id="courseNoList" parameterType="int" resultType="int">
 	<![CDATA[
 	
     	select courseno from courseregist where userno = #{userNo}
@@ -194,7 +322,17 @@ SELECT    rownum as rnum,
 	</select>
 
 
+	<update id="updateUser" parameterType="UserVo">
+	<![CDATA[
+	  	update users 
+	  	set
+    			userName = #{userName},
+    			password = #{password}
+		where userno=#{userNo}
 
+                        
+	]]>
+	</update>
 
 
 </mapper>

@@ -212,14 +212,41 @@
 
 
 	<delete id="deleteDataRoom" parameterType="CourseDataRoomVo">
+	<![CDATA[
 		delete from dataroom
 		where dataroomno=#{dataRoomNo}
+		]]>
 	</delete>
 
 	<delete id="deleteFile" parameterType="CourseDataRoomVo">
+	<![CDATA[
 		delete
 		from datafile where fileno=#{fileNo}
+		]]>
 	</delete>
+	
+	<delete id="deleteDataroomfiletag" parameterType="CourseDataRoomVo">
+	<![CDATA[
+	delete
+		from dataroomfiletag where  dataroomfileno = #{dataRoomFileNo} 
+	]]>
+	</delete>
+	
+	<delete id="deleteDataroomfile" parameterType="CourseDataRoomVo">
+	<![CDATA[
+	delete
+		from dataRoomFile where fileno=#{fileNo}
+	]]>
+	</delete>
+	
+	
+	<select id="DataroomfileNo" parameterType="CourseDataRoomVo"
+		resultType="CourseDataRoomVo">
+		<![CDATA[
+			select dataRoomFileNo from  dataroomfile where fileno=#{fileNo}
+		]]>
+	</select>
+
 
 
 

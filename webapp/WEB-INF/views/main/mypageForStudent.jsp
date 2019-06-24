@@ -781,7 +781,7 @@
 													str += "<td>"
 															+ list[i].rnum
 															+ "</td>"
-													str += "<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"'>["
+													str += "<td><a class='btn-link' href='${pageContext.request.contextPath }/"+list[i].coursePath+"/notice/read/"+list[i].postNo+"'>["
 															+ list[i].subjectTitle
 															+ "]"
 															+ list[i].postTitle

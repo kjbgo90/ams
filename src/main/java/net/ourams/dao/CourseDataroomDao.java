@@ -115,19 +115,40 @@ public class CourseDataroomDao {
 	
 	//폴더 삭제 
 	public int deleteDataRoom(CourseDataroomVo vo) {
-		int count = sqlSession.selectOne("courseDataRoom.deleteDataRoom", vo);
+		int count = sqlSession.delete("courseDataRoom.deleteDataRoom", vo);
 		return count;
 	}
 	
 	
 	//파일 삭제 
 	public int deleteFile(CourseDataroomVo vo) {
-		int count = sqlSession.selectOne("courseDataRoom.deleteFile", vo);
+		int count = sqlSession.delete("courseDataRoom.deleteFile", vo);
+		return count;
+	}
+	
+	
+
+	//파일 삭제 
+	public int deleteDataroomfiletag(CourseDataroomVo vo) {
+		int count = sqlSession.delete("courseDataRoom.deleteDataroomfiletag", vo);
+		return count;
+	}
+	
+
+	//파일 삭제 
+	public int deleteDataroomfile(CourseDataroomVo vo) {
+		int count = sqlSession.delete("courseDataRoom.deleteDataroomfile", vo);
 		return count;
 	}
 	
 	public CourseDataroomVo selectListAtFirst(CourseDataroomVo vo) {
 		CourseDataroomVo vo2 = sqlSession.selectOne("courseDataRoom.selectListAtFirst", vo);
+		return vo2;
+	}
+	
+	public CourseDataroomVo DataroomfileNo(CourseDataroomVo vo){
+		
+		CourseDataroomVo vo2 = sqlSession.selectOne("courseDataRoom.DataroomfileNo", vo);
 		return vo2;
 	}
 	

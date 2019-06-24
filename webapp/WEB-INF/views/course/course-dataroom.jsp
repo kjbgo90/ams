@@ -126,8 +126,7 @@
 					<ol class="breadcrumb">
 						<li><a href="#"><i class="demo-pli-home"></i></a></li>
 						<li>자료실</li>
-						<li class="active">나의 자료실
-						</li>
+						<li class="active">나의 자료실</li>
 					</ol>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<!--End breadcrumb-->
@@ -145,7 +144,8 @@
 										<button data-target="#lg-modal" data-toggle="modal"
 											class="btn btn-warning">UPLOAD</button>
 									</div>
-									<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Folders</p>
+									<p
+										class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Folders</p>
 									<div class="list-group bg-trans pad-btm bord-btm">
 										<div id="fileTree">
 											<ul id="fileTreeList">
@@ -153,7 +153,8 @@
 											</ul>
 										</div>
 									</div>
-									<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Tags</p>
+									<p
+										class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Tags</p>
 									<ul id="tagList" class="list-inline mar-hor">
 									</ul>
 								</div>
@@ -162,7 +163,6 @@
 
 										<!-- 바뀌게 만들기  -->
 										<ol id="changeFolder" class="breadcrumb">
-											<li class="active">home</li>
 										</ol>
 									</div>
 									<div class="file-toolbar bord-btm">
@@ -176,8 +176,9 @@
 											</a>
 										</div>
 										<div class="btn-file-toolbar">
-											<a class="btn btn-icon add-tooltip" data-original-title="New Folder" data-target="#sm-modal" data-toggle="modal">
-												<i class="icon-2x demo-pli-folder"></i>
+											<a class="btn btn-icon add-tooltip"
+												data-original-title="New Folder" data-target="#sm-modal"
+												data-toggle="modal"> <i class="icon-2x demo-pli-folder"></i>
 											</a>
 										</div>
 										<div class="btn-file-toolbar pull-right">
@@ -240,7 +241,8 @@
 								<h3 class="panel-title">UPLOAD FILE AND INSERT TAG</h3>
 							</div>
 							<div class="panel-body">
-								<p class="text-main text-bold mar-no bord-btm">Drag’n’drop file uploads</p>
+								<p class="text-main text-bold mar-no bord-btm">Drag’n’drop
+									file uploads</p>
 								<p>And then insert tag here</p>
 								<!-- Multiple Select Choosen
 							 		태크, 코스, 파일 개별적으로 저장 -->
@@ -305,7 +307,8 @@
 					</div>
 					<div class="modal-body">
 						<input id="inputAddFolder" type="text" value="">
-						<button type="submit" id="newFolder" class="btn btn-primary" data-target="#sm-modal" data-toggle="modal">폴더생성</button>
+						<button type="submit" id="newFolder" class="btn btn-primary"
+							data-target="#sm-modal" data-toggle="modal">폴더생성</button>
 					</div>
 				</div>
 			</div>
@@ -798,13 +801,14 @@
 							
 							
 							
-							
+							/*
 							//바뀔때마다 폴더 이름 바꾸고 no도 바꿔버리기 
 							changeFolderStr = ""
 							changeFolderStr += "<li data-dataroomno="+CourseDataroomVo.dataRoomNo+">home</li>"
 							changeFolderStr += "<li data-dataroomno="+CourseDataroomVo.dataRoomNo+">home</li>"
 							changeFolderStr += "<li class='active' data-dataroomno="+CourseDataroomVo.dataRoomNo+">home</li>"
 							$("#changeFolder").html();
+							*/
 		});
 
 		$(".file-details").on("click", function() {
@@ -868,9 +872,10 @@
 												},
 												success : function(list) {
 													console.log(list);
-													console.log(list[0].dataRoomNo);
-													var no = list[0].dataRoomNo;
 
+													
+													
+													
 													strList2 = "";
 													strList = "";
 													
@@ -982,68 +987,338 @@
 						
 							var checkedfilelength = $('input:checkbox[name="checkingFileBox"]:checked').length
 							console.log(checkedfilelength);
-
-							for(i=0;i<checkedfilelength;i++){
-					        	console.log( i + "번째 파일 : " + $("input[name='checkingFileBox']").eq(i).attr("value") );
-					        	var fileNo = $("input[name='checkingFileBox']").eq(i).attr("value");
-					        	
-					        	
-					        	$.ajax({
-									url : "${pageContext.request.contextPath }/{coursePath}/dataroom/deleteFile",
-									type : "post",
-									data : {
-										fileNo:fileNo
-									},
-									dataType : "json",
-									success : function() {
-										console.log(dataRoomNo +"번째 삭제 ~")
-										
-									},
-									error : function(XHR, status, error) {
-										console.error(status + " : "
-												+ error);
-									} 
-								});
-					        	
-					        	
-					        	
-					        }
-							
-							var checkedfolderlength = $('input:checkbox[name="checkingFolderBox"]:checked').length
-							console.log(checkedfolderlength);
-							
-							 for(i=0;i<checkedfolderlength;i++){
-						        	console.log( i + "번째 폴더 : " + $("input[name='checkingFolderBox']").eq(i).attr("value") );
-						        	var dataRoomNo = $("input[name='checkingFolderBox']").eq(i).attr("value");
-
-									//체크박스에 폴더가 있을 시에 폴더안에 데이터들이 있으면 삭제 불가능하게 만들자 
+							if(checkedfilelength != 0){
+								for(i=0;i<checkedfilelength;i++){
+						        	console.log( i + "번째 파일 : " + $('input:checkbox[name="checkingFileBox"]:checked').eq(i).attr("value") );
+						        	var fileNo = $('input:checkbox[name="checkingFileBox"]:checked').eq(i).attr("value") 
 						        	
-						        	/* 
+						        	
 						        	$.ajax({
-										url : "${pageContext.request.contextPath }/dataroom/deleteFolder",
+										url : "${pageContext.request.contextPath }/{coursePath}/dataroom/deleteFile",
 										type : "post",
 										data : {
-											dataRoomNo:dataRoomNo
+											fileNo:fileNo
 										},
 										dataType : "json",
-										success : function(boolean) {
-											if(boolean == 'true'){
-												
-												
+										success : function(count) {
+											console.log( count+"번삭제 ~")
+											
+											console.log("refresh here!!");
+											$("#fileList").empty("")
+											strList = "";
+											var dataRoomNo = $(
+													'input:checkbox[name="dataRoomNoByInput"]:checked')
+													.val();
+											if (dataRoomNo == -1) {
+												console.log("-1~~");
+												var dataRoomNo = 1;
 											}
+											var courseNo = '${courseNo}';
+											$.ajax({
+												url : "${pageContext.request.contextPath }/{coursePath}/dataroom/selectFolderVo",
+												type : "post",
+												data : {
+													dataRoomNo : dataRoomNo
+												},
+												dataType : "json",
+												success : function(pRoomNo) {
+													console.log(pRoomNo);
+													if (pRoomNo != 0) {
+														strList += "	<li>";
+														strList += "		<div class='file-control'>";
+														strList += "			<label for='file-list-1'></label>";
+														strList += "		</div>";
+														strList += "		<div class='file-attach-icon'></div> ";
+														strList += "		<div id ='FolderBefore'>";
+														strList += "			<div class='media-block'>";
+														strList += "				<div class='media-left'>";
+														strList += "					<i class='demo-psi-folder' data-dataroomno="+pRoomNo+"></i>";
+														strList += "				</div>";
+														strList += "				<div class='media-body'>";
+														strList += "					<p class='file-name single-line'>...</p>";
+														strList += "				</div>";
+														strList += "			</div>";
+														strList += "		</div>";
+														strList += "	</li>";
+													console.log("hi")	
+													console.log(strList);
+													$("#fileList").prepend(strList);
+													strList = "";
+													}
+													
+
+													//2. 폴더하고 파일리스트 뽑아주는것 
+													$.ajax({
+																url : "${pageContext.request.contextPath }/{coursePath}/dataroom/folderList",
+																type : "post",
+																dataType : "json",
+																data : {
+																	courseNo : courseNo,
+																	dataRoomNo : dataRoomNo
+																},
+																success : function(list) {
+																	console.log(list);
+																	console.log(list[0].dataRoomNo);
+																	var no = list[0].dataRoomNo;
+
+																	strList2 = "";
+																	strList = "";
+																	
+
+																				console.log(dataRoomNo);
+																				console.log( "살려줘 !!!!!!!!!!!!");
+
+																	for (var i = 0; i < list.length; i++) {
+																		console.log(list.length);
+																		strFolderList(list[i]);
+																	}
+																	$("#fileList").append(strList);
+																	strList = "";
+
+																	$.ajax({
+																				url : "${pageContext.request.contextPath }/{coursePath}/dataroom/fileList",
+																				type : "post",
+																				data : {
+																					courseNo : courseNo,
+																					dataRoomNo : dataRoomNo
+																				},
+																				dataType : "json",
+																				success : function(list) {
+																					console.log(list);
+																					console
+																							.log(list[0].dataRoomNo);
+																					var no = list[0].dataRoomNo;
+
+																					for (var i = 0; i < list.length; i++) {
+																						console
+																								.log(list.length);
+
+																						strFileList(list[i]);
+
+																					}
+																					$("#fileList")
+																							.append(
+																									strList2);
+
+																					strList2 = "";
+																				},
+																				error : function(XHR,
+																						status, error) {
+																					console
+																							.error(status
+																									+ " : "
+																									+ error);
+																				}
+																	});
+
+																},
+																error : function(XHR, status, error) {
+																	console.error(status + " : "
+																			+ error);
+																}
+													});
+
+													//!폴더하고 파일리스트 뽑아주는것 
+
+												},
+												error : function(XHR, status, error) {
+													console.error(status + " : " + error);
+												}
+									});
+											
+											
+											
+											
 											
 										},
 										error : function(XHR, status, error) {
 											console.error(status + " : "
 													+ error);
 										} 
-									});*/
-									
-									
+									});
+						        	
+						        	
 						        	
 						        }
+								
+							}
+			
+						
+							
+							var checkedfolderlength = $('input:checkbox[name="checkingFolderBox"]:checked').length
+							console.log(checkedfolderlength);
+							if(checkedfolderlength != 0 ){
+								
+								 for(i=0;i<checkedfolderlength;i++){
+							        	console.log( i + "번째 폴더 : " + $('input:checkbox[name="checkingFolderBox"]:checked').eq(i).attr("value") );
+							        	var dataRoomNo = $('input:checkbox[name="checkingFolderBox"]:checked').eq(i).attr("value") ;
 
-							//삭제된후에 같은 데이터룸의 리스트들을 다시 뽑아와야한다.
+										//체크박스에 폴더가 있을 시에 폴더안에 데이터들이 있으면 삭제 불가능하게 만들자 
+							        	
+							        	
+							        	$.ajax({
+											url : "${pageContext.request.contextPath }/{coursePath}/dataroom/deleteFolder",
+											type : "post",
+											data : {
+												dataRoomNo:dataRoomNo
+											},
+											dataType : "json",
+											success : function(aa) {
+												console.log(aa);
+												
+												if(aa == 1){
+													console.log("refresh here!!");
+													$("#fileList").empty("")
+													strList = "";
+													var dataRoomNo = $(
+															'input:checkbox[name="dataRoomNoByInput"]:checked')
+															.val();
+													if (dataRoomNo == -1) {
+														console.log("-1~~");
+														var dataRoomNo = 1;
+													}
+													var courseNo = '${courseNo}';
+													$.ajax({
+														url : "${pageContext.request.contextPath }/{coursePath}/dataroom/selectFolderVo",
+														type : "post",
+														data : {
+															dataRoomNo : dataRoomNo
+														},
+														dataType : "json",
+														success : function(pRoomNo) {
+															console.log(pRoomNo);
+															if (pRoomNo != 0) {
+																strList += "	<li>";
+																strList += "		<div class='file-control'>";
+																strList += "			<label for='file-list-1'></label>";
+																strList += "		</div>";
+																strList += "		<div class='file-attach-icon'></div> ";
+																strList += "		<div id ='FolderBefore'>";
+																strList += "			<div class='media-block'>";
+																strList += "				<div class='media-left'>";
+																strList += "					<i class='demo-psi-folder' data-dataroomno="+pRoomNo+"></i>";
+																strList += "				</div>";
+																strList += "				<div class='media-body'>";
+																strList += "					<p class='file-name single-line'>...</p>";
+																strList += "				</div>";
+																strList += "			</div>";
+																strList += "		</div>";
+																strList += "	</li>";
+															console.log("hi")	
+															console.log(strList);
+															$("#fileList").prepend(strList);
+															strList = "";
+															}
+															
+
+															//2. 폴더하고 파일리스트 뽑아주는것 
+															$.ajax({
+																		url : "${pageContext.request.contextPath }/{coursePath}/dataroom/folderList",
+																		type : "post",
+																		dataType : "json",
+																		data : {
+																			courseNo : courseNo,
+																			dataRoomNo : dataRoomNo
+																		},
+																		success : function(list) {
+																			console.log(list);
+																			console.log(list[0].dataRoomNo);
+																			var no = list[0].dataRoomNo;
+
+																			strList2 = "";
+																			strList = "";
+																			
+
+																						console.log(dataRoomNo);
+																						console.log( "살려줘 !!!!!!!!!!!!");
+
+																			for (var i = 0; i < list.length; i++) {
+																				console.log(list.length);
+																				strFolderList(list[i]);
+																			}
+																			$("#fileList").append(strList);
+																			strList = "";
+
+																			$.ajax({
+																						url : "${pageContext.request.contextPath }/{coursePath}/dataroom/fileList",
+																						type : "post",
+																						data : {
+																							courseNo : courseNo,
+																							dataRoomNo : dataRoomNo
+																						},
+																						dataType : "json",
+																						success : function(list) {
+																							console.log(list);
+																							console
+																									.log(list[0].dataRoomNo);
+																							var no = list[0].dataRoomNo;
+
+																							for (var i = 0; i < list.length; i++) {
+																								console
+																										.log(list.length);
+
+																								strFileList(list[i]);
+
+																							}
+																							$("#fileList")
+																									.append(
+																											strList2);
+
+																							strList2 = "";
+																						},
+																						error : function(XHR,
+																								status, error) {
+																							console
+																									.error(status
+																											+ " : "
+																											+ error);
+																						}
+																			});
+
+																		},
+																		error : function(XHR, status, error) {
+																			console.error(status + " : "
+																					+ error);
+																		}
+															});
+
+															//!폴더하고 파일리스트 뽑아주는것 
+
+														},
+														error : function(XHR, status, error) {
+															console.error(status + " : " + error);
+														}
+											});
+													
+												}else{
+													
+													
+													console.log("fail ")
+													
+													alert("폴더에 내용물이 들어있습니다! ")
+												}
+												
+												
+												
+												
+												
+												
+												
+												
+											},
+											error : function(XHR, status, error) {
+												console.error(status + " : "
+														+ error);
+											} 
+										});
+										
+										
+							        	
+							        }
+
+								//삭제된후에 같은 데이터룸의 리스트들을 다시 뽑아와야한다.
+							}
+
 
 		});
 

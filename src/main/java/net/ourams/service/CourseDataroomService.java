@@ -175,18 +175,35 @@ public class CourseDataroomService {
 	}
 	
 	
+	
+	
 	//폴더 삭제할때 안에 파일이나 폴더를 보고 삭제한다 
 	public boolean deleteFolder(CourseDataroomVo vo) {
+		System.out.println("start delete folder");
 		if(courseDataroomDao.deleteBeforeCountFile(vo)==0&&courseDataroomDao.deleteBeforeCountFolder(vo)==0) {
+			System.out.println("clear");
 			courseDataroomDao.deleteDataRoom(vo);
 			return true;
 		}
+		System.out.println("fail");
 		return false;
 	}
 	
 	//파일 삭제 
 	public int deleteFile(CourseDataroomVo vo) {
+		
+		CourseDataroomVo vo2 = courseDataroomDao.DataroomfileNo(vo);
+		
+		int count2 = courseDataroomDao.deleteDataroomfiletag(vo2);
+		System.out.println(count2);
+		System.out.println("file tag delte");
+		int count3 = courseDataroomDao.deleteDataroomfile(vo);
+		System.out.println(count3);
+		System.out.println("df delete");
+		
+		
 		int count = courseDataroomDao.deleteFile(vo);
+		System.out.println("delete complete ");
 		return count; 
 	}
 	

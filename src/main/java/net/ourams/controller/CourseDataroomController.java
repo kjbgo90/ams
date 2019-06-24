@@ -113,6 +113,10 @@ public class CourseDataroomController {
 				System.out.println("filePath: " + filePath);
 				
 				s3Util.fileUpload(bucketName, file, exName, saveName);
+				
+				
+				
+				
 				String url = s3Util.getFileURL(bucketName, saveName);
 				model.addAttribute("url", url);
 		CourseDataroomVo vo = new CourseDataroomVo();
@@ -212,21 +216,32 @@ public class CourseDataroomController {
 	}
 	
 	
+	
+	
 	@ResponseBody
 	@RequestMapping(value = "/deleteFolder" , method = RequestMethod.POST)
-	public boolean deleteFolder(@RequestParam("dataRoomNo") int dataRoomNo) {
+	public int deleteFolder(@RequestParam("dataRoomNo") int dataRoomNo) {
 		CourseDataroomVo vo = new CourseDataroomVo();
 		vo.setDataRoomNo(dataRoomNo);
-		return CourseDataroomService.deleteFolder(vo);
+		if(CourseDataroomService.deleteFolder(vo) == true) {
+			System.out.println("complete");
+			int aa = 1;
+			return aa;
+		}else {
+			System.out.println("uncomplete");
+			int aa= 0;
+			return aa;
+		}
 	}
 	
-	
+	@ResponseBody
 	@RequestMapping(value = "/deleteFile", method = RequestMethod.POST)
-	public int deleteFile(@RequestParam("dataRoomNo") int fileNo){
-		System.out.println(fileNo);
+	public int deleteFile(@RequestParam("fileNo") int fileNo){
+		System.out.println("delete" + fileNo);
 		CourseDataroomVo vo = new CourseDataroomVo();
-		vo.setDataRoomNo(fileNo);
-		return CourseDataroomService.deleteFile(vo);
+		vo.setFileNo(fileNo);
+		int count = CourseDataroomService.deleteFile(vo);
+		return count;
 	}
 	
 	@ResponseBody

@@ -11,6 +11,7 @@ import net.ourams.vo.MyPageVo;
 import net.ourams.vo.PostVo;
 import net.ourams.vo.SubmitVo;
 import net.ourams.vo.TimelineVo;
+import net.ourams.vo.UserVo;
 
 @Repository
 public class MyMainPageDao {
@@ -35,6 +36,12 @@ public class MyMainPageDao {
 		List<PostVo> list = sqlSession.selectList("myPage.selectQna", vo);
 		return list;
 	}
+	
+	//posttype=? -> notice qna
+		public List<PostVo> selectQnaAllList(PostVo vo){
+			List<PostVo> list = sqlSession.selectList("myPage.selectQnaAllList", vo);
+			return list;
+		}
 	
 	public PostVo selectCoursePath(PostVo vo1) {
 		PostVo vo = sqlSession.selectOne("myPage.selectCoursePath", vo1);
@@ -63,5 +70,8 @@ public class MyMainPageDao {
 		return list;
 	}
 	
+	public int updateUser(UserVo vo) {
+		return sqlSession.update("myPage.updateUser", vo);
+	}
 	
 }

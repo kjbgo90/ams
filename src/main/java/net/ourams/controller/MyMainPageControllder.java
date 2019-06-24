@@ -31,17 +31,34 @@ public class MyMainPageControllder {
 	@Autowired
 	private MyMainPageService myMainPageService;
 	
+	@Auth
 	@RequestMapping(value = "/index")
-	public String mainPage(
-			Model model) {
+	public String mainPage(@AuthUser UserVo authUser ,Model model) {
 		System.out.println("start main");
-		
 		return "main/myPage";
 	}
 	
+	
+	@Auth
 	@RequestMapping("/mainform")
-	public String mainFormPage() {
-		return "";
+	public String mainFormPage(@AuthUser UserVo authUser) {
+		if(authUser.getUserType() == 1) {
+			return "main/myPage";
+		}else if(authUser.getUserType() == 0) {
+			return "ams/index";
+		}
+		return "main/mypageForStudent";
+	}
+	
+	@Auth
+	@RequestMapping("/mainassignment")
+	public String mainassignment(@AuthUser UserVo authUser) {
+		if(authUser.getUserType() == 1) {
+			return "main/myAssignment";
+		}else if(authUser.getUserType() == 0) {
+			return "ams/index";
+		}
+		return "main/myAssignmentForStudent";
 	}
 	
 
@@ -114,12 +131,42 @@ public class MyMainPageControllder {
 		return list;
 	}
 	
+
+	@ResponseBody
+	@RequestMapping(value = "/selectQnaAllList", method = RequestMethod.POST)
+	public List<PostVo> selectQnaAllList(@Param("userNo") int userNo){
+		System.out.println("selectQna start");
+		PostVo vo = new PostVo();
+		vo.setUserNo(userNo);
+		List<PostVo> list = myMainPageService.selectQnaAllList(vo);
+		
+		System.out.println(list.toString());
+		return list;
+	}
+	
 	@Auth
 	@RequestMapping(value = "/editForm")
 	public String editForm( @AuthUser UserVo authUser) {
 		System.out.println("start main");
 		
 		return "main/editForm";
+	}
+	
+	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+	public String editUser(@RequestParam("username") String userName,
+							@RequestParam("userno") int userNo,
+							@RequestParam("password") String password,
+							@RequestParam("confirmPassword") String confirmPassword) {
+		System.out.println("edit user");
+		UserVo vo = new UserVo();
+		vo.setUserName(userName);
+		vo.setUserNo(userNo);
+		vo.setPassword(password);
+		
+		System.out.println(vo.toString());
+		myMainPageService.updateUser(vo);
+		
+		return "redirect:/myPage/mainform";
 	}
 	
 	@ResponseBody

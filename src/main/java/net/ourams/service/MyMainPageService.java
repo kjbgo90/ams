@@ -46,6 +46,15 @@ public class MyMainPageService {
 		return list;
 	}
 
+	
+
+	// post type = 2
+	public List<PostVo> selectQnaAllList(PostVo vo) {
+
+		vo.setRnum(4);
+		List<PostVo> list = myMainPageDao.selectQnaAllList(vo);
+		return list;
+	}
 	// post type = 1
 	public List<PostVo> selectNotice(PostVo vo) {
 		vo.setRnum(4);
@@ -251,6 +260,8 @@ public class MyMainPageService {
 	      return map;
 	   }
 	
-	
+		public int updateUser(UserVo vo) {
+			return myMainPageDao.updateUser(vo);
+		}
 	
 }

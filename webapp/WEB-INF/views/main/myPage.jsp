@@ -204,28 +204,27 @@
 											</div>
 											<div class="blog-content">
 												<div class="blog-title media-block">
+													<!-- 
 													<div id="assignmentPercentFileList"
 														class="media-right textright">
 														<a href="#"
 															class="btn btn-icon demo-pli-paperclip icon-lg add-tooltip"
 															data-original-title="Add file 22" data-container="body"></a>
-													</div>
+													</div> 
+													-->
 													<div id="assignmentPercentTitle" class="media-body">
 														<a href="#" class="btn-link">
-															<h2>최근 과제 1</h2>
+															<h2>과제 없음</h2>
 														</a>
 													</div>
 												</div>
 												<div id="assignmentPercentContent" class="blog-body">
-													<p>최근 과제 내용~~</p>
+													<p>과제가 없습니다 !</p>
 												</div>
 											</div>
 											<div class="blog-footer">
-												<div id="assignmentPercentRegdate" class="media-left">17 Days ago</div>
+												<!--<div id="assignmentPercentRegdate" class="media-left">17 Days ago</div>  -->
 											</div>
-											<br> <br>
-											<button id="demo-update-interval"
-												class="btn btn-block  btn-primary">Update Chart</button>
 											<br> <br>
 
 										</div>
@@ -327,13 +326,13 @@
 									<div class="pad-all">
 										<div id="demo-gallery-3" style="display: none;">
 
-											<a href="#"> <img alt="The winding road"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile1.jpg"
+											<a href="#"> 
+												<img alt="The winding road" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile1.jpg"
 												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile1.jpg"
-												data-description="The winding road description"
-												style="display: none">
-											</a> <a href="#"> <img alt="Pancake"
-												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile2.jpg"
+												data-description="The winding road description" style="display: none">
+											</a> 
+											<a href="#"> 
+											<img alt="Pancake" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile2.jpg"
 												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile2.jpg"
 												data-description="A pancake is a flat cake, often thin and round, prepared from a starch-based batter"
 												style="display: none">
@@ -450,12 +449,12 @@
 													their place and supplies it with the necessary regelialia.
 													It is a paradisematic country, in which roasted parts of
 													sentences fly into your mouth.</p>
-												<a href="#" class="task-footer"> <span
-													class="box-inline"> <span class="pad-rgt"><i
-															class="demo-pli-speech-bubble-7"></i> 45</span> <span
-														class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-												</span> <span class="text-sm"><i
-														class="demo-pli-clock icon-fw text-main"></i>9:25</span>
+												<a href="#" class="task-footer">
+												 <span class="box-inline"> <span class="pad-rgt">
+												 <i class="demo-pli-speech-bubble-7"></i> 45</span> 
+												 <span class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
+												</span> 
+												<span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>9:25</span>
 												</a>
 											</div>
 											<div class="panel-body bord-btm">
@@ -528,8 +527,9 @@
 									<thead>
 										<tr>
 											<th>번호</th>
-											<th>등록일</th>
 											<th>제목</th>
+											<th>과목</th>
+											<th>등록일</th>
 											<th>글쓴이</th>
 											<th>조회수</th>
 										</tr>
@@ -654,9 +654,15 @@
 										dataType : "json",
 										success : function(map) {
 											console.log(map);
-											
-											//과제 제출률 
-											$("#assignmentPercentInfo").html("<blockquote class='bq-sm bq-open bq-close mar-no'>과제 제출률이 현저히 낮습니다!!222</blockquote>")
+											if( map.submitPercent <=40){
+												//과제 제출률 
+												$("#assignmentPercentInfo").html("<blockquote class='bq-sm bq-open bq-close mar-no'>과제 제출률이 현저히 낮습니다!!</blockquote>")
+												
+											}else{
+												//과제 제출률 
+												$("#assignmentPercentInfo").html("<blockquote class='bq-sm bq-open bq-close mar-no'>과제 제출률이 높습니다!!</blockquote>")
+												
+											}
 											
 											//과제 타이틀 
 											$("#assignmentPercentTitle").html("<a href='#' class='btn-link'><h2>"+map.lastAssignmentTitle+"</h2></a>")
@@ -666,7 +672,7 @@
 											
 											
 											//과제 기한
-											$("#assignmentPercentRegdate").html("17 Days ago")
+											//$("#assignmentPercentRegdate").html("17 Days ago")
 											
 											
 											var aa = $('#demo-pie-7-1').data('percent' );
@@ -702,11 +708,11 @@
 							                     hideHover : 'auto'
 							                  });
 
-											// $('.demo-pie').each(function() {
+											 $('.demo-pie').each(function() {
 																// 여기서 임의의 숫자를 넣어주고 있다 여기서 숫자를 바꿔서 넣자 
-																var newVal = 20 //map.submitPercent;
-											//					$(this).data('easyPieChart').update(newVal);
-											//				});
+																var newVal = map.submitPercent;
+																$(this).data('easyPieChart').update(newVal);
+														});
 
 										},
 										error : function(XHR, status, error) {
@@ -792,14 +798,19 @@
 										},
 										dataType : "json",
 										success : function(list) {
-
+											console.log(list);
+											console.log(list.length);
 											if (list.length == 0) {
-												$("#blogList").html(
+												$("#selectNotice").html(
 														"등록된 게시글이 없습니다.");
 											} else {
 												str = "";
 												for (var i = 0; i < list.length; i++) {
 													courseNo = list[i].courseNo
+													
+													
+													
+													
 													str += "<tr>"
 													str += "<td>"
 															+ list[i].rnum
@@ -811,6 +822,9 @@
 															+ "</a></td>"
 													str += "<td><span class='text-muted'>"
 															+ list[i].regDate
+															+ "</span></td>"
+													str += "<td><span class='text-muted'>"
+															+ list[i].courseName
 															+ "</span></td>"
 													str += "<td><a href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+" class='btn-link'>"
 															+ list[i].userName
@@ -844,25 +858,28 @@
 							//qna List 
 							$
 									.ajax({
-										url : "${pageContext.request.contextPath }/myPage/selectQna",
+										url : "${pageContext.request.contextPath }/myPage/selectQnaAllList",
 										type : "post",
 										data : {
 											userNo : userNo
 										},
 										dataType : "json",
 										success : function(list) {
+											console.log("QNA"+list);
+											console.log(list.length);
 											if (list.length == 0) {
 												$("#blogList").html(
 														"검색된 게시글이 없습니다.");
 											} else {
 												str = "";
 												for (var i = 0; i < list.length; i++) {
-
+													console.log("coursePath is " + list[i].coursePath)
+													
 													str += "<tr>"
 													str += "<td>"
 															+ list[i].rnum
 															+ "</td>"
-													str += "<td><a class='btn-link' href='${pageContext.request.contextPath }/${coursePath}/notice/read/"+list[i].postNo+"'>["
+													str += "<td><a class='btn-link' href='${pageContext.request.contextPath }/"+list[i].coursePath+"/notice/read/"+list[i].postNo+"'>["
 															+ list[i].subjectTitle
 															+ "]"
 															+ list[i].postTitle

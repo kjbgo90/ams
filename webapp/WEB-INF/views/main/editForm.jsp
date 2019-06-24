@@ -110,10 +110,10 @@
 									<h3 class="panel-title">개인정보 수정</h3>
 								</div>
 
-								<form id="demo-bvd-notempty" action="#" class="form-horizontal">
+								<form id="demo-bvd-notempty"  action="${pageContext.request.contextPath }/myPage/updateUser" method="post" class="form-horizontal">
 									<div class="panel-body">
 										<p class="bord-btm pad-ver text-main text-bold">개인정보 변경</p>
-
+										<input type="text" class="form-control" name="userno"  value="${authUser.userNo}">
 										<!--NOT EMPTY VALIDATOR-->
 										<!--===================================================-->
 										<fieldset>
@@ -121,17 +121,10 @@
 												<label class="col-lg-3 control-label">Username</label>
 												<div class="col-lg-7">
 													<input type="text" class="form-control" name="username"
-														placeholder="Username" value="${authUser.userName }">
+														placeholder="username" value="${authUser.userName }">
 												</div>
 											</div>
-											<div class="form-group">
-												<div class="col-lg-7 col-lg-offset-3">
-													<div class="checkbox">
-														<input id="demo-checkbox-1" class="magic-checkbox" type="checkbox" name="acceptTerms"> 
-														<label for="demo-checkbox-1"> Accept the terms and policies</label>
-													</div>
-												</div>
-											</div>
+											
 										</fieldset>
 										<!--===================================================-->
 
@@ -141,18 +134,6 @@
 
 										<!--===================================================-->
 										<br> <br>
-										<!--REGULAR EXPRESSION BASED VALIDATORS-->
-										<!--===================================================-->
-										<fieldset>
-											<div class="form-group">
-												<label class="col-lg-3 control-label">Email address</label>
-												<div class="col-lg-7">
-													<input type="email" class="form-control" name="email"
-														placeholder="email"  value="${authUser.email }">
-												</div>
-											</div>
-
-										</fieldset>
 										<!--===================================================-->
 										<fieldset>
 											<div class="form-group">
