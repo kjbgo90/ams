@@ -186,7 +186,7 @@ public class CourseAssignmentController {
 		}
 		System.out.println("###############################################################################");
 		System.out.println(assignmentVo);
-		int count = assignmentService.modifyAssignment(assignmentVo);
+		int count = assignmentService.modifyAssignment(assignmentVo, coursePath);
 
 		JSONResult jsonResult;
 		if (count != 0) {
@@ -205,7 +205,7 @@ public class CourseAssignmentController {
 		System.out.println("assignmentSubmit 실행");
 		System.out.println(submitVo.toString());
 
-		submitVo = assignmentService.submit(submitVo);
+		submitVo = assignmentService.submit(submitVo, coursePath);
 
 		JSONResult jsonResult;
 		if (submitVo != null) {
@@ -366,7 +366,7 @@ public class CourseAssignmentController {
 		System.out.println(endDate);
 		assignmentVo.setEndDate(endDate);
 
-		int count = assignmentService.enrollAssignment(assignmentVo);
+		int count = assignmentService.enrollAssignment(assignmentVo, coursePath);
 
 		JSONResult jsonResult;
 		if (count != 0) {
@@ -379,13 +379,27 @@ public class CourseAssignmentController {
 	}
 
 	@Auth
+	@RequestMapping(value = "/assignmentDelete", method = RequestMethod.GET)
+	public String assignmentDelete(@PathVariable("coursePath") String coursePath, @AuthUser UserVo authUser,
+			Model model, @RequestParam("assignmentNo") int assignmentNo) {
+		System.out.println("assignmentDelete 실행");
+
+		int count = assignmentService.deleteAssignment(assignmentNo, authUser.getUserNo(), coursePath);
+		if(count != 1) {
+			System.out.println("과제 삭제 실패");
+		}
+
+		return "redirect:/" + coursePath + "/assignment/list";
+	}
+	
+	@Auth
 	@ResponseBody
 	@RequestMapping(value = "/saveScore", method = RequestMethod.POST)
 	public JSONResult saveScore(@PathVariable("coursePath") String coursePath, @RequestBody SubmitVo submitVo) {
 		System.out.println("saveScore 실행");
 		System.out.println(submitVo.toString());
 
-		int count = assignmentService.saveScore(submitVo);
+		int count = assignmentService.saveScore(submitVo, coursePath);
 
 		JSONResult jsonResult;
 		if (count != 0) {
@@ -423,9 +437,8 @@ public class CourseAssignmentController {
 		System.out.println("aws 파일업로드");
 		System.out.println(file.getOriginalFilename());
 		String fileName = file.getOriginalFilename();
-		s3Util.fileUpload(bucketName, file);
+		
 		s3Util.getFileURL(bucketName, fileName);
-		String url = s3Util.getFileURL(bucketName, file.getOriginalFilename());
 		// 확장자
 		String exName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 		System.out.println("exName: " + exName);
@@ -438,9 +451,11 @@ public class CourseAssignmentController {
 		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
 		System.out.println("saveName: " + saveName);
 
+		String url = s3Util.getFileURL(bucketName, saveName);
 		// 파일패스
 		String filePath = url;
 		System.out.println("filePath: " + filePath);
+		s3Util.fileUpload(fileName, file, exName, saveName);
 
 		fileUpLoadVo vo = new fileUpLoadVo();
 		vo.setFileName(fileName);
