@@ -252,6 +252,14 @@ public class CourseMainService {
 		return courseMDao.selectFbqPercentByFbqNo(fbaVo.getFbqNo());
 	}
 
+	public List<CourseVo> getCourseList(int userNo) {
+		return courseMDao.selectCourseListByUserNo(userNo);
+	}
+
+	public List<CourseVo> getCourseList(int userNo, int userType) {
+		return courseMDao.selectCourseListByUserNoAndUserType(userNo, userType);
+	}
+
 	
 
 }

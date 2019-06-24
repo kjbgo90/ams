@@ -147,68 +147,28 @@
 								<br>
 								<c:if test="${authUser.userType eq 1 }">
 
-									<div id="teacher-menu-carousel" class="carousel slide" data-interval="false" data-ride="carousel">
-
-										<!--Indicators-->
-										<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-										<ol class="carousel-indicators out">
-											<li data-slide-to="0" data-target="#teacher-menu-carousel" class="active"></li>
-											<li data-slide-to="1" data-target="#teacher-menu-carousel"></li>
-										</ol>
-										<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-
-										<div class="carousel-inner text-center">
-
-											<!--Item 1-->
-											<div class="item active">
-												<div class="panel-body text-left" style="white-space: normal;">
-													<label class="control-label"><span class="text-main text-bold mar-no">현재 진행중인 과목</span></label>
-													<p class="text" id="nowSubjectTitle"></p>
-													<br> <label class="control-label"><span class="text-main text-bold mar-no">챕터 선택</span></label>
-													<div class="select">
-														<select class="form-control" id="chapterSelector" disabled="disabled">
-														</select>
-													</div>
-													<br>
-													<br>
-													<br> <label class="control-label"><span class="text-main text-bold mar-no">질문 내용</span></label>
-													<textarea placeholder="질문 내용을 입력해주세요." rows="10" class="form-control" id="questionContent" disabled="disabled"></textarea>
-												</div>
-												<div class="panel-footer text-center">
-													<button class="media btn btn-info btn-labeled btn-rounded btn-sm" data-target='#feedbackQuestion-modal' data-toggle='modal' id="feedbackQuestionButton" disabled="disabled">
-														<div class="media-left">
-															<span class="icon-wrap icon-wrap-xs icon-circle alert-icon"> <i class="fa fa-quora icon-2x"></i>
-															</span>
-														</div>
-														<div class="media-body text-center" style="padding-top: 4px;">
-															<p class="alert-message text-bold">Feedback</p>
-															<p class="alert-message text-bold">Question</p>
-														</div>
-													</button>
-												</div>
-											</div>
-
-											<!--Item 2-->
-											<div class="item">
-												<div class="panel-body text-left" style="white-space: normal;">
-													<label class="control-label"><span class="text-main text-bold mar-no">과목 선택</span></label>
-													<div class="select">
-														<select class="form-control" id="subjectSelector" disabled="disabled">
-														</select>
-													</div>
-													<br>
-													<label class="control-label"><span class="text-main text-bold mar-no">질문 리스트</span></label>
-													<div class="list-group" id="questionList">
-														<c:forEach items="${SCListMap.subjectList }" var="vo">
-															<a href="#" class="list-group-item subjectPick subject${vo.subjectNo }" data-subjectno="${vo.subjectNo }"> <span class="text-main text-semibold subTitle">${vo.subjectTitle }</span><br>
-																<small class="text-muted subDate">${vo.startDate } - ${vo.endDate }</small>
-															</a>
-														</c:forEach>
-													</div>
-												</div>
-											</div>
-
+									<div class="panel-body text-left" style="white-space: normal;">
+										<label class="control-label"><span class="text-main text-bold mar-no">현재 진행중인 과목</span></label>
+										<p class="text" id="nowSubjectTitle"></p>
+										<br> <label class="control-label"><span class="text-main text-bold mar-no">챕터 선택</span></label>
+										<div class="select">
+											<select class="form-control" id="chapterSelector" disabled="disabled">
+											</select>
 										</div>
+										<br> <br> <br> <label class="control-label"><span class="text-main text-bold mar-no">질문 내용</span></label>
+										<textarea placeholder="질문 내용을 입력해주세요." rows="10" class="form-control" id="questionContent" disabled="disabled"></textarea>
+									</div>
+									<div class="panel-footer text-center">
+										<button class="media btn btn-info btn-labeled btn-rounded btn-sm" data-target='#feedbackQuestion-modal' data-toggle='modal' id="feedbackQuestionButton" disabled="disabled">
+											<div class="media-left">
+												<span class="icon-wrap icon-wrap-xs icon-circle alert-icon"> <i class="fa fa-quora icon-2x"></i>
+												</span>
+											</div>
+											<div class="media-body text-center" style="padding-top: 4px;">
+												<p class="alert-message text-bold">Feedback</p>
+												<p class="alert-message text-bold">Question</p>
+											</div>
+										</button>
 									</div>
 
 								</c:if>

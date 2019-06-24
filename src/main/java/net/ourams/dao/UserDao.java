@@ -33,6 +33,10 @@ public class UserDao {
 	public UserVo selecteUser(int userNo) {
 		return sqlSession.selectOne("user.selectByNo", userNo);
 	}
+
+	public int insertUsersByUserVO(UserVo joinUserVo) {
+		return sqlSession.insert("user.insertUsersByUserVo", joinUserVo);
+	}
 	
 	
 	

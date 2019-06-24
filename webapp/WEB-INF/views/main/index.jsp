@@ -24,9 +24,20 @@
 <!--Nifty Premium Icon [ DEMONSTRATION ]-->
 <link href="${pageContext.request.contextPath }/assets/css/demo/nifty-demo-icons.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/assets/css/premium/icon-sets/icons/line-icons/premium-line-icons.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/assets/css/ionicons.css" rel="stylesheet">
 
 <!--Nifty Stylesheet [ REQUIRED ]-->
 <link href="${pageContext.request.contextPath }/assets/css/nifty.css" rel="stylesheet">
+
+<!--Animate.css [ OPTIONAL ]-->
+<link href="${pageContext.request.contextPath }/assets/css/animate.css" rel="stylesheet">
+
+<!--Pace - Page Load Progress Par [OPTIONAL]-->
+<link href="${pageContext.request.contextPath }/assets/css/pace.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath }/assets/js/pace.js"></script>
+
+<!--Bootstrap Validator [ OPTIONAL ]-->
+<link href="${pageContext.request.contextPath }/assets/css/bootstrapValidator.css" rel="stylesheet">
 
 </head>
 
@@ -58,10 +69,10 @@
 
 					<!-- login form/ Logo -->
 					<div class="row">
-						<div class="col-lg-10 col-lg-offset-1">
+						<div class="col-xs-10 col-xs-offset-1">
 							<div class="panel panel-body">
 								<div class="panel-body">
-									<div class="col-lg-6 col-lg-offset-1">
+									<div class="col-xs-5 col-xs-offset-1">
 
 										<!-- Panel  Blog -->
 										<!--===================================================-->
@@ -71,30 +82,99 @@
 											</div>
 										</div>
 									</div>
-									<div class="cls-content col-lg-4 col-lg-offset-1">
+									<div class="cls-content col-lg-4 col-lg-offset-1 mar-rgt">
 										<div class="cls-content-sm panel">
 											<div class="panel-body">
-												<div class="mar-ver pad-btm">
-													<h1 class="h3">Account Login</h1>
-													<p>Sign In to your account</p>
-												</div>
-												<form action="index.html">
-													<div class="form-group">
-														<input type="text" class="form-control" placeholder="Username" autofocus>
+												<c:if test="${authUser eq null }">
+													<div class="mar-ver pad-btm">
+														<h1 class="h3">Account Login</h1>
+														<p>Sign In to your account</p>
 													</div>
-													<div class="form-group">
-														<input type="password" class="form-control" placeholder="Password">
+													<form action="user/login">
+														<input type="hidden" name="url" value="${pageContext.request.contextPath }/index">
+														<div class="form-group">
+															<input type="text" class="form-control" name="email" placeholder="Email" autofocus>
+														</div>
+														<div class="form-group">
+															<input type="password" name="password" class="form-control" placeholder="Password">
+														</div>
+														<div class="checkbox pad-btm text-left">
+															<input id="demo-form-checkbox" class="magic-checkbox" type="checkbox"> <label for="demo-form-checkbox">Remember me</label>
+														</div>
+														<button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
+													</form>
+													<div class="pad-all">
+														<a href="#" class="btn-link mar-lft pull-right" data-target='#joinMembershipModal' data-toggle='modal'>회원가입</a>
 													</div>
-													<div class="checkbox pad-btm text-left">
-														<input id="demo-form-checkbox" class="magic-checkbox" type="checkbox"> <label for="demo-form-checkbox">Remember me</label>
+												</c:if>
+												
+												<c:if test="${authUser ne null }">
+													<div class="mar-ver pad-btm">
+														<h1 class="h3">${authUser.userName }님 환영합니다!</h1>
 													</div>
-													<button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
-												</form>
+													<!-- 로그인 유저가 매니저인 경우 -->
+													<c:if test="${authUser.userType eq 0 }">
+														<div class="mar-ver pad-btm">
+															<h1 class="h4">매니저 메뉴</h1>
+															<a href="${pageContext.request.contextPath }/manager" class="btn-link">관리 페이지</a>
+														</div>
+														
+														<div class="mar-ver pad-btm">
+															<h1 class="h5">관리중인 강의</h1>
+															<div id="demo-carousel" class="carousel slide">
+																<div id="indexCourseList" class="carousel-inner text-center">
+																	<!--Item 1-->
+																	<div class="item active">
+																		<h4 class="text-main">강의가 없습니다.</h4>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</c:if>
+													
+													<!-- 로그인 유저가 강사인 경우 -->
+													<c:if test="${authUser.userType eq 1 }">
+														<div class="mar-ver pad-btm">
+															<h1 class="h4">강사 메뉴</h1>
+															<p>관리</p>
+														</div>
+
+														<div class="mar-ver pad-btm">
+															<h1 class="h5">진행중인 강의</h1>
+															<div id="demo-carousel" class="carousel slide">
+																<div id="indexCourseList" class="carousel-inner text-center">
+																	<!--Item 1-->
+																	<div class="item active">
+																		<h4 class="text-main">강의가 없습니다.</h4>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</c:if>
+													
+													<!-- 로그인 유저가 학생인 경우 -->
+													<c:if test="${authUser.userType eq 2 }">
+														<div class="mar-ver pad-btm">
+															<h1 class="h4">학생 메뉴</h1>
+															<a href="${pageContext.request.contextPath }/myPage/indexforstudent" class="btn-link">mypage</a>
+														</div>
+
+														<div class="mar-ver pad-btm">
+															<h1 class="h5">진행중인 강의</h1>
+															<div id="demo-carousel" class="carousel slide">
+																<div id="indexCourseList" class="carousel-inner text-center">
+
+																	<!--Item 1-->
+																	<div class="item active">
+																		<h4 class="text-main">강의가 없습니다.</h4>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</c:if>
+												</c:if>
 											</div>
 
-											<div class="pad-all">
-												<a href="pages-password-reminder.html" class="btn-link mar-rgt">Forgot password ?</a> <a href="pages-register.html" class="btn-link mar-lft">Create a new account</a>
-											</div>
 										</div>
 									</div>
 									<!--===================================================-->
@@ -105,206 +185,10 @@
 						<!-- END QUICK TIPS -->
 					</div>
 
-					<!-- notice -->
-					<div class="row">
-						<div class="col-lg-10 col-lg-offset-1">
-							<div class="panel panel-body">
-								<h3>공지사항</h3>
-								<hr size="5" noshade>
-								<div class="col-lg-4" style="position: absolute; width: 800px; margin: 0px;">
-									<!-- Panel  Blog -->
-									<!--===================================================-->
-									<div class="panel">
-										<div class="blog-header">
-											<img class="img-responsive align-center" src="${pageContext.request.contextPath }/assets/img/shared-img-2.jpg" alt="Image">
-										</div>
-									</div>
-								</div>
-								<div class="panel-body  pull-right col-lg-5">
-									<table id="demo-foo-accordion" class="table toggle-arrow-tiny">
-										<thead>
-											<tr>
-												<th data-toggle="true">순번</th>
-												<th>작성자</th>
-												<th data-hide="all">제목</th>
-												<th data-hide="all">작성 일자</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>22</td>
-												<td>황일영</td>
-												<td>Traffic Court Referee</td>
-												<td>22 Jun 1972</td>
-											</tr>
-											<tr>
-												<td>43</td>
-												<td>orbi</td>
-												<td>Airline Transport Pilot</td>
-												<td>3 Oct 1981</td>
-											</tr>
-											<tr>
-												<td>44</td>
-												<td>비트 교육센터</td>
-												<td>Business Services Sales Representative</td>
-												<td>19 Apr 1969</td>
-											</tr>
-											<tr>
-												<td>58</td>
-												<td>황희지</td>
-												<td>Drywall Stripper</td>
-												<td>13 Dec 1977</td>
-											</tr>
-											<tr>
-												<td>77</td>
-												<td>비트 컴퓨터</td>
-												<td>Aviation Tactical Readiness Officer</td>
-												<td>30 Dec 1991</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- community -->
-					<div class="row">
-						<div class="col-lg-6 col-lg-offset-1">
-							<div class="panel panel-body">
-								<h3>커뮤니티</h3>
-								<hr size="5" noshade>
-								<div class="panel">
-									<div class="blog-header">
-										<img class="img-responsive" src="${pageContext.request.contextPath }/assets/img/shared-img-5.jpg" style="width: 300px;" alt="Image">
-									</div>
-									<div class="blog-content">
-										<div class="blog-title media-block">
-											<div class="media-right textright">
-												<a href="#" class="btn btn-icon demo-psi-twitter icon-lg add-tooltip" data-original-title="Twitter" data-container="body"></a> <a href="#"
-													class="btn btn-icon demo-psi-instagram icon-lg add-tooltip" data-original-title="Instagram" data-container="body"></a>
-											</div>
-											<div class="media-body">
-												<a href="#" class="btn-link">
-													<h2>강남역 5번 출구 주변 맛집</h2>
-												</a>
-											</div>
-										</div>
-										<div class="blog-body">
-											<p>동해도(강남역점)</p>
-											<p>서울시 서초구 서초동 1320-10</p>
-											<!-- <p>강남역 12번 출구로 나와 LIG건물 지하 1층에 위치했다. 회전 초밥 뷔페 집으로, 가격은
-												1만7천원이다. 우선 초밥을 무제한으로 먹을 수 있다는 장점이 있다. 그러나 40분의 식사시간은 다소
-												촉박하다는 느낌을 받는 곳이다. 롤의 종류 대여섯개 정도와 스시는 15종 정도가 있다. 5명 이상 예약
-												가능하다.</p> -->
-										</div>
-									</div>
-									<div class="blog-footer">
-										<div class="media-left">
-											<span class="label label-success">5 Days ago</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="panel panel-body">
-								<h3>Q/A</h3>
-								<hr size="5" noshade>
-								<table id="demo-foo-accordion" class="table toggle-arrow-tiny">
-									<thead>
-										<tr>
-											<th data-toggle="true">순번</th>
-											<th>작성자</th>
-											<th data-hide="all">제목</th>
-											<th data-hide="all">작성 일자</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>12</td>
-											<td>구민수</td>
-											<td>소음 문제</td>
-											<td>22 Jun 1972</td>
-										</tr>
-										<tr>
-											<td>32</td>
-											<td>강보은</td>
-											<td>너무 바람이 세요</td>
-											<td>3 Oct 1981</td>
-										</tr>
-										<tr>
-											<td>45</td>
-											<td>김재봉</td>
-											<td>에어컨 언제 나오나요?</td>
-											<td>19 Apr 1969</td>
-										</tr>
-										<tr>
-											<td>56</td>
-											<td>이건창</td>
-											<td>몇시까지 하나요?</td>
-											<td>13 Dec 1977</td>
-										</tr>
-										<tr>
-											<td>59</td>
-											<td>이종현</td>
-											<td>강의실 언제까지 쓸 수 있죠?</td>
-											<td>30 Dec 1991</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-
-					</div>
-
-					<!-- 학습 지원 센터 -->
-					<div class="row">
-						<div class="col-lg-4 col-lg-offset-1">
-							<div class="panel panel-body">
-								<h3>학습 지원 센터</h3>
-								<hr size="5" noshade>
-								<div class="col-sm-6">
-									<div class="mar-all">
-										<div class="media">
-											<div class="media-left">
-												<i class="icon-lg icon-fw demo-pli-map-marker-2"></i>
-											</div>
-											<div class="media-body">
-												<address>
-													<strong class="text-main"> My Company, Inc.</strong><br> 795 Folsom Ave, Suite 600<br> San Francisco, CA 94107<br>
-												</address>
-											</div>
-										</div>
-
-										<p>
-											<i class="icon-lg icon-fw demo-pli-old-telephone"></i> <span>(123) 456-7890</span>
-										</p>
-										<div class="pad-btm">
-											<i class="icon-lg icon-fw demo-pli-mail"></i> <span>support@mycompany.com</span>
-										</div>
-										<div class="pad-ver">
-											<a href="#" class="mar-rgt box-inline demo-pli-facebook icon-lg add-tooltip" data-original-title="Facebook" data-container="body"></a> <a href="#"
-												class="mar-rgt box-inline demo-pli-twitter icon-lg add-tooltip" data-original-title="Twitter" data-container="body"></a> <a href="#"
-												class="mar-rgt box-inline demo-pli-google-plus icon-lg add-tooltip" data-original-title="Google+" data-container="body"></a> <a href="#"
-												class="mar-rgt box-inline demo-pli-instagram icon-lg add-tooltip" data-original-title="Instagram" data-container="body"></a>
-										</div>
-										<div>
-											<iframe src="https://www.google.com/maps/embed/v1/place?q=New+York+University&amp;key=AIzaSyBSFRN6WWGYwmFi498qXXsD2UwkbmD74v4" frameborder="0" scrolling="no" marginheight="0"
-												marginwidth="0" style="width: 100%; height: 200px;"></iframe>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--===================================================-->
-					<!--End page content-->
-
 
 				</div>
 				<!--===================================================-->
-				<!--END CONTENT CONTAINER-->
+				<!--END Page content-->
 
 
 			</div>
@@ -312,9 +196,6 @@
 			<!--END CONTENT CONTAINER-->
 
 		</div>
-
-		<!-- footer -->
-		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 
 		<!-- SCROLL PAGE BUTTON -->
 		<!--===================================================-->
@@ -325,10 +206,115 @@
 	</div>
 	<!--===================================================-->
 	<!-- END OF CONTAINER -->
+	<div class="modal fade" id="joinMembershipModal" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal" aria-hidden="true">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+
+				<!--Modal header-->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<i class="pci-cross pci-circle"></i>
+					</button>
+					<h4 class="modal-title">회원가입</h4>
+				</div>
+				<!--Modal body-->
+				<div class="modal-body container-fluid" >
+					<div class="panel">
+						<div id="demo-bv-wz">
+							<div class="wz-heading pad-top">
+
+								<!--Nav-->
+								<ul class="row wz-step wz-icon-bw wz-nav-off mar-top">
+									<li class="col-xs-4"><a data-toggle="tab" href="#demo-bv-tab1"> <span class="text-danger"><i class="demo-pli-information icon-2x"></i></span>
+											<p class="text-semibold mar-no">Account</p>
+									</a></li>
+									<li class="col-xs-4"><a data-toggle="tab" href="#demo-bv-tab2"> <span class="text-warning"><i class="demo-pli-male icon-2x"></i></span>
+											<p class="text-semibold mar-no">Profile</p>
+									</a></li>
+									<li class="col-xs-4"><a data-toggle="tab" href="#demo-bv-tab3"> <span class="text-success"><i class="demo-pli-medal-2 icon-2x"></i></span>
+											<p class="text-semibold mar-no">Finish</p>
+									</a></li>
+								</ul>
+							</div>
+
+							<!--progress bar-->
+							<div class="progress progress-xs">
+								<div class="progress-bar progress-bar-primary"></div>
+							</div>
 
 
+							<!--Form-->
+							<form id="demo-bv-wz-form" class="form-horizontal" method="post" action="${pageContext.request.contextPath }/joinmember">
+								<div class="panel-body">
+									<div class="tab-content">
 
+										<!--First tab-->
+										<div id="demo-bv-tab1" class="tab-pane">
+											<div class="form-group">
+												<label class="col-lg-3 control-label">Email</label>
+												<div class="col-lg-7">
+													<input type="text" class="form-control" name="email" placeholder="Email">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-lg-3 control-label">Password</label>
+												<div class="col-lg-7">
+													<input type="password" class="form-control" name="password" placeholder="Password">
+												</div>
+											</div>
+										</div>
 
+										<!--Second tab-->
+										<div id="demo-bv-tab2" class="tab-pane fade">
+											<div class="form-group">
+												<label class="col-lg-3 control-label">이름</label>
+												<div class="col-lg-7">
+													<input type="text" placeholder="Name" name="userName" class="form-control">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-lg-3 control-label">성별</label>
+												<div class="col-lg-7">
+													<div class="form-check mar-all">
+														<input class="form-check-input" type="radio" name="gender" id="exampleRadios1" value="man" checked>
+														<label class="form-check-label" for="exampleRadios1">남성 </label>
+														<input class="form-check-input" type="radio" name="gender" id="exampleRadios2" value="woman">
+  														<label class="form-check-label" for="exampleRadios2">여성 </label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-lg-3 control-label">핸드폰 번호</label>
+												<div class="col-lg-7">
+													<input type="text" placeholder="Phone number" name="phoneNumber" class="form-control">
+												</div>
+											</div>
+										</div>
+
+										<!--Fourth tab-->
+										<div id="demo-bv-tab3" class="tab-pane  mar-btm text-center">
+											<h4>감사합니다.</h4>
+											<p class="text-muted">Finish를 누르면 가입이 완료됩니다. <br>관리자 승인 후 서비스 이용이 가능합니다.</p>
+										</div>
+									</div>
+								</div>
+
+								<!--Footer button-->
+								<div class="panel-footer text-right">
+									<div class="box-inline">
+										<button type="button" class="previous btn btn-primary">이전으로</button>
+										<button type="button" class="next btn btn-primary">다음으로</button>
+										<button type="submit" class="finish btn btn-warning" disabled>Finish</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
 	<!--JAVASCRIPT-->
 	<!--=================================================-->
 
@@ -342,7 +328,104 @@
 
 	<!--NiftyJS [ RECOMMENDED ]-->
 	<script src="${pageContext.request.contextPath }/assets/js/nifty.js"></script>
+	
+	<!--Bootstrap Validator [ OPTIONAL ]-->
+	<script src="${pageContext.request.contextPath }/assets/js/bootstrapValidator.js"></script>
+	
+	<!--Bootstrap Wizard [ OPTIONAL ]-->
+    <script src="${pageContext.request.contextPath }/assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
+    
+    <!--Bootstrap Validator [ OPTIONAL ]-->
+	<script src="${pageContext.request.contextPath }/assets/js/form-wizard.js"></script>
 
 </body>
+
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		var result = "${param.result}";
+		
+		if("${authUser}" != null){
+			var userNo = "${authUser.userNo}";	
+			var userType = "${authUser.userType}";
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath }/index/courselist",
+				type : "post",
+				data : {
+					userNo : userNo,
+					userType : userType
+				},
+				dataType : "json",
+				success : function(list) {
+					console.log(list);
+					console.log(list.length);
+					
+					if(list.length > 0) {
+						var CourseList = "";
+						$("#indexCourseList").empty();
+						
+						for (var i = 0; i < list.length; i++) {
+							// list 찾기 !!
+							if(i == 0){
+								CourseList += "<div class='item active'>";
+							}else {
+								CourseList += "<div class='item'>";
+							}
+	
+							CourseList += "<h4 class='text-main'>" + list[i].courseName + "</h4>";
+							CourseList += "<p>" + list[i].startDate + " ~ " + list[i].endDate + "</p>";
+							CourseList += "<a href='" + list[i].coursePath + "/main' class='btn-link'>이동하기</a>";
+							CourseList += "</div>";
+	
+							$("#indexCourseList").append(CourseList);
+							
+							CourseList = "";
+						}
+						$("#indexCourseList").append("<a class='carousel-control left' data-slide='prev' href='#demo-carousel'> <i class='demo-pli-arrow-left icon-2x'></i></a> ");
+						$("#indexCourseList").append("<a class='carousel-control right' data-slide='next' href='#demo-carousel'> <i class='demo-pli-arrow-right icon-2x'></i></a>");
+						
+					}
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+		}
+		if(result != null){
+			if(result == 1){
+				callNoty("info", "ion-alert", "top-right", 2500, "회원가입 성공", "회원가입을 성공 하였습니다.", "zoomIn", "fadeOut");
+			}
+		}
+	});
+	
+	function callNoty(color, icon, position, time, title, message, animationIn, animationOut){
+		var notyContent = "";
+		
+		notyContent += "<div class='media-left'>";
+		notyContent += "	<span class='icon-wrap icon-wrap-xs icon-circle alert-icon'>";
+		notyContent += "		<i class='" + icon + " icon-2x'></i>";
+		notyContent += "	</span>";
+		notyContent += "</div>";
+		notyContent += "<div class='media-body'>";
+		notyContent += "	<h4 class='alert-title'>" + title + "</h4>";
+		notyContent += "	<p class='alert-message'>" + message + "</p>";
+		notyContent += "</div>";
+		
+		
+		$.niftyNoty({
+			type : color,
+			container : 'floating',
+			floating    : {
+                position    : position,
+                animationIn : animationIn,
+                animationOut: animationOut
+            },
+            html : notyContent,
+            closeBtn    : true,
+			timer : time
+		});
+	}
+</script>
 
 </html>
