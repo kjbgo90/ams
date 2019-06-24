@@ -322,10 +322,24 @@ public class CourseAssignmentService {
 	}
 
 	@Transactional
-	public int saveScore(SubmitVo submitVo, String coursePath) {
+	public List<SubmitVo> saveScore(SubmitVo submitVo, String coursePath) {
 		int count = assignmentDao.updateSubmitScore(submitVo);
 		SubmitVo submitVo2 = assignmentDao.selectSubmitBySubmitNo(submitVo.getSubmitNo());
 		AssignmentVo assignmentVo = assignmentDao.selectAssignmentByAssignmentNo(submitVo2.getAssignmentNo());
+		
+		List<SubmitVo> submitList = assignmentDao.selectSubmitList(submitVo2.getAssignmentNo());
+		List<fileUpLoadVo> fileList = assignmentDao.selectSubmitFileList();
+
+		for (SubmitVo vo : submitList) {
+			List<fileUpLoadVo> submitFileList = new ArrayList<fileUpLoadVo>();
+			for (fileUpLoadVo fileVo : fileList) {
+				if (vo.getSubmitNo() == fileVo.getSubmitNo()) {
+					submitFileList.add(fileVo);
+				}
+			}
+			vo.setFileList(submitFileList);
+		}
+		
 		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
 		String timeLineContent = "[" + courseVo.getCourseName() + "]" + assignmentVo.getAssignmentTitle()
 				+ " 과제 성적이 입력되었습니다!</p>";
@@ -348,7 +362,10 @@ public class CourseAssignmentService {
 		// timelineuser 테이블에 저장
 		assignmentDao.insertTimelineUser(vo2);
 
-		return count;
+		if(count == 1) {
+			System.out.println("성적 입력 성공");
+		}
+		return submitList;
 	}
 
 	public List<fileUpLoadVo> getFileList(AssignmentVo assignmentVo) {

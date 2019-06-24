@@ -1,5 +1,6 @@
 package net.ourams.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -37,7 +38,7 @@ public class CourseAssignmentController {
 	@Autowired
 	private S3Util s3Util;
 
-	private String bucketName = "net.ourams.assignment";
+	private String bucketName = "net.ourams.assignment2";
 
 	// 테스트용
 	@RequestMapping(value = "/init", method = RequestMethod.GET)
@@ -399,11 +400,15 @@ public class CourseAssignmentController {
 		System.out.println("saveScore 실행");
 		System.out.println(submitVo.toString());
 
-		int count = assignmentService.saveScore(submitVo, coursePath);
+		List<SubmitVo> submitList = assignmentService.saveScore(submitVo, coursePath);
 
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("submitVo", submitVo);
+		map.put("submitList", submitList);
+		
 		JSONResult jsonResult;
-		if (count != 0) {
-			jsonResult = JSONResult.success(submitVo);
+		if (submitList != null) {
+			jsonResult = JSONResult.success(map);
 		} else {
 			jsonResult = JSONResult.error(null);
 		}
@@ -455,7 +460,7 @@ public class CourseAssignmentController {
 		// 파일패스
 		String filePath = url;
 		System.out.println("filePath: " + filePath);
-		s3Util.fileUpload(fileName, file, exName, saveName);
+		s3Util.fileUpload(bucketName, file, exName, saveName);
 
 		fileUpLoadVo vo = new fileUpLoadVo();
 		vo.setFileName(fileName);

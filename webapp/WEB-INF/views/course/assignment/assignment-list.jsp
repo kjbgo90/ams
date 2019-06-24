@@ -243,60 +243,109 @@
 									</div>
 								</div>
 							</c:if>
-							<div class="panel panel-bordered-primary" style="padding-left:10px; padding-right:10px;">
+							<div class="panel panel-bordered-primary" style="padding-left: 10px; padding-right: 10px;" id="submitArea">
 								<div class="panel-heading">
-									<h3 class="panel-title text-bold" style="padding-left:7px">제출자 명단</h3>
+									<h3 class="panel-title text-bold" style="padding-left: 7px">제출자 명단</h3>
 								</div>
 								<!--Table-->
-								<table class="table">
-									<thead>
-										<tr>
-											<th>Name</th>
-											<th>File</th>
-											<th>Score</th>
-											<th>Detail</th>
-										</tr>
-									</thead>
-									<tbody id="tbody">
-										<c:forEach items="${submitList}" var="submitVo">
-											<tr id="tr${submitVo.submitNo }">
-												<td>${submitVo.userName}</td>
-												<c:choose>
-													<c:when test="${empty submitVo.fileList}">
-														<td><strong>없음</strong></td>
-													</c:when>
-													<c:otherwise>
-														<td>
-														<c:forEach items="${submitVo.fileList}" var="fileVo">
-															<a href="${fileVo.filepath}"> <strong>${fileVo.fileName}</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i></a>
-														</c:forEach>
-														</td>
-													</c:otherwise>
-												</c:choose>
-												<td>
-													<c:if test="${submitVo.scoreCheck eq 'false'}">
-														<div class="circle-loader">
-															<div class="checkmark draw" style='display: none;'></div>
-														</div>
-													</c:if>
-													<c:if test="${authUser.userType eq 2 }">
-														<c:if test="${submitVo.scoreCheck eq 'true'}">
-															<div class="circle-loader load-complete">
-																<div class="checkmark draw" style='display: block;'></div>
-															</div>
-														</c:if>
-													</c:if>
-													<c:if test="${authUser.userType eq 1 }">
-														<c:if test="${submitVo.scoreCheck eq 'true'}">
+								<c:if test="${authUser.userType eq 1}">
+									<div class="nano has-scroll mar-no pad-no" style="height: 645px;">
+										<div class="nano-content mar-no pad-no" style="height: 645px;">
+											<table class="table">
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>File</th>
+														<th>Score</th>
+														<th>Detail</th>
+													</tr>
+												</thead>
+												<tbody id="tbody1">
+													<c:forEach items="${submitList}" var="submitVo">
+														<tr id="tr${submitVo.submitNo }">
+															<td>${submitVo.userName}</td>
+															<c:choose>
+																<c:when test="${empty submitVo.fileList}">
+																	<td><strong>없음</strong></td>
+																</c:when>
+																<c:otherwise>
+																	<td><c:forEach items="${submitVo.fileList}" var="fileVo">
+																			<a href="${fileVo.filepath}"> <strong>${fileVo.fileName}</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i></a>
+																		</c:forEach></td>
+																</c:otherwise>
+															</c:choose>
+															<td><c:if test="${submitVo.scoreCheck eq 'false'}">
+																	<div class="circle-loader">
+																		<div class="checkmark draw" style='display: none;'></div>
+																	</div>
+																</c:if> <c:if test="${authUser.userType eq 2 }">
+																	<c:if test="${submitVo.scoreCheck eq 'true'}">
+																		<div class="circle-loader load-complete">
+																			<div class="checkmark draw" style='display: block;'></div>
+																		</div>
+																	</c:if>
+																</c:if> <c:if test="${authUser.userType eq 1 }">
+																	<c:if test="${submitVo.scoreCheck eq 'true'}">
 															${submitVo.score }
 														</c:if>
-													</c:if>
-												</td>
-												<td><button id="submit-detail" class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal" data-submitno="${submitVo.submitNo}">click</button></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
+																</c:if></td>
+															<td><button id="submit-detail" class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal" data-submitno="${submitVo.submitNo}">click</button></td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</c:if>
+								<c:if test="${authUser.userType eq 2}">
+									<div class="mar-no pad-no">
+										<div class="mar-no pad-no">
+											<table class="table">
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>File</th>
+														<th>Score</th>
+														<th>Detail</th>
+													</tr>
+												</thead>
+												<tbody id="tbody2">
+													<c:forEach items="${submitList}" var="submitVo">
+														<tr id="tr${submitVo.submitNo }">
+															<td>${submitVo.userName}</td>
+															<c:choose>
+																<c:when test="${empty submitVo.fileList}">
+																	<td><strong>없음</strong></td>
+																</c:when>
+																<c:otherwise>
+																	<td><c:forEach items="${submitVo.fileList}" var="fileVo">
+																			<a href="${fileVo.filepath}"> <strong>${fileVo.fileName}</strong> <i class="demo-psi-paperclip icon-lg icon-fw"></i></a>
+																		</c:forEach></td>
+																</c:otherwise>
+															</c:choose>
+															<td><c:if test="${submitVo.scoreCheck eq 'false'}">
+																	<div class="circle-loader">
+																		<div class="checkmark draw" style='display: none;'></div>
+																	</div>
+																</c:if> <c:if test="${authUser.userType eq 2 }">
+																	<c:if test="${submitVo.scoreCheck eq 'true'}">
+																		<div class="circle-loader load-complete">
+																			<div class="checkmark draw" style='display: block;'></div>
+																		</div>
+																	</c:if>
+																</c:if> <c:if test="${authUser.userType eq 1 }">
+																	<c:if test="${submitVo.scoreCheck eq 'true'}">
+																${submitVo.score }
+															</c:if>
+																</c:if></td>
+															<td><button id="submit-detail" class="btn btn-sm btn-primary" data-target="#demo-default-modal" data-toggle="modal" data-submitno="${submitVo.submitNo}">click</button></td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</c:if>
 							</div>
 						</div>
 					</div>
@@ -442,7 +491,8 @@
 						$("[name=assignmentNo]").val(response.data.assignmentVo.assignmentNo);
 						assignTeacherNo = response.data.assignmentVo.teacherNo;
 						
-						$("#tbody").empty();
+						$("#tbody1").empty();
+						$("#tbody2").empty();
 						console.log(response.data.submitList);
 						for(i=0; i<response.data.submitList.length; i++){
 							renderList(response.data.submitList[i], "down");
@@ -508,7 +558,7 @@
 			});
 		});
 		
-		$("#tbody").on("click", "#submit-detail", function(){
+		$("#submitArea").on("click", "#submit-detail", function(){
 			console.log("submit-detail");
 			var $this = $(this);
 			var submitNo = $this.data("submitno");
@@ -651,10 +701,16 @@
 							$("#scoreForm").empty();
 							
 							var str = "";
-							str += "<li class='list-group-item'>점수 : <input style='width:40px; text-align:right;' name='score' type='text' value=" + response.data.score + "> / 100 ";
-							str += "&nbsp<button id='saveScore' data-submitno=" + response.data.submitNo + " class='btn btn-sm btn-primary'>저장</button></li>";
+							str += "<li class='list-group-item'>점수 : <input style='width:40px; text-align:right;' name='score' type='text' value=" + response.data.submitVo.score + "> / 100 ";
+							str += "&nbsp<button id='saveScore' data-submitno=" + response.data.submitVo.submitNo + " class='btn btn-sm btn-primary'>저장</button></li>";
 							$("#scoreForm").append(str);
 							
+							$("#tbody1").empty();
+							$("#tbody2").empty();
+							console.log(response.data.submitList);
+							for(i=0; i<response.data.submitList.length; i++){
+								renderList(response.data.submitList[i], "down");
+							}
 						} else {
 							console.log("점수 입력 실패");
 							alert("점수를 다시 확인해 주세요.");
@@ -703,9 +759,11 @@
 			str += "</tr>";
 			
 			if (updown == "up") {
-				$("#tbody").prepend(str);
+				$("#tbody1").prepend(str);
+				$("#tbody2").prepend(str);
 			} else if (updown == "down") {
-				$("#tbody").append(str);
+				$("#tbody1").append(str);
+				$("#tbody2").append(str);
 			} else {
 				console.log("updown 오류");
 			}

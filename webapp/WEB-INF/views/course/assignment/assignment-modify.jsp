@@ -209,8 +209,8 @@
 										<!--===================================================-->
 									</div>
 									<div>
-										<span><button class="btn btn-lg btn-primary pull-right" id="btnEnroll">수정하기</button></span>
-										<span style="margin-right:20px;"><a href="${pageContext.request.contextPath }/${coursePath}/assignment/list"><button class="btn btn-lg btn-danger pull-right">돌아가기</button></a></span>
+										<span class="pull-right"><button class="btn btn-primary" id="btnEnroll">수정하기</button></span>
+										<span class="pull-right" style="margin-right:5px;"><a href="${pageContext.request.contextPath }/${coursePath}/assignment/list"><button class="btn btn-danger">돌아가기</button></a></span>
 									</div>
 								</div>
 								<hr>
