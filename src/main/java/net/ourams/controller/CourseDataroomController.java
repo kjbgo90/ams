@@ -94,8 +94,6 @@ public class CourseDataroomController {
 		System.out.println("aws 파일업로드");
 		System.out.println(file.getOriginalFilename());
 		String fileName = file.getOriginalFilename();
-		s3Util.fileUpload(bucketName, file);
-		s3Util.getFileURL(bucketName, fileName);
 		//확장자
 				String exName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 				System.out.println("exName: " + exName);
@@ -109,9 +107,12 @@ public class CourseDataroomController {
 				System.out.println("saveName: " + saveName);
 				
 		//파일패스
-				String filePath = s3Util.getFileURL(bucketName, file.getOriginalFilename());
+				String filePath = s3Util.getFileURL(bucketName, saveName);
+				
+				s3Util.getFileURL(bucketName, saveName);
 				System.out.println("filePath: " + filePath);
 				
+				s3Util.fileUpload(bucketName, file, exName, saveName);
 				String url = s3Util.getFileURL(bucketName, saveName);
 				model.addAttribute("url", url);
 		CourseDataroomVo vo = new CourseDataroomVo();
