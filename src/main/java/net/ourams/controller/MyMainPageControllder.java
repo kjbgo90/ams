@@ -1,6 +1,7 @@
 package net.ourams.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -188,5 +189,12 @@ public class MyMainPageControllder {
 	public List<SubmitVo> getSubmitListByUserNo(@RequestParam("userNo") int userNo){
 		List<SubmitVo> list = myMainPageService.getSubmitListByUserNo(userNo);
 		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/assignmentAverageList", method = RequestMethod.POST)
+	public Map<String, Object> assignmentAverageList(@RequestParam("courseNo") int courseNo){
+		Map<String , Object> map = myMainPageService.assignmentAverageList(courseNo);
+		return map;
 	}
 }

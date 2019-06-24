@@ -1,19 +1,24 @@
 package net.ourams.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.ourams.dao.CourseAssignmentDao;
+import net.ourams.dao.CourseStatisticDao;
 import net.ourams.dao.MyMainPageDao;
 import net.ourams.vo.AssignmentVo;
 import net.ourams.vo.CourseVo;
 import net.ourams.vo.MyPageVo;
 import net.ourams.vo.PostVo;
+import net.ourams.vo.StatisticVo;
 import net.ourams.vo.SubmitVo;
 import net.ourams.vo.TimelineVo;
+import net.ourams.vo.UserVo;
 import net.ourams.vo.fileUpLoadVo;
 
 @Service
@@ -21,6 +26,9 @@ public class MyMainPageService {
 
 	@Autowired
 	private MyMainPageDao myMainPageDao;
+	
+	@Autowired 
+	private CourseStatisticDao statisticDao;
 
 	@Autowired
 	private CourseAssignmentDao assignmentDao;
@@ -182,4 +190,67 @@ public class MyMainPageService {
 	      
 	      return submitList;
 	   }
+	
+	public Map<String, Object> assignmentAverageList(int courseNo) {
+	      Map<String, Object> map = new HashMap<String, Object>();
+
+	      List<UserVo> userList = statisticDao.selectUserListByCourseNo(courseNo);
+	      int studentCount = userList.size();
+
+	      List<AssignmentVo> assignmentList = statisticDao.selectAssignmentListByCourseNo(courseNo);
+	      List<StatisticVo> asList = new ArrayList<StatisticVo>();
+	      double totalAverage = 0;
+	      int totalSum = 0;
+	      int totalScoreCount = 0;
+	      for (AssignmentVo assignmentVo : assignmentList) {
+	         int sum = 0;
+	         int scoreCount = 0;
+	         int submitCount = 0;
+	         int unsubmitCount = 0;
+	         double avg = 0;
+	         
+	         List<SubmitVo> submitList = assignmentDao.selectSubmitList(assignmentVo.getAssignmentNo());
+	         for (SubmitVo submitVo : submitList) {
+	            if (submitVo.getScoreCheck().equals("true")) {
+	               scoreCount++;
+	               sum += submitVo.getScore();
+	            }
+	         }
+	         totalSum += sum;
+	         totalScoreCount += scoreCount;
+	         submitCount = submitList.size();
+	         unsubmitCount = studentCount - submitCount;
+	         if (scoreCount != 0) {
+	            avg = sum / (double) scoreCount;
+	            avg = Math.round(avg * 100) / 100.0;
+	         }
+	         System.out.println(assignmentVo.getAssignmentTitle() + " : 평균 " + avg + "점 / 점수입력완료 " + scoreCount
+	               + " / 제출 " + submitCount + "명 / 미제출 " + unsubmitCount + "명");
+	         StatisticVo asVo = new StatisticVo();
+	         asVo.setAssignmentTitle(assignmentVo.getAssignmentTitle());
+	         asVo.setAverage(avg);
+	         asList.add(asVo);
+	      }
+	      
+	      totalAverage = Math.round(totalSum / totalScoreCount * 100) / 100;
+	      
+	      AssignmentVo lastAssignment = assignmentList.get(assignmentList.size()-1);
+	      StatisticVo statisticVo = statisticDao.selectSubmitCountByAssignmentNo(lastAssignment.getAssignmentNo());
+	      System.out.println(statisticVo.toString());
+	      double submitPercent = statisticVo.getSubmitCount() / (double)studentCount * 100;
+	      double unsubmitPercent = 100 - submitPercent;      
+	      
+	      map.put("asList", asList); // assignmentStatistic List(StatisticVo)
+	      map.put("totalAverage", totalAverage);
+	      map.put("lastAssignmentTitle", lastAssignment.getAssignmentTitle());
+	      map.put("submitPercent", submitPercent);
+	      map.put("unsubmitPercent", unsubmitPercent);
+	      
+	      System.out.println(map.toString());
+	      
+	      return map;
+	   }
+	
+	
+	
 }

@@ -122,17 +122,17 @@
 								<h3 class="panel-title">제출 현황</h3>
 							</div>
 							<div class="panel-body">
-								<h3 class="panel-title">자바</h3>
-								<table id="" class="table table-striped table-bordered"
+								<h3 class="panel-title">과제 목록</h3>
+								<table class="table table-striped table-bordered"
 									cellspacing="0" width="100%">
 									<thead>
 										<tr>
-											<th>레포트 제목 </th>
+											<th>레포트 제목</th>
 											<th>레포트 파일</th>
 											<th>과제 타이틀</th>
 											<th>제출 일자</th>
-											<th>점수 여부 </th>
-											<th>점수 </th>
+											<th>점수 여부</th>
+											<th>점수</th>
 										</tr>
 									</thead>
 									<tbody id="assignmentList">
@@ -142,10 +142,36 @@
 									</tbody>
 								</table>
 								<br> <br>
-		
+
 							</div>
 						</div>
+						<div class="panel">
+							<div class="panel-heading">
+								<h3 class="panel-title">출제한 과제들</h3>
+							</div>
+							<div class="panel-body">
 
+								<table class="table table-striped table-bordered"
+									cellspacing="0" width="100%">
+									<thead>
+										<tr>
+											<th>코스 이름</th>
+											<th>챕터</th>
+											<th>타이틀</th>
+											<th>파일</th>
+											<th>제출일</th>
+											<th>제출 마감일</th>
+										</tr>
+									</thead>
+									<tbody id="assignmentListForTeacher">
+										<tr>
+											<td colspan="6">출제한 과제가 없습니다.</td>
+										</tr>
+									</tbody>
+								</table>
+								<br> <br>
+							</div>
+						</div>
 
 
 
@@ -183,34 +209,44 @@
 	<!--=================================================-->
 
 	<!--jQuery [ REQUIRED ]-->
-	<script src="${pageContext.request.contextPath }/assets/js/jquery.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/assets/js/jquery.min.js"></script>
 
 	<!--BootstrapJS [ RECOMMENDED ]-->
-	<script src="${pageContext.request.contextPath }/assets/js/bootstrap.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/assets/js/bootstrap.js"></script>
 
 	<!--NiftyJS [ RECOMMENDED ]-->
 	<script src="${pageContext.request.contextPath }/assets/js/nifty.js"></script>
 
 	<!--Unite Gallery [ OPTIONAL ]-->
-	<script src="${pageContext.request.contextPath }/assets/plugins/unitegallery/js/unitegallery.min.js"></script>
-	<script src="${pageContext.request.contextPath }/assets/plugins/unitegallery/themes/slider/ug-theme-slider.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/assets/plugins/unitegallery/js/unitegallery.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/assets/plugins/unitegallery/themes/slider/ug-theme-slider.js"></script>
 
 	<!--Sparklines [ OPTIONAL ]-->
-	<script src="${pageContext.request.contextPath }/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
 
 	<!--Easy Pie Chart [ OPTIONAL ]-->
-	<script src="${pageContext.request.contextPath }/assets/plugins/easy-pie-chart/jquery.easypiechart.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/assets/plugins/easy-pie-chart/jquery.easypiechart.min.js"></script>
 
 	<!--Custom script [ DEMONSTRATION ]-->
 	<!--===================================================-->
 	<script>
-		$(document).on('nifty.ready',function() {
+		$(document)
+				.on(
+						'nifty.ready',
+						function() {
 
 							userNo = '${authUser.userNo}'
 							console.log(userNo);
 
 							//qna List 
-							$.ajax({
+							$
+									.ajax({
 										url : "${pageContext.request.contextPath }/myPage/getSubmitListByUserNo",
 										type : "post",
 										data : {
@@ -220,17 +256,18 @@
 										success : function(list) {
 											console.log(list);
 											assignmentListStr = "";
-											for(var i = 0; i < list.length; i++){
+											for (var i = 0; i < list.length; i++) {
 												assList(list[i]);
 											}
-											$("#assignmentList").html(assignmentListStr);
+											$("#assignmentList").html(
+													assignmentListStr);
 											assignmentListStr = "";
 										},
 										error : function(XHR, status, error) {
 											console.error(status + " : "
 													+ error);
 										}
-							});
+									});
 							/* 과제 현황 리스트 
 											<th>레포트 제목 </th>
 											<th>레포트 파일</th>
@@ -251,7 +288,8 @@
 
 								assignmentListStr += "<tr>";
 								//레포트 제목 
-								assignmentListStr += "<td>" + SubmitVo.assignmentTitle + "</td>";
+								assignmentListStr += "<td>"
+										+ SubmitVo.assignmentTitle + "</td>";
 								//첨부 파일 
 								if (SubmitVo.fileList != null) {
 									console.log(SubmitVo.fileList);
@@ -261,7 +299,8 @@
 										for (var s = 0; s < SubmitVo.fileList.length; s++) {
 
 											assignmentListStr += "<a href="+SubmitVo.fileList[s].filePath+" class='text-semibold text-main mar-no'>"
-													+ SubmitVo.fileList[s].fileName + "</a><br>";
+													+ SubmitVo.fileList[s].fileName
+													+ "</a><br>";
 
 										}
 										assignmentListStr += "</td>";
@@ -273,14 +312,18 @@
 									assignmentListStr += "<td>첨부파일이 없습니다.</td>";
 								}
 								//과제 타이틀 
-								assignmentListStr += "<td>" + SubmitVo.assignmentTitle + "</td>";
+								assignmentListStr += "<td>"
+										+ SubmitVo.assignmentTitle + "</td>";
 								//제출 일자
 								// 과제 채점 여부 , 점수 
 								if (SubmitVo.submitNo != 0) {
-									assignmentListStr += "<td>" + SubmitVo.submitDate + "</td>";
-									assignmentListStr += "<td>" + SubmitVo.scoreCheck + "</td>";
+									assignmentListStr += "<td>"
+											+ SubmitVo.submitDate + "</td>";
+									assignmentListStr += "<td>"
+											+ SubmitVo.scoreCheck + "</td>";
 									if (SubmitVo.scoreCheck == 'true') {
-										assignmentListStr += "<td>" + SubmitVo.score + "</td>";
+										assignmentListStr += "<td>"
+												+ SubmitVo.score + "</td>";
 									} else {
 										assignmentListStr += "<td>미채점</td>";
 									}
@@ -293,8 +336,72 @@
 
 								assignmentListStr += "</tr>";
 							}
+
+							var userNo = 2;
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath }/myPage/getAssignmentByTeacherNo",
+										type : "post",
+										data : {
+											userNo : userNo
+										},
+										dataType : "json",
+										success : function(list) {
+											console.log(list);
+											assignmentListForTeacherstr = "";
+											for (var i = 0; i < list.length; i++) {
+												assList(list[i]);
+												assignmentListForTeacherstr += "<tr>";
+												assignmentListForTeacherstr += "<td>"
+														+ list[i].courseName
+														+ "</td>";
+												assignmentListForTeacherstr += "<td>"
+														+ list[i].chapterContent
+														+ "</td>";
+												assignmentListForTeacherstr += "<td>"
+														+ list[i].assignmentTitle
+														+ "</td>";
+														//첨부 파일 
+														if (list[i].fileList != null) {
+															console.log(list[i].fileList);
+
+															if (list[i].fileList.length != 0) {
+																assignmentListForTeacherstr += "<td>";
+																for (var s = 0; s < list[i].fileList.length; s++) {
+																	var sa = s+ 1; 
+																	assignmentListForTeacherstr += "<a href="+list[i].fileList[s].filePath+" class='text-semibold text-main mar-no'>"
+																			+sa+"."+ list[i].fileList[s].fileName
+																			+ "</a><br>";
+
+																}
+																assignmentListForTeacherstr += "</td>";
+															} else {
+																assignmentListForTeacherstr += "<td>첨부파일이 없습니다.</td>";
+															}
+
+														} else {
+															assignmentListForTeacherstr += "<td>첨부파일이 없습니다.</td>";
+														}
+												assignmentListForTeacherstr += "<td>"
+														+ list[i].startDate
+														+ "</td>";
+												assignmentListForTeacherstr += "<td>"
+														+ list[i].endDate
+														+ "</td>";
+												assignmentListForTeacherstr += "</tr>";
+											}
+											$("#assignmentListForTeacher")
+													.html(
+															assignmentListForTeacherstr);
+											assignmentListForTeacherstr = "";
+										},
+										error : function(XHR, status, error) {
+											console.error(status + " : "
+													+ error);
+										}
+									});
+
 						});
-		
 	</script>
 
 

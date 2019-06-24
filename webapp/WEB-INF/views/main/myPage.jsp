@@ -128,12 +128,7 @@
 
 										<!--Indicators-->
 										<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-										<ol class="carousel-indicators out">
-											<li class="active" data-slide-to="0"
-												data-target="#demo-carousel"></li>
-											<li data-slide-to="1" data-target="#demo-carousel"></li>
-											<li data-slide-to="2" data-target="#demo-carousel"></li>
-										</ol>
+									
 										<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
 										<div id="controlCourseList" class="carousel-inner text-center">
@@ -180,17 +175,17 @@
 									</div>
 								</div>
 								<div class="demorow">
-									<div class="col-lg-5">
+									<div class="col-lg-6">
 										<div class="panel">
 											<div class="panel-heading">
-												<h3 class="panel-title">과제 제출률</h3>
+												<h3 class="panel-title">최근 과제 제출률</h3>
 											</div>
-											<div class="panel-body">
+											<div class="panel-body" style="text-align:center">
 
 												<!--Data Percent-->
 												<!--===================================================-->
 												<div id="demo-pie-7-1" class="demo-pie pie-title-center"
-													data-percent="39">
+													data-percent="0">
 													<span class="pie-value text-thin text-2x"></span>
 												</div>
 												<!--===================================================-->
@@ -200,40 +195,35 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-lg-7 blog">
+									<div class="col-lg-6 blog">
 										<br> <br>
 										<!-- Panel  Blog -->
 										<!--===================================================-->
 										<div class="panel">
 
-											<div class="blog-header bg-warning pad-all">
-												<blockquote class="bq-sm bq-open bq-close mar-no">
-													과제 제출률이 현저히 낮습니다!!</blockquote>
+											<div id="assignmentPercentInfo" class="blog-header bg-warning pad-all">
+												
 											</div>
 											<div class="blog-content">
 												<div class="blog-title media-block">
-													<div class="media-right textright">
+													<div id="assignmentPercentFileList"
+														class="media-right textright">
 														<a href="#"
 															class="btn btn-icon demo-pli-paperclip icon-lg add-tooltip"
 															data-original-title="Add file 22" data-container="body"></a>
 													</div>
-													<div class="media-body">
+													<div id="assignmentPercentTitle" class="media-body">
 														<a href="#" class="btn-link">
 															<h2>최근 과제 1</h2>
 														</a>
 													</div>
 												</div>
-												<div class="blog-body">
+												<div id="assignmentPercentContent" class="blog-body">
 													<p>최근 과제 내용~~</p>
 												</div>
 											</div>
 											<div class="blog-footer">
-												<div class="media-left">17 Days ago</div>
-												<div class="media-body text-right">
-													<span class="mar-rgt"> <i
-														class="demo-pli-heart-2 icon-fw"></i>75
-													</span> <i class="demo-pli-speech-bubble-5 icon-fw"></i>2
-												</div>
+												<div id="assignmentPercentRegdate" class="media-left">17 Days ago</div>
 											</div>
 											<br> <br>
 											<button id="demo-update-interval"
@@ -243,33 +233,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="panel">
-									<div class="panel-heading">
-										<h3 class="panel-title">출제한 과제들 </h3>
-									</div>
-									<div class="panel-body">
-
-										<table id="" class="table table-striped table-bordered"
-											cellspacing="0" width="100%">
-											<thead>
-												<tr>
-													<th>과제</th>
-													<th>과제내용</th>
-													<th>첨부 파일</th>
-													<th>제출 기한</th>
-													<th>제출 여부</th>
-													<th>점수 여부</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td colspan="6">제출한 과제가 없습니다.</td>
-												</tr>
-											</tbody>
-										</table>
-										<br> <br>
-									</div>
-								</div>
+								
 
 							</div>
 							<div class="col-lg-6">
@@ -297,7 +261,35 @@
 
 							</div>
 						</div>
+						
 						<div class="panel">
+									<div class="panel-heading">
+										<h3 class="panel-title">출제한 과제들</h3>
+									</div>
+									<div class="panel-body">
+
+										<table class="table table-striped table-bordered"
+											cellspacing="0" width="100%">
+											<thead>
+												<tr>
+													<th>코스 이름</th>
+													<th>챕터</th>
+													<th>타이틀</th>
+													<th>파일</th>
+													<th>제출일</th>
+													<th>제출 마감일</th>
+												</tr>
+											</thead>
+											<tbody id="assignmentListForTeacher">
+												<tr>
+													<td colspan="6">출제한 과제가 없습니다.</td>
+												</tr>
+											</tbody>
+										</table>
+										<br> <br>
+									</div>
+								</div>
+								<div class="panel">
 							<div class="panel-heading">
 								<h3 class="panel-title">질의 응답</h3>
 							</div>
@@ -630,33 +622,67 @@
 						function() {
 
 							//userNo = '${authUser.userNo}'
-							userNo=2;
+							userNo = 2;
 							console.log(userNo);
 
-							
-							
 							$
-							.ajax({
-								url : "${pageContext.request.contextPath }/myPage/getAssignmentByTeacherNo",
-								type : "post",
-								data : {
-									userNo : userNo
-								},
-								dataType : "json",
-								success : function(list) {
-									console.log(list);
-									
-									
-									
-									
-									
+									.ajax({
+										url : "${pageContext.request.contextPath }/myPage/getAssignmentByTeacherNo",
+										type : "post",
+										data : {
+											userNo : userNo
+										},
+										dataType : "json",
+										success : function(list) {
+											console.log(list);
 
-								},
-								error : function(XHR, status, error) {
-									console.error(status + " : "
-											+ error);
-								}
-							});
+										},
+										error : function(XHR, status, error) {
+											console.error(status + " : "
+													+ error);
+										}
+									});
+							var courseNo = 1
+
+							$.ajax({
+										url : "${pageContext.request.contextPath }/myPage/assignmentAverageList",
+										type : "post",
+										data : {
+											courseNo : courseNo
+										},
+										dataType : "json",
+										success : function(map) {
+											console.log(map);
+											
+											//과제 제출률 
+											$("#assignmentPercentInfo").html("<blockquote class='bq-sm bq-open bq-close mar-no'>과제 제출률이 현저히 낮습니다!!222</blockquote>")
+											
+											//과제 타이틀 
+											$("#assignmentPercentTitle").html("<a href='#' class='btn-link'><h2>"+map.lastAssignmentTitle+"</h2></a>")
+											
+											//과제 내용
+											$("#assignmentPercentContent").html("<p>최근 과제 내용~~</p>")
+											
+											
+											//과제 기한
+											$("#assignmentPercentRegdate").html("17 Days ago")
+											
+											
+											var aa = $('#demo-pie-7-1').data('percent' );
+											console.log(aa);
+
+											 $('.demo-pie').each(function() {
+																// 여기서 임의의 숫자를 넣어주고 있다 여기서 숫자를 바꿔서 넣자 
+																var newVal = map.submitPercent;
+																$(this).data('easyPieChart').update(newVal);
+															});
+
+										},
+										error : function(XHR, status, error) {
+											console.error(status + " : "
+													+ error);
+										}
+									});
 
 							var lineSparklines2 = function() {
 								$('#demo-sparklines-line-1-1').sparkline(
@@ -689,22 +715,11 @@
 							});
 
 							// 전부다 새로고침 해버리기 
-							$('#demo-update-interval')
-									.on(
-											'click',
-											function() {
-												$('.demo-pie')
-														.each(
-																function() {
+							$('#demo-update-interval').on('click',function() {
+												$('.demo-pie').each(function() {
 																	// 여기서 임의의 숫자를 넣어주고 있다 여기서 숫자를 바꿔서 넣자 
-																	var newVal = Math
-																			.floor(100 * Math
-																					.random());
-																	$(this)
-																			.data(
-																					'easyPieChart')
-																			.update(
-																					newVal);
+																	var newVal = Math.floor(100 * Math.random());
+																	$(this).data('easyPieChart').update(newVal);
 																});
 											});
 
@@ -716,8 +731,7 @@
 										lineWidth : 7,
 										size : 200,
 										onStep : function(from, to, percent) {
-											$(this.el).find('.pie-value').text(
-													Math.round(percent) + '%');
+											$(this.el).find('.pie-value').text(Math.round(percent) + '%');
 										}
 									});
 
@@ -739,7 +753,7 @@
 												// list 찾기 !!
 
 												CourseList += "<div class='item active'>";
-												CourseList += "<h4 class='text-main'>java 고급과정</h4>";
+												CourseList += "<h4 class='text-main' data-courseno="+list[i].courseNo+">"+list[i].courseName+"</h4>";
 												CourseList += "<p>2010.04.02~2016.05.07</p>";
 												CourseList += "<p>";
 												CourseList += "<a href=''>이동하기</a>";
@@ -929,6 +943,71 @@
 													timelineStr);
 
 											timelineStr = "";
+										},
+										error : function(XHR, status, error) {
+											console.error(status + " : "
+													+ error);
+										}
+									});
+
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath }/myPage/getAssignmentByTeacherNo",
+										type : "post",
+										data : {
+											userNo : userNo
+										},
+										dataType : "json",
+										success : function(list) {
+											console.log(list);
+											assignmentListForTeacherstr = "";
+											for (var i = 0; i < list.length; i++) {
+												assignmentListForTeacherstr += "<tr>";
+												assignmentListForTeacherstr += "<td>"
+														+ list[i].courseName
+														+ "</td>";
+												assignmentListForTeacherstr += "<td>"
+														+ list[i].chapterContent
+														+ "</td>";
+												assignmentListForTeacherstr += "<td>"
+														+ list[i].assignmentTitle
+														+ "</td>";
+												//첨부 파일 
+												if (list[i].fileList != null) {
+													console
+															.log(list[i].fileList);
+
+													if (list[i].fileList.length != 0) {
+														assignmentListForTeacherstr += "<td>";
+														for (var s = 0; s < list[i].fileList.length; s++) {
+															var sa = s + 1;
+															assignmentListForTeacherstr += "<a href="+list[i].fileList[s].filePath+" class='text-semibold text-main mar-no'>"
+																	+ sa
+																	+ "."
+																	+ list[i].fileList[s].fileName
+																	+ "</a><br>";
+
+														}
+														assignmentListForTeacherstr += "</td>";
+													} else {
+														assignmentListForTeacherstr += "<td>첨부파일이 없습니다.</td>";
+													}
+
+												} else {
+													assignmentListForTeacherstr += "<td>첨부파일이 없습니다.</td>";
+												}
+												assignmentListForTeacherstr += "<td>"
+														+ list[i].startDate
+														+ "</td>";
+												assignmentListForTeacherstr += "<td>"
+														+ list[i].endDate
+														+ "</td>";
+												assignmentListForTeacherstr += "</tr>";
+											}
+											$("#assignmentListForTeacher")
+													.html(
+															assignmentListForTeacherstr);
+											assignmentListForTeacherstr = "";
 										},
 										error : function(XHR, status, error) {
 											console.error(status + " : "

@@ -667,13 +667,23 @@
 												// list 찾기 !!
 
 												CourseList += "<div class='item active'>";
-												CourseList += "<h4 class='text-main'>java 고급과정</h4>";
+												CourseList += "<h4 class='text-main'>java 고급과정22</h4>";
+												CourseList += "<p>2010.04.02~2016.05.07</p>";
+												CourseList += "<p>";
+												CourseList += "<a href=''>이동하기</a>";
+												CourseList += "</p>";
+												CourseList += "</div>";
+												CourseList += "<div class='item'>";
+												CourseList += "<h4 class='text-main'>java 22고급과정</h4>";
 												CourseList += "<p>2010.04.02~2016.05.07</p>";
 												CourseList += "<p>";
 												CourseList += "<a href=''>이동하기</a>";
 												CourseList += "</p>";
 												CourseList += "</div>";
 
+												
+												
+												
 											}
 											$("#controlCourseList").html(
 													CourseList);
