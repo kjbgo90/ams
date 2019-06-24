@@ -49,30 +49,38 @@
 							</a>
 						</div>
 						<div id="profile-nav" class="collapse list-group bg-trans">
-							<a href="#" class="list-group-item"> <i
-								class="demo-pli-male icon-lg icon-fw"></i> Profile
-							</a> <a href="#" class="list-group-item"> <i
-								class="demo-pli-gear icon-lg icon-fw"></i> MyPage
-							</a> <a href="${pageContext.request.contextPath }/user/logout"
-								class="list-group-item"> <i
-								class="demo-pli-unlock icon-lg icon-fw"></i> Logout
+							<a href="${pageContext.request.contextPath }/myPage/mainform" class="list-group-item"> <i class="demo-pli-gear icon-lg icon-fw"></i> MyPage
+							</a> <a href="${pageContext.request.contextPath }/user/logout" class="list-group-item"> <i class="demo-pli-unlock icon-lg icon-fw"></i> Logout
 							</a>
 						</div>
 					</div>
 					<ul id="mainnav-menu" class="list-group">
+					
+					
+					
 						<!--Category name-->
-						<li class="list-header"><a
-							href="${pageContext.request.contextPath }/myPage/indexforstudent"> <i class="pli-home"></i><span class="menu-title">MyPage</span></a></li>
-						<li class="list-divider"></li>
+						<li class="list-header"><a href="${pageContext.request.contextPath }/myPage/mainform"><i class="pli-home"></i><span class="menu-title">MyPage</span></a></li>
 						<!--Menu list item-->
-						<li><a><i class="pli-management"></i><span class="menu-title">Select Class</span></a></li>
-						<li><a
-							href="${pageContext.request.contextPath }/myPage/myassignment"><i class="pli-notepad"></i><span class="menu-title"> 과제
-								관리</span></a></li>
-						<li><a
-							href="${pageContext.request.contextPath }/myPage/mytimeline"><i class="pli-calendar-4"></i><span class="menu-title"> Timeline</span></a></li>
-						<li><a
-							href="${pageContext.request.contextPath }/myPage/editForm"><i class="pli-question"></i><span class="menu-title">개인정보수정</span></a></li>
+						<li>
+								<a>
+										<i class="pli-management"></i>
+										<span class="menu-title">Select Class</span>
+										<i class="arrow"></i>
+								</a>
+								<ul id="courseListInNav" class="collapse">
+						            <li>강좌가 없습니다.</li>
+						        </ul>
+						</li>
+						<li>
+							<a href="${pageContext.request.contextPath }/myPage/mainassignment">
+								<i class="pli-notepad"></i>
+								<span class="menu-title">
+									 과제 관리
+								</span>
+							</a>
+						</li>
+						<li><a href="${pageContext.request.contextPath }/myPage/mytimeline"><i class="pli-calendar-4"></i><span class="menu-title"> Timeline</span></a></li>
+						<li><a href="${pageContext.request.contextPath }/myPage/editForm"><i class="pli-question"></i><span class="menu-title">개인정보수정</span></a></li>
 
 
 						<!--Menu list item-->
@@ -106,6 +114,39 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
+
+		var userNo = '${authUser.userNo}'
+		console.log(userNo);
+		var userType ="${authUser.userType}";
+
+		$.ajax({
+			url : "${pageContext.request.contextPath }/index/courselist",
+			type : "post",
+			data : {
+				userNo : userNo,
+				userType : userType
+			},
+			dataType : "json",
+			success : function(list) {
+				console.log(list);
+				console.log(list.length);
+				
+				if(list.length > 0) {
+					var courseListInNavStr = "";
+					$("#courseListInNavStr").empty();
+					
+					for (var i = 0; i < list.length; i++) {
+						courseListInNavStr += "<li><a href='${pageContext.request.contextPath }/" + list[i].coursePath + "/main'>" + list[i].courseName + "</a></li>";
+					}
+						$("#courseListInNav").html(courseListInNavStr);
+						courseListInNavStr = "";
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
 	});
 </script>
 
