@@ -107,13 +107,12 @@
 							<!--===================================================-->
 							<div class="panel">
 								<div class="panel-heading">
-									<h3 class="panel-title">Form Validation</h3>
+									<h3 class="panel-title">개인정보 수정</h3>
 								</div>
 
 								<form id="demo-bvd-notempty" action="#" class="form-horizontal">
 									<div class="panel-body">
-										<p class="bord-btm pad-ver text-main text-bold">Not Empty
-											validator</p>
+										<p class="bord-btm pad-ver text-main text-bold">개인정보 변경</p>
 
 										<!--NOT EMPTY VALIDATOR-->
 										<!--===================================================-->
@@ -122,16 +121,14 @@
 												<label class="col-lg-3 control-label">Username</label>
 												<div class="col-lg-7">
 													<input type="text" class="form-control" name="username"
-														placeholder="Username">
+														placeholder="Username" value="${authUser.userName }">
 												</div>
 											</div>
 											<div class="form-group">
 												<div class="col-lg-7 col-lg-offset-3">
 													<div class="checkbox">
-														<input id="demo-checkbox-1" class="magic-checkbox"
-															type="checkbox" name="acceptTerms"> <label
-															for="demo-checkbox-1"> Accept the terms and
-															policies</label>
+														<input id="demo-checkbox-1" class="magic-checkbox" type="checkbox" name="acceptTerms"> 
+														<label for="demo-checkbox-1"> Accept the terms and policies</label>
 													</div>
 												</div>
 											</div>
@@ -139,10 +136,23 @@
 										<!--===================================================-->
 
 										<br>
-										<p class="bord-btm pad-ver text-main text-bold">Identical
-											validator</p>
-
 										<!--IDENTICAL VALIDATOR-->
+										<!--===================================================-->
+
+										<!--===================================================-->
+										<br> <br>
+										<!--REGULAR EXPRESSION BASED VALIDATORS-->
+										<!--===================================================-->
+										<fieldset>
+											<div class="form-group">
+												<label class="col-lg-3 control-label">Email address</label>
+												<div class="col-lg-7">
+													<input type="email" class="form-control" name="email"
+														placeholder="email"  value="${authUser.email }">
+												</div>
+											</div>
+
+										</fieldset>
 										<!--===================================================-->
 										<fieldset>
 											<div class="form-group">
@@ -161,107 +171,6 @@
 												</div>
 											</div>
 										</fieldset>
-										<!--===================================================-->
-
-										<br>
-										<p class="bord-btm pad-ver text-main text-bold">Other
-											validators</p>
-
-										<!--OTHER VALIDATOR-->
-										<!--===================================================-->
-										<fieldset>
-											<div class="form-group">
-												<label class="col-lg-3 control-label">Member Type</label>
-												<div class="col-lg-7">
-													<div class="radio">
-														<input id="demo-radio-7" class="magic-radio" type="radio"
-															name="member" value="free"> <label
-															for="demo-radio-7">Free</label> <input id="demo-radio-8"
-															class="magic-radio" type="radio" name="member"
-															value="personal"> <label for="demo-radio-8">Personal</label>
-														<input id="demo-radio-9" class="magic-radio" type="radio"
-															name="member" value="bussines"> <label
-															for="demo-radio-9">Bussiness</label>
-													</div>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-lg-3 control-label">Skill</label>
-												<div class="col-lg-7">
-
-													<div class="checkbox">
-														<input id="demo-checkbox-2" class="magic-checkbox"
-															type="checkbox" name="programs[]" value="net"> <label
-															for="demo-checkbox-2">.Net</label>
-													</div>
-
-													<div class="checkbox">
-														<input id="demo-checkbox-3" class="magic-checkbox"
-															type="checkbox" name="programs[]" value="java"> <label
-															for="demo-checkbox-3">Java</label>
-													</div>
-
-													<div class="checkbox">
-														<input id="demo-checkbox-4" class="magic-checkbox"
-															type="checkbox" name="programs[]" value="c"> <label
-															for="demo-checkbox-4">C/C++</label>
-													</div>
-
-													<div class="checkbox">
-														<input id="demo-checkbox-5" class="magic-checkbox"
-															type="checkbox" name="programs[]" value="php"> <label
-															for="demo-checkbox-5">PHP</label>
-													</div>
-
-													<div class="checkbox">
-														<input id="demo-checkbox-6" class="magic-checkbox"
-															type="checkbox" name="programs[]" value="perl"> <label
-															for="demo-checkbox-6">Perl</label>
-													</div>
-
-													<div class="checkbox">
-														<input id="demo-checkbox-7" class="magic-checkbox"
-															type="checkbox" name="programs[]" value="Ruby"> <label
-															for="demo-checkbox-7">Ruby</label>
-													</div>
-												</div>
-											</div>
-											<hr>
-										
-										</fieldset>
-										<!--===================================================-->
-
-										<br>
-										<p class="bord-btm pad-ver text-main text-bold">Regular
-											expression based validators</p>
-
-										<!--REGULAR EXPRESSION BASED VALIDATORS-->
-										<!--===================================================-->
-										<fieldset>
-											<div class="form-group">
-												<label class="col-lg-3 control-label">Email address</label>
-												<div class="col-lg-7">
-													<input type="email" class="form-control" name="email"
-														placeholder="email">
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-lg-3 control-label">Website</label>
-												<div class="col-lg-7">
-													<input type="text" class="form-control" name="website"
-														placeholder="http://" />
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-lg-3 control-label">Hex color</label>
-												<div class="col-lg-5">
-													<input type="text" class="form-control" name="color"
-														placeholder="#fff">
-												</div>
-											</div>
-										</fieldset>
-										<!--===================================================-->
-
 									</div>
 									<div class="panel-footer">
 										<div class="row">
@@ -320,12 +229,14 @@
 	<script src="${pageContext.request.contextPath }/assets/js/nifty.js"></script>
 
 
-    <!--Bootstrap Validator [ OPTIONAL ]-->
-    <script src="${pageContext.request.contextPath }/assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+	<!--Bootstrap Validator [ OPTIONAL ]-->
+	<script
+		src="${pageContext.request.contextPath }/assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
 
 
-    <!--Masked Input [ OPTIONAL ]-->
-    <script src="${pageContext.request.contextPath }/assets/plugins/masked-input/jquery.maskedinput.min.js"></script>
+	<!--Masked Input [ OPTIONAL ]-->
+	<script
+		src="${pageContext.request.contextPath }/assets/plugins/masked-input/jquery.maskedinput.min.js"></script>
 
 
 
@@ -339,15 +250,16 @@
 		// - ThemeOn.net -
 
 		$(document).on('nifty.ready',function() {
-					var faIcon = {
-			        valid: 'fa fa-check-circle fa-lg text-success',
-			        invalid: 'fa fa-times-circle fa-lg',
-			        validating: 'fa fa-refresh'
-			    	}
+							var faIcon = {
+								valid : 'fa fa-check-circle fa-lg text-success',
+								invalid : 'fa fa-times-circle fa-lg',
+								validating : 'fa fa-refresh'
+							}
 
 							// FORM VARIOUS VALIDATION
 							// =================================================================
-							$('#demo-bvd-notempty').bootstrapValidator(
+							$('#demo-bvd-notempty')
+									.bootstrapValidator(
 											{
 												message : 'This value is not valid',
 												feedbackIcons : faIcon,
@@ -512,12 +424,16 @@
 														}
 													}
 												}
-											}).on('success.field.bv',function(e, data) {
+											})
+									.on(
+											'success.field.bv',
+											function(e, data) {
 												// $(e.target)  --> The field element
 												// data.bv      --> The BootstrapValidator instance
 												// data.field   --> The field name
 												// data.element --> The field element
-												var $parent = data.element.parents('.form-group');
+												var $parent = data.element
+														.parents('.form-group');
 												// Remove the has-success class
 												$parent.removeClass('has-success');
 											});
@@ -539,7 +455,7 @@
 							$('#demo-msk-taxid').mask('99-9999999');
 							$('#demo-msk-ssn').mask('999-99-9999');
 							$('#demo-msk-pkey').mask('a*-999-a999');
-		});
+						});
 	</script>
 
 

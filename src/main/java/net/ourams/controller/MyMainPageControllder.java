@@ -39,6 +39,11 @@ public class MyMainPageControllder {
 		return "main/myPage";
 	}
 	
+	@RequestMapping("/mainform")
+	public String mainFormPage() {
+		return "";
+	}
+	
 
 	@Auth
 	@RequestMapping(value = "/indexforstudent")
@@ -109,9 +114,9 @@ public class MyMainPageControllder {
 		return list;
 	}
 	
-	
+	@Auth
 	@RequestMapping(value = "/editForm")
-	public String editForm() {
+	public String editForm( @AuthUser UserVo authUser) {
 		System.out.println("start main");
 		
 		return "main/editForm";

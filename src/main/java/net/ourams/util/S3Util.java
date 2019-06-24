@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,7 +79,17 @@ public class S3Util {
 	// 파일 업로드
 	public void fileUpload(String bucketName, MultipartFile file) {
 		try {
-			PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, file.getOriginalFilename(),
+			
+			//확장자
+			String exName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+			System.out.println("exName: " + exName);
+			
+			//저장파일명
+			String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
+			System.out.println("saveName: " + saveName);
+			
+			
+			PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, saveName,
 					file.getInputStream(), new ObjectMetadata());
 			putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead); // file permission
 			s3.putObject(putObjectRequest); // upload file

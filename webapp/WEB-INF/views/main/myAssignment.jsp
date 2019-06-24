@@ -172,7 +172,13 @@
 								<br> <br>
 							</div>
 						</div>
+						<div class="result-images">
+							<img src="https://s3.ap-northeast-2.amazonaws.com/net.ourams.assignment/4.jpg" style="width: 150px"><br>
+						</div>
 
+						<div class="result-images">
+							<img src="https://s3.ap-northeast-2.amazonaws.com/net.ourams.assignment/다운로드.png" style="width: 150px"><br>
+						</div>
 
 
 
@@ -361,27 +367,30 @@
 												assignmentListForTeacherstr += "<td>"
 														+ list[i].assignmentTitle
 														+ "</td>";
-														//첨부 파일 
-														if (list[i].fileList != null) {
-															console.log(list[i].fileList);
+												//첨부 파일 
+												if (list[i].fileList != null) {
+													console
+															.log(list[i].fileList);
 
-															if (list[i].fileList.length != 0) {
-																assignmentListForTeacherstr += "<td>";
-																for (var s = 0; s < list[i].fileList.length; s++) {
-																	var sa = s+ 1; 
-																	assignmentListForTeacherstr += "<a href="+list[i].fileList[s].filePath+" class='text-semibold text-main mar-no'>"
-																			+sa+"."+ list[i].fileList[s].fileName
-																			+ "</a><br>";
+													if (list[i].fileList.length != 0) {
+														assignmentListForTeacherstr += "<td>";
+														for (var s = 0; s < list[i].fileList.length; s++) {
+															var sa = s + 1;
+															assignmentListForTeacherstr += "<a href="+list[i].fileList[s].filePath+" class='text-semibold text-main mar-no'>"
+																	+ sa
+																	+ "."
+																	+ list[i].fileList[s].fileName
+																	+ "</a><br>";
 
-																}
-																assignmentListForTeacherstr += "</td>";
-															} else {
-																assignmentListForTeacherstr += "<td>첨부파일이 없습니다.</td>";
-															}
-
-														} else {
-															assignmentListForTeacherstr += "<td>첨부파일이 없습니다.</td>";
 														}
+														assignmentListForTeacherstr += "</td>";
+													} else {
+														assignmentListForTeacherstr += "<td>첨부파일이 없습니다.</td>";
+													}
+
+												} else {
+													assignmentListForTeacherstr += "<td>첨부파일이 없습니다.</td>";
+												}
 												assignmentListForTeacherstr += "<td>"
 														+ list[i].startDate
 														+ "</td>";

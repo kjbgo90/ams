@@ -96,8 +96,6 @@ public class CourseDataroomController {
 		String fileName = file.getOriginalFilename();
 		s3Util.fileUpload(bucketName, file);
 		s3Util.getFileURL(bucketName, fileName);
-		String url = s3Util.getFileURL(bucketName, file.getOriginalFilename());
-		model.addAttribute("url", url);
 		//확장자
 				String exName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 				System.out.println("exName: " + exName);
@@ -114,6 +112,8 @@ public class CourseDataroomController {
 				String filePath = s3Util.getFileURL(bucketName, file.getOriginalFilename());
 				System.out.println("filePath: " + filePath);
 				
+				String url = s3Util.getFileURL(bucketName, saveName);
+				model.addAttribute("url", url);
 		CourseDataroomVo vo = new CourseDataroomVo();
 		vo.setFileName(fileName);
 		vo.setFilePath(filePath);

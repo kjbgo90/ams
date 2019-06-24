@@ -64,7 +64,9 @@
 	href="${pageContext.request.contextPath }/assets/plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css"
 	rel="stylesheet">
 
-
+<!--Morris.js [ OPTIONAL ]-->
+<link href="${pageContext.request.contextPath }/assets/plugins/morris-js/morris.min.css" rel="stylesheet">
+<!--=================================================
 
 <!--=================================================
     REQUIRED
@@ -163,16 +165,12 @@
 									<div class="panel-heading">
 										<h3 class="panel-title">Line</h3>
 									</div>
-									<div class="pad-all">
-
-										<!--Sparklines Line-->
-										<!--===================================================-->
-										<div id="demo-sparklines-line-1-1"></div>
-										<!--===================================================-->
-										<!-- End Sparklines Line -->
-
-
+									
+									<div class="pad-all" id="reset-graph">
+										<div id="demo-morris-line-legend" class="text-center"></div>
+										<div id="demo-morris-line" style="height: 250px"></div>
 									</div>
+									
 								</div>
 								<div class="demorow">
 									<div class="col-lg-6">
@@ -610,7 +608,9 @@
 	<script
 		src="${pageContext.request.contextPath }/assets/plugins/easy-pie-chart/jquery.easypiechart.min.js"></script>
 
-
+	<!--Morris.js [ OPTIONAL ]-->
+	<script src="${pageContext.request.contextPath }/assets/plugins/morris-js/morris.min.js"></script>
+	<script src="${pageContext.request.contextPath }/assets/plugins/morris-js/raphael-js/raphael.min.js"></script>
 
 
 	<!--Custom script [ DEMONSTRATION ]-->
@@ -670,12 +670,42 @@
 											
 											var aa = $('#demo-pie-7-1').data('percent' );
 											console.log(aa);
+											
+											var avg_data = [];
+							                  
+							                  for(var i=0; i<map.asList.length; i++){
+							                     avg_data.push({'elapsed' : map.asList[i].assignmentTitle, 'value' : map.asList[i].average});
+							                  }
+							                  console.log(map.asList);
+							                  
+							                  
+							                  
+							                  
+							                  
+							                  console.log(avg_data);
+							                  
+							                  Morris.Line({
+							                     element : 'demo-morris-line',
+							                     data : avg_data,
+							                     xkey : 'elapsed',
+							                     ykeys : [ 'value' ],
+							                     labels : [ '평균점수' ],
+							                     gridEnabled : true,
+							                     gridLineColor : 'rgba(0,0,0,.1)',
+							                     gridTextColor : '#8f9ea6',
+							                     gridTextSize : '11px',
+							                     lineColors : [ '#177bbb' ],
+							                     lineWidth : 2,
+							                     parseTime : false,
+							                     resize : true,
+							                     hideHover : 'auto'
+							                  });
 
-											 $('.demo-pie').each(function() {
+											// $('.demo-pie').each(function() {
 																// 여기서 임의의 숫자를 넣어주고 있다 여기서 숫자를 바꿔서 넣자 
-																var newVal = map.submitPercent;
-																$(this).data('easyPieChart').update(newVal);
-															});
+																var newVal = 20 //map.submitPercent;
+											//					$(this).data('easyPieChart').update(newVal);
+											//				});
 
 										},
 										error : function(XHR, status, error) {
@@ -683,45 +713,13 @@
 													+ error);
 										}
 									});
+						
 
-							var lineSparklines2 = function() {
-								$('#demo-sparklines-line-1-1').sparkline(
-										[ 945, 754, 805, 855, 678, 987, 1026,
-												885, 878, 922, 875, ], {
-											type : 'line',
-											width : '100%',
-											height : '70',
-											spotRadius : 3,
-											lineWidth : 2,
-											lineColor : '#03a9f4',
-											fillColor : false,
-											minSpotColor : false,
-											maxSpotColor : false,
-											highlightLineColor : '#03a9f4',
-											highlightSpotColor : '#03a9f4',
-											tooltipChartTitle : 'Earning',
-											tooltipPrefix : '$ ',
-											spotColor : '#03a9f4',
-											valueSpots : {
-												'0:' : '#03a9f4'
-											}
-										});
-							};
-							lineSparklines2();
 
 							$("#demo-gallery-3").unitegallery({
 								slider_enable_text_panel : true,
 								slider_enable_bullets : false
 							});
-
-							// 전부다 새로고침 해버리기 
-							$('#demo-update-interval').on('click',function() {
-												$('.demo-pie').each(function() {
-																	// 여기서 임의의 숫자를 넣어주고 있다 여기서 숫자를 바꿔서 넣자 
-																	var newVal = Math.floor(100 * Math.random());
-																	$(this).data('easyPieChart').update(newVal);
-																});
-											});
 
 							$('#demo-pie-7-1').easyPieChart(
 									{
