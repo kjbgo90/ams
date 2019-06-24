@@ -195,7 +195,6 @@ public class CommunityController {
 		System.out.println("aws 파일업로드");
 		System.out.println(file.getOriginalFilename());
 		String fileName = file.getOriginalFilename();
-		s3Util.fileUpload(bucketName, file);
 		s3Util.getFileURL(bucketName, fileName);
 		String url = s3Util.getFileURL(bucketName, file.getOriginalFilename());
 		// 확장자
@@ -213,7 +212,7 @@ public class CommunityController {
 		// 파일패스
 		String filePath = url;
 		System.out.println("filePath: " + filePath);
-
+		s3Util.fileUpload(bucketName, file, exName, saveName);
 		fileUpLoadVo vo = new fileUpLoadVo();
 		vo.setFileName(fileName);
 		vo.setFilepath(filePath);
