@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import net.ourams.vo.ChapterVo;
+import net.ourams.vo.CourseDataroomVo;
 import net.ourams.vo.CourseRegistVo;
 import net.ourams.vo.CourseVo;
 import net.ourams.vo.FeedbackAnswerVo;
@@ -198,6 +199,18 @@ public class CourseMainDao {
 	public List<CourseVo> selectCourseListByUserNoAndUserType(int userNo, int userType) {
 		
 		return sqlSession.selectList("user.selectCourseListByUserNoAndUserType", userNo);
+	}
+
+	public int insertCourseByCourseVo(CourseVo createCourseVo) {
+		return sqlSession.insert("course.insertCourseByCourseVo", createCourseVo);
+	}
+
+	public int insertCourseregistByCourseRegistVo(CourseRegistVo crVo) {
+		return sqlSession.insert("course.insertCourseregistByCourseRegistVo", crVo);
+	}
+
+	public void insertDataroomByDataroomVo(CourseDataroomVo drVo) {
+		sqlSession.insert("course.insertDataroomByDataroomVo", drVo);
 	}
 
 }

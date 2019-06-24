@@ -404,4 +404,56 @@
 		]]>
 	</select>
 	
+	<insert id="insertCourseByCourseVo" parameterType="CourseVo">
+		<selectKey keyProperty="courseNo" resultType="int" order="BEFORE">
+			SELECT seq_course_no.nextval FROM dual
+		</selectKey>
+		<![CDATA[
+			INSERT INTO course(		courseNo,
+	    							courseName,
+	    							lecRoomNo,
+	    							startDate,
+	    							endDate,
+	    							teacherNo,
+	    							managerNo,
+	    							coursePath)
+			VALUES (
+	    							#{courseNo},
+	    							#{courseName},
+	    							#{lecRoomNo}, 
+	    							#{startDate},
+	    							#{endDate},
+	    							#{teacherNo},
+	    							#{managerNo},
+	    							#{coursePath})
+		]]>
+	</insert>
+	
+	<insert id="insertCourseregistByCourseRegistVo" parameterType="CourseRegistVo">
+		<![CDATA[
+			INSERT INTO courseregist(		registNo,
+	    									userNo,
+			    							courseNo,
+			    							seatNo)
+			VALUES (
+			    							seq_courseregist_no.nextval,
+			    							#{userNo},
+			    							#{courseNo}, 
+			    							#{seatNo})
+		]]>
+	</insert>
+	
+	<insert id="insertDataroomByDataroomVo" parameterType="CourseDataroomVo">
+		<![CDATA[
+			INSERT INTO dataroom(			dataRoomNo,
+	    									courseNo,
+			    							dataRoomName,
+			    							pRoomNo)
+			VALUES (
+			    							seq_dataroom_no.nextval,
+			    							#{courseNo},
+			    							#{dataRoomName}, 
+			    							#{pRoomNo})
+		]]>
+	</insert>
 </mapper>

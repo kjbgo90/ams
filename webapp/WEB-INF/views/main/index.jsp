@@ -39,6 +39,12 @@
 <!--Bootstrap Validator [ OPTIONAL ]-->
 <link href="${pageContext.request.contextPath }/assets/css/bootstrapValidator.css" rel="stylesheet">
 
+<!--Chosen [ OPTIONAL ]-->
+<link href="${pageContext.request.contextPath }/assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+
+<!--Bootstrap Datepicker [ OPTIONAL ]-->
+<link href="${pageContext.request.contextPath }/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet">
+
 </head>
 
 <!--TIPS-->
@@ -70,7 +76,7 @@
 					<!-- login form/ Logo -->
 					<div class="row">
 						<div class="col-xs-10 col-xs-offset-1">
-							<div class="panel panel-body">
+							<div class="panel">
 								<div class="panel-body">
 									<div class="col-xs-5 col-xs-offset-1">
 
@@ -116,7 +122,7 @@
 													<c:if test="${authUser.userType eq 0 }">
 														<div class="mar-ver pad-btm">
 															<h1 class="h4">매니저 메뉴</h1>
-															<a href="${pageContext.request.contextPath }/manager" class="btn-link">관리 페이지</a>
+															<button class="btn-link" data-target='#courseCreate' data-toggle='modal'>코스 생성</button>
 														</div>
 														
 														<div class="mar-ver pad-btm">
@@ -131,12 +137,11 @@
 															</div>
 														</div>
 													</c:if>
-													
 													<!-- 로그인 유저가 강사인 경우 -->
 													<c:if test="${authUser.userType eq 1 }">
 														<div class="mar-ver pad-btm">
 															<h1 class="h4">강사 메뉴</h1>
-															<p>관리</p>
+															<a href="${pageContext.request.contextPath }/myPage/index" class="btn-link">mypage</a>
 														</div>
 
 														<div class="mar-ver pad-btm">
@@ -184,8 +189,6 @@
 						<!-- ==================================================================== -->
 						<!-- END QUICK TIPS -->
 					</div>
-
-
 				</div>
 				<!--===================================================-->
 				<!--END Page content-->
@@ -315,6 +318,87 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="modal fade" id="courseCreate" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal" aria-hidden="true">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+
+				<!--Modal header-->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<i class="pci-cross pci-circle"></i>
+					</button>
+					<h4 class="modal-title">코스 생성</h4>
+				</div>
+				<!--Modal body-->
+				<form action="${pageContext.request.contextPath }/course/create" method="post">
+					<div class="modal-body ">
+						<div class="panel">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-xs-5">
+										<label class="control-labe"><span class="text-main text-bold mar-no">코스명</span></label>
+										<input type="text" class="form-control" name="courseName">
+									</div>
+									<div class="col-xs-3">
+										<label class="control-labe"><span class="text-main text-bold mar-no">강사</span></label>
+										<select data-placeholder="Choose a Country..." id="teacher-select" name="teacherNo" tabindex="2">
+											<option value="2" >황일영</option>
+						                    <option value="8" >김강사</option>
+										</select>
+									</div>
+									<div class="col-xs-2">
+										<label class="control-labe"><span class="text-main text-bold mar-no">강의실 번호</span></label>
+										<input type="text" class="form-control" name="lecRoomNo">
+									</div>
+									<div class="col-xs-2">
+										<label class="control-labe"><span class="text-main text-bold mar-no">CoursePath</span></label>
+										<input type="text" class="form-control" name="coursePath">
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-xs-12">
+										<label class="control-labe"><span class="text-main text-bold mar-no">기간</span></label>
+										<div class="col-xs-12" id="dp-range">
+											<div class="input-daterange input-group" id="datepicker">
+												<input type="text" class="form-control" id="subject-edit-start" name="startDate" /> <span class="input-group-addon">to</span> <input type="text" class="form-control" id="subject-edit-end" name="endDate" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-xs-12">
+										<label class="control-labe"><span class="text-main text-bold mar-no">학생</span></label>
+										<select id="student-multiselect" data-placeholder="학생들을 선택해 주세요." multiple tabindex="4" name="userNoList">
+											<option value="10" >d</option>
+											<option value="1" >김재봉(kjbgo90@naver.com)</option>
+											<option value="2" >김재봉(kjbgo90@naver.com)</option>
+											<option value="3" >김재봉(kjbgo90@naver.com)</option>
+											<option value="4" >김재봉(kjbgo90@naver.com)</option>
+											<option value="5" >김재봉(kjbgo90@naver.com)</option>
+											<option value="7" >김재봉(kjbgo90@naver.com)</option>
+											<option value="6" >김재봉</option>
+											<option value="8" >김재봉</option>
+											<option value="9" >김재봉</option>
+						                    <option value="11" >11</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<!--Modal footer-->
+					<div class="modal-footer">
+						<button class="btn btn-info" type="submit">확인</button>
+						<button data-dismiss="modal" class="btn btn-default" type="button">닫기</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 	<!--JAVASCRIPT-->
 	<!--=================================================-->
 
@@ -337,12 +421,21 @@
     
     <!--Bootstrap Validator [ OPTIONAL ]-->
 	<script src="${pageContext.request.contextPath }/assets/js/form-wizard.js"></script>
+	
+	<!-- Chosen [ OPTIONAL ] -->
+	<script src="${pageContext.request.contextPath }/assets/plugins/chosen/chosen.jquery.min.js"></script>
+	
+	<!--Bootstrap Datepicker [ OPTIONAL ]-->
+	<script src="${pageContext.request.contextPath }/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 
 </body>
 
 <script type="text/javascript">
 
 	$(document).ready(function() {
+		$('#teacher-select').chosen({width:'100%'});
+	    $('#student-multiselect').chosen({width:'100%'});
+		
 		var result = "${param.result}";
 		
 		if("${authUser}" != null){
@@ -375,7 +468,12 @@
 	
 							CourseList += "<h4 class='text-main'>" + list[i].courseName + "</h4>";
 							CourseList += "<p>" + list[i].startDate + " ~ " + list[i].endDate + "</p>";
-							CourseList += "<a href='" + list[i].coursePath + "/main' class='btn-link'>이동하기</a>";
+							if(userType == 0){
+								CourseList += "<button class='btn-link' data-target='#joinMembershipModal' data-toggle='modal' data-courseno='" + list[i].courseNo + "'>관리하기</button>";
+							}
+							else {
+								CourseList += "<a href='" + list[i].coursePath + "/main' class='btn-link'>이동하기</a>";
+							}
 							CourseList += "</div>";
 	
 							$("#indexCourseList").append(CourseList);
@@ -397,6 +495,13 @@
 				callNoty("info", "ion-alert", "top-right", 2500, "회원가입 성공", "회원가입을 성공 하였습니다.", "zoomIn", "fadeOut");
 			}
 		}
+	});
+	
+	$('#dp-range .input-daterange').datepicker({
+		format : "yyyy-mm-dd",
+		todayBtn : "linked",
+		autoclose : false,
+		todayHighlight : false
 	});
 	
 	function callNoty(color, icon, position, time, title, message, animationIn, animationOut){

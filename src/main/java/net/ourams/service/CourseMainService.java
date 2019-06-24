@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import net.ourams.dao.CourseMainDao;
 import net.ourams.dao.UserDao;
 import net.ourams.vo.ChapterVo;
+import net.ourams.vo.CourseDataroomVo;
+import net.ourams.vo.CourseRegistVo;
 import net.ourams.vo.CourseVo;
 import net.ourams.vo.FeedbackAnswerVo;
 import net.ourams.vo.FeedbackQuestionVo;
@@ -258,6 +260,42 @@ public class CourseMainService {
 
 	public List<CourseVo> getCourseList(int userNo, int userType) {
 		return courseMDao.selectCourseListByUserNoAndUserType(userNo, userType);
+	}
+
+	@Transactional
+	public int insertCourseByCourseVoAndRegistCourseAndInsertDataRoom(CourseVo createCourseVo,
+			List<Integer> userNoList) {
+		int resultCourse = courseMDao.insertCourseByCourseVo(createCourseVo);
+		
+		if(resultCourse == 1) {
+			int courseNo = createCourseVo.getCourseNo();
+			CourseRegistVo crVo = new CourseRegistVo();
+			crVo.setCourseNo(courseNo);
+			crVo.setSeatNo(0);
+			
+			int resultCR = 0;
+			
+			//학생을 넣어줌
+			for(int i = 0; i < userNoList.size(); i++) {
+				crVo.setUserNo(userNoList.get(i));
+				resultCR += courseMDao.insertCourseregistByCourseRegistVo(crVo);
+			}
+			
+			//강사를 넣어줌
+			if(resultCR == userNoList.size()) {
+				crVo.setSeatNo(99);
+				crVo.setUserNo(createCourseVo.getTeacherNo());
+				courseMDao.insertCourseregistByCourseRegistVo(crVo);
+			}
+			
+			CourseDataroomVo drVo = new CourseDataroomVo();
+			drVo.setCourseNo(courseNo);
+			drVo.setDataRoomName("root");
+			drVo.setpRoomNo(0);
+			courseMDao.insertDataroomByDataroomVo(drVo);
+		}
+		
+		return resultCourse;
 	}
 
 	

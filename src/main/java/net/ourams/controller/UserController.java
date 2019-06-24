@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.ourams.interceptor.Auth;
+import net.ourams.interceptor.AuthUser;
 import net.ourams.service.CourseMainService;
 import net.ourams.service.UserService;
 import net.ourams.vo.CourseVo;
@@ -76,5 +77,31 @@ public class UserController {
 		}
 		
 		return list;
+	}
+	
+	@Auth
+	@RequestMapping(value="/course/create", method = RequestMethod.POST)
+	public String createCourse(@AuthUser UserVo authUser,
+							   @RequestParam("courseName") String courseName,
+							   @RequestParam("lecRoomNo") int lecRoomNo,
+							   @RequestParam("startDate") String startDate,
+							   @RequestParam("endDate") String endDate,
+							   @RequestParam("teacherNo") int teacherNo,
+							   @RequestParam("coursePath") String coursePath,
+							   @RequestParam("userNoList") List<Integer> userNoList) {
+		
+		CourseVo createCourseVo = new CourseVo();
+		
+		createCourseVo.setCourseName(courseName);
+		createCourseVo.setLecRoomNo(lecRoomNo);
+		createCourseVo.setStartDate(startDate);
+		createCourseVo.setEndDate(endDate);
+		createCourseVo.setTeacherNo(teacherNo);
+		createCourseVo.setCoursePath(coursePath);
+		createCourseVo.setManagerNo(authUser.getUserNo());
+		
+		courseMService.insertCourseByCourseVoAndRegistCourseAndInsertDataRoom(createCourseVo, userNoList);
+		
+		return "redirect:/index";
 	}
 }
