@@ -544,7 +544,8 @@
 						'nifty.ready',
 						function() {
 
-							userNo = '${authUser.userNo}'
+							var userNo = '${authUser.userNo}';
+							var userType = '${authUser.userType}';
 							console.log(userNo);
 
 							$
@@ -585,6 +586,54 @@
 													+ error);
 										}
 									});
+							
+							$.ajax({
+								url : "${pageContext.request.contextPath }/index/courselist",
+								type : "post",
+								data : {
+									userNo : userNo,
+									userType : userType
+								},
+								dataType : "json",
+								success : function(list) {
+									console.log(list);
+									console.log(list.length);
+									
+									if(list.length > 0) {
+										var CourseList = "";
+										$("#controlCourseList").empty();
+										
+										for (var i = 0; i < list.length; i++) {
+											// list 찾기 !!
+											if(i == 0){
+												CourseList += "<div class='item active'>";
+											}else {
+												CourseList += "<div class='item'>";
+											}
+					
+											CourseList += "<h4 class='text-main'>" + list[i].courseName + "</h4>";
+											CourseList += "<p>" + list[i].startDate + " ~ " + list[i].endDate + "</p>";
+											if(userType == 0){
+												CourseList += "<button class='btn-link' data-target='#joinMembershipModal' data-toggle='modal' data-courseno='" + list[i].courseNo + "'>관리하기</button>";
+											}
+											else {
+												CourseList += "<a href='${pageContext.request.contextPath }/" + list[i].coursePath + "/main' class='btn-link'>이동하기</a>";
+											}
+											CourseList += "</div>";
+					
+											$("#controlCourseList").append(CourseList);
+											
+											CourseList = "";
+										}
+										$("#controlCourseList").append("<a class='carousel-control left' data-slide='prev' href='#demo-carousel'> <i class='demo-pli-arrow-left icon-2x'></i></a> ");
+										$("#controlCourseList").append("<a class='carousel-control right' data-slide='next' href='#demo-carousel'> <i class='demo-pli-arrow-right icon-2x'></i></a>");
+										
+									}
+								},
+								error : function(XHR, status, error) {
+									console.error(status + " : " + error);
+								}
+							});
 
 							var lineSparklines2 = function() {
 								$('#demo-sparklines-line-1-1').sparkline(
@@ -650,51 +699,7 @@
 									});
 
 							//코스 리스트 뽑아서 나열 하자~ 
-							CourseList = "";
-							$
-									.ajax({
-										url : "${pageContext.request.contextPath }/myPage/courseList",
-										type : "post",
-										data : {
-											userNo : userNo
-										},
-										dataType : "json",
-										success : function(list) {
-											console.log(list);
-											console.log(list.length);
-
-											for (var i = 0; i < list.length; i++) {
-												// list 찾기 !!
-
-												CourseList += "<div class='item active'>";
-												CourseList += "<h4 class='text-main'>java 고급과정22</h4>";
-												CourseList += "<p>2010.04.02~2016.05.07</p>";
-												CourseList += "<p>";
-												CourseList += "<a href=''>이동하기</a>";
-												CourseList += "</p>";
-												CourseList += "</div>";
-												CourseList += "<div class='item'>";
-												CourseList += "<h4 class='text-main'>java 22고급과정</h4>";
-												CourseList += "<p>2010.04.02~2016.05.07</p>";
-												CourseList += "<p>";
-												CourseList += "<a href=''>이동하기</a>";
-												CourseList += "</p>";
-												CourseList += "</div>";
-
-												
-												
-												
-											}
-											$("#controlCourseList").html(
-													CourseList);
-
-											CourseList = "";
-										},
-										error : function(XHR, status, error) {
-											console.error(status + " : "
-													+ error);
-										}
-									});
+							
 
 							//noticeList 
 							$
