@@ -469,4 +469,18 @@
          order by submitNo
       ]]>
    </select>
+   
+   <delete id="deleteAssignment" parameterType="map">
+		<![CDATA[
+			delete from assignment
+			where assignmentNo = #{assignmentNo} and teacherNo = #{userNo}
+		]]>
+	</delete>
+
+	<delete id="deleteAssignmentSchedule" parameterType="int">
+		<![CDATA[
+			delete from schedule
+			where scheduleNo = #{scheduleNo}
+		]]>
+	</delete>
 </mapper>

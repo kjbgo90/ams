@@ -127,6 +127,30 @@
 		]]>
 	</select>
 	
+	<select id="selectFeedbackAnswerByUserNo" parameterType="map" resultType="StatisticVo">
+		<![CDATA[
+			select fbqNo,
+			       fbqContent,
+			       courseNo,
+			       chapterContent,
+			       subjectTitle,
+			       fbaType
+			from(   select fbq.fbqNo fbqNo,
+			               fbqContent,
+			               courseNo,
+			               fbaType,
+			               chapterNo
+			        from feedbackquestion fbq join feedbackanswer fba on fbq.fbqNo = fba.fbqNo
+			        where fbq.fbqno = #{fbqNo} and userNo = #{userNo}) fb 
+			        join
+			        (select chapterNo,
+			                chapterContent,
+			                subjectTitle
+			         from chapter c join subject s on c.subjectNo = s.subjectNo) cs
+			         on fb.chapterNo = cs.chapterNo 
+		]]>
+	</select>
+	
 	<select id="selectSubjectList" parameterType="int" resultType="SubjectVo">
 		<![CDATA[
 			select subjectNo,
@@ -148,13 +172,49 @@
 		]]>
 	</select>
 	
-	<select id="selectSubmitByUserNo" parameterType="map" resultType="SubmitVo">
+	<select id="selectQnAByUserNo" parameterType="map" resultType="StatisticVo">
+		<![CDATA[
+			select s.subjectNo subjectNo,
+				   subjectTitle,
+                   DECODE(COUNT(postType), 0, 0, COUNT(subjectTitle)) qnaCount
+			from subject s left join post p on s.subjectNo = p.subjectNo
+			where s.subjectNo = #{subjectNo} and userNo = #{userNo}
+			group by s.subjectNo, subjectTitle
+		]]>
+	</select>
+	
+	<select id="selectSubmitByUserNo" parameterType="map" resultType="StatisticVo">
 		<![CDATA[
 			select submitNo,
 				   assignmentTitle,
 				   score
 			from submit s join assignment a on s.assignmentNo = a.assignmentNo
 			where s.assignmentNo = #{assignmentNo} and userNo = #{userNo}
+		]]>
+	</select>
+	
+	<select id="selectMaxScore" parameterType="map" resultType="StatisticVo">
+		<![CDATA[
+			select NVL(max(score), 0) maxScore
+			from submit s join assignment a on s.assignmentNo = a.assignmentNo
+			where a.courseNo = #{courseNo} and userNo = #{userNo}
+		]]>
+	</select>
+	
+	<select id="selectMinScore" parameterType="map" resultType="StatisticVo">
+		<![CDATA[
+			select NVL(min(score), 0) minScore
+			from submit s join assignment a on s.assignmentNo = a.assignmentNo
+			where a.courseNo = #{courseNo} and userNo = #{userNo}
+		]]>
+	</select>
+	
+	<select id="selectSubmitCountByUserNo" parameterType="map" resultType="StatisticVo">
+		<![CDATA[
+			select count(submitNo) submitCount,
+				   count(case scoreCheck when 'false' then 1 end) noCount
+			from submit s right join assignment a on s.assignmentNo = a.assignmentNo
+			where a.courseNo = #{courseNo} and userNo = #{userNo}
 		]]>
 	</select>
 </mapper>

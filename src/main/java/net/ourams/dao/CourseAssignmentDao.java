@@ -170,4 +170,20 @@ public class CourseAssignmentDao {
 	public List<SubmitVo> selectSubmitListByUserNo(int userNo) {
 	      return sqlSession.selectList("assignment.selectSubmitListByUserNo", userNo);
 	   }
+	
+	public int deleteAssignment(int assignmentNo, int userNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("assignmentNo", assignmentNo);
+		map.put("userNo", userNo);
+		
+		return sqlSession.delete("assignment.deleteAssignment", map);
+	}
+
+	public int deleteAssignmentSchedule(int scheduleNo) {
+		return sqlSession.delete("assignment.deleteAssignmentSchedule", scheduleNo);
+	}
+
+	public int deleteSubmitFile(int submitNo) {
+		return sqlSession.delete("assignment.deleteSubmitFile", submitNo);
+	}
 }

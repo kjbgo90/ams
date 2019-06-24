@@ -12,7 +12,6 @@ import net.ourams.vo.AssignmentVo;
 import net.ourams.vo.FeedbackQuestionVo;
 import net.ourams.vo.StatisticVo;
 import net.ourams.vo.SubjectVo;
-import net.ourams.vo.SubmitVo;
 import net.ourams.vo.UserVo;
 
 
@@ -50,7 +49,7 @@ public class CourseStatisticDao {
 		return sqlSession.selectOne("statistic.selectQnA", subjectNo);
 	}
 
-	public SubmitVo selectSubmitByUserNo(int assignmentNo, int userNo) {
+	public StatisticVo selectSubmitByUserNo(int assignmentNo, int userNo) {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		
 		map.put("assignmentNo", assignmentNo);
@@ -59,5 +58,49 @@ public class CourseStatisticDao {
 		return sqlSession.selectOne("statistic.selectSubmitByUserNo", map);
 	}
 
-	
+	public StatisticVo selectMaxScore(int courseNo, int userNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		map.put("courseNo", courseNo);
+		map.put("userNo", userNo);
+		
+		return sqlSession.selectOne("statistic.selectMaxScore", map);
+	}
+
+	public StatisticVo selectMinScore(int courseNo, int userNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		map.put("courseNo", courseNo);
+		map.put("userNo", userNo);
+		
+		return sqlSession.selectOne("statistic.selectMinScore", map);
+	}
+
+	public StatisticVo selectFeedbackAnswerByUserNo(int fbqNo, int userNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		map.put("fbqNo", fbqNo);
+		map.put("userNo", userNo);
+		
+		return sqlSession.selectOne("statistic.selectFeedbackAnswerByUserNo", map);
+	}
+
+	public StatisticVo selectSubmitCountByUserNo(int courseNo, int userNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		map.put("courseNo", courseNo);
+		map.put("userNo", userNo);
+		
+		return sqlSession.selectOne("statistic.selectSubmitCountByUserNo", map);
+	}
+
+	public StatisticVo selectQnAByUserNo(int subjectNo, int userNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		map.put("subjectNo", subjectNo);
+		map.put("userNo", userNo);
+		
+		return sqlSession.selectOne("statistic.selectQnAByUserNo", map);
+	}
+
 }
