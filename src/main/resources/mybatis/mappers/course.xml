@@ -178,7 +178,7 @@
 			VALUES (
 	    							#{scheduleNo},
 	    							#{subjectTitle}, 
-	    							#{startDate},
+	    							TO_DATE(#{startDate}, 'yyyy/mm/dd'),
 	    							TO_DATE(#{endDate}, 'yyyy/mm/dd hh24:mi:ss'),
 	    							'dark',
 	    							#{courseNo},
@@ -421,8 +421,8 @@
 	    							#{courseNo},
 	    							#{courseName},
 	    							#{lecRoomNo}, 
-	    							#{startDate},
-	    							#{endDate},
+	    							TO_DATE(#{startDate}, 'yyyy/mm/dd'),
+	    							TO_DATE(#{endDate}, 'yyyy/mm/dd'),
 	    							#{teacherNo},
 	    							#{managerNo},
 	    							#{coursePath})
