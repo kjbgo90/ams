@@ -46,7 +46,7 @@ public class CourseDataroomController {
 	// 테스트용
 	@RequestMapping(value = "/init", method = RequestMethod.GET)
 	public String init() {
-		// 버킷생성
+		// 버킷생성 asdfadsfasdfadsfasdfa
 		s3Util.createBucket(bucketName);
 
 		// 버킷리스트
