@@ -443,11 +443,14 @@
 			type : "post",
 			success : function(map){
 				console.log(map.teacherUserVo);
+				if(map.subjectTitle != null){
+					$("#nowSubjectTitle").html(map.subjectTitle);
+				}
 				
-				$("#nowSubjectTitle").html(map.subjectTitle);
-				
-				for(var i = 0; i < map.chapterList.length; i++){
-					$("#chapterSelector").append("<option value='" + map.chapterList[i].chapterNo + "'>" + map.chapterList[i].chapterContent + "</option>");
+				if(map.chapterList != null){
+					for(var i = 0; i < map.chapterList.length; i++){
+						$("#chapterSelector").append("<option value='" + map.chapterList[i].chapterNo + "'>" + map.chapterList[i].chapterContent + "</option>");
+					}
 				}
 				
 				for(var i = 0; i < map.userList.length; i++){

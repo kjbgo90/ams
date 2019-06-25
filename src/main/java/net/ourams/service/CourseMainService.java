@@ -159,11 +159,11 @@ public class CourseMainService {
 		
 		if(subjectVo != null) {
 			map.put("chapterList", courseMDao.selectChapterList(subjectVo.getSubjectNo()));
+			map.put("subjectTitle", subjectVo.getSubjectTitle());
 		}
 		
 		map.put("userList", courseMDao.selectUserListByCourseNo(courseNo));
 		map.put("teacherUserVo", teacherUserVo);
-		map.put("subjectTitle", subjectVo.getSubjectTitle());
 		
 		return map;
 	}
