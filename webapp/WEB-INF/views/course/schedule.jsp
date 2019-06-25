@@ -613,12 +613,6 @@
 						dataType : "json",
 						success : function(scheduledto) {
 							console.log('등록');
-							if(tagList == null){
-								console.log("태그 없음");
-							}else{
-								console.log("태그 있음");
-								send_mail(tagList, scheduledto.scheduleName, scheduledto.startDate, scheduledto.endDate);
-							}
 							reflashSchedule();
 							$("#schedule-modal").modal("hide");
 						},
@@ -629,6 +623,12 @@
 				}
 			}
 			
+			if(tagList == null){
+				console.log("태그 없음");
+			}else{
+				console.log("태그 있음");
+				send_mail(tagList, scheduledto.scheduleName, scheduledto.startDate, scheduledto.endDate);
+			}
 			
 		});
 		
