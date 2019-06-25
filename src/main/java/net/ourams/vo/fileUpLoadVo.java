@@ -9,6 +9,8 @@ public class fileUpLoadVo {
 	private String filepath;
 	private int assignmentFileNo;
 	private int assignmentNo;
+	private int cfileNo;
+	private int cpostNo;
 	private int submitFileNo;
 	private int submitNo;
 	private int postFileNo;
@@ -18,7 +20,9 @@ public class fileUpLoadVo {
 	}
 
 	public fileUpLoadVo(int fileNo, String fileName, String saveName, long fileSize, String regDate, String filepath,
-			int assignmentFileNo, int assignmentNo, int submitFileNo, int submitNo, int postFileNo, int postNo) {
+			int assignmentFileNo, int assignmentNo, int cfileNo, int cpostNo, int submitFileNo, int submitNo,
+			int postFileNo, int postNo) {
+		super();
 		this.fileNo = fileNo;
 		this.fileName = fileName;
 		this.saveName = saveName;
@@ -27,6 +31,8 @@ public class fileUpLoadVo {
 		this.filepath = filepath;
 		this.assignmentFileNo = assignmentFileNo;
 		this.assignmentNo = assignmentNo;
+		this.cfileNo = cfileNo;
+		this.cpostNo = cpostNo;
 		this.submitFileNo = submitFileNo;
 		this.submitNo = submitNo;
 		this.postFileNo = postFileNo;
@@ -95,6 +101,22 @@ public class fileUpLoadVo {
 
 	public void setAssignmentNo(int assignmentNo) {
 		this.assignmentNo = assignmentNo;
+	}
+
+	public int getCfileNo() {
+		return cfileNo;
+	}
+
+	public void setCfileNo(int cfileNo) {
+		this.cfileNo = cfileNo;
+	}
+
+	public int getCpostNo() {
+		return cpostNo;
+	}
+
+	public void setCpostNo(int cpostNo) {
+		this.cpostNo = cpostNo;
 	}
 
 	public int getSubmitFileNo() {

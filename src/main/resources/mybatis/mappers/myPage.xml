@@ -333,6 +333,24 @@ SELECT    rownum as rnum,
                         
 	]]>
 	</update>
+	
+	<select id="selectAllList" resultType="CommunityVo">
+      <![CDATA[
+         SELECT   c.cpostNo, 
+                c.cpostType, 
+                u.userNo, 
+                     regDate,
+                c.cpostTitle,
+                c.cpostContent,
+                c.liked,
+                     (SELECT count(*) 
+                      FROM communityreply r
+                      WHERE c.cpostNo = r.cpostNo) AS replyCount 
+         FROM  communitypost c join users u
+         ON c.userNo = u.userNo
+         ORDER BY c.cpostNo DESC
+      ]]>   
+   </select>
 
 
 </mapper>

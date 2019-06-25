@@ -26,6 +26,23 @@
 		]]>
 	</select>
 	
+	<select id="selectAllList" resultType="CommunityVo">
+		<![CDATA[
+			SELECT   c.cpostNo, 
+					 c.cpostType, 
+					 u.userNo, 
+                     regDate,
+					 c.cpostTitle,
+					 c.cpostContent,
+					 c.liked,
+                     (SELECT count(*) 
+                      FROM communityreply r
+                      WHERE c.cpostNo = r.cpostNo) AS replyCount 
+			FROM  communitypost c join users u
+			ON c.userNo = u.userNo
+			ORDER BY c.cpostNo DESC
+		]]>	
+	</select>
 	
 	<select id="MainEatList" resultType="CommunityVo">
 		<![CDATA[
@@ -151,6 +168,17 @@
 		]]>
 	</select>
 	
+	<select id="selectMyPost" parameterType="CommunityVo" resultType="CommunityVo">
+		<![CDATA[
+			SELECT  * 
+			FROM (SELECT * 
+				  FROM communitypost 
+				  WHERE userno = #{userNo} AND cpostType = #{cpostType} 
+				  ORDER BY liked DESC) 
+			WHERE rownum<6
+		]]>
+	</select>
+	
 	<select id="selectLocationNo" parameterType="CommunityVo" resultType="int">
 		<![CDATA[
 			SELECT locationNo
@@ -188,6 +216,77 @@
 			SELECT longitude
 			FROM location
 			WHERE locationNo = #{locationNo}
+		]]>
+	</select>
+	
+	<select id="selectPagingList" parameterType="map" resultType="CommunityVo">
+		<![CDATA[
+			SELECT  rnum ,
+                    cpostNo, 
+                    cpostType, 
+                    userNo, 
+                    regDate,
+                    cpostTitle,
+                    cpostContent,
+                    liked,
+                    fileNo,
+                    fileName,
+                    filePath,
+                    replyCount 
+			FROM (
+					SELECT  rownum as rnum,
+                    		cpostNo, 
+                    		cpostType, 
+                    		userNo, 
+                    		regDate,
+                    		cpostTitle,
+                    		cpostContent,
+                    		liked,
+                    		fileno,
+                    		filename,
+                    		filepath,
+                    		replyCount 
+        			FROM (
+            			SELECT  c.cpostNo, 
+					 		    c.cpostType, 
+					 			c.userNo, 
+                     			c.regDate,
+					 			c.cpostTitle,
+					 			c.cpostContent,
+					 			c.liked,
+                     			cf.fileno,
+                     			cf.filename,
+                     			cf.filepath,
+                     			(SELECT count(*) FROM communityreply r WHERE c.cpostNo = r.cpostNo) as replyCount 
+						FROM  communitypost c left outer JOIN  
+            				(SELECT c.fileno,
+                    				c.cpostno,
+                    				filename,
+                    				filepath
+            				FROM communityfile c join datafile df 
+           			 		ON c.fileno = df.fileno) cf
+          			    ON c.cpostno = cf.cpostno
+						WHERE c.cpostType = #{cpostType}
+						ORDER BY c.cpostNo desc)
+       			   WHERE rownum <= #{pageNo2})
+			WHERE rnum >= #{pageNo1}
+		]]>	
+	</select>
+	
+	<select id="totalPostNumber" parameterType="int" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM communitypost WHERE cpostType = #{cpostType}
+		]]>
+	</select>
+	
+	<select id="selectCommunityFileList" resultType="fileUploadVo">
+		<![CDATA[
+			select cfileNo,
+				   cpostNo,
+				   c.fileNo,
+				   fileName,
+				   filepath
+			from communityfile c join datafile d on c.fileNo = d.fileNo
 		]]>
 	</select>
 	

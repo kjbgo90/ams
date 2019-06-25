@@ -6,6 +6,7 @@ public class CommunityVo {
 	private int cpostNo;
 	private int cpostType;
 	private int userNo;
+	private String userName;
 	private String regDate;
 	private String cpostTitle;
 	private String cpostContent;
@@ -14,13 +15,20 @@ public class CommunityVo {
 	public int pageNo;
 	private List<fileUpLoadVo> fileList;
 	private String categoryName;
+	
+	//location
 	private int locationNo;
 	private int cfileNo;
 	private String address;
 	private String businessName;
 	private String latitude;
 	private String longitude;
+	
+	//file 
 	private int replyCount;
+	private String filePath;
+	private String fileName;
+	private int fileNo;
 	
 	public CommunityVo() {
 		
@@ -72,6 +80,14 @@ public class CommunityVo {
 
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getRegDate() {
@@ -155,7 +171,6 @@ public class CommunityVo {
 		this.address = address;
 	}
 
-	
 	public String getBusinessName() {
 		return businessName;
 	}
@@ -188,16 +203,39 @@ public class CommunityVo {
 		this.cfileNo = cfileNo;
 	}
 
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public int getFileNo() {
+		return fileNo;
+	}
+
+	public void setFileNo(int fileNo) {
+		this.fileNo = fileNo;
+	}
+
 	
-	public int getreplyCount() {
+	public int getReplyCount() {
 		return replyCount;
 	}
 
-	public void setreplyCount(int replyCount) {
+	public void setReplyCount(int replyCount) {
 		this.replyCount = replyCount;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "CommunityVo [cpostNo=" + cpostNo + ", cpostType=" + cpostType + ", userNo=" + userNo + ", regDate="
@@ -211,4 +249,7 @@ public class CommunityVo {
 		return "location info [address=" + address + ", businessName=" + businessName + ", latitude=" + latitude + ", longitude=" + longitude +"]";
 	}
 	
+	public String fileInfo() {
+		return "file info [fileNo="+ fileNo + ", fileName=" + fileName + ", filePath=" + filePath + ", replyCount: " + replyCount + "]";
+	}
 }

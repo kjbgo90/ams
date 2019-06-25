@@ -2,16 +2,15 @@ package net.ourams.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,9 +45,10 @@ public class CommunityController {
 	@Autowired
 	private S3Util s3Util;
 
-	private String bucketName = "net.ourams.assignment";
+	private String bucketName = "net.ourams.community2";
 
 	// community main list
+	@Auth
 	@RequestMapping(value = "/mainform", method = RequestMethod.GET)
 	public String mainForm(Model model) {
 		System.out.println("mainform");
@@ -73,10 +73,14 @@ public class CommunityController {
 	}
 	
 	// community category detail list
+	@Auth
 	@RequestMapping(value = "/selectform", method = RequestMethod.GET)
 	public String selectForm(Model model, @RequestParam("cpostType") int cpostType) throws ParseException {
 		System.out.println("selectform(Type: "+cpostType+")");
+		System.out.println("--------------------------------------------------------");
 		List<CommunityVo> communityList = communityService.getList(cpostType);
+		System.out.println(communityList);
+		
 		List<CommunityVo> getlikedList = communityService.getlikedList(cpostType);
 		for (CommunityVo el : communityList) {
 			System.out.println(el.getRegDate());
@@ -107,7 +111,17 @@ public class CommunityController {
 	
 		return "community/community-list";
 	}
-	
+
+	/*
+	// community load all list
+	@ResponseBody
+	@RequestMapping(value="/loadAll", method=RequestMethod.GET)
+	public List<CommunityVo> loadAllPost() {
+		System.out.println("load all list... ");
+		
+		return communityService.getAllList();
+	}
+	*/
 	
 	@Auth
 	@ResponseBody
@@ -196,7 +210,6 @@ public class CommunityController {
 		System.out.println(file.getOriginalFilename());
 		String fileName = file.getOriginalFilename();
 		s3Util.getFileURL(bucketName, fileName);
-		String url = s3Util.getFileURL(bucketName, file.getOriginalFilename());
 		// 확장자
 		String exName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 		System.out.println("exName: " + exName);
@@ -209,9 +222,11 @@ public class CommunityController {
 		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
 		System.out.println("saveName: " + saveName);
 
+		String url = s3Util.getFileURL(bucketName, saveName);
 		// 파일패스
 		String filePath = url;
 		System.out.println("filePath: " + filePath);
+
 		s3Util.fileUpload(bucketName, file, exName, saveName);
 		fileUpLoadVo vo = new fileUpLoadVo();
 		vo.setFileName(fileName);
@@ -220,8 +235,6 @@ public class CommunityController {
 		vo.setSaveName(saveName);
 		System.out.println(vo.toString());
 		model.addAttribute("vo", vo);
-		
-		
 		
 		return vo;
 	}
@@ -243,6 +256,36 @@ public class CommunityController {
 		System.out.println("load hot places...");
 		
 		return communityService.hotPlaces(cpostType);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/myPost", method=RequestMethod.POST)
+	public List<CommunityVo> myPost(@RequestParam("cpostType") int cpostType, @AuthUser UserVo authUser){
+		System.out.println("load my post...");
+		
+		if(authUser != null) {
+			return communityService.myPost(cpostType, authUser.getUserNo(), authUser.getUserName());
+		}else {
+			return null;
+		}
+	}
+	
+	@ResponseBody 
+	@RequestMapping(value="/locationInfo", method=RequestMethod.POST)
+	public CommunityVo loadLocationInfo(@RequestParam("cpostNo") int cpostNo ) {
+		System.out.println("load " + cpostNo + " location info..." );
+		
+		return communityService.loadLocationInfo(cpostNo);
+	}
+	
+	// 페이징 한것들
+	@ResponseBody
+	@RequestMapping(value = "/selectPostPaging", method = RequestMethod.POST)
+	public Map<String, Object> selectPostPaging(@RequestParam("cpostType") int cpostType, @RequestParam("pageNo") int pageNo) throws ParseException {
+		System.out.println("selectPostPaging");
+		System.out.println("cpostType: " + cpostType);
+		Map<String, Object> map = communityService.selectPostPaging(cpostType, pageNo);
+		return map;
 	}
 	
 }

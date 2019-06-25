@@ -63,7 +63,8 @@
 		<![CDATA[
 		select 	d.fileno as fileNo, 
 				d.filename  as fileName,
-				d.filepath as filePath
+				d.filepath as filePath,
+				d.regdate as regDate
 		from dataroomfile dr join datafile d 
 		on dr.fileno=d.fileno where dr.dataroomno = #{dataRoomNo}
 		order by d.filename
