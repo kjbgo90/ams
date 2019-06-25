@@ -1,5 +1,8 @@
 package net.ourams.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.ourams.interceptor.Auth;
 import net.ourams.interceptor.AuthUser;
+import net.ourams.service.CommunityService;
 import net.ourams.service.MyMainPageService;
+import net.ourams.util.TimeUtile;
 import net.ourams.vo.AssignmentVo;
-import net.ourams.vo.CourseVo;
+import net.ourams.vo.CommunityVo;
 import net.ourams.vo.MyPageVo;
 import net.ourams.vo.PostVo;
 import net.ourams.vo.SubmitVo;
@@ -30,6 +35,9 @@ public class MyMainPageControllder {
 
 	@Autowired
 	private MyMainPageService myMainPageService;
+	
+	@Autowired
+	private CommunityService communityService;
 	
 	@Auth
 	@RequestMapping(value = "/index")
@@ -249,4 +257,27 @@ public class MyMainPageControllder {
 		Map<String , Object> map = myMainPageService.assignmentAverageList(courseNo);
 		return map;
 	}
+	
+	// community load all list 구민수
+	   @ResponseBody
+	   @RequestMapping(value="/selectCommunity", method=RequestMethod.POST)
+	   public List<CommunityVo> loadAllPost() throws ParseException {
+	      System.out.println("load all list... ");
+	      
+	      List<CommunityVo> communityList = myMainPageService.getAllList();
+	      
+	      for (CommunityVo el : communityList) {
+	         System.out.println(el.getRegDate());
+	         String from = el.getRegDate();
+
+	         SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+	         Date to = transFormat.parse(from);
+	         System.out.println(to);
+	         System.out.println(to.getTime());
+	         el.setRegDate(TimeUtile.toDuration(new Date().getTime() - to.getTime()));
+	      };
+	      
+	      return communityList;
+	   }
 }

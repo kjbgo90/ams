@@ -125,8 +125,7 @@
 
 									<!--Carousel-->
 									<!--===================================================-->
-									<div id="demo-carousel" class="carousel slide"
-										cdata-ride="carousel">
+									<div id="demo-carousel" class="carousel slide" cdata-ride="carousel">
 
 										<!--Indicators-->
 										<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -319,33 +318,65 @@
 								<h4>Community</h4>
 								<!--===================================================-->
 								<!-- End Timeline -->
-								<div class="panel">
-									<div class="panel-heading">
-										<h3 class="panel-title">Enable title text</h3>
-									</div>
-									<div class="pad-all">
-										<div id="demo-gallery-3" style="display: none;">
+								                  <div class="row">
+                     <div class="col-lg-6">
+<!--                         <h4>Community</h4> -->
+                        <!--===================================================-->
+                        <!-- End Timeline -->
+                        <div class="panel">
+                           <div class="panel-heading">
+                              <h3 class="panel-title">Community</h3>
+                           </div> 
+                           <div class="pad-all">
+                              <div id="demo-gallery-3" style="display: none;">
 
-											<a href="#"> 
-												<img alt="The winding road" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile1.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile1.jpg"
-												data-description="The winding road description" style="display: none">
-											</a> 
-											<a href="#"> 
-												<img alt="Pancake" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile2.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile2.jpg"
-												data-description="A pancake is a flat cake, often thin and round, prepared from a starch-based batter"
-												style="display: none">
-											</a> 
-											<a href="#"> 
-												<img alt="Foreshore" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile3.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile3.jpg"
-												data-description="The part of a shore between high- and low-water marks, or between the water and cultivated or developed land."
-												style="display: none">
-											</a> 
-										</div>
-									</div>
-								</div>
+                                 <a href="${pageContext.request.contextPath }/community/selectform?cpostType=1"> 
+                                    <img alt="맛집" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile1.jpg"
+                                    data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile1.jpg"
+                                    data-description="강남역 주변 맛집 커뮤니티" style="display: none">
+                                 </a> 
+                                 <a href="${pageContext.request.contextPath }/community/selectform?cpostType=2"> 
+                                    <img alt="카페" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile2.jpg"
+                                    data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile2.jpg"
+                                    data-description="강남역 주변 카페 커뮤니티"
+                                    style="display: none">
+                                 </a> 
+                                 <a href="${pageContext.request.contextPath }/community/selectform?cpostType=3"> 
+                                    <img alt="자유게시판" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile3.jpg"
+                                    data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile3.jpg"
+                                    data-description=""
+                                    style="display: none">
+                                 </a> 
+                              </div>
+                           </div>
+                           <div class="panel-footer">
+                           
+                           
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-6">
+                        <!-- <h4>CommunityList</h4> -->
+                        <div class="panel">
+                           <div class="panel-heading">
+                              <h3 class="panel-title">CommunityPost</h3>
+                           </div>
+                           <div id="communityStrList" class="nano" style="height: 360px">
+                              <div class="nano-content">
+                                 
+                              </div>
+                              <div class="nano-pane">
+                                 <div class="nano-slider" style="height: 141px; transform: translate(0px, 176.495px);">
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="panel-footer text-right">
+                              <!-- <button class="btn btn-sm btn-Default">Load more</button> -->
+                              <button class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/community/mainform'">View all</button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
 
 							</div>
 							<div class="col-lg-6">
@@ -635,15 +666,15 @@
 									userType : userType
 								},
 								dataType : "json",
-								success : function(list) {
-									console.log(list);
-									console.log(list.length);
+								success : function(map) {
+									console.log(map.courseList);
+									console.log(map.courseList.length);
 									
-									if(list.length > 0) {
+									if(map.courseList.length > 0) {
 										var CourseList = "";
 										$("#controlCourseList").empty();
 										
-										for (var i = 0; i < list.length; i++) {
+										for (var i = 0; i < map.courseList.length; i++) {
 											// list 찾기 !!
 											if(i == 0){
 												CourseList += "<div class='item active'>";
@@ -651,13 +682,13 @@
 												CourseList += "<div class='item'>";
 											}
 					
-											CourseList += "<h4 class='text-main'>" + list[i].courseName + "</h4>";
-											CourseList += "<p>" + list[i].startDate + " ~ " + list[i].endDate + "</p>";
+											CourseList += "<h4 class='text-main'>" + map.courseList[i].courseName + "</h4>";
+											CourseList += "<p>" + map.courseList[i].startDate + " ~ " + map.courseList[i].endDate + "</p>";
 											if(userType == 0){
-												CourseList += "<button class='btn-link' data-target='#joinMembershipModal' data-toggle='modal' data-courseno='" + list[i].courseNo + "'>관리하기</button>";
+												CourseList += "<button class='btn-link' data-target='#joinMembershipModal' data-toggle='modal' data-courseno='" + map.courseList[i].courseNo + "'>관리하기</button>";
 											}
 											else {
-												CourseList += "<a href='${pageContext.request.contextPath }/" + list[i].coursePath + "/main' class='btn-link'>이동하기</a>";
+												CourseList += "<a href='${pageContext.request.contextPath }/" + map.courseList[i].coursePath + "/main' class='btn-link'>이동하기</a>";
 											}
 											CourseList += "</div>";
 					
@@ -930,6 +961,47 @@
 
 						});
 	</script>
+	
+	<script type="text/javascript">
+      $(document).ready(function(){
+         console.log("---------------------load community info-------------------");
+         $.ajax({
+            url : "${pageContext.request.contextPath }/myPage/selectCommunity",
+            type : "post",
+
+            dataType : "json",
+            success : function(list) {
+               $("#communityStrList").empty();
+               
+               for(var i=0; i<list.length; i++){
+                  renderCommunityPost(list[i]);
+               }
+            },
+            error : function(XHR, status, error) {
+               console.error(status + " : " + error);
+            }
+         });
+      })
+      
+      function renderCommunityPost(communityVo){
+
+         str = '';
+         str += '<div class="panel-body bord-btm">';
+         str += '   <p class="text-bold text-main text-sm">#'+communityVo.cpostNo+'</p>';
+         str += '   <p class="pad-btm">'+communityVo.cpostTitle+'</p>'
+         str += '   <a href="#" class="task-footer">'
+         str += '      <span class="box-inline">'
+         str += '         <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i>'+communityVo.replyCount+'</span>';
+         str += '         <span class="pad-rgt"><i class="demo-pli-like"></i>'+communityVo.liked+'</span>'
+         str += '      </span>'
+         str += '      <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>'+communityVo.regDate+'</span>'
+         str += '   </a>'
+         str += '</div>' 
+         
+         $("#communityStrList").append(str);
+      }
+      
+   </script>
 
 
 

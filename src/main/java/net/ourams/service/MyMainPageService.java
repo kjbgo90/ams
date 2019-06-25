@@ -12,6 +12,7 @@ import net.ourams.dao.CourseAssignmentDao;
 import net.ourams.dao.CourseStatisticDao;
 import net.ourams.dao.MyMainPageDao;
 import net.ourams.vo.AssignmentVo;
+import net.ourams.vo.CommunityVo;
 import net.ourams.vo.CourseVo;
 import net.ourams.vo.MyPageVo;
 import net.ourams.vo.PostVo;
@@ -263,5 +264,9 @@ public class MyMainPageService {
 		public int updateUser(UserVo vo) {
 			return myMainPageDao.updateUser(vo);
 		}
+		
+		public List<CommunityVo> getAllList(){
+		      return myMainPageDao.allList();
+		   }
 	
 }

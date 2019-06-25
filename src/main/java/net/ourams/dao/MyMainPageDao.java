@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import net.ourams.vo.CourseVo;
+import net.ourams.vo.CommunityVo;
 import net.ourams.vo.MyPageVo;
 import net.ourams.vo.PostVo;
 import net.ourams.vo.SubmitVo;
@@ -74,4 +74,7 @@ public class MyMainPageDao {
 		return sqlSession.update("myPage.updateUser", vo);
 	}
 	
+	public List<CommunityVo> allList(){
+	      return sqlSession.selectList("myPage.selectAllList");
+	}
 }

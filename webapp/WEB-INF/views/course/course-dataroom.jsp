@@ -1507,23 +1507,19 @@
 				strList2 += "	<a class='file-details'>";
 				strList2 += "		<div class='media-block'>";
 				strList2 += "			<div class='media-left'>";
-				strList2 += "				<i class='demo-pli-doc'></i>";
+				strList2 += "				<i class='demo-pli-file'></i>";
 
 			} else if (ext == 'pdf') {
-				strList2 += "	<a href='https://docs.google.com/gview?url="
-						+ CourseDataroomVo.filePath
-						+ "&embedeede=true' class='embed file-details' id='test'>";
+				strList2 += "	<a href='https://docs.google.com/gview?url="+ CourseDataroomVo.filePath+ "&embedeede=true' class='embed file-details' id='test'>";
 				strList2 += "		<div class='media-block'>";
 				strList2 += "			<div class='media-left'>";
-				strList2 += "				<i class='demo-pli-doc'></i>";
+				strList2 += "				<i class='demo-pli-file'></i>";
 
 			} else if (ext == 'ppt') {
-				strList2 += "	<a href='https://docs.google.com/gview?url="
-						+ CourseDataroomVo.filePath
-						+ "&embedeede=true' class='embed file-details' id='test'>";
+				strList2 += "	<a href='https://docs.google.com/gview?url="+ CourseDataroomVo.filePath+ "&embedeede=true' class='embed file-details' id='test'>";
 				strList2 += "		<div class='media-block'>";
 				strList2 += "			<div class='media-left'>";
-				strList2 += "				<i class='demo-pli-doc'></i>";
+				strList2 += "				<i class='demo-pli-file'></i>";
 
 			} else {
 				strList2 += "	<a class='file-details'>";
@@ -1537,7 +1533,8 @@
 			strList2 += "			<div class='media-body/>";
 			strList2 += "				<p class='file-name'>" + CourseDataroomVo.fileName
 					+ "</p>";
-			strList2 += "				<small>folder</small>";
+			strList2 += "				<small>"+ext+" file</small>";
+			strList2 += "				<small>/"+CourseDataroomVo.regDate+"</small>"
 			strList2 += "			</div>";
 			strList2 += "		</div>";
 			strList2 += "	</a>";

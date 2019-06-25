@@ -127,16 +127,16 @@
 				userType : userType
 			},
 			dataType : "json",
-			success : function(list) {
-				console.log(list);
-				console.log(list.length);
+			success : function(map) {
+				console.log(map.courseList);
+				console.log(map.courseList.length);
 				
-				if(list.length > 0) {
+				if(map.courseList.length > 0) {
 					var courseListInNavStr = "";
 					$("#courseListInNavStr").empty();
 					
-					for (var i = 0; i < list.length; i++) {
-						courseListInNavStr += "<li><a href='${pageContext.request.contextPath }/" + list[i].coursePath + "/main'>" + list[i].courseName + "</a></li>";
+					for (var i = 0; i < map.courseList.length; i++) {
+						courseListInNavStr += "<li><a href='${pageContext.request.contextPath }/" + map.courseList[i].coursePath + "/main'>" + map.courseList[i].courseName + "</a></li>";
 					}
 						$("#courseListInNav").html(courseListInNavStr);
 						courseListInNavStr = "";
