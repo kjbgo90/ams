@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.ourams.interceptor.Auth;
 import net.ourams.interceptor.AuthUser;
-import net.ourams.service.CommunityService;
 import net.ourams.service.MyMainPageService;
 import net.ourams.util.TimeUtile;
 import net.ourams.vo.AssignmentVo;
@@ -35,16 +34,6 @@ public class MyMainPageControllder {
 
 	@Autowired
 	private MyMainPageService myMainPageService;
-	
-	@Autowired
-	private CommunityService communityService;
-	
-	@Auth
-	@RequestMapping(value = "/index")
-	public String mainPage(@AuthUser UserVo authUser ,Model model) {
-		System.out.println("start main");
-		return "main/myPage";
-	}
 	
 	
 	@Auth
@@ -70,16 +59,6 @@ public class MyMainPageControllder {
 	}
 	
 
-	@Auth
-	@RequestMapping(value = "/indexforstudent")
-	public String indexforstudent( @AuthUser UserVo authUser,
-			Model model) {
-		System.out.println("start main for student");
-		model.addAttribute("authUser", authUser);
-		
-		return "main/mypageForStudent";
-	}
-	
 
 	@Auth
 	@RequestMapping(value = "/mytimeline")
@@ -92,15 +71,6 @@ public class MyMainPageControllder {
 	}
 	
 
-	@Auth
-	@RequestMapping(value = "/myassignment")
-	public String myassignment( @AuthUser UserVo authUser,
-			Model model) {
-		System.out.println("start main for student");
-		model.addAttribute("authUser", authUser);
-		
-		return "main/myAssignment";
-	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/courseList", method = RequestMethod.POST)

@@ -318,12 +318,12 @@
 						<div class="row">
 
 							<div class="col-lg-6">
+										<h4>Community</h4>
 								<!--                         <h4>Community</h4> -->
 								<!--===================================================-->
 								<!-- End Timeline -->
 								<div class="panel">
 									<div class="panel-heading">
-										<h3 class="panel-title">Community</h3>
 									</div>
 									<div class="pad-all">
 										<div id="demo-gallery-3" style="display: none;">
