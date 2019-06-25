@@ -29,7 +29,6 @@
 		<div id="mainnav-menu-wrap">
 			<div class="nano">
 				<div class="nano-content">
-
 					<!--Profile Widget-->
 					<!--================================-->
 					<div id="mainnav-profile" class="mainnav-profile">
@@ -54,11 +53,13 @@
 							</a>
 						</div>
 					</div>
+					
+					
+					
+					
 					<ul id="mainnav-menu" class="list-group">
 					
-					
-					
-						<!--Category name-->
+									<!--Category name-->
 						<li class="list-header"><a href="${pageContext.request.contextPath }/myPage/mainform"><i class="pli-home"></i><span class="menu-title">MyPage</span></a></li>
 						<!--Menu list item-->
 						<li>
@@ -81,7 +82,10 @@
 						</li>
 						<li><a href="${pageContext.request.contextPath }/myPage/mytimeline"><i class="pli-calendar-4"></i><span class="menu-title"> Timeline</span></a></li>
 						<li><a href="${pageContext.request.contextPath }/myPage/editForm"><i class="pli-question"></i><span class="menu-title">개인정보수정</span></a></li>
-
+					
+					
+					
+		
 
 						<!--Menu list item-->
 

@@ -169,7 +169,7 @@ public class ScheduleController {
 			
 			String tomail = mailList.get(i);
 			String title="[Academy Management Service]";
-			String content = "새로운 이벤트 ["+scheduleName+"]가 추가되었습니다.\r ("+startDate+"~"+endDate+") /r 어서 확인하세요!";
+			String content = "새로운 이벤트 ["+scheduleName+"]가 추가되었습니다.\r ("+startDate+"~"+endDate+") \r 어서 확인하세요!";
 		
 			try {
 				System.out.println("print.");

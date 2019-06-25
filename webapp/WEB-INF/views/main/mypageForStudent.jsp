@@ -241,36 +241,36 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
-								 <div class="panel">
-                           			<div class="panel-heading">
-                             			 <h3 class="panel-title">Community</h3>
-                          			</div> 
-                           			<div class="pad-all">
-                              			<div id="demo-gallery-3" style="display: none;">
+								<div class="panel">
+									<div class="panel-heading">
+										<h3 class="panel-title">Community</h3>
+									</div>
+									<div class="pad-all">
+										<div id="demo-gallery-3" style="display: none;">
 
-                                 			<a href="${pageContext.request.contextPath }/community/selectform?cpostType=1"> 
-                                    			<img alt="맛집" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile1.jpg"
-                                    			data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile1.jpg"				
-                                    			data-description="강남역 주변 맛집 커뮤니티" style="display: none">
-                                 			</a> 
-                                 			<a href="${pageContext.request.contextPath }/community/selectform?cpostType=2"> 
-                                   			<img alt="카페" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile2.jpg"
-                                    		data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile2.jpg"
-                                    		data-description="강남역 주변 카페 커뮤니티"
-                                    		style="display: none">
-                                 			</a> 
-                                 			<a href="${pageContext.request.contextPath }/community/selectform?cpostType=3"> 
-                                    		<img alt="자유게시판" src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile3.jpg"
-                                    		data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile3.jpg"
-                                    		data-description=""style="display: none">
-                                 			</a> 
-                              		</div>
-                           		</div>
-                           <div class="panel-footer">
-                           
-                           
-                           </div>
-                        </div>
+											<a
+												href="${pageContext.request.contextPath }/community/selectform?cpostType=1">
+												<img alt="맛집"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile1.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile1.jpg"
+												data-description="강남역 주변 맛집 커뮤니티" style="display: none">
+											</a> <a
+												href="${pageContext.request.contextPath }/community/selectform?cpostType=2">
+												<img alt="카페"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile2.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile2.jpg"
+												data-description="강남역 주변 카페 커뮤니티" style="display: none">
+											</a> <a
+												href="${pageContext.request.contextPath }/community/selectform?cpostType=3">
+												<img alt="자유게시판"
+												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile3.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile3.jpg"
+												data-description="" style="display: none">
+											</a>
+										</div>
+									</div>
+									<div class="panel-footer"></div>
+								</div>
 
 							</div>
 							<div class="col-lg-6">
@@ -280,73 +280,14 @@
 										<h3 class="panel-title">Newsfeed</h3>
 									</div>
 									<div class="nano" style="height: 360px">
-										<div class="nano-content">
-											<div class="panel-body bord-btm">
-												<p class="text-bold text-main text-sm">#68464</p>
-												<p class="pad-btm">To achieve this, it would be
-													necessary to have uniform grammar, pronunciation and more
-													common words.</p>
-												<a href="#" class="task-footer"> <span
-													class="box-inline"> <label
-														class="label label-warning">Feature Request</label> <label
-														class="label label-danger">Bug</label>
-												</span>
-												</a>
-											</div>
-											<div class="panel-body bord-btm">
-												<p class="text-bold text-main text-sm">#45684</p>
-												<p class="pad-btm">A small river named Duden flows by
-													their place and supplies it with the necessary regelialia.
-													It is a paradisematic country, in which roasted parts of
-													sentences fly into your mouth.</p>
-												<a href="#" class="task-footer"> <span
-													class="box-inline"> <span class="pad-rgt"><i
-															class="demo-pli-speech-bubble-7"></i> 45</span> <span
-														class="pad-rgt"><i class="demo-pli-like"></i> 45</span>
-												</span> <span class="text-sm"><i
-														class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-												</a>
-											</div>
-											<div class="panel-body bord-btm">
-												<p class="text-bold text-main text-sm">#84564</p>
-												<div class="task-img">
-													<img class="img-responsive" src="img/shared-img-2.jpg"
-														alt="Image">
-												</div>
-												<p class="pad-btm">No one rejects, dislikes, or avoids
-													pleasure itself, because it is pleasure.</p>
-												<a href="#" class="task-footer"> <span
-													class="box-inline"> <span class="pad-rgt"><i
-															class="demo-pli-heart-2"></i> 54K</span>
-												</span> <span class="text-sm"><i
-														class="demo-pli-clock icon-fw text-main"></i>03:08</span>
-												</a>
-											</div>
-											<div class="panel-body bord-btm">
-												<p class="text-bold text-main text-sm">#23255</p>
-												<p class="pad-btm">The new common language will be more
-													simple and regular than the existing European languages.</p>
-												<a href="#" class="task-footer"> <span
-													class="box-inline"> <img class="img-xs img-circle"
-														src="img/profile-photos/8.png" alt="task-user">
-														Brenda Fuller
-												</span>
-												</a>
-											</div>
-											<div class="panel-body bord-btm">
-												<p class="text-bold text-main text-sm">#34522</p>
-												<p class="pad-btm">To take a trivial example, which of
-													us ever undertakes laborious physical exercise, except to
-													obtain some advantage from it?</p>
-												<a href="#" class="task-footer"> <span class="text-sm"><i
-														class="demo-pli-clock icon-fw text-main"></i>9:25</span>
-												</a>
-											</div>
+										<div id="communityStrList" class="nano-content">
+
 										</div>
 									</div>
 									<div class="panel-footer text-right">
-										<button class="btn btn-sm btn-Default">Load more</button>
-										<button class="btn btn-sm btn-primary">View all</button>
+										<button class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/community/mainform'">
+											View all
+										</button>
 									</div>
 								</div>
 							</div>
@@ -497,54 +438,66 @@
 													+ error);
 										}
 									});
-							
-							$.ajax({
-								url : "${pageContext.request.contextPath }/index/courselist",
-								type : "post",
-								data : {
-									userNo : userNo,
-									userType : userType
-								},
-								dataType : "json",
-								success : function(map) {
-									console.log(map.courseList);
-									console.log(map.courseList.length);
-									
-									if(map.courseList.length > 0) {
-										var CourseList = "";
-										$("#controlCourseList").empty();
-										
-										for (var i = 0; i < map.courseList.length; i++) {
-											// list 찾기 !!
-											if(i == 0){
-												CourseList += "<div class='item active'>";
-											}else {
-												CourseList += "<div class='item'>";
+
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath }/index/courselist",
+										type : "post",
+										data : {
+											userNo : userNo,
+											userType : userType
+										},
+										dataType : "json",
+										success : function(map) {
+											console.log(map.courseList);
+											console.log(map.courseList.length);
+
+											if (map.courseList.length > 0) {
+												var CourseList = "";
+												$("#controlCourseList").empty();
+
+												for (var i = 0; i < map.courseList.length; i++) {
+													// list 찾기 !!
+													if (i == 0) {
+														CourseList += "<div class='item active'>";
+													} else {
+														CourseList += "<div class='item'>";
+													}
+
+													CourseList += "<h4 class='text-main'>"
+															+ map.courseList[i].courseName
+															+ "</h4>";
+													CourseList += "<p>"
+															+ map.courseList[i].startDate
+															+ " ~ "
+															+ map.courseList[i].endDate
+															+ "</p>";
+													if (userType == 0) {
+														CourseList += "<button class='btn-link' data-target='#joinMembershipModal' data-toggle='modal' data-courseno='" + map.courseList[i].courseNo + "'>관리하기</button>";
+													} else {
+														CourseList += "<a href='${pageContext.request.contextPath }/" + map.courseList[i].coursePath + "/main' class='btn-link'>이동하기</a>";
+													}
+													CourseList += "</div>";
+
+													$("#controlCourseList")
+															.append(CourseList);
+
+													CourseList = "";
+												}
+												$("#controlCourseList")
+														.append(
+																"<a class='carousel-control left' data-slide='prev' href='#demo-carousel'> <i class='demo-pli-arrow-left icon-2x'></i></a> ");
+												$("#controlCourseList")
+														.append(
+																"<a class='carousel-control right' data-slide='next' href='#demo-carousel'> <i class='demo-pli-arrow-right icon-2x'></i></a>");
+
 											}
-					
-											CourseList += "<h4 class='text-main'>" + map.courseList[i].courseName + "</h4>";
-											CourseList += "<p>" + map.courseList[i].startDate + " ~ " + map.courseList[i].endDate + "</p>";
-											if(userType == 0){
-												CourseList += "<button class='btn-link' data-target='#joinMembershipModal' data-toggle='modal' data-courseno='" + map.courseList[i].courseNo + "'>관리하기</button>";
-											}
-											else {
-												CourseList += "<a href='${pageContext.request.contextPath }/" + map.courseList[i].coursePath + "/main' class='btn-link'>이동하기</a>";
-											}
-											CourseList += "</div>";
-					
-											$("#controlCourseList").append(CourseList);
-											
-											CourseList = "";
+										},
+										error : function(XHR, status, error) {
+											console.error(status + " : "
+													+ error);
 										}
-										$("#controlCourseList").append("<a class='carousel-control left' data-slide='prev' href='#demo-carousel'> <i class='demo-pli-arrow-left icon-2x'></i></a> ");
-										$("#controlCourseList").append("<a class='carousel-control right' data-slide='next' href='#demo-carousel'> <i class='demo-pli-arrow-right icon-2x'></i></a>");
-										
-									}
-								},
-								error : function(XHR, status, error) {
-									console.error(status + " : " + error);
-								}
-							});
+									});
 
 							var lineSparklines2 = function() {
 								$('#demo-sparklines-line-1-1').sparkline(
@@ -610,7 +563,6 @@
 									});
 
 							//코스 리스트 뽑아서 나열 하자~ 
-							
 
 							//noticeList 
 							$
@@ -837,7 +789,8 @@
 
 				var courseNo = SubmitVo.courseNo;
 
-				$.ajax({
+				$
+						.ajax({
 							url : "${pageContext.request.contextPath }/myPage/selectCoursePath",
 							type : "post",
 							data : {
@@ -853,7 +806,7 @@
 							error : function(XHR, status, error) {
 								console.error(status + " : " + error);
 							}
-				});
+						});
 
 			}
 
@@ -862,45 +815,53 @@
 	</script>
 
 	<script type="text/javascript">
-      $(document).ready(function(){
-         console.log("---------------------load community info-------------------");
-         $.ajax({
-            url : "${pageContext.request.contextPath }/myPage/selectCommunity",
-            type : "post",
+		$(document)
+				.ready(
+						function() {
+							console
+									.log("---------------------load community info-------------------");
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath }/myPage/selectCommunity",
+										type : "post",
 
-            dataType : "json",
-            success : function(list) {
-               $("#communityStrList").empty();
-               
-               for(var i=0; i<list.length; i++){
-                  renderCommunityPost(list[i]);
-               }
-            },
-            error : function(XHR, status, error) {
-               console.error(status + " : " + error);
-            }
-         });
-      })
-      
-      function renderCommunityPost(communityVo){
+										dataType : "json",
+										success : function(list) {
+											$("#communityStrList").empty();
 
-         str = '';
-         str += '<div class="panel-body bord-btm">';
-         str += '   <p class="text-bold text-main text-sm">#'+communityVo.cpostNo+'</p>';
-         str += '   <p class="pad-btm">'+communityVo.cpostTitle+'</p>'
-         str += '   <a href="#" class="task-footer">'
-         str += '      <span class="box-inline">'
-         str += '         <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i>'+communityVo.replyCount+'</span>';
-         str += '         <span class="pad-rgt"><i class="demo-pli-like"></i>'+communityVo.liked+'</span>'
-         str += '      </span>'
-         str += '      <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>'+communityVo.regDate+'</span>'
-         str += '   </a>'
-         str += '</div>' 
-         
-         $("#communityStrList").append(str);
-      }
-      
-   </script>
+											for (var i = 0; i < list.length; i++) {
+												renderCommunityPost(list[i]);
+											}
+										},
+										error : function(XHR, status, error) {
+											console.error(status + " : "
+													+ error);
+										}
+									});
+						})
+
+		function renderCommunityPost(communityVo) {
+
+			str = '';
+			str += '<div class="panel-body bord-btm">';
+			str += '   <p class="text-bold text-main text-sm">#'
+					+ communityVo.cpostNo + '</p>';
+			str += '   <p class="pad-btm">' + communityVo.cpostTitle + '</p>'
+			str += '   <a href="#" class="task-footer">'
+			str += '      <span class="box-inline">'
+			str += '         <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i>'
+					+ communityVo.replyCount + '</span>';
+			str += '         <span class="pad-rgt"><i class="demo-pli-like"></i>'
+					+ communityVo.liked + '</span>'
+			str += '      </span>'
+			str += '      <span class="text-sm"><i class="demo-pli-clock icon-fw text-main"></i>'
+					+ communityVo.regDate + '</span>'
+			str += '   </a>'
+			str += '</div>'
+
+			$("#communityStrList").append(str);
+		}
+	</script>
 
 
 	<!--=================================================-->
