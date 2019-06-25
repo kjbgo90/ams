@@ -456,4 +456,27 @@
 			    							#{pRoomNo})
 		]]>
 	</insert>
+	
+	<select id="selectAllStudentList" resultType="UserVo">
+		<![CDATA[
+			SELECT 		userNo,
+						email,
+						userName
+			FROM   		users
+			WHERE  		userType = 2
+			ORDER BY userNo DESC
+		]]>
+	</select>
+	
+	<select id="selectAllTeacherList" resultType="UserVo">
+		<![CDATA[
+			SELECT 		userNo,
+						email,
+						userName
+			FROM   		users
+			WHERE  		userType = 1
+			ORDER BY userNo DESC
+		]]>
+	</select>
+	
 </mapper>

@@ -1,6 +1,8 @@
 package net.ourams.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,19 +66,31 @@ public class UserController {
 	@Auth
 	@ResponseBody
 	@RequestMapping(value = "/index/courselist", method = RequestMethod.POST)
-	public List<CourseVo> getCourseList(@RequestParam("userNo") int userNo,
-										@RequestParam("userType") int userType) {
+	public Map<String, Object> getCourseList(@RequestParam("userNo") int userNo,
+											 @RequestParam("userType") int userType) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		List<CourseVo> list = null;
+		
+		List<CourseVo> courseList = null;
 		
 		if(userType == 1 || userType == 2) {
-			list = courseMService.getCourseList(userNo);
+			courseList = courseMService.getCourseList(userNo);
 		}
 		else {
-			list = courseMService.getCourseList(userNo, userType);
+			courseList = courseMService.getCourseList(userNo, userType);
 		}
 		
-		return list;
+		map.put("courseList", courseList);
+		
+		//매니저로 접속했을 경우에만 학생리스트와 강사리스트를 가져온다.
+		if(userType == 0) {
+			List<UserVo> studentList = courseMService.getAllStudentList();
+			List<UserVo> teacherList = courseMService.getAllTeacherList();
+			map.put("studentList", studentList);
+			map.put("teacherList", teacherList);
+		}
+		
+		return map;
 	}
 	
 	@Auth

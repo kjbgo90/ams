@@ -343,8 +343,7 @@
 									<div class="col-xs-3">
 										<label class="control-labe"><span class="text-main text-bold mar-no">강사</span></label>
 										<select data-placeholder="Choose a Country..." id="teacher-select" name="teacherNo" tabindex="2">
-											<option value="2" >황일영</option>
-						                    <option value="8" >김강사</option>
+											
 										</select>
 									</div>
 									<div class="col-xs-2">
@@ -372,17 +371,7 @@
 									<div class="col-xs-12">
 										<label class="control-labe"><span class="text-main text-bold mar-no">학생</span></label>
 										<select id="student-multiselect" data-placeholder="학생들을 선택해 주세요." multiple tabindex="4" name="userNoList">
-											<option value="10" >d</option>
-											<option value="1" >김재봉(kjbgo90@naver.com)</option>
-											<option value="2" >김재봉(kjbgo90@naver.com)</option>
-											<option value="3" >김재봉(kjbgo90@naver.com)</option>
-											<option value="4" >김재봉(kjbgo90@naver.com)</option>
-											<option value="5" >김재봉(kjbgo90@naver.com)</option>
-											<option value="7" >김재봉(kjbgo90@naver.com)</option>
-											<option value="6" >김재봉</option>
-											<option value="8" >김재봉</option>
-											<option value="9" >김재봉</option>
-						                    <option value="11" >11</option>
+										
 										</select>
 									</div>
 								</div>
@@ -433,9 +422,6 @@
 <script type="text/javascript">
 
 	$(document).ready(function() {
-		$('#teacher-select').chosen({width:'100%'});
-	    $('#student-multiselect').chosen({width:'100%'});
-		
 		var result = "${param.result}";
 		
 		if("${authUser}" != null){
@@ -450,15 +436,13 @@
 					userType : userType
 				},
 				dataType : "json",
-				success : function(list) {
-					console.log(list);
-					console.log(list.length);
+				success : function(map) {
 					
-					if(list.length > 0) {
+					if(map.courseList.length > 0) {
 						var CourseList = "";
 						$("#indexCourseList").empty();
 						
-						for (var i = 0; i < list.length; i++) {
+						for (var i = 0; i < map.courseList.length; i++) {
 							// list 찾기 !!
 							if(i == 0){
 								CourseList += "<div class='item active'>";
@@ -466,13 +450,13 @@
 								CourseList += "<div class='item'>";
 							}
 	
-							CourseList += "<h4 class='text-main'>" + list[i].courseName + "</h4>";
-							CourseList += "<p>" + list[i].startDate + " ~ " + list[i].endDate + "</p>";
+							CourseList += "<h4 class='text-main'>" + map.courseList[i].courseName + "</h4>";
+							CourseList += "<p>" + map.courseList[i].startDate + " ~ " + map.courseList[i].endDate + "</p>";
 							if(userType == 0){
-								CourseList += "<button class='btn-link' data-target='#joinMembershipModal' data-toggle='modal' data-courseno='" + list[i].courseNo + "'>관리하기</button>";
+								CourseList += "<button class='btn-link' data-target='#joinMembershipModal' data-toggle='modal' data-courseno='" + map.courseList[i].courseNo + "'>관리하기</button>";
 							}
 							else {
-								CourseList += "<a href='" + list[i].coursePath + "/main' class='btn-link'>이동하기</a>";
+								CourseList += "<a href='" + map.courseList[i].coursePath + "/main' class='btn-link'>이동하기</a>";
 							}
 							CourseList += "</div>";
 	
@@ -483,6 +467,22 @@
 						$("#indexCourseList").append("<a class='carousel-control left' data-slide='prev' href='#demo-carousel'> <i class='demo-pli-arrow-left icon-2x'></i></a> ");
 						$("#indexCourseList").append("<a class='carousel-control right' data-slide='next' href='#demo-carousel'> <i class='demo-pli-arrow-right icon-2x'></i></a>");
 						
+					}
+					if(userType == 0){
+						
+						for(var i = 0; i < map.teacherList.length; i++){
+							if(i == 0){
+								$("#teacher-select").append("<option value='" + map.teacherList[i].userNo + "' selected='selected'>" + map.teacherList[i].userName + "</option>");
+							}else{
+								$("#teacher-select").append("<option value='" + map.teacherList[i].userNo + "' >" + map.teacherList[i].userName + "</option>");
+							}
+						}
+						$('#teacher-select').chosen({width:'100%'});
+						
+						for(var i = 0; i < map.studentList.length; i++){
+							$("#student-multiselect").append("<option value='" + map.studentList[i].userNo + "' >" + map.studentList[i].userName + "(" + map.studentList[i].email + ")</option>");
+						}
+						$('#student-multiselect').chosen({width:'100%'});
 					}
 				},
 				error : function(XHR, status, error) {

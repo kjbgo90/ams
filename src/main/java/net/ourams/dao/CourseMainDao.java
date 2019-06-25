@@ -213,4 +213,12 @@ public class CourseMainDao {
 		sqlSession.insert("course.insertDataroomByDataroomVo", drVo);
 	}
 
+	public List<UserVo> selectAllStudentList() {
+		return sqlSession.selectList("course.selectAllStudentList");
+	}
+
+	public List<UserVo> selectAllTeacherList() {
+		return sqlSession.selectList("course.selectAllTeacherList");
+	}
+
 }

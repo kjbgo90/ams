@@ -298,6 +298,14 @@ public class CourseMainService {
 		return resultCourse;
 	}
 
+	public List<UserVo> getAllStudentList() {
+		return courseMDao.selectAllStudentList();
+	}
+
+	public List<UserVo> getAllTeacherList() {
+		return courseMDao.selectAllTeacherList();
+	}
+
 	
 
 }
