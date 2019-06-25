@@ -48,6 +48,7 @@ public class CommunityController {
 	private String bucketName = "net.ourams.community2";
 
 	// community main list
+	@Auth
 	@RequestMapping(value = "/mainform", method = RequestMethod.GET)
 	public String mainForm(Model model) {
 		System.out.println("mainform");
@@ -72,6 +73,7 @@ public class CommunityController {
 	}
 	
 	// community category detail list
+	@Auth
 	@RequestMapping(value = "/selectform", method = RequestMethod.GET)
 	public String selectForm(Model model, @RequestParam("cpostType") int cpostType) throws ParseException {
 		System.out.println("selectform(Type: "+cpostType+")");

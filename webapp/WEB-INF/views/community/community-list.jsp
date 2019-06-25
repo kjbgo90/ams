@@ -194,14 +194,8 @@
 													<p class="mar-no text-main">${authUser.userName }</p>
 												</div>
 											</c:when>
-											<c:otherwise>
-												<div class="media-left pos-rel">
-													<img class="img-circle img-xs" src="${pageContext.request.contextPath }/assets/img/profile-photos/7.png" alt="Profile Picture">
-												</div>
-												<div class="media-body">
-													<p class="mar-no text-main"><i>로그인 후 이용하실 수 있는 서비스입니다.</i></p>
-												</div>
-											</c:otherwise>
+											<%-- <c:otherwise>
+											</c:otherwise> --%>
 										</c:choose>
 										</a>
 										<div class='list-group bg-trans pad-btm bord-btm' id="myPost">
