@@ -253,7 +253,7 @@ public class CommunityService {
 	}
 	
 	public Map<String, Object> selectPostPaging(int cpostType, int pageNo) throws ParseException{
-		int listSize = 5 ;
+		int listSize = 7 ;
 		int pageNo1 = 1+listSize*(pageNo-1);
 		int pageNo2 = listSize*pageNo;
 		int countPage = communityDao.totalPostNumber(cpostType);

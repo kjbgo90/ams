@@ -46,60 +46,86 @@
 	
 	<select id="MainEatList" resultType="CommunityVo">
 		<![CDATA[
-			
-   				SELECT   c.cpostNo, 
-					 c.cpostType, 
-					 u.userNo, 
-                     TO_CHAR(regDate,'hh24:mi') as regDate,
-					 c.cpostTitle,
-					 c.cpostContent,
-					 c.liked,
-					 (select count(*) from communityreply r
-                      where c.cpostNo = r.cpostNo) as replyCount 
-			FROM  communitypost c join users u
-			ON c.userNo = u.userNo
-			where c.cpostType = 1  and rownum <=5
-			order by c.cpostNo desc
-			
+   			SELECt   cpostNo, 
+					 cpostType, 
+					 userNo, 
+                     regDate,
+					 cpostTitle,
+					 cpostContent,
+					 liked,
+					 replyCount 
+            FROM   (
+       			 SELECT   c.cpostNo, 
+					 	  c.cpostType, 
+					      u.userNo, 
+                          TO_CHAR(regDate,'hh24:mi') as regDate,
+					      c.cpostTitle,
+					      c.cpostContent,
+					      c.liked,
+					      (SELECT count(*) from communityreply r
+                          WHERE c.cpostNo = r.cpostNo) as replyCount 
+						  FROM  communitypost c join users u
+						  ON c.userNo = u.userNo
+				WHERE c.cpostType = 1
+				ORDER BY c.cpostNo desc)
+            WHERE rownum<=5
 		]]>
 	</select>
 	
 		
 	<select id="MaincafeList" resultType="CommunityVo">
 		<![CDATA[
-			
-   				SELECT   c.cpostNo, 
-					 c.cpostType, 
-					 u.userNo, 
-                     TO_CHAR(regDate,'hh24:mi') as regDate,
-					 c.cpostTitle,
-					 c.cpostContent,
-					 c.liked,
-					 (select count(*) from communityreply r
-                      where c.cpostNo = r.cpostNo) as replyCount 
-			FROM  communitypost c join users u
-			ON c.userNo = u.userNo
-			where c.cpostType = 2  and rownum <=5
-			order by c.cpostNo desc
-			
+				SELECt   cpostNo, 
+					 cpostType, 
+					 userNo, 
+                     regDate,
+					 cpostTitle,
+					 cpostContent,
+					 liked,
+					 replyCount 
+            FROM   (
+       			 SELECT   c.cpostNo, 
+					 	  c.cpostType, 
+					      u.userNo, 
+                          TO_CHAR(regDate,'hh24:mi') as regDate,
+					      c.cpostTitle,
+					      c.cpostContent,
+					      c.liked,
+					      (SELECT count(*) from communityreply r
+                          WHERE c.cpostNo = r.cpostNo) as replyCount 
+						  FROM  communitypost c join users u
+						  ON c.userNo = u.userNo
+				WHERE c.cpostType = 2
+				ORDER BY c.cpostNo desc)
+            WHERE rownum<=5
 		]]>
 	</select>
+	
 	<select id="MainList" resultType="CommunityVo">
 		<![CDATA[
-			
-   				SELECT   c.cpostNo, 
-					 c.cpostType, 
-					 u.userNo, 
-                     TO_CHAR(regDate,'hh24:mi') as regDate,
-					 c.cpostTitle,
-					 c.cpostContent,
-					 c.liked,
-					 (select count(*) from communityreply r
-                      where c.cpostNo = r.cpostNo) as replyCount 
-			FROM  communitypost c join users u
-			ON c.userNo = u.userNo
-			where c.cpostType = 3  and rownum <=5
-			order by c.cpostNo desc
+				SELECt   cpostNo, 
+					 cpostType, 
+					 userNo, 
+                     regDate,
+					 cpostTitle,
+					 cpostContent,
+					 liked,
+					 replyCount 
+            FROM   (
+       			 SELECT   c.cpostNo, 
+					 	  c.cpostType, 
+					      u.userNo, 
+                          TO_CHAR(regDate,'hh24:mi') as regDate,
+					      c.cpostTitle,
+					      c.cpostContent,
+					      c.liked,
+					      (SELECT count(*) from communityreply r
+                          WHERE c.cpostNo = r.cpostNo) as replyCount 
+						  FROM  communitypost c join users u
+						  ON c.userNo = u.userNo
+				WHERE c.cpostType = 3
+				ORDER BY c.cpostNo desc)
+            WHERE rownum<=5
 			
 		]]>
 	</select>
@@ -267,7 +293,7 @@
            			 		ON c.fileno = df.fileno) cf
           			    ON c.cpostno = cf.cpostno
 						WHERE c.cpostType = #{cpostType}
-						ORDER BY c.regDate desc)
+						ORDER BY c.cpostNo desc)
        			   WHERE rownum <= #{pageNo2})
 			WHERE rnum >= #{pageNo1}
 		]]>	
