@@ -37,29 +37,17 @@
 <!--Morris.js [ OPTIONAL ]-->
 <link href="${pageContext.request.contextPath }/assets/plugins/morris-js/morris.min.css" rel="stylesheet">
 <!--=================================================
-
     REQUIRED
     You must include this in your project.
-
-
     RECOMMENDED
     This category must be included but you may modify which plugins or components which should be included in your project.
-
-
     OPTIONAL
     Optional plugins. You may choose whether to include it in your project or not.
-
-
     DEMONSTRATION
-    This is to be removed, used for demonstration purposes only. This category must not be included in your project.
-
-
+    This is to be removed, used for demonstration purposes only. This category must not be included in your project.
     SAMPLE
     Some script samples which explain how to initialize plugins or components. This category should not be included in your project.
-
-
     Detailed information and more samples can be found in the document.
-
     =================================================-->
 </head>
 <!--TIPS-->
@@ -331,12 +319,10 @@
 			console.log(courseNo);
 			
 			$.ajax({
-
 				url : "${pageContext.request.contextPath }/${coursePath}/statistic/main",
 				type : "post",
 				contentType : "application/json",
 				data : JSON.stringify({courseNo : courseNo}),
-
 				dataType : "json",
 				success : function(response) {
 					/*성공시 처리해야될 코드 작성*/
@@ -358,15 +344,11 @@
 						
 						var avg_data = [];
 						
-						if(response.data.asList != ""){
-							for(var i=0; i<response.data.asList.length; i++){
-								avg_data.push({'elapsed' : response.data.asList[i].assignmentTitle, 'value' : response.data.asList[i].average});
-							}
-							console.log(response.data.asList);
-							console.log(avg_data);
-						} else {
-							avg_data.push({'elapsed' : '없음', 'value' : 0});
+						for(var i=0; i<response.data.asList.length; i++){
+							avg_data.push({'elapsed' : response.data.asList[i].assignmentTitle, 'value' : response.data.asList[i].average});
 						}
+						console.log(response.data.asList);
+						console.log(avg_data);
 						
 						Morris.Line({
 							element : 'demo-morris-line',
@@ -404,63 +386,50 @@
 					        ],
 					        resize:true
 					    });
+						
 						$("#qnaList").empty();
 						console.log(response.data.qnaList.length)
-						if(response.data.qnaList.length == 0){
-							var qnaEmpty="";
-							qnaEmpty += "<div class='pad-all mar-all' style='text-align:center; padding-top:63px; padding-bottom:63px;'>질문내역이 없습니다.</div>"
-							$("#qnaList").append(qnaEmpty);
-						}
-						$("#qnaList").empty();
-						console.log(response.data.qnaList.length)
-						if(response.data.qnaList.length == 0){
-							var qnaEmpty="";
-							qnaEmpty += "<div class='pad-all mar-all' style='text-align:center; padding-top:63px; padding-bottom:63px;'>질문내역이 없습니다.</div>"
-							$("#qnaList").append(qnaEmpty);
-						} else {
-							for(var i=0; i<response.data.qnaList.length; i++){
-								renderQnaList(response.data.qnaList[i]);
-								
-								if( i == 0){
-									$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
-										barColor :'#ab47bc',
-								        scaleColor: false,
-								        trackColor : 'rgba(0,0,0,.1)',
-								        lineWidth : 10,
-								        size : 107,
-								        onStep: function(from, to, percent) {
-								            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
-								        }
-									 });
-								} else if ( i == 1){
-									$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
-										barColor :'#8bc34a',
-								        scaleColor: false,
-								        trackColor : 'rgba(0,0,0,.1)',
-								        lineWidth : 10,
-								        size : 107,
-								        onStep: function(from, to, percent) {
-								            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
-								        }
-									 });
-								} else if ( i == 2){
-									$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
-										barColor :'#ffb300',
-								        scaleColor: false,
-								        trackColor : 'rgba(0,0,0,.1)',
-								        lineWidth : 10,
-								        size : 107,
-								        onStep: function(from, to, percent) {
-								            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
-								        }
-									 });
-								}
+						for(var i=0; i<response.data.qnaList.length; i++){
+							renderQnaList(response.data.qnaList[i]);
+							
+							if( i == 0){
+								$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
+									barColor :'#ab47bc',
+							        scaleColor: false,
+							        trackColor : 'rgba(0,0,0,.1)',
+							        lineWidth : 10,
+							        size : 107,
+							        onStep: function(from, to, percent) {
+							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
+							        }
+								 });
+							} else if ( i == 1){
+								$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
+									barColor :'#8bc34a',
+							        scaleColor: false,
+							        trackColor : 'rgba(0,0,0,.1)',
+							        lineWidth : 10,
+							        size : 107,
+							        onStep: function(from, to, percent) {
+							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
+							        }
+								 });
+							} else if ( i == 2){
+								$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
+									barColor :'#ffb300',
+							        scaleColor: false,
+							        trackColor : 'rgba(0,0,0,.1)',
+							        lineWidth : 10,
+							        size : 107,
+							        onStep: function(from, to, percent) {
+							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
+							        }
+								 });
 							}
 						}
 					} else {
 						console.log("통계 메인 출력 실패");
 					}
-
 				},
 				error : function(XHR, status, error) {
 					console.error(status + " : " + error);
@@ -475,12 +444,10 @@
 			console.log(courseNo);
 			
 			$.ajax({
-
 				url : "${pageContext.request.contextPath }/${coursePath}/statistic/main",
 				type : "post",
 				contentType : "application/json",
 				data : JSON.stringify({courseNo : courseNo}),
-
 				dataType : "json",
 				success : function(response) {
 					/*성공시 처리해야될 코드 작성*/
@@ -502,15 +469,11 @@
 						
 						var avg_data = [];
 						
-						if(response.data.asList != ""){
-							for(var i=0; i<response.data.asList.length; i++){
-								avg_data.push({'elapsed' : response.data.asList[i].assignmentTitle, 'value' : response.data.asList[i].average});
-							}
-							console.log(response.data.asList);
-							console.log(avg_data);
-						} else {
-							avg_data.push({'elapsed' : '없음', 'value' : 0});
+						for(var i=0; i<response.data.asList.length; i++){
+							avg_data.push({'elapsed' : response.data.asList[i].assignmentTitle, 'value' : response.data.asList[i].average});
 						}
+						console.log(response.data.asList);
+						console.log(avg_data);
 						
 						$("#reset-graph").empty();
 						var str = "";
@@ -608,7 +571,6 @@
 					} else {
 						console.log("통계 메인 출력 실패");
 					}
-
 				},
 				error : function(XHR, status, error) {
 					console.error(status + " : " + error);
@@ -622,14 +584,11 @@
 			
 			var $this = $(this);
 			var userNo = $this.data("userno");
-
 			$.ajax({
-
 				url : "${pageContext.request.contextPath }/${coursePath}/statistic/student",
 				type : "post",
 				contentType : "application/json",
 				data : JSON.stringify({userNo : userNo}),
-
 				dataType : "json",
 				success : function(response) {
 					/*성공시 처리해야될 코드 작성*/
@@ -655,16 +614,12 @@
 						str += "<div id='demo-morris-line-legend' class='text-center'></div>";
 						str += "<div id='demo-morris-line' style='height: 250px'></div>";
 						$("#reset-graph").append(str);
-						if(response.data.asList != ""){
-							console.log(response.data.asList);
-							for(var i=0; i<response.data.asList.length; i++){
-								score_data.push({'elapsed' : response.data.asList[i].assignmentTitle, 'value' : response.data.asList[i].score});
-							}
-							console.log(response.data.asList);
-							console.log(score_data);
-						} else {
-							score_data.push({'elapsed' : "없음", 'value' : 0});
+						console.log(response.data.asList);
+						for(var i=0; i<response.data.asList.length; i++){
+							score_data.push({'elapsed' : response.data.asList[i].assignmentTitle, 'value' : response.data.asList[i].score});
 						}
+						console.log(response.data.asList);
+						console.log(score_data);
 						
 						Morris.Line({
 							element : 'demo-morris-line',
@@ -775,7 +730,6 @@
 			str += "</div>";
 			str += "<br>";
 			str += "</div>";
-
 			$("#feedbackList").append(str);
 		}
 		
@@ -795,7 +749,6 @@
 			str += "</div>";
 			str += "<br>";
 			str += "</div>";
-
 			$("#feedbackList").append(str);
 		}
 		
@@ -810,7 +763,6 @@
 			str += "		<span class='pie-value text-thin text-2x'></span>";
 			str += "	</div>";
 			str += "</div>";
-
 			$("#qnaList").append(str);
 		}
 		
