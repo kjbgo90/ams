@@ -88,8 +88,8 @@
 					<!--Breadcrumb-->
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<ol class="breadcrumb">
-						<li><a href="#"><i class="demo-pli-home"></i></a></li>
-						<li><a href="#">App</a></li>
+						<li><a href="${pageContext.request.contextPath }/index"><i class="demo-pli-home"></i></a></li>
+						<li><a href="${pageContext.request.contextPath }/${coursePath}/main">Course</a></li>
 						<li class="active">통계</li>
 					</ol>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
