@@ -55,7 +55,8 @@
 	
 	<select id="selectCourseListByUserNoAndUserType" parameterType="int" resultType="CourseVo">
 		<![CDATA[
-			SELECT 	courseName,
+			SELECT 	courseNo,
+					courseName,
 					TO_CHAR(startDate, 'yyyy.mm.dd') as startDate,
 					TO_CHAR(endDate, 'yyyy.mm.dd') as endDate,
 					coursePath
