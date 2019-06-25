@@ -27,6 +27,10 @@ public class CommunityDao {
 		return sqlSession.selectList("community.MaincafeList");
 	}
 	
+	public List<CommunityVo> allList(){
+		return sqlSession.selectList("community.selectAllList");
+	}
+	
 	public List<CommunityVo> communityList(int cpostType) {
 		return sqlSession.selectList("community.selectList", cpostType);
 	}
@@ -38,7 +42,11 @@ public class CommunityDao {
 	public CommunityVo selectNotice(int cpostNo) {
 		return sqlSession.selectOne("community.selectNotice", cpostNo);
 	}
-
+	
+	public List<fileUpLoadVo> selectCommunityFileList(){
+		return sqlSession.selectList("community.selectCommunityFileList");
+	}
+	
 	public int updateliked(int cpostNo) {
 		return sqlSession.update("community.updateliked", cpostNo);
 	}
@@ -75,6 +83,10 @@ public class CommunityDao {
 	public List<CommunityVo> hotPlaces(int cpostType){
 		return sqlSession.selectList("community.selectHotPlaces", cpostType);
 	}
+	
+	public List<CommunityVo> myPost(CommunityVo vo){
+		return sqlSession.selectList("community.selectMyPost", vo);
+	}
 
 	public int loadLocationNo(CommunityVo vo){
 		return sqlSession.selectOne("community.selectLocationNo", vo);
@@ -94,6 +106,20 @@ public class CommunityDao {
 	
 	public String loadLongitude(CommunityVo vo) {
 		return sqlSession.selectOne("community.selectLongitude", vo);
+	}
+	
+	/* 글전체리스트 가져오기 기본*/
+	public List<CommunityVo> selectPagingList(Map<String, Object> map){
+		List<CommunityVo> list = sqlSession.selectList("community.selectPagingList", map);
+		System.out.println(list.toString());
+		
+		return list;
+	}
+	
+	// count 	
+	public int totalPostNumber(int cpostType) {
+		int count = sqlSession.selectOne("community.totalPostNumber", cpostType);
+		return count;
 	}
 	
 	public int countReply(CommunityVo communityvo) {

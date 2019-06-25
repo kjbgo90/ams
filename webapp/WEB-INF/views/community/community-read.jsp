@@ -23,6 +23,8 @@
 <!--나눔 고딕 Font [ OPTIONAL ] -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
+<!-- Unite Gallery [ OPTIONAL ] -->
+<link href="${pageContext.request.contextPath }/assets/plugins/unitegallery/css/unitegallery.min.css" rel="stylesheet">
 
 <!--Bootstrap Stylesheet [ REQUIRED ]-->
 <link href="${pageContext.request.contextPath }/assets/css/bootstrap.css" rel="stylesheet">
@@ -145,10 +147,18 @@
 							</div>
 							<br>
 							<div class="blog-header">
-								<img class="img-responsive" src="${pageContext.request.contextPath }/assets/img/shared-img-5.jpg" alt="Image">
+								<div class="pad-all">
+									<div id="demo-gallery-3" style="display: none;">
+										<c:forEach items="${CommunityVo.fileList }" var="list">
+										<a>
+											<img class="img-responsive" src="${list.filepath }" alt="Image">
+										</a>
+										</c:forEach>
+									</div>
+								</div>
 							</div>
-							<div class="blog-content">
-
+							<div class="blog-content">	
+									
 								<div class="blog-body">
 									<p>${CommunityVo.cpostContent}</p>
 								</div>
@@ -302,6 +312,12 @@
 	<!--NiftyJS [ RECOMMENDED ]-->
 	<script src="${pageContext.request.contextPath }/assets/js/nifty.js"></script>
 	
+	<!-- Unite Gallery [ OPTIONAL ]  -->
+	<script
+		src="${pageContext.request.contextPath }/assets/plugins/unitegallery/js/unitegallery.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/assets/plugins/unitegallery/themes/slider/ug-theme-slider.js"></script>
+	
 	<!-- GMaps -->
 	<script type="text/javascript"
 		src="http://maps.google.com/maps/api/js?key=AIzaSyBSFRN6WWGYwmFi498qXXsD2UwkbmD74v4&libraries=places"></script>
@@ -313,9 +329,33 @@
 			$(document).ready(function(){
 				var heartsize = $("#heartsize").data("heartsize");	
 				$("#heartlike").text(heartsize);
+				
+				$("#demo-gallery-3").unitegallery({
+					slider_enable_text_panel : true,
+					slider_enable_bullets : false
+				});
 			});
 			
 			$(document).ready(function(){
+				console.log("-----------------load location info------------------")
+				
+				var cpostNo = ${CommunityVo.cpostNo};
+				console.log(cpostNo);
+				
+				$.ajax({
+					url : "${pageContext.request.contextPath }/community/locationInfo?cpostNo=" + cpostNo,
+					type : "post",
+					
+					dataType : "json",
+					success : function(CommunityVo) {
+						console.log(CommunityVo)
+						renderMap(CommunityVo);
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
+				
 				var str ='';
 				$("#map").html('<iframe src="https://www.google.com/maps/embed/v1/place?q=@37.4946083, 127.0254167&amp;key=AIzaSyBSFRN6WWGYwmFi498qXXsD2UwkbmD74v4" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="width: 100%; height: 200px;"></iframe>')
 			});
@@ -475,6 +515,15 @@
 			str += "</div>"
 
 			$("#commentDiv").append(str);
+		}
+		
+		function renderMap(CommunityVo){
+			$("#map").empty();
+			
+			var str ='';
+			str += '<iframe src="https://www.google.com/maps/embed/v1/place?q='+CommunityVo.address+'&amp;key=AIzaSyBSFRN6WWGYwmFi498qXXsD2UwkbmD74v4" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="width: 100%; height: 200px;"></iframe>'
+			
+			$("#map").html(str)
 		}
 	</script>
 

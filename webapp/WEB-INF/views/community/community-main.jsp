@@ -134,8 +134,10 @@
 								<ul id="demo-tasklist-upcoming" class="sortable-list tasklist list-unstyled">
 									<c:forEach items="${MainEatList}" var="eatList">
 										<li id="demo-tasklist-12" class="task-info" onclick="location.href='${pageContext.request.contextPath }/community/read/${eatList.cpostNo}'">
-											<p class="text-bold text-main text-sm "># ${eatList.cpostNo}</p> <img class="img-responsive mar-btm" src="${pageContext.request.contextPath }/assets/img/shared-img-4.jpg" alt="Image">
-											<p class="text-bold text-main text-sm text-right">${eatList.cpostTitle}</p>
+											<c:if test="${ !empty eatList.fileList }">
+												<p class="text-bold text-main text-sm "># ${eatList.cpostNo}</p> <img class="img-responsive mar-btm" src="${eatList.fileList[0].filepath }" style='width: 350px; height: 300px;' alt="Image">
+											</c:if>
+											<p class="text-bold text-main text-sm text-left">${eatList.cpostTitle}</p>
 											<p class="pad-btm bord-btm">${eatList.cpostContent}</p> <a href="#" class="task-footer"> <span class="box-inline"> <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> ${eatList.replyCount}</span> <span class="pad-rgt"><i class="demo-pli-heart-2 icon-fw"></i>
 														${eatList.liked}</span>
 											</span> <span class="text-sm"><i class="pli-arrow-right-in-circle icon-fw text-main"></i>${eatList.regDate}</span>
@@ -161,8 +163,10 @@
 								<ul id="demo-tasklist-inprogress" class="sortable-list tasklist list-unstyled">
 									<c:forEach items="${MaincafeList}" var="cafelist">
 										<li id="demo-tasklist-3" class="task-success" onclick="location.href='${pageContext.request.contextPath }/community/read/${cafelist.cpostNo}'">
-											<p class="text-bold text-main text-sm "># ${cafelist.cpostNo}</p> <img class="img-responsive mar-btm" src="${pageContext.request.contextPath }/assets/img/shared-img-2.jpg" alt="Image">
-											<p class="text-bold text-main text-sm text-right">${cafelist.cpostTitle}</p>
+											<c:if test="${ !empty cafelist.fileList }">
+												<p class="text-bold text-main text-sm "># ${cafelist.cpostNo}</p> <img class="img-responsive mar-btm" src="${cafelist.fileList[0].filepath}" style='width: 350px; height: 300px;' alt="Image">
+											</c:if>
+											<p class="text-bold text-main text-sm text-left">${cafelist.cpostTitle}</p>
 											<p class="pad-btm bord-btm">${cafelist.cpostContent}</p> <a href="#" class="task-footer"> <span class="box-inline"> <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i> ${cafelist.replyCount}</span> <span class="pad-rgt"><i class="demo-pli-heart-2 icon-fw"></i>
 														${cafelist.liked}</span>
 											</span> <span class="text-sm"><i class="pli-arrow-right-in-circle icon-fw text-main"></i>${cafelist.regDate}</span>
@@ -186,8 +190,10 @@
 								<ul id="demo-tasklist-completed" class="sortable-list tasklist list-unstyled">
 									<c:forEach items="${MainList}" var="mainList">
 										<li id="demo-tasklist-3" class="task-warning" onclick="location.href='${pageContext.request.contextPath }/community/read/${mainList.cpostNo}'">
-											<p class="text-bold text-main text-sm "># ${mainList.cpostNo}</p> <img class="img-responsive mar-btm" src="${pageContext.request.contextPath }/assets/img/shared-img-3.jpg" alt="Image">
-											<p class="text-bold text-main text-sm text-right">${mainList.cpostTitle}</p>
+											<c:if test="${ !empty mainList.fileList  }">
+												<p class="text-bold text-main text-sm "># ${mainList.cpostNo}</p> <img class="img-responsive mar-btm" src="${mainList.fileList[0].filepath}" style='width: 350px; height: 300px;' alt="Image">
+											</c:if>
+											<p class="text-bold text-main text-sm text-left">${mainList.cpostTitle}</p>
 											<p class="pad-btm bord-btm">${mainList.cpostContent}</p> <a href="#" class="task-footer"> <span class="box-inline"> <span class="pad-rgt"><i class="demo-pli-speech-bubble-7"></i>${mainList.replyCount}</span> <span class="pad-rgt"><i class="demo-pli-heart-2 icon-fw"></i>
 														${mainList.liked}</span>
 											</span> <span class="text-sm"><i class="pli-arrow-right-in-circle icon-fw text-main"></i>${mainList.regDate}</span>
@@ -228,7 +234,7 @@
 
 			<!--MAIN NAVIGATION-->
 			<!--===================================================-->
-			<c:import url="/WEB-INF/views/includes/navigation.jsp"></c:import>
+			<c:import url="/WEB-INF/views/includes/otherNavigation.jsp"></c:import>
 			<!--===================================================-->
 			<!--END MAIN NAVIGATION-->
 

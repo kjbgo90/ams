@@ -48,6 +48,9 @@
 <link
 	href="${pageContext.request.contextPath }/assets/css/premium/icon-sets/icons/line-icons/premium-line-icons.min.css"
 	rel="stylesheet">
+	
+<!-- Summernote [ OPTIONAL ]  -->
+<link href="${pageContext.request.contextPath }/assets/plugins/summernote/summernote.min.css" rel="stylesheet">
 <!--=================================================-->
 
 
@@ -206,9 +209,10 @@
 										<div id="post-address">
 											
 										</div>
-										<div>
+										<!-- <div>
 											<input type="text" placeholder="내용" class="form-control" id="post-content" style="width: 100%; height: 300px; vertical-align: top;">
-										</div>
+										</div> -->
+										<div id="demo-summernote"></div>
 										<div class="bord-top pad-ver">
 											<!--Dropzonejs-->
 											<!--===================================================-->
@@ -271,12 +275,10 @@
 		<!--===================================================-->
 		<!--END MAIN NAVIGATION-->
 
+		<!-- FOOTER -->
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 	</div>
 
-
-
-	<!-- FOOTER -->
-	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 
 	<!-- SCROLL PAGE BUTTON -->
 	<!--===================================================-->
@@ -323,6 +325,8 @@
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath }/assets/js/gmaps.js"></script>
 
+	<!--  Summernote [ OPTIONAL ] -->
+	<script src="${pageContext.request.contextPath }/assets/plugins/summernote/summernote.js"></script>
 	<!--=================================================-->
 
 	<script type="text/javascript">
@@ -346,6 +350,18 @@
 				console.log(fileList.length);
 			}
 		});
+		
+		$("document").ready(function(){
+			// SUMMERNOTE
+			// =================================================================
+			// Require Summernote
+			// http://hackerwins.github.io/summernote/
+			// =================================================================
+			$('#demo-summernote, #demo-summernote-full-width').summernote({
+					height : '200px'
+			});
+		})
+		
 	</script>
 
 
@@ -606,7 +622,7 @@
 			
 			var communityvo = {
 					cpostTitle: $("#post-title").val(),
-					cpostContent: $("#post-content").val(),
+					cpostContent: $('#demo-summernote').summernote('code'),
 					cpostType: postType,
 					address: $("#post-address").children("[name=address]").val(),
 					businessName: $("#post-address").children("[name=businessName]").val(),

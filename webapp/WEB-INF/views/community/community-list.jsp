@@ -137,49 +137,14 @@
 
 							<div class="fluid">
 
-								<div class="blog blog-list">
-
-									<!-- Panel  Blog -->
-									<!--===================================================-->
-									<c:forEach items="${communityList}" var="List">
-										<div class="panel sm" id="pagelist">
-											<div class="blog-header" onclick="location.href='${pageContext.request.contextPath }/community/read/${List.cpostNo}' ">
-												<img class="img-responsive"
-													src="${pageContext.request.contextPath}/assets/img/shared-img-5.jpg"
-													alt="Image">
-											</div>
-											<div class="blog-content">
-												<div class="blog-title media-block">
-													<div class="media-body">
-														<a
-															href="${pageContext.request.contextPath }/community/read/${List.cpostNo}"
-															class="btn-link">
-															<h2>${List.cpostTitle}</h2>
-														</a>
-													</div>
-												</div>
-												<div class="blog-body">
-													<p>${List.cpostContent}</p>
-												</div>
-											</div>
-											<div class="blog-footer">
-												<div class="media-left">
-													<span class="label label-success">${List.regDate}</span>
-												</div>
-												<div class="media-body text-right">
-													<span class="mar-rgt">
-														<i class="demo-pli-heart-2 icon-fw"></i>${List.liked}
-													</span> 
-													<i class="demo-pli-speech-bubble-5 icon-fw"></i>${List.replyCount }
-												</div>
-											</div>
-
-										</div>
-									</c:forEach>
+								<div id="pagelist" class="blog blog-list">
 
 								</div>
 							</div>
-
+							<div class="col-sm-7 text-right">
+									<ul id="pager" class="pagination">
+									</ul>
+								</div>
 						</div>
 						<div class="col-lg-4">
 
@@ -191,69 +156,60 @@
 									<!-- <div class="panel-body"> -->
 										<div class="fixed-fluid">
 											<!-- map -->
-											<div class="fixed-sm-350 pull-sm-right">
+											<!-- <div class="fixed-sm-350 pull-sm-right"> -->
+											<div class="list-inline mar-hor">
 												<div id="map"></div>
 											</div>
 										</div>
 										<hr>
-										<p
-											class="pad-hor mar-top text-main text-bold text-sm text-uppercase">
+										<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase" id="cpostType" data-type="${cpostType }">
 											HOT PLACE<i class="icon-lg icon-fw demo-pli-map-marker-2"></i>
 										</p>
 
-										<!-- 누나랑 상의 foreach의 존재 유무 -->
 										<ul class="list-inline mar-hor" id="hotplaces">
 
 										</ul>
 										<hr>
 
-
-
-										<p
-											class="pad-hor mar-top text-main text-bold text-sm text-uppercase">BEST
+										<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">BEST
 											POST</p>
 										<div class="list-group bg-trans pad-btm bord-btm" >
 											 <c:forEach items="${getlikedList}" var="List">
 												<div class="list-group-item list-item-sm">
-													<a href="${pageContext.request.contextPath }/community/read/${List.cpostNo}" class="btn-link">${List.cpostTitle}</a><small
-														class="box-block">${List.regDate}</small>
+													<a href="${pageContext.request.contextPath }/community/read/${List.cpostNo}" class="btn-link">${List.cpostTitle}</a>
+													<small class="box-block">${List.regDate}</small>
 												</div>
 											</c:forEach> 
 										</div>
 
 
-
-
-										<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">Recent Comments</p>
-										<div class="list-group bg-trans">
-											<a href="#" class="list-group-item">
+										<p class="pad-hor mar-top text-main text-bold text-sm text-uppercase">MY POST</p>
+										<a href="${pageContext.request.contextPath }/user/loginform" class="list-group-item">
+										<c:choose>
+											<c:when test="${not empty authUser}">
 												<div class="media-left pos-rel">
-													<img class="img-circle img-xs"
-														src="${pageContext.request.contextPath }/assets/img/profile-photos/7.png"
-														alt="Profile Picture">
+													<img class="img-circle img-xs" src="${pageContext.request.contextPath }/assets/img/profile-photos/7.png" alt="Profile Picture">
 												</div>
 												<div class="media-body">
-													<p class="mar-no text-main">Brittany Meyer</p>
-													<small>9 minutes ago</small>
-													<p class="pad-top text-sm">I think so</p>
+													<p class="mar-no text-main">${authUser.userName }</p>
 												</div>
-											</a> <a href="#" class="list-group-item">
+											</c:when>
+											<c:otherwise>
 												<div class="media-left pos-rel">
-													<img class="img-circle img-xs"
-														src="${pageContext.request.contextPath }/assets/img/profile-photos/4.png"
-														alt="Profile Picture">
+													<img class="img-circle img-xs" src="${pageContext.request.contextPath }/assets/img/profile-photos/7.png" alt="Profile Picture">
 												</div>
 												<div class="media-body">
-													<p class="mar-no text-main">Donald Brown</p>
-													<small>3 hours ago</small>
+													<p class="mar-no text-main"><i>로그인 후 이용하실 수 있는 서비스입니다.</i></p>
 												</div>
-											</a>
-											
-											
-
+											</c:otherwise>
+										</c:choose>
+										</a>
+										<div class='list-group bg-trans pad-btm bord-btm' id="myPost">
+												
 										</div>
-										<hr>
-										<br> &nbsp;
+										
+										<!-- <hr>
+										<br> &nbsp; -->
 										<button class="btn btn-dark btn-circle"
 											onclick="location.href='${pageContext.request.contextPath }/community/writeform' ">
 											<i class="demo-psi-pen-5 icon-2x"></i>
@@ -317,20 +273,13 @@
 
 
 	<!--jQuery [ REQUIRED ]-->
-	<script
-		src="${pageContext.request.contextPath }/assets/js/jquery.min.js"></script>
-
+	<script src="${pageContext.request.contextPath }/assets/js/jquery.min.js"></script>
 
 	<!--BootstrapJS [ RECOMMENDED ]-->
-	<script
-		src="${pageContext.request.contextPath }/assets/js/bootstrap.js"></script>
-
+	<script src="${pageContext.request.contextPath }/assets/js/bootstrap.js"></script>
 
 	<!--Dropzone [ OPTIONAL ]-->
-	<script
-		src="${pageContext.request.contextPath }/assets/plugins/dropzone/dropzone.js"></script>
-
-
+	<script src="${pageContext.request.contextPath }/assets/plugins/dropzone/dropzone.js"></script>
 
 
 
@@ -338,10 +287,8 @@
 	<script src="${pageContext.request.contextPath }/assets/js/nifty.js"></script>
 
 	<!-- GMaps -->
-	<script type="text/javascript"
-		src="http://maps.google.com/maps/api/js?key=AIzaSyBSFRN6WWGYwmFi498qXXsD2UwkbmD74v4&libraries=places"></script>
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath }/assets/js/gmaps.js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBSFRN6WWGYwmFi498qXXsD2UwkbmD74v4&libraries=places"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/gmaps.js"></script>
 
 	<!--=================================================-->
 
@@ -366,40 +313,19 @@
 				console.log(fileList.length);
 			}
 		});
+		
+		$("document").ready(function(){
+			var pageNo = 1;
+			console.log(pageNo);
+			pagingAjax(pageNo);
+			pageMove()
+		})
 	</script>
 
 
 	<script type="text/javascript">
-	
-		$(document).on('nifty.ready', function() {
-			var bit_lat = 37.4946083;
-			var bit_lng = 127.0254167;
-
-			var searched_address;
-			var searched_lat;
-			var searched_lng;
-
-			// GMAPS
-			// =================================================================
-			// Require gmaps
-			// -----------------------------------------------------------------
-			// http://hpneo.github.io/gmaps/
-			// =================================================================
-
-			// Marker
-			// =================================================================
-
-			var geocoder = new google.maps.Geocoder;
-
-			/* var markerMap = new GMaps({
-				el : '#map',
-				lat : 37.4946083,
-				lng : 127.0254167,
-
-			}); */
-
-		});
 		
+		//지도 출력, hotplaces 10곳, 내가 작성한 게시글 5개 로드
 		$(document).ready(function() {
 				
 				var markerMap = new GMaps({
@@ -410,8 +336,9 @@
 				});
 				
 				console.log("-------------------HOT PLCAE-------------------");
+				var cpostType = $("#cpostType").data("type");
 				$.ajax({
-					url : "${pageContext.request.contextPath }/community/hotPlaces?cpostType=2",
+					url : "${pageContext.request.contextPath }/community/hotPlaces?cpostType="+cpostType,
 					type : "post",
 
 					dataType : "json",
@@ -423,6 +350,25 @@
 					}
 				});
 				
+				console.log("-------------------My Post-------------------");
+				$.ajax({
+					url : "${pageContext.request.contextPath}/community/myPost?cpostType="+cpostType,
+					type : "post",
+					
+					dataType : "json",
+					success : function(list) {
+						if(list != ""){
+							for(var i=0; i<list.length; i++){
+								renderMyPost(list[i]);
+							}
+						}else{
+							$("#myPost").append("로그인 후 이용하실 수 있는 서비스 입니다.")
+						}
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				})
 				
 				$("#page-content").on("click", "#businessName", function(){
 					var lat = $(this).data("lat");
@@ -433,21 +379,12 @@
 				});
 		});
 		
-		
+		// 지도에 핀을 찍어주는 function
 		function addMarker(input_map, input_businessName, input_address, input_lat, input_lng){
 			input_map.addMarker({
 				lat : input_lat,
 				lng : input_lng,
 				title : 'Location',
-				click : function(e) {
-					$.niftyNoty({
-						type : "info",
-						icon : "fa fa-info",
-						message : "You clicked in the marker",
-						container : 'floating',
-						timer : 3500
-					});
-				},
 				infoWindow : {
 					content : '<div>'+ input_businessName +'</div><div>'+ input_address +'</div>'
 				}
@@ -458,6 +395,7 @@
 			input_map.setCenter(input_lat, input_lng);
 		}
 		
+		// 가장 좋아요가 많은 장소 출력 폼 
 		function renderHotPlaces(map, list) {
 			$("#hotplaces").empty();
 			for (var i = 0; i < list.length; i++) {
@@ -469,69 +407,177 @@
 			}
 		}
 		
-		function pagingAjax(pageNo){
-			console.log(pageNo);
+		// 내가 작성한 게시글 출력 폼
+		function renderMyPost(CommunityVo){
+			
+			str='';
+			str+="<div class='list-group-item list-item-sm'>";
+			str+="	<a href='${pageContext.request.contextPath }/community/read/" + CommunityVo.cpostNo + "' class='btn-link'>"+ CommunityVo.cpostTitle +"</a>";
+			str+="	<small class='box-block'><i class='demo-psi-heart-2 icon-fw'></i> "+ CommunityVo.liked +"</small>";
+			str+="</div>";
+			
+			$("#myPost").append(str);
+		}
+		
+		// 비동기 통신으로 리스트 출력 
+		function pagingAjax(input_pageNo){
+			console.log(input_pageNo);
+			var cpostType = $("#cpostType").data("type");
 			$.ajax({
-				url : "${pageContext.request.contextPath }/community/selectlist",
+				url : "${pageContext.request.contextPath }/community/selectPostPaging?cpostType="+cpostType,
 				type : "post",
 				data : {
-					pageNo:pageNo
+					pageNo:input_pageNo
 				},
 				dataType : "json",	
 				success : function(map) {
 					console.log(map);
 					console.log(map.maxPage);
 					console.log(map.list);
-					console.log(pageNo);
+					console.log(input_pageNo);
+					astr = "";
+					paging(input_pageNo,map.maxPage);
 					
-					paging(pageNo,map.maxPage);
-					
+					// onclick=location.href='${pageContext.request.contextPath }/community/read/"+ map.list[i].cpostNo+"'
 					if (map.list.length == 0) {
-						$("#blogList").html(
-								"등록된 게시글이 없습니다.");
+						//$("#blogList").html("등록된 게시글이 없습니다.");
 					} else {
-						for (var i = 0; i < vo.length; i++) {
-							str+="<div class='blog-header' onclick='location.href='${pageContext.request.contextPath }/community/read/"+ vo[i].cpostNo+"''>"
-							str+="<img class='img-responsive'	src='${pageContext.request.contextPath}/assets/img/shared-img-5.jpg' alt='Image'>"
-							str+="</div>"
-							str+="<div class="blog-content">"
-							str+="<div class="blog-title media-block">"
-							str+="<div class="media-body">"
-							str+="<a href='${pageContext.request.contextPath }/community/read/"+ vo[i].cpostNo} + "'class='btn-link'>"
-							str+="<h2>"+vo[i].cpostTitle+"</h2>"
-							str+="</a>"
-							str+="</div>"
-							str+="</div>"
-							str+="<div class='blog-body'>"
-							str+="<p>"+vo[i].cpostContent+"</p>"
-							str+="</div>"
-							str+="</div>"
-							str+="<div class='blog-footer'>"
-							str+="<div class='media-left'>"
-							str+="<span class='label label-success'>"+vo[i].regDate+"</span>"
-							str+="</div>"
-							str+="<div class='media-body text-right'>"
-							str+="<span class='mar-rgt'>"
-							str+="<i class='demo-pli-heart-2 icon-fw'></i>"+vo[i].liked
-							str+="</span> "
-							str+="<i class='demo-pli-speech-bubble-5 icon-fw'></i>"+vo[i].replyCount
-							str+="</div>"
-							str+="</div>"
+						for (var i = 0; i < map.list.length; i++) {
+							astr+="<div class='panel sm' id='pagelist'>"
+							astr+="<div class='blog-header' onclick=location.href='${pageContext.request.contextPath }/community/read/"+ map.list[i].cpostNo+"'>"
+							if(map.list[i].fileList != ""){
+								astr+="<img class='img-responsive' src="+map.list[i].fileList[0].filepath+" style='width: 350px; height: 250px;' alt='Image'>"
+							}
+							astr+="</div>"
+							astr+="<div class='blog-content'>"
+							astr+="<div class='blog-title media-block'>"
+							astr+="<div class='media-body'>"
+							astr+="<a href='${pageContext.request.contextPath }/community/read/" + map.list[i].cpostNo + "' class='btn-link'>"
+							astr+="<h2>"+map.list[i].cpostTitle+"</h2>"
+							astr+="</a>"
+							astr+="</div>"
+							astr+="</div>"
+							astr+="<div class='blog-body'>"
+							astr+="<p>"+map.list[i].cpostContent+"</p>"
+							astr+="</div>"
+							astr+="</div>"
+							astr+="<div class='blog-footer'>"
+							astr+="<div class='media-left'>"
+							astr+="<span class='label label-success'>"+map.list[i].regDate+"</span>"
+							astr+="</div>"
+							astr+="<div class='media-body text-right'>"
+							astr+="<span class='mar-rgt'>"
+							astr+="<i class='demo-pli-heart-2 icon-fw'></i>"+map.list[i].liked
+							astr+="</span> "
+							astr+="<i class='demo-pli-speech-bubble-5 icon-fw'></i>"+map.list[i].replyCount
+							astr+="</div>"
+							astr+="</div>"
+							astr+="</div>"
 
 						}
-						$("#pagelist").html(str);
-						str = "";
+						$("#pagelist").html(astr);
+						astr = "";
 					}
 					
-					paging(pageNo, map.maxPage);
+					paging(input_pageNo, map.maxPage);
 					
 				},
 				error : function(XHR, status, error) {
 					console.error(status + " : " + error);
 				}
 			});
+		}	
+		
+		//페이지 분할
+		function paging(pageno,maxPage){
+			pg = ""
+				pg +="<ul class='pagination'>";
+			if(pageno>1){
+				pg +="<li data-pageno="+(pageno-1)+"><a class='demo-pli-arrow-left'>";
+				pg +="</a></li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno>3)	
+			{
+				pg +="<li data-pageno="+(pageno-3)+" ><a>";
+				pg +=	pageno-3  ;
+				pg +="</a></li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno>2){
+				pg +="<li data-pageno="+(pageno-2)+" ><a>";
+				pg +=	pageno-2 ;
+				pg +="</a></li>";	
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno>1){
+				pg +="<li data-pageno="+(pageno-1)+"><a>";
+				pg +=	pageno-1 ;
+				pg +="</a></li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+		
+			pg +="<li data-pageno="+pageno+" class='active'><a>"+pageno +" </li>";
+			
+			if(pageno+1<=maxPage){
+				pg +="<li data-pageno="+(pageno+1)+"><a>";
+				pg += 	pageno+1  ;
+				pg +="</a></li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno+2<=maxPage){
+				pg +="<li data-pageno="+(pageno+2)+"><a>";
+				pg +=	 pageno+2  ;
+				pg +="</a></li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno+3<=maxPage){
+				pg +="<li data-pageno="+(pageno+3)+"><a>";
+				pg +=	pageno+3 ;
+				pg +="</a></li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+			if(pageno+1<=maxPage){
+				pg +="<li data-pageno="+(pageno+1)+"><a  class='demo-pli-arrow-right'>";
+				pg +="</a></li>";
+			}else{
+				pg +="<li>";
+				pg +="</li>";
+			}
+
+			pg +="</ul>";
+
+							
+					
+			$("#pager").html(pg);
+			
+		}
+		
+		// 페이지 이동 
+		function pageMove(){
+			$("#pager").on("click","li",function(){
+				$this = $(this);
+				console.log($this);
+				var pageNo = $this.data("pageno");
+				console.log(pageNo);
+				pagingAjax(pageNo);
+			});
+		}
 		
 	</script>
-
 </body>
 </html>

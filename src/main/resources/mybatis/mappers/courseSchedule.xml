@@ -194,7 +194,6 @@
 				   regDate,
 				   postTitle,
 				   postContent,
-				   communityNo,
 				   hit,
 				   category,
 				   subjectNo

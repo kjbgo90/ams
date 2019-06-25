@@ -295,14 +295,16 @@
 						</div>
 						<div class="form-group text-right" style="padding-left: 20px;" id="panel-body">
 							<!--Save draft button-->
-							<button id="schedule-delete" type="button" class="btn btn-default">
+							<button id="schedule-delete" type="button" class="btn btn-primary">
 								<i class="-unread icon-lg icon-fw"></i> 삭제
 							</button>
 
-							<!--Discard button-->
-							<button id="schedule-modify-form" type="submit" class="btn btn-primary"  data-target="#schedule-modify-modal" data-toggle="modal">
+	
+							<!-- 
+							<button id="schedule-modify-form" type="submit" class="btn btn-default"  data-target="#schedule-modify-modal" data-toggle="modal">
 								<i class="icon-lg icon-fw"></i> 수정
-							</button>
+							</button> 
+							-->
 						</div>
 						<!--===================================================-->
 						<!-- End Striped Table -->
@@ -511,8 +513,9 @@
 			selectedSchedule(scheduledto);
 		});
 		
-		// searched schedule detail info
+		/* // searched schedule detail info
 		$("#page-content").on("click", ".fc-event", function(){
+			console.log("애는 먼데")
 			var scheduledto = {
 					scheduleNo: $(this).data("scheduleno")
 			}			
@@ -520,6 +523,7 @@
 			console.log(scheduledto)
 			selectedSchedule(scheduledto);
 		});
+		 */
 		
 		// click date for registration(schedule)
 		$("#page-content").on("click", ".fc-day-number", function(){
@@ -579,7 +583,7 @@
 			var tagList = [];
 			tagList = $("#schedule-tag").val();
 			if($.inArray("${authUser.userNo}",tagList) == -1 ){
-				tagList.push( ${authUser.userNo} 	);
+				tagList.push( ${authUser.userNo} );
 			}
 			
 			var scheduledto = {
@@ -600,7 +604,6 @@
 	    			$("#check").text("해당 카테고리는 여기서 등록할 수 없습니다.");
 					$("#check").css("color", "red");
 				}else{
-					/*
 					$.ajax({
 						url : "${pageContext.request.contextPath}/${coursePath}/schedule/register",
 						type: "post",
@@ -617,7 +620,6 @@
 							console.error(status + " : " + error);
 						}
 					})
-					*/
 				}
 			}
 			
@@ -625,7 +627,7 @@
 				console.log("태그 없음");
 			}else{
 				console.log("태그 있음");
-				send_mail(tagList, scheduledto);
+				send_mail(tagList, scheduledto.scheduleName, scheduledto.startDate, scheduledto.endDate);
 			}
 		});
 		
@@ -977,11 +979,9 @@
 		}
 		
 		//send mail
-		function send_mail(tagList, scheduledto){
-			console.log(tagList)
-			console.log(scheduledto)
+		function send_mail(tagList, scheduleName, startDate, endDate){
 			$.ajax({
-				url : "${pageContext.request.contextPath}/${coursePath}/schedule/alarm?tagList="+tagList+"&scheduledto="+scheduledto,
+				url : "${pageContext.request.contextPath}/${coursePath}/schedule/alarm?tagList="+tagList+"&scheduleName="+scheduleName+"&startDate="+startDate+"&endDate="+endDate,
 				type: "post",
 				contentType : "application/json",
 
