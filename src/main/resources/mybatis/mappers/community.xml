@@ -267,7 +267,7 @@
            			 		ON c.fileno = df.fileno) cf
           			    ON c.cpostno = cf.cpostno
 						WHERE c.cpostType = #{cpostType}
-						ORDER BY c.cpostNo desc)
+						ORDER BY c.regDate desc)
        			   WHERE rownum <= #{pageNo2})
 			WHERE rnum >= #{pageNo1}
 		]]>	

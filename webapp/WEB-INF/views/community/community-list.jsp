@@ -355,8 +355,6 @@
 							for(var i=0; i<list.length; i++){
 								renderMyPost(list[i]);
 							}
-						}else{
-							$("#myPost").append("로그인 후 이용하실 수 있는 서비스 입니다.")
 						}
 					},
 					error : function(XHR, status, error) {

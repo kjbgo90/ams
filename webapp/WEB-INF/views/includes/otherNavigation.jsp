@@ -89,7 +89,7 @@
 
 						<!--Menu list item-->
 
-						<li class="list-header"><i class="pli-hello"></i>Community</li>
+						<li class="list-header"><i class="pli-hello"></i><a href="${pageContext.request.contextPath }/community/mainform"></a>Community</li>
 						<li><a href="${pageContext.request.contextPath }/community/selectform?cpostType=1"><i class="pli-soup"></i><span class="menu-title"> 맛집</span></a></li>
 						<li><a href="${pageContext.request.contextPath }/community/selectform?cpostType=2"><i class="pli-juice"></i><span class="menu-title"> 카페</span></a></li>
 						<li><a href="${pageContext.request.contextPath }/community/selectform?cpostType=3"><i class="pli-pen"></i><span class="menu-title"> 자유게시판</span></a></li>
