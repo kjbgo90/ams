@@ -203,6 +203,7 @@ public class CourseAssignmentService {
 
 	@Transactional
 	public int enrollAssignment(AssignmentVo assignmentVo, String coursePath) {
+		assignmentVo.setEndDate(assignmentVo.getEndDate() + " 23:59:00");
 		assignmentDao.insertAssignmentSchedule(assignmentVo);
 		int count = assignmentDao.insertAssignment(assignmentVo);
 
@@ -277,6 +278,7 @@ public class CourseAssignmentService {
 
 	@Transactional
 	public int modifyAssignment(AssignmentVo assignmentVo, String coursePath) {
+		assignmentVo.setEndDate(assignmentVo.getEndDate() + " 23:59:00");
 		assignmentDao.updateAssignmentSchedule(assignmentVo);
 		int count = assignmentDao.updateAssignment(assignmentVo);
 		assignmentDao.deleteAssignmentFile(assignmentVo);

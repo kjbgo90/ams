@@ -220,7 +220,7 @@
 										 #{assignmentTitle},
 										 #{assignmentContent},
 										 sysdate,
-										 #{endDate},
+										 TO_DATE(#{endDate}, 'yyyy/mm/dd hh24:mi:ss'),
 										 'pink',
 										 #{courseNo},
 										 #{teacherNo},
@@ -323,7 +323,7 @@
 			update schedule
 			set scheduleName = #{assignmentTitle},
 				scheduleMemo = #{assignmentContent},
-				endDate = #{endDate}
+				endDate = TO_DATE(#{endDate}, 'yyyy/mm/dd hh24:mi:ss')
 			where scheduleNo = #{scheduleNo}
 		]]>
 	</update>
