@@ -324,8 +324,8 @@
 				
 				var markerMap = new GMaps({
 					el : '#map',
-					lat : 37.4946083,
-					lng : 127.0254167,
+					lat : 37.4983761,
+					lng : 127.0275566,
 
 				});
 				
