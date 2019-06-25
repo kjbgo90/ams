@@ -21,12 +21,14 @@ public class CourseDataroomService {
 	
 	
 	
-	
+	//폴더 생성다시만들기 
 	public CourseDataroomVo insertFolderByDataRoomNo(CourseDataroomVo vo) {
 		
-		int count = courseDataroomDao.insertFolder(vo);
+		courseDataroomDao.insertFolder(vo);
 		int no = vo.getDataRoomNo();
 		System.out.println(no);
+		
+		
 		return vo;
 	}
 	
@@ -53,9 +55,9 @@ public class CourseDataroomService {
 	}
 	
 
-	public List<CourseDataroomVo> SelectTagOnByDataTagNo(int dataTagNo){
+	public List<CourseDataroomVo> SelectTagOnByDataTagNo(int dataTagNo, int courseNo){
 		CourseDataroomVo vo = new CourseDataroomVo();
-		vo.setCourseNo(1);
+		vo.setCourseNo(courseNo);
 		System.out.println(dataTagNo);
 		vo.setDataTagNo(dataTagNo);
 		List<CourseDataroomVo> list = courseDataroomDao.SelectTagOnByDataTagNo(vo);
@@ -67,6 +69,9 @@ public class CourseDataroomService {
 		List<CourseDataroomVo> list = courseDataroomDao.getDataTagList(vo);
 		return list;
 	}
+	
+	
+	
 	
 	public int fileUploadInDB(CourseDataroomFileUploadVo fileVo, String coursePath, int userNo) {
 		System.out.println("help me");
@@ -88,6 +93,8 @@ public class CourseDataroomService {
 		System.out.println(userNo);
 		CourseVo coursevo = new CourseVo();
 		coursevo.setCoursePath(coursePath);
+		
+		
 		CourseVo coursevo2 = courseDataroomDao.selectCoursePath(coursevo);
 		System.out.println("coursePath is" + coursePath);
 		String courseName = coursevo2.getCourseName();

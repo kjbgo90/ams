@@ -43,6 +43,7 @@
 		select dataroomno, dataroomname , proomno 
 		from dataroom 
 		where proomno=  (select dataroomno from dataroom where courseno=#{courseNo} and proomno=0)
+		order by dataroomname
 		]]>
 	</select>
 
@@ -52,6 +53,7 @@
 		select d.fileno as fileNo, d.filename as fileName
 		from dataroomfile dr join datafile d 
 		on dr.fileno=d.fileno where dr.dataroomno = (select dataroomno from dataroom where courseno=#{courseNo} and proomno=0)
+		order by d.filename
 		]]>
 	</select>
 
@@ -59,9 +61,12 @@
 	<select id="selectFileClickedByFolder"
 		resultType="CourseDataRoomVo">
 		<![CDATA[
-		select d.fileno, d.filename    
+		select 	d.fileno as fileNo, 
+				d.filename  as fileName,
+				d.filepath as filePath
 		from dataroomfile dr join datafile d 
 		on dr.fileno=d.fileno where dr.dataroomno = #{dataRoomNo}
+		order by d.filename
 		]]>
 	</select>
 
@@ -71,6 +76,7 @@
 		select dataroomno, dataroomname , proomno 
 		from dataroom 
 		where proomno=#{dataRoomNo}
+		order by dataroomname
 		]]>
 	</select>
 

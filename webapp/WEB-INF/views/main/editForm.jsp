@@ -113,7 +113,7 @@
 								<form id="demo-bvd-notempty"  action="${pageContext.request.contextPath }/myPage/updateUser" method="post" class="form-horizontal">
 									<div class="panel-body">
 										<p class="bord-btm pad-ver text-main text-bold">개인정보 변경</p>
-										<input type="text" class="form-control" name="userno"  value="${authUser.userNo}">
+										<input type="text" class="hidden" name="userno"  value="${authUser.userNo}">
 										<!--NOT EMPTY VALIDATOR-->
 										<!--===================================================-->
 										<fieldset>

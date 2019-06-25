@@ -204,17 +204,13 @@
 	<!--Custom script [ DEMONSTRATION ]-->
 	<!--===================================================-->
 	<script>
-		$(document)
-				.on(
-						'nifty.ready',
-						function() {
+		$(document).on('nifty.ready',function() {
 
 							userNo = '${authUser.userNo}'
 							console.log(userNo);
 
 							//qna List 
-							$
-									.ajax({
+							$.ajax({
 										url : "${pageContext.request.contextPath }/myPage/getSubmitListByUserNo",
 										type : "post",
 										data : {
@@ -235,7 +231,7 @@
 											console.error(status + " : "
 													+ error);
 										}
-									});
+							});
 							/* 과제 현황 리스트 
 											<th>레포트 제목 </th>
 											<th>레포트 파일</th>
@@ -259,7 +255,7 @@
 								assignmentListStr += "<td>"
 										+ SubmitVo.assignmentTitle + "</td>";
 								//첨부 파일 
-								if (SubmitVo.fileList != null) {
+								if (SubmitVo.fileList != null ) {
 									console.log(SubmitVo.fileList);
 
 									if (SubmitVo.fileList.length != 0) {
@@ -273,27 +269,24 @@
 										}
 										assignmentListStr += "</td>";
 									} else {
-										assignmentListStr += "_$ta첨부파일이 없습니다._$tag";
+										assignmentListStr += "<td>첨부파일이 없습니다.</td>";
 									}
 
 								} else {
-									assignmentListStr += "_$ta첨부파일이 없습니다._$tag";
+									assignmentListStr += "<td>첨부파일이 없습니다.</td>";
 								}
 								//과제 타이틀 
-								assignmentListStr += "_$ta"
-										+ SubmitVo.assignmentTitle + "_$tag";
+								assignmentListStr += "<td>"
+										+ SubmitVo.assignmentTitle + "</td>";
 								//제출 일자
 								// 과제 채점 여부 , 점수 
 								if (SubmitVo.submitNo != 0) {
-									assignmentListStr += "_$ta"
-											+ SubmitVo.submitDate + "_$tag";
-									assignmentListStr += "_$ta"
-											+ SubmitVo.scoreCheck + "_$tag";
+									assignmentListStr += "<td>"+ SubmitVo.submitDate + "</td>";
+									assignmentListStr += "<td>"+ SubmitVo.scoreCheck + "</td>";
 									if (SubmitVo.scoreCheck == 'true') {
-										assignmentListStr += "_$ta"
-												+ SubmitVo.score + "_$tag";
+										assignmentListStr += "<td>"+ SubmitVo.score + "</td>";
 									} else {
-										assignmentListStr += "_$ta미채점_$tag";
+										assignmentListStr += "<td>미채점</td>";
 									}
 
 								} else {
@@ -302,7 +295,7 @@
 
 								}
 
-								assignmentListStr += "_$tag";
+								assignmentListStr += "</tr>";
 							}
 
 						});

@@ -78,7 +78,9 @@ public class CourseDataroomController {
 													 @RequestParam("courseNo") int courseNo) {
 		
 		CourseDataroomVo vo = new CourseDataroomVo();
-		vo.setDataRoomNo(dataRoomNo);
+		
+		//원래 있던 dataroomno를 proomno 로 바꾸기 
+		vo.setpRoomNo(dataRoomNo);
 		vo.setDataRoomName(dataRoomName);
 		vo.setCourseNo(courseNo);
 				
@@ -145,9 +147,18 @@ public class CourseDataroomController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/SelectTagOnByDataTagNo")
-	public List<CourseDataroomVo> SelectTagOnByDataTagNo(@RequestParam("dataTagNo") int dataTagNo){
+	public List<CourseDataroomVo> SelectTagOnByDataTagNo(@PathVariable("coursePath") String coursePath, @RequestParam("dataTagNo") int dataTagNo){
 		System.out.println(dataTagNo);
-		List<CourseDataroomVo> list = CourseDataroomService.SelectTagOnByDataTagNo(dataTagNo);
+		
+		
+		
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
+		System.out.println(courseVo.getCourseNo());
+		
+		int courseNo = courseVo.getCourseNo();
+		
+		
+		List<CourseDataroomVo> list = CourseDataroomService.SelectTagOnByDataTagNo(dataTagNo ,courseNo);
 		return list;
 	}
 	@ResponseBody
