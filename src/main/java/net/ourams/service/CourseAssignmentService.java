@@ -418,4 +418,9 @@ public class CourseAssignmentService {
 		return assignmentDao.deleteAssignmentSchedule(assignmentVo.getScheduleNo());
 	}
 
+	public List<AssignmentVo> getAssignmentList(String coursePath) {
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
+		return assignmentDao.selectList(courseVo.getCourseNo());
+	}
+
 }

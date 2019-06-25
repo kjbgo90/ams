@@ -358,11 +358,15 @@
 						
 						var avg_data = [];
 						
-						for(var i=0; i<response.data.asList.length; i++){
-							avg_data.push({'elapsed' : response.data.asList[i].assignmentTitle, 'value' : response.data.asList[i].average});
+						if(response.data.asList != ""){
+							for(var i=0; i<response.data.asList.length; i++){
+								avg_data.push({'elapsed' : response.data.asList[i].assignmentTitle, 'value' : response.data.asList[i].average});
+							}
+							console.log(response.data.asList);
+							console.log(avg_data);
+						} else {
+							avg_data.push({'elapsed' : '없음', 'value' : 0});
 						}
-						console.log(response.data.asList);
-						console.log(avg_data);
 						
 						Morris.Line({
 							element : 'demo-morris-line',
@@ -400,45 +404,57 @@
 					        ],
 					        resize:true
 					    });
-						
 						$("#qnaList").empty();
 						console.log(response.data.qnaList.length)
-						for(var i=0; i<response.data.qnaList.length; i++){
-							renderQnaList(response.data.qnaList[i]);
-							
-							if( i == 0){
-								$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
-									barColor :'#ab47bc',
-							        scaleColor: false,
-							        trackColor : 'rgba(0,0,0,.1)',
-							        lineWidth : 10,
-							        size : 107,
-							        onStep: function(from, to, percent) {
-							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
-							        }
-								 });
-							} else if ( i == 1){
-								$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
-									barColor :'#8bc34a',
-							        scaleColor: false,
-							        trackColor : 'rgba(0,0,0,.1)',
-							        lineWidth : 10,
-							        size : 107,
-							        onStep: function(from, to, percent) {
-							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
-							        }
-								 });
-							} else if ( i == 2){
-								$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
-									barColor :'#ffb300',
-							        scaleColor: false,
-							        trackColor : 'rgba(0,0,0,.1)',
-							        lineWidth : 10,
-							        size : 107,
-							        onStep: function(from, to, percent) {
-							            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
-							        }
-								 });
+						if(response.data.qnaList.length == 0){
+							var qnaEmpty="";
+							qnaEmpty += "<div class='pad-all mar-all' style='text-align:center; padding-top:63px; padding-bottom:63px;'>질문내역이 없습니다.</div>"
+							$("#qnaList").append(qnaEmpty);
+						}
+						$("#qnaList").empty();
+						console.log(response.data.qnaList.length)
+						if(response.data.qnaList.length == 0){
+							var qnaEmpty="";
+							qnaEmpty += "<div class='pad-all mar-all' style='text-align:center; padding-top:63px; padding-bottom:63px;'>질문내역이 없습니다.</div>"
+							$("#qnaList").append(qnaEmpty);
+						} else {
+							for(var i=0; i<response.data.qnaList.length; i++){
+								renderQnaList(response.data.qnaList[i]);
+								
+								if( i == 0){
+									$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
+										barColor :'#ab47bc',
+								        scaleColor: false,
+								        trackColor : 'rgba(0,0,0,.1)',
+								        lineWidth : 10,
+								        size : 107,
+								        onStep: function(from, to, percent) {
+								            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
+								        }
+									 });
+								} else if ( i == 1){
+									$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
+										barColor :'#8bc34a',
+								        scaleColor: false,
+								        trackColor : 'rgba(0,0,0,.1)',
+								        lineWidth : 10,
+								        size : 107,
+								        onStep: function(from, to, percent) {
+								            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
+								        }
+									 });
+								} else if ( i == 2){
+									$('#demo-pie-' + response.data.qnaList[i].subjectNo).easyPieChart({
+										barColor :'#ffb300',
+								        scaleColor: false,
+								        trackColor : 'rgba(0,0,0,.1)',
+								        lineWidth : 10,
+								        size : 107,
+								        onStep: function(from, to, percent) {
+								            $(this.el).find('.pie-value').text(Math.round(percent) + '%');
+								        }
+									 });
+								}
 							}
 						}
 					} else {
@@ -486,11 +502,15 @@
 						
 						var avg_data = [];
 						
-						for(var i=0; i<response.data.asList.length; i++){
-							avg_data.push({'elapsed' : response.data.asList[i].assignmentTitle, 'value' : response.data.asList[i].average});
+						if(response.data.asList != ""){
+							for(var i=0; i<response.data.asList.length; i++){
+								avg_data.push({'elapsed' : response.data.asList[i].assignmentTitle, 'value' : response.data.asList[i].average});
+							}
+							console.log(response.data.asList);
+							console.log(avg_data);
+						} else {
+							avg_data.push({'elapsed' : '없음', 'value' : 0});
 						}
-						console.log(response.data.asList);
-						console.log(avg_data);
 						
 						$("#reset-graph").empty();
 						var str = "";
@@ -635,12 +655,16 @@
 						str += "<div id='demo-morris-line-legend' class='text-center'></div>";
 						str += "<div id='demo-morris-line' style='height: 250px'></div>";
 						$("#reset-graph").append(str);
-						console.log(response.data.asList);
-						for(var i=0; i<response.data.asList.length; i++){
-							score_data.push({'elapsed' : response.data.asList[i].assignmentTitle, 'value' : response.data.asList[i].score});
+						if(response.data.asList != ""){
+							console.log(response.data.asList);
+							for(var i=0; i<response.data.asList.length; i++){
+								score_data.push({'elapsed' : response.data.asList[i].assignmentTitle, 'value' : response.data.asList[i].score});
+							}
+							console.log(response.data.asList);
+							console.log(score_data);
+						} else {
+							score_data.push({'elapsed' : "없음", 'value' : 0});
 						}
-						console.log(response.data.asList);
-						console.log(score_data);
 						
 						Morris.Line({
 							element : 'demo-morris-line',
