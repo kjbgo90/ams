@@ -105,8 +105,8 @@
 				#{scheduleNo},
 				#{scheduleName},
 				#{scheduleMemo},
-				#{startDate},
-				#{endDate},
+				TO_DATE(#{startDate}, 'yyyy-mm-dd'),
+				TO_DATE(#{endDate}, 'yyyy-mm-dd'),
 				#{eventColor},
 				#{courseNo},
 				#{userNo}
