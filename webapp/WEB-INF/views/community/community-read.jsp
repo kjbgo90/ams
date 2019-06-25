@@ -269,7 +269,7 @@
 
 			<!--MAIN NAVIGATION-->
 			<!--===================================================-->
-			<c:import url="/WEB-INF/views/includes/navigation.jsp"></c:import>
+			<c:import url="/WEB-INF/views/includes/otherNavigation.jsp"></c:import>
 			<!--===================================================-->
 			<!--END MAIN NAVIGATION-->
 
