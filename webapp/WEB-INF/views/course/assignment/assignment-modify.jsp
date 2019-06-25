@@ -460,7 +460,7 @@
 					/*성공시 처리해야될 코드 작성*/
 					if (response.result === "success") {
 						alert("과제 수정 성공");
-						window.location = "http://localhost:8088/ams/" + response.data + "/assignment/list";
+						window.location = "${pageContext.request.contextPath }/" + response.data + "/assignment/list";
 					} else {
 						alert("과제 수정 실패");
 					}

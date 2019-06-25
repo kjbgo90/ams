@@ -66,7 +66,7 @@
 		<![CDATA[
 			insert into submit values( #{submitNo},
 									 #{submitContent},
-									 TO_DATE(sysdate, 'yyyy/mm/dd'),
+									 default,
 									 #{assignmentNo},
 									 #{userNo},
 									 null,
@@ -219,7 +219,7 @@
 			insert into schedule values( #{scheduleNo},
 										 #{assignmentTitle},
 										 #{assignmentContent},
-										 TO_DATE(sysdate, 'yyyy/mm/dd'),
+										 default,
 										 TO_DATE(#{endDate}, 'yyyy/mm/dd hh24:mi:ss'),
 										 'pink',
 										 #{courseNo},
@@ -269,7 +269,7 @@
 										 #{fileName},
 										 #{saveName},
 										 #{fileSize},
-										 TO_DATE(sysdate, 'yyyy/mm/dd'),
+										 default,
 										 #{filepath})
 		]]>
 	</insert>
@@ -376,7 +376,7 @@
 		<![CDATA[
 			insert into timeline values (   #{timeLineNo},
                                 			#{timeLineContent},
-                              			   TO_DATE(sysdate, 'yyyy/mm/dd')
+                              			    default
                             			)
 		]]>
 	</insert>
