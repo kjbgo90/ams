@@ -141,7 +141,7 @@
 													<c:if test="${authUser.userType eq 1 }">
 														<div class="mar-ver pad-btm">
 															<h1 class="h4">강사 메뉴</h1>
-															<a href="${pageContext.request.contextPath }/myPage/index" class="btn-link">mypage</a>
+															<a href="${pageContext.request.contextPath }/myPage/mainform" class="btn-link text-2x">MYPAGE</a>
 														</div>
 
 														<div class="mar-ver pad-btm">
@@ -161,7 +161,7 @@
 													<c:if test="${authUser.userType eq 2 }">
 														<div class="mar-ver pad-btm">
 															<h1 class="h4">학생 메뉴</h1>
-															<a href="${pageContext.request.contextPath }/myPage/indexforstudent" class="btn-link">mypage</a>
+															<a href="${pageContext.request.contextPath }/myPage/mainform" class="btn-link text-2x">MYPAGE</a>
 														</div>
 
 														<div class="mar-ver pad-btm">
@@ -332,6 +332,76 @@
 				</div>
 				<!--Modal body-->
 				<form action="${pageContext.request.contextPath }/course/create" method="post">
+					<div class="modal-body ">
+						<div class="panel">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-xs-5">
+										<label class="control-labe"><span class="text-main text-bold mar-no">코스명</span></label>
+										<input type="text" class="form-control" name="courseName">
+									</div>
+									<div class="col-xs-3">
+										<label class="control-labe"><span class="text-main text-bold mar-no">강사</span></label>
+										<select data-placeholder="Choose a Country..." id="teacher-select" name="teacherNo" tabindex="2">
+											
+										</select>
+									</div>
+									<div class="col-xs-2">
+										<label class="control-labe"><span class="text-main text-bold mar-no">강의실 번호</span></label>
+										<input type="text" class="form-control" name="lecRoomNo">
+									</div>
+									<div class="col-xs-2">
+										<label class="control-labe"><span class="text-main text-bold mar-no">CoursePath</span></label>
+										<input type="text" class="form-control" name="coursePath">
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-xs-12">
+										<label class="control-labe"><span class="text-main text-bold mar-no">기간</span></label>
+										<div class="col-xs-12" id="dp-range">
+											<div class="input-daterange input-group" id="datepicker">
+												<input type="text" class="form-control" id="subject-edit-start" name="startDate" /> <span class="input-group-addon">to</span> <input type="text" class="form-control" id="subject-edit-end" name="endDate" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-xs-12">
+										<label class="control-labe"><span class="text-main text-bold mar-no">학생</span></label>
+										<select id="student-multiselect" data-placeholder="학생들을 선택해 주세요." multiple tabindex="4" name="userNoList">
+										
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<!--Modal footer-->
+					<div class="modal-footer">
+						<button class="btn btn-info" type="submit">확인</button>
+						<button data-dismiss="modal" class="btn btn-default" type="button">닫기</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="courseManage" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal" aria-hidden="true">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+
+				<!--Modal header-->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<i class="pci-cross pci-circle"></i>
+					</button>
+					<h4 class="modal-title">코스 관리</h4>
+				</div>
+				<!--Modal body-->
+				<form action="${pageContext.request.contextPath }/course/manage" method="post">
 					<div class="modal-body ">
 						<div class="panel">
 							<div class="panel-body">

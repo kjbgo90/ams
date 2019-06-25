@@ -174,7 +174,7 @@
 								</c:if>
 								<c:if test="${authUser.userType eq 2 }">
 									<div class="panel-body text-center" id="feedbackButtonPanel">
-										<button class="btn btn-pink btn-labeled btn-rounded icon-lg ion-locked" disabled="disabled" id="btnPink">나만질문</button>
+										<button class="btn btn-pink btn-labeled btn-rounded icon-lg ion-locked" disabled="disabled" id="btnPink">개인질문</button>
 										<br> <br>
 										<button class="btn btn-dark btn-labeled btn-rounded icon-lg fa fa-question-circle-o" disabled="disabled" id="btnDark">공개질문</button>
 										<br> <br>
