@@ -2,7 +2,6 @@ package net.ourams.service;
 
 import java.util.List;
 
-import org.eclipse.jdt.internal.compiler.ast.AND_AND_Expression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
