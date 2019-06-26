@@ -406,7 +406,9 @@
 					/*성공시 처리해야될 코드 작성*/
 					if (response.result === "success") {
 						alert("과제 출제 성공");
+						
 						window.location = "${pageContext.request.contextPath }/" + response.data + "/assignment/list";
+						mail_sending(assignmentTitle, courseNo);
 					} else {
 						alert("과제 출제 실패");
 					}
@@ -414,8 +416,27 @@
 				error : function(XHR, status, error) {
 					console.error(status + " : " + error);
 				}
+				
 			});
+			
 		});
+		
+		function mail_sending(input_assignmentTitle, input_courseNo){
+
+			$.ajax({
+				url: "${pageContext.request.contextPath}/${coursePath}/schedule/alarmToAll?scheduleName="+input_assignmentTitle+"&courseNo="+input_courseNo,
+				type: "post",
+				
+				datatType: "json",
+				success: function(result){
+					console.log("메일 전송 완료");
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+				
+			})
+		}
 	</script>
 </body>
 </html>

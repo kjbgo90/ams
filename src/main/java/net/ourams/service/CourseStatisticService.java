@@ -51,86 +51,128 @@ public class CourseStatisticService {
 
 		List<AssignmentVo> assignmentList = statisticDao.selectAssignmentListByCourseNo(courseNo);
 		List<StatisticVo> asList = new ArrayList<StatisticVo>();
-		double totalAverage = 0;
-		int totalSum = 0;
-		for (AssignmentVo assignmentVo : assignmentList) {
-			int sum = 0;
-			int scoreCount = 0;
-			int submitCount = 0;
-			int unsubmitCount = 0;
-			double avg = 0;
+		if (assignmentList.size() > 0) {
+			double totalAverage = 0;
+			int totalSum = 0;
+			for (AssignmentVo assignmentVo : assignmentList) {
+				int sum = 0;
+				int scoreCount = 0;
+				int submitCount = 0;
+				int unsubmitCount = 0;
+				double avg = 0;
 
-			List<SubmitVo> submitList = assignmentDao.selectSubmitList(assignmentVo.getAssignmentNo());
-			for (SubmitVo submitVo : submitList) {
-				if (submitVo.getScoreCheck().equals("true")) {
-					scoreCount++;
-					sum += submitVo.getScore();
-				} else {
-					sum += 0;
+				List<SubmitVo> submitList = assignmentDao.selectSubmitList(assignmentVo.getAssignmentNo());
+				for (SubmitVo submitVo : submitList) {
+					if (submitVo.getScoreCheck().equals("true")) {
+						scoreCount++;
+						sum += submitVo.getScore();
+					} else {
+						sum += 0;
+					}
 				}
+				totalSum += sum;
+				submitCount = submitList.size();
+				unsubmitCount = studentCount - submitCount;
+				if (scoreCount != 0) {
+					avg = sum / (double) studentCount;
+					avg = Math.round(avg * 100) / 100;
+				}
+				System.out.println(assignmentVo.getAssignmentTitle() + " : 평균 " + avg + "점 / 점수입력완료 " + scoreCount
+						+ " / 제출 " + submitCount + "명 / 미제출 " + unsubmitCount + "명");
+				StatisticVo asVo = new StatisticVo();
+				asVo.setAssignmentTitle(assignmentVo.getAssignmentTitle());
+				asVo.setAverage(avg);
+				asList.add(asVo);
 			}
-			totalSum += sum;
-			submitCount = submitList.size();
-			unsubmitCount = studentCount - submitCount;
-			if (scoreCount != 0) {
-				avg = sum / (double) studentCount;
-				avg = Math.round(avg * 100) / 100.0;
+
+			totalAverage = Math.round(totalSum / (studentCount * assignmentList.size()) * 100) / 100;
+
+			double maxAverage = asList.get(0).getAverage();
+			double minAverage = asList.get(0).getAverage();
+			for (StatisticVo asVo : asList) {
+				maxAverage = Math.max(maxAverage, asVo.getAverage());
+				minAverage = Math.min(minAverage, asVo.getAverage());
 			}
-			System.out.println(assignmentVo.getAssignmentTitle() + " : 평균 " + avg + "점 / 점수입력완료 " + scoreCount
-					+ " / 제출 " + submitCount + "명 / 미제출 " + unsubmitCount + "명");
-			StatisticVo asVo = new StatisticVo();
-			asVo.setAssignmentTitle(assignmentVo.getAssignmentTitle());
-			asVo.setAverage(avg);
-			asList.add(asVo);
+
+			AssignmentVo lastAssignment = assignmentList.get(assignmentList.size() - 1);
+			StatisticVo statisticVo = statisticDao.selectSubmitCountByAssignmentNo(lastAssignment.getAssignmentNo());
+			System.out.println(statisticVo.toString());
+			double submitPercent = statisticVo.getSubmitCount() / (double) studentCount * 100;
+			double unsubmitPercent = 100 - submitPercent;
+
+			map.put("asList", asList);
+			map.put("maxAverage", maxAverage);
+			map.put("minAverage", minAverage);
+			map.put("totalAverage", totalAverage);
+			map.put("lastAssignmentTitle", lastAssignment.getAssignmentTitle());
+			map.put("submitPercent", submitPercent);
+			map.put("unsubmitPercent", unsubmitPercent);
+
+		} else {
+			double maxAverage = 0;
+			double minAverage = 0;
+			double totalAverage = 0;
+			AssignmentVo lastAssignment = new AssignmentVo();
+			lastAssignment.setAssignmentTitle("없음");
+			double submitPercent = 0;
+			double unsubmitPercent = 0;
+			List<StatisticVo> asList1 = new ArrayList<StatisticVo>();
+
+			map.put("asList", asList1);
+			map.put("maxAverage", maxAverage);
+			map.put("minAverage", minAverage);
+			map.put("totalAverage", totalAverage);
+			map.put("lastAssignmentTitle", lastAssignment.getAssignmentTitle());
+			map.put("submitPercent", submitPercent);
+			map.put("unsubmitPercent", unsubmitPercent);
 		}
-
-		totalAverage = Math.round(totalSum / (studentCount * assignmentList.size()) * 100) / 100;
-
-		double maxAverage = asList.get(0).getAverage();
-		double minAverage = asList.get(0).getAverage();
-		for (StatisticVo asVo : asList) {
-			maxAverage = Math.max(maxAverage, asVo.getAverage());
-			minAverage = Math.min(minAverage, asVo.getAverage());
-		}
-
-		AssignmentVo lastAssignment = assignmentList.get(assignmentList.size() - 1);
-		StatisticVo statisticVo = statisticDao.selectSubmitCountByAssignmentNo(lastAssignment.getAssignmentNo());
-		System.out.println(statisticVo.toString());
-		double submitPercent = statisticVo.getSubmitCount() / (double) studentCount * 100;
-		double unsubmitPercent = 100 - submitPercent;
-
 		/*
 		 * #############################################################################
 		 */
 
 		List<FeedbackQuestionVo> feedbackQuestionList = statisticDao.selectFeedbackQuestionList(courseNo);
 		List<StatisticVo> feedbackList = new ArrayList<StatisticVo>();
-		int totalYes = 0;
-		int totalNo = 0;
-		int totalNonResponse = 0;
-		for (FeedbackQuestionVo fbqVo : feedbackQuestionList) {
-			StatisticVo fbaVo = statisticDao.selectFeedbackAnswer(fbqVo.getFbqNo());
-			System.out.println(fbaVo.toString());
-			double yesPercent = Math.round(fbaVo.getYesCount() / (double) studentCount * 100);
-			double noPercent = Math.round(fbaVo.getNoCount() / (double) studentCount * 100);
-			double nonResponsePercent = 100 - yesPercent - noPercent;
+		if (feedbackQuestionList.size() > 0) {
+			int totalYes = 0;
+			int totalNo = 0;
+			int totalNonResponse = 0;
+			for (FeedbackQuestionVo fbqVo : feedbackQuestionList) {
+				StatisticVo fbaVo = statisticDao.selectFeedbackAnswer(fbqVo.getFbqNo());
+				System.out.println(fbaVo.toString());
+				double yesPercent = Math.round(fbaVo.getYesCount() / (double) studentCount * 100);
+				double noPercent = Math.round(fbaVo.getNoCount() / (double) studentCount * 100);
+				double nonResponsePercent = 100 - yesPercent - noPercent;
 
-			totalYes += fbaVo.getYesCount();
-			totalNo += fbaVo.getNoCount();
-			totalNonResponse += studentCount - fbaVo.getYesCount() - fbaVo.getNoCount();
+				totalYes += fbaVo.getYesCount();
+				totalNo += fbaVo.getNoCount();
+				totalNonResponse += studentCount - fbaVo.getYesCount() - fbaVo.getNoCount();
 
-			fbaVo.setYesPercent(yesPercent);
-			fbaVo.setNoPercent(noPercent);
-			fbaVo.setNonResponsePercent(nonResponsePercent);
+				fbaVo.setYesPercent(yesPercent);
+				fbaVo.setNoPercent(noPercent);
+				fbaVo.setNonResponsePercent(nonResponsePercent);
 
-			feedbackList.add(fbaVo);
+				feedbackList.add(fbaVo);
+			}
+
+			int totalFeedback = totalYes + totalNo + totalNonResponse;
+			double totalYesPercent = Math.round(totalYes / (double) totalFeedback * 100);
+			double totalNoPercent = Math.round(totalNo / (double) totalFeedback * 100);
+			double totalNonResponsePercent = 100 - totalYesPercent - totalNoPercent;
+
+			map.put("feedbackList", feedbackList);
+			map.put("totalYesPercent", totalYesPercent);
+			map.put("totalNoPercent", totalNoPercent);
+			map.put("totalNonResponsePercent", totalNonResponsePercent);
+		} else {
+			double totalYesPercent = 0;
+			double totalNoPercent = 0;
+			double totalNonResponsePercent = 100 - totalYesPercent - totalNoPercent;
+
+			map.put("feedbackList", feedbackList);
+			map.put("totalYesPercent", totalYesPercent);
+			map.put("totalNoPercent", totalNoPercent);
+			map.put("totalNonResponsePercent", totalNonResponsePercent);
 		}
-
-		int totalFeedback = totalYes + totalNo + totalNonResponse;
-		double totalYesPercent = Math.round(totalYes / (double) totalFeedback * 100);
-		double totalNoPercent = Math.round(totalNo / (double) totalFeedback * 100);
-		double totalNonResponsePercent = 100 - totalYesPercent - totalNoPercent;
-
 		/*
 		 * #############################################################################
 		 */
@@ -188,17 +230,6 @@ public class CourseStatisticService {
 		}
 		System.out.println(qnaList);
 
-		map.put("asList", asList);
-		map.put("maxAverage", maxAverage);
-		map.put("minAverage", minAverage);
-		map.put("totalAverage", totalAverage);
-		map.put("lastAssignmentTitle", lastAssignment.getAssignmentTitle());
-		map.put("submitPercent", submitPercent);
-		map.put("unsubmitPercent", unsubmitPercent);
-		map.put("feedbackList", feedbackList);
-		map.put("totalYesPercent", totalYesPercent);
-		map.put("totalNoPercent", totalNoPercent);
-		map.put("totalNonResponsePercent", totalNonResponsePercent);
 		map.put("qnaList", qnaList);
 
 		System.out.println(map.toString());
@@ -214,80 +245,117 @@ public class CourseStatisticService {
 		assignmentList = statisticDao.selectAssignmentListByCourseNo(courseVo.getCourseNo());
 		List<StatisticVo> asList = new ArrayList<StatisticVo>();
 
-		double totalAverage = 0;
-		int totalSum = 0;
-		for (AssignmentVo assignmentVo : assignmentList) {
-			StatisticVo submitVo = new StatisticVo();
-			StatisticVo submitVo2 = statisticDao.selectSubmitByUserNo(assignmentVo.getAssignmentNo(), userNo);
+		if (assignmentList.size() > 0) {
+			double totalAverage = 0;
+			int totalSum = 0;
+			for (AssignmentVo assignmentVo : assignmentList) {
+				StatisticVo submitVo = new StatisticVo();
+				StatisticVo submitVo2 = statisticDao.selectSubmitByUserNo(assignmentVo.getAssignmentNo(), userNo);
 
-			submitVo.setAssignmentTitle(assignmentVo.getAssignmentTitle());
-			if (submitVo2 == null) {
-				submitVo.setScore(0);
-			} else {
-				submitVo.setScore(submitVo2.getScore());
+				submitVo.setAssignmentTitle(assignmentVo.getAssignmentTitle());
+				if (submitVo2 == null) {
+					submitVo.setScore(0);
+				} else {
+					submitVo.setScore(submitVo2.getScore());
+				}
+
+				totalSum += submitVo.getScore();
+
+				asList.add(submitVo);
 			}
 
-			totalSum += submitVo.getScore();
+			StatisticVo max = new StatisticVo();
+			max = statisticDao.selectMaxScore(courseVo.getCourseNo(), userNo);
+			StatisticVo min = new StatisticVo();
+			min = statisticDao.selectMinScore(courseVo.getCourseNo(), userNo);
 
-			asList.add(submitVo);
-		}
+			StatisticVo submitCountVo = statisticDao.selectSubmitCountByUserNo(courseVo.getCourseNo(), userNo);
+			if (assignmentList.size() == 0 || submitCountVo.getSubmitCount() < assignmentList.size()
+					|| submitCountVo.getNoCount() > 0) {
+				min.setMinScore(0);
+			}
 
-		StatisticVo max = new StatisticVo();
-		max = statisticDao.selectMaxScore(courseVo.getCourseNo(), userNo);
-		StatisticVo min = new StatisticVo();
-		min = statisticDao.selectMinScore(courseVo.getCourseNo(), userNo);
+			if (assignmentList.size() != 0) {
+				totalAverage = Math.round(totalSum / (double) assignmentList.size() * 100) / 100;
+			}
 
-		StatisticVo submitCountVo = statisticDao.selectSubmitCountByUserNo(courseVo.getCourseNo(), userNo);
-		if (submitCountVo.getSubmitCount() < assignmentList.size() || submitCountVo.getNoCount() > 0) {
-			min.setMinScore(0);
-		}
+			AssignmentVo lastAssignment = assignmentList.get(assignmentList.size() - 1);
+			StatisticVo statisticVo = new StatisticVo();
+			statisticVo = statisticDao.selectSubmitByUserNo(lastAssignment.getAssignmentNo(), userNo);
+			double submitPercent = 0;
+			double unsubmitPercent = 0;
+			if (statisticVo != null) {
+				submitPercent = 100;
+				unsubmitPercent = 100 - submitPercent;
+			} else {
+				submitPercent = 0;
+				unsubmitPercent = 100 - submitPercent;
+			}
 
-		totalAverage = Math.round(totalSum / (double) assignmentList.size() * 100) / 100;
+			map.put("asList", asList);
+			map.put("maxScore", max.getMaxScore());
+			map.put("minScore", min.getMinScore());
+			map.put("totalAverage", totalAverage);
+			map.put("lastAssignmentTitle", lastAssignment.getAssignmentTitle());
+			map.put("submitPercent", submitPercent);
+			map.put("unsubmitPercent", unsubmitPercent);
 
-		AssignmentVo lastAssignment = assignmentList.get(assignmentList.size() - 1);
-		StatisticVo statisticVo = new StatisticVo();
-		statisticVo = statisticDao.selectSubmitByUserNo(lastAssignment.getAssignmentNo(), userNo);
-		double submitPercent = 0;
-		double unsubmitPercent = 0;
-		if (statisticVo != null) {
-			submitPercent = 100;
-			unsubmitPercent = 100 - submitPercent;
 		} else {
-			submitPercent = 0;
-			unsubmitPercent = 100 - submitPercent;
+			double totalAverage = 0;
+			double maxScore = 0;
+			double minScore = 0;
+			
+			map.put("asList", asList);
+			map.put("maxScore", maxScore);
+			map.put("minScore", minScore);
+			map.put("totalAverage", totalAverage);
+			map.put("lastAssignmentTitle", "없음");
+			map.put("submitPercent", 0);
+			map.put("unsubmitPercent", 0);
 		}
-
 		/*
 		 * #############################################################################
 		 */
 
 		List<FeedbackQuestionVo> feedbackQuestionList = statisticDao.selectFeedbackQuestionList(courseVo.getCourseNo());
 		List<StatisticVo> feedbackList = new ArrayList<StatisticVo>();
-		int totalYes = 0;
-		int totalNo = 0;
-		int totalNonResponse = 0;
-		for (FeedbackQuestionVo fbqVo : feedbackQuestionList) {
-			StatisticVo fbaVo = statisticDao.selectFeedbackAnswerByUserNo(fbqVo.getFbqNo(), userNo);
-			System.out.println(fbaVo.toString());
+		if (feedbackQuestionList.size() > 0) {
+			int totalYes = 0;
+			int totalNo = 0;
+			int totalNonResponse = 0;
+			for (FeedbackQuestionVo fbqVo : feedbackQuestionList) {
+				StatisticVo fbaVo = statisticDao.selectFeedbackAnswerByUserNo(fbqVo.getFbqNo(), userNo);
+				System.out.println(fbaVo.toString());
 
-			if (fbaVo.getFbaType() == 1) {
-				totalYes++;
-				fbaVo.setYesPercent(100);
-			} else if (fbaVo.getFbaType() == 2) {
-				totalNo++;
-				fbaVo.setNoPercent(100);
-			} else {
-				totalNonResponse++;
-				fbaVo.setNonResponsePercent(100);
+				if (fbaVo.getFbaType() == 1) {
+					totalYes++;
+					fbaVo.setYesPercent(100);
+				} else if (fbaVo.getFbaType() == 2) {
+					totalNo++;
+					fbaVo.setNoPercent(100);
+				} else {
+					totalNonResponse++;
+					fbaVo.setNonResponsePercent(100);
+				}
+				System.out.println(fbaVo);
+				feedbackList.add(fbaVo);
 			}
-			System.out.println(fbaVo);
-			feedbackList.add(fbaVo);
-		}
 
-		int totalFeedback = totalYes + totalNo + totalNonResponse;
-		double totalYesPercent = Math.round(totalYes / (double) totalFeedback * 100);
-		double totalNoPercent = Math.round(totalNo / (double) totalFeedback * 100);
-		double totalNonResponsePercent = 100 - totalYesPercent - totalNoPercent;
+			int totalFeedback = totalYes + totalNo + totalNonResponse;
+			double totalYesPercent = Math.round(totalYes / (double) totalFeedback * 100);
+			double totalNoPercent = Math.round(totalNo / (double) totalFeedback * 100);
+			double totalNonResponsePercent = 100 - totalYesPercent - totalNoPercent;
+
+			map.put("feedbackList", feedbackList);
+			map.put("totalYesPercent", totalYesPercent);
+			map.put("totalNoPercent", totalNoPercent);
+			map.put("totalNonResponsePercent", totalNonResponsePercent);
+		} else {
+			map.put("feedbackList", feedbackList);
+			map.put("totalYesPercent", 0);
+			map.put("totalNoPercent", 0);
+			map.put("totalNonResponsePercent", 100);
+		}
 
 		/*
 		 * #############################################################################
@@ -331,18 +399,6 @@ public class CourseStatisticService {
 		}
 		System.out.println(qnaList);
 
-		map.put("asList", asList);
-		map.put("totalAverage", totalAverage);
-		map.put("maxScore", max.getMaxScore());
-		map.put("minScore", min.getMinScore());
-		map.put("totalAverage", totalAverage);
-		map.put("lastAssignmentTitle", lastAssignment.getAssignmentTitle());
-		map.put("submitPercent", submitPercent);
-		map.put("unsubmitPercent", unsubmitPercent);
-		map.put("feedbackList", feedbackList);
-		map.put("totalYesPercent", totalYesPercent);
-		map.put("totalNoPercent", totalNoPercent);
-		map.put("totalNonResponsePercent", totalNonResponsePercent);
 		map.put("qnaList", qnaList);
 
 		return map;

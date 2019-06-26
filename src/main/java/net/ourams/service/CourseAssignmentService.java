@@ -31,7 +31,8 @@ public class CourseAssignmentService {
 
 	/* 전체 과제 selectList */
 	public Map<String, Object> getList(String coursePath) {
-
+		Map<String, Object> map = new HashMap<String, Object>();
+		
 		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
 		List<AssignmentVo> assignmentList = assignmentDao.selectList(courseVo.getCourseNo());
 		List<SubjectVo> subjectList = assignmentDao.selectSubList(courseVo.getCourseNo());
@@ -59,27 +60,35 @@ public class CourseAssignmentService {
 			System.out.println(subjectVo.getSubjectTitle() + " 과제 리스트: " + subjectVo.getAssignmentListBySub());
 		}
 
-		AssignmentVo lastAssignment = assignmentList.get(0);
-
-		List<SubmitVo> submitList = assignmentDao.selectSubmitList(lastAssignment.getAssignmentNo());
-		List<fileUpLoadVo> submitFileList = assignmentDao.selectSubmitFileList();
-
-		for (SubmitVo submitVo : submitList) {
-			List<fileUpLoadVo> submitFileList2 = new ArrayList<fileUpLoadVo>();
-			for (fileUpLoadVo fileVo : submitFileList) {
-				if (submitVo.getSubmitNo() == fileVo.getSubmitNo()) {
-					submitFileList2.add(fileVo);
+		if(assignmentList.size() > 0) {
+			AssignmentVo lastAssignment = assignmentList.get(0);
+		
+			List<SubmitVo> submitList = assignmentDao.selectSubmitList(lastAssignment.getAssignmentNo());
+			List<fileUpLoadVo> submitFileList = assignmentDao.selectSubmitFileList();
+	
+			for (SubmitVo submitVo : submitList) {
+				List<fileUpLoadVo> submitFileList2 = new ArrayList<fileUpLoadVo>();
+				for (fileUpLoadVo fileVo : submitFileList) {
+					if (submitVo.getSubmitNo() == fileVo.getSubmitNo()) {
+						submitFileList2.add(fileVo);
+					}
 				}
+				submitVo.setFileList(submitFileList2);
 			}
-			submitVo.setFileList(submitFileList2);
+			map.put("lastAssignment", lastAssignment);
+			map.put("submitList", submitList);
+			map.put("submitListCount", submitList.size());
+		} else {
+			AssignmentVo lastAssignment = new AssignmentVo();
+			List<SubmitVo> submitList = new ArrayList<SubmitVo>();
+			
+			map.put("lastAssignment", lastAssignment);
+			map.put("submitList", submitList);
+			map.put("submitListCount", submitList.size());
 		}
-
-		Map<String, Object> map = new HashMap<String, Object>();
+		
 		map.put("assignmentList", assignmentList);
 		map.put("subjectList", subjectList);
-		map.put("lastAssignment", lastAssignment);
-		map.put("submitList", submitList);
-		map.put("submitListCount", submitList.size());
 
 		return map;
 	}
@@ -96,8 +105,12 @@ public class CourseAssignmentService {
 				}
 			}
 			SubmitVo submitVo2 = assignmentDao.selectSubmitBySubmitNo(submitVo.getSubmitNo());
+			if(submitVo.getFileList() != null) {
 			submitVo2.setFileList(submitVo.getFileList());
-
+			} else {
+				List<fileUpLoadVo> fileList = new ArrayList<fileUpLoadVo>();
+				submitVo2.setFileList(fileList);
+			}
 			AssignmentVo assignmentVo = assignmentDao.selectAssignmentByAssignmentNo(submitVo2.getAssignmentNo());
 			CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
 			String timeLineContent = "[" + courseVo.getCourseName() + "]" + submitVo2.getUserName() + "님이 "
@@ -129,7 +142,8 @@ public class CourseAssignmentService {
 
 	public SubmitVo getSubmit(int submitNo) {
 		SubmitVo submitVo = assignmentDao.selectSubmitBySubmitNo(submitNo);
-		List<fileUpLoadVo> fileList = assignmentDao.selectSubmitFileList();
+		List<fileUpLoadVo> fileList = new ArrayList<fileUpLoadVo>();
+		fileList = assignmentDao.selectSubmitFileList();
 		List<fileUpLoadVo> submitFileList = new ArrayList<fileUpLoadVo>();
 
 		for (fileUpLoadVo fileVo : fileList) {
@@ -156,7 +170,8 @@ public class CourseAssignmentService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		AssignmentVo assignmentVo = assignmentDao.selectAssignmentByAssignmentNo(assignmentNo);
 		List<SubmitVo> submitList = assignmentDao.selectSubmitList(assignmentNo);
-		List<fileUpLoadVo> fileList = assignmentDao.selectSubmitFileList();
+		List<fileUpLoadVo> fileList = new ArrayList<fileUpLoadVo>();
+		fileList = assignmentDao.selectSubmitFileList();
 
 		for (SubmitVo submitVo : submitList) {
 			List<fileUpLoadVo> submitFileList = new ArrayList<fileUpLoadVo>();

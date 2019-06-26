@@ -190,10 +190,10 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping(value = "/alarmToAll", method=RequestMethod.POST)
-	public void mailSendingToAll(HttpServletRequest request, @RequestBody CourseScheduleVo vo) {
+	public void mailSendingToAll(HttpServletRequest request, @RequestParam("scheduleName") String scheduleName, @RequestParam("courseNo") int courseNo) {
 
 		
-		List<UserVo> mailList = service.mailSendingToAll(vo.getCourseNo());
+		List<UserVo> mailList = service.mailSendingToAll(courseNo);
 		System.out.println(mailList);
 		
 		for(int i=0; i<mailList.size(); i++) {
@@ -201,7 +201,7 @@ public class ScheduleController {
 			
 			String tomail = mailList.get(i).getEmail();
 			String title="[Academy Management Service]";
-			String content = "새로운 이벤트 ["+vo.getScheduleName()+"]가 추가되었습니다. \r 어서 확인하세요!";
+			String content = "새로운 이벤트 ["+scheduleName+"]가 추가되었습니다. \r 어서 확인하세요!";
 		
 			try {
 				System.out.println("print.");
