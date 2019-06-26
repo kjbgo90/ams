@@ -131,10 +131,10 @@ public class ScheduleController {
 	//search schedule
 	@ResponseBody
 	@RequestMapping(value="/searchSchedule")
-	public List<CourseScheduleVo> searchSchedule(@RequestBody CourseScheduleVo vo){
+	public List<CourseScheduleVo> searchSchedule(@RequestBody CourseScheduleVo vo, @PathVariable("coursePath") String coursePath){
 		System.out.println("searching schedule named " + vo.getScheduleName() + "...");
 		
-		return service.searchSchedule(vo);
+		return service.searchSchedule(vo, coursePath);
 	}
 	
 	

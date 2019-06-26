@@ -155,7 +155,8 @@
 				   userNo
 			FROM schedule
 			WHERE scheduleName 
-			LIKE '%'||#{scheduleName}||'%'
+			LIKE '%'||#{scheduleName}||'%' 
+			AND courseNo = #{courseNo}
 			ORDER BY eventColor DESC
 		]]>
 	</select>

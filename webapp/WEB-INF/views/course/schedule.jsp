@@ -513,9 +513,8 @@
 			selectedSchedule(scheduledto);
 		});
 		
-		/* // searched schedule detail info
+		// searched schedule detail info
 		$("#page-content").on("click", ".fc-event", function(){
-			console.log("애는 먼데")
 			var scheduledto = {
 					scheduleNo: $(this).data("scheduleno")
 			}			
@@ -523,7 +522,7 @@
 			console.log(scheduledto)
 			selectedSchedule(scheduledto);
 		});
-		 */
+		 
 		
 		// click date for registration(schedule)
 		$("#page-content").on("click", ".fc-day-number", function(){

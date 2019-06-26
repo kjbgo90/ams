@@ -266,7 +266,10 @@ public class CourseScheduleService {
 			return result;
 		}
 		
-		public List<CourseScheduleVo> searchSchedule(CourseScheduleVo vo){
+		public List<CourseScheduleVo> searchSchedule(CourseScheduleVo vo, String coursePath){
+			int courseNo = csDao.findCourseNo(coursePath);
+			vo.setCourseNo(courseNo);
+			
 			return csDao.searchSchedule(vo);
 		}
 		
