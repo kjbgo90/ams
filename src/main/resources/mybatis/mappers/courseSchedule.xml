@@ -185,6 +185,16 @@
 		]]>
 	</delete>
 	
+	<select id="findCourseUser" parameterType="int" resultType="UserVo">
+		<![CDATA[
+			SELECT c.userno,
+				   u.email
+			FROM courseRegist c join users u
+			ON c.userNo = u.userNo
+			WHERE c.courseNo = #{courseNo}
+		]]>
+	</select>
+	
 	<select id="findNotice" parameterType="CourseScheduleVo" resultType="PostVo">
 		<![CDATA[
 			SELECT postNo,

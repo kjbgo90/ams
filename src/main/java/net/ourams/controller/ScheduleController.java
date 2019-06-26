@@ -188,4 +188,36 @@ public class ScheduleController {
 		}
 
 	}
+	
+	@RequestMapping(value = "/alarmToAll", method=RequestMethod.POST)
+	public void mailSendingToAll(HttpServletRequest request, @RequestBody CourseScheduleVo vo) {
+
+		
+		List<UserVo> mailList = service.mailSendingToAll(vo.getCourseNo());
+		System.out.println(mailList);
+		
+		for(int i=0; i<mailList.size(); i++) {
+			String setfrom ="academymanagementservice@gmail.com";
+			
+			String tomail = mailList.get(i).getEmail();
+			String title="[Academy Management Service]";
+			String content = "새로운 이벤트 ["+vo.getScheduleName()+"]가 추가되었습니다. \r 어서 확인하세요!";
+		
+			try {
+				System.out.println("print.");
+				MimeMessage message = mailSender.createMimeMessage();
+				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+
+				messageHelper.setFrom(setfrom); // 보내는사람 생략하거나 하면 정상작동을 안함
+				messageHelper.setTo(tomail); // 받는사람 이메일
+				messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+				messageHelper.setText(content); // 메일 내용
+
+				mailSender.send(message);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+
+	}
 }

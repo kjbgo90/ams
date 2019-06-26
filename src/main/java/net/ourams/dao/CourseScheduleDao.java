@@ -12,6 +12,7 @@ import net.ourams.vo.CourseScheduleVo;
 import net.ourams.vo.PostVo;
 import net.ourams.vo.ScheduleTagVo;
 import net.ourams.vo.SubjectVo;
+import net.ourams.vo.UserVo;
 
 @Repository
 public class CourseScheduleDao {
@@ -77,6 +78,10 @@ public class CourseScheduleDao {
 
 	public SubjectVo findCourse(CourseScheduleVo vo) {
 		return sqlSession.selectOne("courseSchedule.findCourse", vo);
+	}
+	
+	public List<UserVo> findCourseUser(int courseNo) {
+		return sqlSession.selectList("courseSchedule.findCourseUser", courseNo);
 	}
 
 	/*-----------------------------------------find one column-----------------------------------------*/

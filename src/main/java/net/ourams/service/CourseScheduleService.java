@@ -298,6 +298,10 @@ public class CourseScheduleService {
 				return 0;
 		}
 		
+		public List<UserVo> mailSendingToAll(int courseNo){
+			return csDao.findCourseUser(courseNo);
+		}
+		
 		public List<String> mailSending(List list){
 			List<String> mailList = new ArrayList<String>();
 			

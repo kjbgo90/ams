@@ -305,6 +305,7 @@ public class CommunityService {
 			
 			for(CommunityVo vo : returnList) {
 				if(vo.getCpostNo() == cpostNo) {
+					System.out.println("cpostNo: " + cpostNo + "vo cpostNo: " + vo.getCpostNo() + "vo cposttitle: " + vo.getCpostTitle());
 					flag = 1;
 					break;
 				}
