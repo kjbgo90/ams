@@ -146,19 +146,14 @@ public class CourseDataroomController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/SelectTagOnByDataTagNo")
-	public List<CourseDataroomVo> SelectTagOnByDataTagNo(@PathVariable("coursePath") String coursePath, @RequestParam("dataTagNo") int dataTagNo){
+	@RequestMapping(value = "/SelectTagOnByDataTagNo", method = RequestMethod.POST)
+	public List<CourseDataroomVo> SelectTagOnByDataTagNo(@RequestParam("courseNo") int courseNo, @RequestParam("dataTagNo") int dataTagNo){
 		System.out.println(dataTagNo);
 		
 		
 		
-		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
-		System.out.println(courseVo.getCourseNo());
-		
-		int courseNo = courseVo.getCourseNo();
-		
-		
 		List<CourseDataroomVo> list = CourseDataroomService.SelectTagOnByDataTagNo(dataTagNo ,courseNo);
+		System.out.println(list);
 		return list;
 	}
 	@ResponseBody
@@ -221,7 +216,7 @@ public class CourseDataroomController {
 		System.out.println(vo);
 		System.out.println("****************************************");
 		
-		s3Util.cvplFileDownload(request, response ,vo);
+		S3Util.cvplFileDownload(request, response ,vo);
 		 
 		return "";
 	}

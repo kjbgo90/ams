@@ -389,14 +389,14 @@
 							var dataRoomNoByInput = $('input:checkbox[name="dataRoomNoByInput"]:checked').val();
 
 							console.log(dataRoomNoByInput);
-							var courseNo = '${courseNo}';
 							console.log('${coursePath}');
 							console.log('${courseNo}');
 							
 							// 코스 넘버의 proomno = 0 인것을 가지고 와야한다. 
 							
-												
+											
 							
+							var courseNo = '${courseNo}';
 							$.ajax({
 										url : "${pageContext.request.contextPath }/{coursePath}/dataroom/selectListAtFirst",
 										type : "post",
@@ -481,9 +481,6 @@
 																						dataType : "json",
 																						success : function(list) {
 																							console.log(list);
-																							console
-																									.log(list[0].dataRoomNo);
-																							var no = list[0].dataRoomNo;
 
 																							for (var i = 0; i < list.length; i++) {
 																								console.log(list.length);
@@ -566,20 +563,20 @@
 							//태득 선택했을때 나오는 파일 리스트들 
 							
 							$("#tagList").on("click","li",function() {
-												console
-														.log("select tag List !!")
+												console.log("select tag List !!")
 
 												$this = $(this);
 												console.log($this);
-												var dataTagNo = $this
-														.data("datatagno");
+												var dataTagNo = $this.data("datatagno");
+												var courseNo = '${courseNo}';
 												console.log(dataTagNo);
-
+												$("#fileList").empty("")
 												$.ajax({
 															url : "${pageContext.request.contextPath }/{coursePath}/dataroom/SelectTagOnByDataTagNo",
 															type : "post",
 															data : {
-																dataTagNo : dataTagNo
+																dataTagNo : dataTagNo,
+																courseNo : courseNo
 															},
 															dataType : "json",
 															success : function(list) {
@@ -603,6 +600,8 @@
 																console.error(status+ " : "+ error);
 															}
 												});
+												
+												
 
 							});
 
@@ -658,6 +657,8 @@
 							console.log(dataRoomNo);
 							$("#dataRoomNoByInput").val(dataRoomNo);
 
+							
+							
 							var dataRoomNoByInput2 = $(
 									'input:checkbox[name="dataRoomNoByInput"]:checked')
 									.val();
@@ -1067,9 +1068,6 @@
 																		dataType : "json",
 																		success : function(list) {
 																			console.log(list);
-																			console
-																					.log(list[0].dataRoomNo);
-																			var no = list[0].dataRoomNo;
 
 																			for (var i = 0; i < list.length; i++) {
 																				console
@@ -1248,9 +1246,6 @@
 																		dataType : "json",
 																		success : function(list) {
 																			console.log(list);
-																			console
-																					.log(list[0].dataRoomNo);
-																			var no = list[0].dataRoomNo;
 
 																			for (var i = 0; i < list.length; i++) {
 																				console
@@ -1350,122 +1345,137 @@
 
 		//집으로 ~~
 		$("#goHome").on("click",function() {
-							var courseNo = '${courseNo}';
-							var dataRoomNo = 1
-							console.log("go Home !!");
+			$("#fileList").empty("")
+			var courseNo = '${courseNo}';
+			$.ajax({
+						url : "${pageContext.request.contextPath }/{coursePath}/dataroom/selectListAtFirst",
+						type : "post",
+						data : {
+							courseNo : courseNo
+						},
+						dataType : "json",
+						success : function(CourseDataroomVo) {
+							console.log(CourseDataroomVo);
+							console.log(CourseDataroomVo.dataRoomNo);
+							$("#dataRoomNoByInput").val(CourseDataroomVo.dataRoomNo);
+							
+							
+							var dataRoomNo =  $('input:checkbox[name="dataRoomNoByInput"]:checked').val();
+							console.log(dataRoomNo);
+							
 
-							$("#fileList").empty("")
-
-							strList = "";
 							$.ajax({
-								url : "${pageContext.request.contextPath }/{coursePath}/dataroom/selectFolderVo",
-								type : "post",
-								data : {
-									dataRoomNo : dataRoomNo
-								},
-								dataType : "json",
-								success : function(pRoomNo) {
-									console.log(pRoomNo);
-									if (pRoomNo != 0) {
-										strList += "	<li>";
-										strList += "		<div class='file-control'>";
-										strList += "			<label for='file-list-1'></label>";
-										strList += "		</div>";
-										strList += "		<div class='file-attach-icon'></div> ";
-										strList += "		<div id ='FolderBefore'>";
-										strList += "			<div class='media-block'>";
-										strList += "				<div class='media-left'>";
-										strList += "					<i class='demo-psi-folder' data-dataroomno="+pRoomNo+"></i>";
-										strList += "				</div>";
-										strList += "				<div class='media-body'>";
-										strList += "					<p class='file-name single-line'>...</p>";
-										strList += "				</div>";
-										strList += "			</div>";
-										strList += "		</div>";
-										strList += "	</li>";
-									console.log("hi")	
-									console.log(strList);
-									$("#fileList").prepend(strList);
-									strList = "";
-									}
-									
+										url : "${pageContext.request.contextPath }/{coursePath}/dataroom/selectFolderVo",
+										type : "post",
+										data : {
+											dataRoomNo : dataRoomNo
+										},
+										dataType : "json",
+										success : function(pRoomNo) {
+											console.log(pRoomNo);
+											if (pRoomNo != 0) {
+												strList += "	<li>";
+												strList += "		<div class='file-control'>";
+												strList += "			<label for='file-list-1'></label>";
+												strList += "		</div>";
+												strList += "		<div class='file-attach-icon'></div> ";
+												strList += "		<div id ='FolderBefore'>";
+												strList += "			<div class='media-block'>";
+												strList += "				<div class='media-left'>";
+												strList += "					<i class='demo-psi-folder' data-dataroomno="+pRoomNo+"></i>";
+												strList += "				</div>";
+												strList += "				<div class='media-body'>";
+												strList += "					<p class='file-name single-line'>...</p>";
+												strList += "				</div>";
+												strList += "			</div>";
+												strList += "		</div>";
+												strList += "	</li>";
+											console.log("hi")	
+											console.log(strList);
+											$("#fileList").prepend(strList);
+											strList = "";
+											}
+											
 
-									//2. 폴더하고 파일리스트 뽑아주는것 
-									$.ajax({
-												url : "${pageContext.request.contextPath }/{coursePath}/dataroom/folderList",
-												type : "post",
-												dataType : "json",
-												data : {
-													courseNo : courseNo,
-													dataRoomNo : dataRoomNo
-												},
-												success : function(list) {
-													console.log(list);
+											//2. 폴더하고 파일리스트 뽑아주는것 
+											$.ajax({
+														url : "${pageContext.request.contextPath }/{coursePath}/dataroom/folderList",
+														type : "post",
+														dataType : "json",
+														data : {
+															courseNo : courseNo,
+															dataRoomNo : dataRoomNo
+														},
+														success : function(list) {
+															console.log(list);
 
-													strList2 = "";
-													strList = "";
-													
+															strList2 = "";
+															strList = "";
+															console.log(dataRoomNo);
+															console.log( "살려줘 !!!!!!!!!!!!");
 
-																console.log(dataRoomNo);
-																console.log( "살려줘 !!!!!!!!!!!!");
+															for (var i = 0; i < list.length; i++) {
+																console.log(list.length);
+																strFolderList(list[i]);
+															}
+															$("#fileList").append(strList);
+															strList = "";
 
-													for (var i = 0; i < list.length; i++) {
-														console.log(list.length);
-														strFolderList(list[i]);
-													}
-													$("#fileList").append(strList);
-													strList = "";
+															$.ajax({
+																		url : "${pageContext.request.contextPath }/{coursePath}/dataroom/fileList",
+																		type : "post",
+																		data : {
+																			courseNo : courseNo,
+																			dataRoomNo : dataRoomNo
+																		},
+																		dataType : "json",
+																		success : function(list) {
+																			console.log(list);
 
-													$.ajax({
-																url : "${pageContext.request.contextPath }/{coursePath}/dataroom/fileList",
-																type : "post",
-																data : {
-																	courseNo : courseNo,
-																	dataRoomNo : dataRoomNo
-																},
-																dataType : "json",
-																success : function(list) {
-																	console.log(list);
-																	console
-																			.log(list[0].dataRoomNo);
-																	var no = list[0].dataRoomNo;
+																			for (var i = 0; i < list.length; i++) {
+																				console.log(list.length);
 
-																	for (var i = 0; i < list.length; i++) {
-																		console
-																				.log(list.length);
+																				strFileList(list[i]);
 
-																		strFileList(list[i]);
+																			}
+																			$("#fileList")
+																					.append(
+																							strList2);
 
-																	}
-																	$("#fileList")
-																			.append(
-																					strList2);
+																			strList2 = "";
+																		},
+																		error : function(XHR,
+																				status, error) {
+																			console
+																					.error(status
+																							+ " : "
+																							+ error);
+																		}
+															});
 
-																	strList2 = "";
-																},
-																error : function(XHR,
-																		status, error) {
-																	console
-																			.error(status
-																					+ " : "
-																					+ error);
-																}
-													});
+														},
+														error : function(XHR, status, error) {
+															console.error(status + " : "
+																	+ error);
+														}
+											});
 
-												},
-												error : function(XHR, status, error) {
-													console.error(status + " : "
-															+ error);
-												}
-									});
+											//!폴더하고 파일리스트 뽑아주는것 
 
-									//!폴더하고 파일리스트 뽑아주는것 
-
-								},
-								error : function(XHR, status, error) {
-									console.error(status + " : " + error);
-								}
-					});
+										},
+										error : function(XHR, status, error) {
+											console.error(status + " : " + error);
+										}
+							});
+					
+							
+							
+							
+						},
+						error : function(XHR, status, error) {
+							console.error(status + " : "+ error);
+						}
+			});
 			
 
 		});

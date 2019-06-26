@@ -332,19 +332,19 @@
 												href="${pageContext.request.contextPath }/community/selectform?cpostType=1">
 												<img alt="맛집"
 												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile1.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile1.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/KakaoTalk_Image_2019-06-25-19-32-52.jpeg"
 												data-description="강남역 주변 맛집 커뮤니티" style="display: none">
 											</a> <a
 												href="${pageContext.request.contextPath }/community/selectform?cpostType=2">
 												<img alt="카페"
 												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile2.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile2.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/cafe2.jpeg"
 												data-description="강남역 주변 카페 커뮤니티" style="display: none">
 											</a> <a
 												href="${pageContext.request.contextPath }/community/selectform?cpostType=3">
 												<img alt="자유게시판"
 												src="${pageContext.request.contextPath }/assets/img/gallery/thumbs/tile3.jpg"
-												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/tile3.jpg"
+												data-image="${pageContext.request.contextPath }/assets/img/gallery/big/teamproject.jpg"
 												data-description="" style="display: none">
 											</a>
 										</div>

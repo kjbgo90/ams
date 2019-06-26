@@ -97,7 +97,8 @@
 		select 	df.fileno as fileNo, 
 				df.savename as saveName, 
 				df.filename as fileName,
-				df.filepath as filePath 
+				df.filepath as filePath,
+				df.regdate as regDate
 		from datafile df join (select 
                                 a.dataroomfileno ,
                                 a.dataroomno, 

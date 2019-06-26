@@ -158,7 +158,7 @@ public class S3Util {
 
 		// FileVo 값
 		String bucketName = "net.ourams.upload";
-		String key = vo.getFileName(); // 저장된 파일값
+		String key = vo.getSaveName(); // 저장된 파일값
 		String orgFileName = vo.getFileName(); // 오리지널 파일값
 
 		S3Object fullObject = s3.getObject(new GetObjectRequest(bucketName, key));
