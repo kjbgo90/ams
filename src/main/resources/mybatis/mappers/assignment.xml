@@ -59,21 +59,6 @@
 		]]>
 	</select>
 	
-	<insert id="insertSubmit" parameterType="SubmitVo">
-		<selectKey keyProperty="submitNo" resultType="int" order="BEFORE">
-			select seq_submit_no.nextval from dual
-		</selectKey>
-		<![CDATA[
-			insert into submit values( #{submitNo},
-									 #{submitContent},
-									 default,
-									 #{assignmentNo},
-									 #{userNo},
-									 null,
-									 'false')
-		]]>
-	</insert>
-	
 	<select id="selectSubmitList" parameterType="int" resultType="SubmitVo">
 		<![CDATA[
 			select submitNo,
@@ -228,6 +213,47 @@
 		]]>
 	</insert>
 	
+	<insert id="insertTimeline" parameterType="TimelineVo">
+		<selectKey keyProperty="timeLineNo" resultType="int" order="BEFORE">
+			select seq_timeline_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into timeline values (   #{timeLineNo},
+                                			#{timeLineContent},
+                              			    default
+                            			)
+		]]>
+	</insert>
+	
+	<insert id="insertSubmit" parameterType="SubmitVo">
+		<selectKey keyProperty="submitNo" resultType="int" order="BEFORE">
+			select seq_submit_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into submit values( #{submitNo},
+									 #{submitContent},
+									 default,
+									 #{assignmentNo},
+									 #{userNo},
+									 null,
+									 'false')
+		]]>
+	</insert>
+	
+	<insert id="insertFile" parameterType="fileUpLoadVo">
+		<selectKey keyProperty="fileNo" resultType="int" order="BEFORE">
+			select seq_datafile_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into datafile values( #{fileNo},
+										 #{fileName},
+										 #{saveName},
+										 #{fileSize},
+										 default,
+										 #{filepath})
+		]]>
+	</insert>
+	
 	<insert id="insertAssignment" parameterType="AssignmentVo">
 		<selectKey keyProperty="assignmentNo" resultType="int" order="BEFORE">
 			select seq_assignment_no.nextval from dual
@@ -257,20 +283,6 @@
 			insert into submitfile values( seq_submitfile_no.nextval,
 										   #{submitNo},
 										   #{fileNo} )
-		]]>
-	</insert>
-	
-	<insert id="insertFile" parameterType="fileUpLoadVo">
-		<selectKey keyProperty="fileNo" resultType="int" order="BEFORE">
-			select seq_datafile_no.nextval from dual
-		</selectKey>
-		<![CDATA[
-			insert into datafile values( #{fileNo},
-										 #{fileName},
-										 #{saveName},
-										 #{fileSize},
-										 default,
-										 #{filepath})
 		]]>
 	</insert>
 	
@@ -369,17 +381,6 @@
 		]]>
 	</select>
 
-	<insert id="insertTimeline" parameterType="TimelineVo">
-		<selectKey keyProperty="timeLineNo" resultType="int" order="BEFORE">
-			select seq_timeline_no.nextval from dual
-		</selectKey>
-		<![CDATA[
-			insert into timeline values (   #{timeLineNo},
-                                			#{timeLineContent},
-                              			    default
-                            			)
-		]]>
-	</insert>
 
 	<insert id="insertTimelineUser" parameterType="TimelineVo">
 		<![CDATA[

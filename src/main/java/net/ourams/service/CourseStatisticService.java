@@ -97,7 +97,7 @@ public class CourseStatisticService {
 			AssignmentVo lastAssignment = assignmentList.get(assignmentList.size() - 1);
 			StatisticVo statisticVo = statisticDao.selectSubmitCountByAssignmentNo(lastAssignment.getAssignmentNo());
 			System.out.println(statisticVo.toString());
-			double submitPercent = statisticVo.getSubmitCount() / (double) studentCount * 100;
+			double submitPercent = Math.round(statisticVo.getSubmitCount() / (double) studentCount * 100) * 100 / 100;
 			double unsubmitPercent = 100 - submitPercent;
 
 			map.put("asList", asList);
