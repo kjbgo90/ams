@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.ourams.dao.CourseMainDao;
 import net.ourams.dao.CourseQnaDao;
 import net.ourams.vo.CourseVo;
 import net.ourams.vo.PostVo;
@@ -21,12 +22,14 @@ public class CourseQnaService {
 	@Autowired
 	private CourseQnaDao courseQnaDao;
 	
+	@Autowired
+	private CourseMainDao mainDao;
 
 	public Map<String, Object> selectListPaging(int pageNo, int courseNo){
 		int listSize = 10 ;
 		int pageNo1 = 1+listSize*(pageNo-1);
 		int pageNo2 = listSize*pageNo;
-		int countPage = courseQnaDao.countPost();
+		int countPage = courseQnaDao.countPost(courseNo);
 		System.out.println("countPage"+countPage);
 		int maxPage = (int)Math.ceil((double)countPage/listSize);
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -45,7 +48,7 @@ public class CourseQnaService {
 		int listSize = 10 ;
 		int pageNo1 = 1+listSize*(pageNo-1);
 		int pageNo2 = listSize*pageNo;
-		int countPage = courseQnaDao.countPost();
+		int countPage = courseQnaDao.countPost(courseNo);
 		System.out.println("countPage"+countPage);
 		int maxPage = (int)Math.ceil((double)countPage/listSize);
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -70,6 +73,8 @@ public class CourseQnaService {
 		System.out.println("#########################");
 		System.out.println(postVo.toString());
 		
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(postVo.getCoursePath());
+		postVo.setCourseNo(courseVo.getCourseNo());
 
 		int count = courseQnaDao.insert(postVo);
 		
@@ -130,8 +135,9 @@ public class CourseQnaService {
 		return  count;
 	}
 
-	public List<SubjectVo> getsubjectList(int courseNo) {
-		List<SubjectVo> subjectList = courseQnaDao.selectsubjectAll(courseNo);
+	public List<SubjectVo> getsubjectList(String coursePath) {
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(coursePath);
+		List<SubjectVo> subjectList = courseQnaDao.selectsubjectAll(courseVo.getCourseNo());
 		System.out.println("SSSSVVVICCCEE");
 		System.out.println(subjectList.toString());
 		return subjectList;

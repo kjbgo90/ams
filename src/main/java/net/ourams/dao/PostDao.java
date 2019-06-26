@@ -36,8 +36,8 @@ public class PostDao {
 		return list;
 	}
 	
-	public int countPost() {
-		int count = sqlSession.selectOne("notice.countPost");
+	public int countPost(int courseNo) {
+		int count = sqlSession.selectOne("notice.countPost", courseNo);
 		return count;
 	}
 	

@@ -117,8 +117,7 @@ public class QnaController {
 	@RequestMapping(value = "/writeform", method = RequestMethod.GET)
 	public String qnaWrite(@PathVariable("coursePath") String coursePath, Model model, HttpServletRequest re) {
 		System.out.println("writeform");
-		int courseNo=1;
-		List<SubjectVo> subjectList  = courseQnaService.getsubjectList(courseNo);
+		List<SubjectVo> subjectList  = courseQnaService.getsubjectList(coursePath);
 		System.out.println("##############################33");
 		System.out.println(subjectList);
 		model.addAttribute("subjectList", subjectList);
@@ -142,6 +141,7 @@ public class QnaController {
 		postVo.setRegDate(resJSON.getRegDate());
 		postVo.setUserName(authUser.getUserName());
 		postVo.setFileList(resJSON.getFileList());
+		postVo.setCoursePath(coursePath);
 		courseQnaService.write(postVo);
 		postVo.setCoursePath(coursePath);
 		System.out.println(coursePath);
@@ -197,8 +197,7 @@ public class QnaController {
 		postVo = courseQnaService.modifyform(postNo);
 		System.out.println("subjectNo" + subjectNo);
 		String subjectTitle = "과목선택";
-		int courseNo=1;
-		List<SubjectVo> subjectList  = courseQnaService.getsubjectList(courseNo);
+		List<SubjectVo> subjectList  = courseQnaService.getsubjectList(coursePath);
 		for(int i=0; i<subjectList.size(); i++) {
 			if (subjectList.get(i).getSubjectNo() == subjectNo) {
 				subjectTitle = subjectList.get(i).getSubjectTitle();

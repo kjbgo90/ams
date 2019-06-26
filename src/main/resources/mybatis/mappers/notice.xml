@@ -109,9 +109,9 @@ select   					B.rnum as rnum ,
 
 
 	<!-- 포스트 총 갯수  -->
-	<select id="countPost"  resultType="int">
+	<select id="countPost"  resultType="int" parameterType="int">
 	<![CDATA[
- 	   select count(*) from post where postType= 1
+ 	   select count(*) from post where postType= 1 and courseNo = #{courseNo}
 	]]>
 	</select>
 
@@ -151,7 +151,7 @@ select   					B.rnum as rnum ,
 					seq_post_no.nextval,
 					1,
 					#{userNo},	
-					1,	
+					#{courseNo},	
 					sysdate,		 
 					#{postTitle}, 					
 					#{postContent}, 
@@ -196,7 +196,7 @@ select   					B.rnum as rnum ,
 										 #{selectedDate},
 										 #{selectedDate},
 										 'warning',
-										 1,
+										 #{courseNo},
 										 #{userNo},
 										 null )
 		]]>
@@ -212,7 +212,7 @@ select   					B.rnum as rnum ,
 					#{postNo},
 					1,
 					#{userNo},	
-					1,	
+					#{courseNo},	
 					sysdate,		 
 					#{postTitle}, 					
 					#{postContent}, 

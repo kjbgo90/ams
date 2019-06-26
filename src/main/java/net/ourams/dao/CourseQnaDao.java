@@ -21,8 +21,8 @@ public class CourseQnaDao {
 	private SqlSession sqlSession;
 
 	// post 갯수
-	public int countPost() {
-		int count = sqlSession.selectOne("qna.countPost");
+	public int countPost(int courseNo) {
+		int count = sqlSession.selectOne("qna.countPost" , courseNo);
 		return count;
 	}
 

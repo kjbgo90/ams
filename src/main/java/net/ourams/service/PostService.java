@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.ourams.dao.CourseMainDao;
 import net.ourams.dao.PostDao;
 import net.ourams.vo.CourseVo;
 import net.ourams.vo.PostVo;
@@ -21,11 +22,14 @@ public class PostService {
 	@Autowired
 	private PostDao postDao;
 	
+	@Autowired
+	private CourseMainDao mainDao;
+	
 	public Map<String, Object> selectPostPaging(int courseNo, int pageNo){
 		int listSize = 10 ;
 		int pageNo1 = 1+listSize*(pageNo-1);
 		int pageNo2 = listSize*pageNo;
-		int countPage = postDao.countPost();
+		int countPage = postDao.countPost(courseNo);
 		System.out.println("countPage"+countPage);
 		int maxPage = (int)Math.ceil((double)countPage/listSize);
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -44,7 +48,7 @@ public class PostService {
 		int listSize = 10 ;
 		int pageNo1 = 1+listSize*(pageNo-1);
 		int pageNo2 = listSize*pageNo;
-		int countPage = postDao.countPost();
+		int countPage = postDao.countPost(courseNo);
 		System.out.println("countPage"+countPage);
 		int maxPage = (int)Math.ceil((double)countPage/listSize);
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -69,8 +73,10 @@ public class PostService {
 
 	public int write(PostVo postVo) {
 		System.out.println(postVo.toString());
-		int count = postDao.insert(postVo);
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(postVo.getCoursePath());
+		postVo.setCourseNo(courseVo.getCourseNo());
 		
+		int count = postDao.insert(postVo);
 	
 		TimelineVo vo = new TimelineVo();
 		vo.setUserNo(postVo.getUserNo());
@@ -154,6 +160,8 @@ public class PostService {
 	
 	@Transactional
 	public int writePostSchedule(PostVo postVo) {
+		CourseVo courseVo = mainDao.selectCourseVoByCoursePath(postVo.getCoursePath());
+		postVo.setCourseNo(courseVo.getCourseNo());
 		postDao.insertSchedule(postVo);
 		int count = postDao.insertSchedulePost(postVo);
 		if (postVo.getFileList() != null) {

@@ -71,7 +71,7 @@
 		                        subjectNo
 		                FROM users u join post p
 		                ON p.userNo = u.userNo
-		                where p.postType = 2 and p.courseNo = 1)pu
+		                where p.postType = 2 and p.courseNo = #{courseNo})pu
 		                left join subject s 
 		                on pu.subjectno = s.subjectno 
                         WHERE pu.posttitle LIKE '%'||#{postTitle}||'%' 
@@ -84,9 +84,9 @@
 	</select>
 
 	<!-- 포스트 총 갯수 -->
-	<select id="countPost" resultType="int">
+	<select id="countPost" resultType="int" parameterType="int">
 	<![CDATA[
- 	   select count(*) from post where postType= 2
+ 	   select count(*) from post where postType= 2 and courseNo=#{courseNo}
 	]]>
 	</select>
 
@@ -223,7 +223,7 @@
 					#{postNo},
 					2,
 					#{userNo},	
-					1,	
+					#{courseNo},	
 					sysdate,		 
 					#{postTitle}, 					
 					#{postContent}, 
@@ -243,6 +243,7 @@
 				SELECT   subjectNo,
 				        subjectTitle
 				        FROM subject 
+				        WHERE courseNo = #{courseNo}
 		]]>
 	</select>
 
