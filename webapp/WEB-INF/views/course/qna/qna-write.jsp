@@ -483,7 +483,7 @@
 							var markstr = $('#demo-summernote').summernote(
 									'code');
 							/* var cate = $(".category .btn:first-child").val(); */
-
+							
 							var subjectNo = $('#subjectNo').val();
 							var postTitle = $('#postTitle').val();
 							var selectedDate = $('#select-day').val();
@@ -518,7 +518,7 @@
 										//dataType : "json",
 										success : function(coursePath) {
 											console.log("성공 ");
-											window.location = "http://localhost:8088/ams/"
+											window.location = "${pageContext.request.contextPath}/"
 													+ coursePath + "/qna/list";
 
 										},

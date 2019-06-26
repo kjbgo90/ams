@@ -389,15 +389,12 @@ rhd
 	<!--===================================================-->
 	<!-- blog-edit 에서 스크립트 페이지 찾기 sample page 안에 있음  -->
 	<script>
-	
 		var fileList = [];
-		
+
 		$(document)
 				.on(
 						'nifty.ready',
 						function() {
-
-							
 
 							$("#dropzone")
 									.dropzone(
@@ -408,7 +405,8 @@ rhd
 													console.log(fileVo);
 													fileList.push(fileVo);
 													console.log(fileList);
-													console.log(fileList.length);
+													console
+															.log(fileList.length);
 												}
 											});
 
@@ -482,6 +480,10 @@ rhd
 							var markstr = $('#demo-summernote').summernote(
 									'code');
 							var cate = $(".category .btn:first-child").val();
+							if ($(".category .btn:first-child").val() == "") {
+								alert("카테고리를 선택해주세요.");
+							} else {
+
 							var postTitle = $('#postTitle').val();
 							var selectedDate = $('#select-day').val();
 							var postResult = {};
@@ -490,11 +492,11 @@ rhd
 							postResult["postContent"] = markstr;
 							postResult["selectedDate"] = selectedDate;
 							console.log(fileList);
-							
-							if(fileList.length != 0){
+
+							if (fileList.length != 0) {
 								postResult["fileList"] = fileList;
 							}
-							
+
 							console.log(postResult);
 							console.log(markstr);
 							console.log(cate);
@@ -516,7 +518,7 @@ rhd
 										//dataType : "json",
 										success : function(coursePath) {
 											console.log("성공 ");
-											window.location = "http://localhost:8088/ams/"
+											window.location = "${pageContext.request.contextPath}/"
 													+ coursePath
 													+ "/notice/list";
 
@@ -527,7 +529,7 @@ rhd
 													+ " : " + errorThrown);
 										}
 									});
-
+							}
 						});
 	</script>
 
