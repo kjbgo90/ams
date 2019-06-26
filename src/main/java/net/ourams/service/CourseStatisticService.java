@@ -304,7 +304,7 @@ public class CourseStatisticService {
 			double totalAverage = 0;
 			double maxScore = 0;
 			double minScore = 0;
-			
+
 			map.put("asList", asList);
 			map.put("maxScore", maxScore);
 			map.put("minScore", minScore);
@@ -388,15 +388,34 @@ public class CourseStatisticService {
 		}
 
 		List<StatisticVo> qnaList = new ArrayList<StatisticVo>();
-		for (int a = 0; a < 3; a++) {
-			for (StatisticVo qnaVo : qnaTempList) {
-				if (qnaVo.getQnaCount() == qnaCount[a] && qnaVo.getQnaCount() != 0) {
-					qnaVo.setQnaPercent(Math.round(qnaVo.getQnaCount() / (double) qnaTotal * 100));
-					qnaList.add(a, qnaVo);
-					break;
+		if (qnaCount.length > 3) {
+			for (int a = 0; a < 3; a++) {
+				int index = 0;
+				for (StatisticVo qnaVo : qnaTempList) {
+					if (qnaVo.getQnaCount() == qnaCount[a] && qnaVo.getQnaCount() != 0) {
+						qnaVo.setQnaPercent(Math.round(qnaVo.getQnaCount() / (double) qnaTotal * 100));
+						qnaList.add(a, qnaVo);
+						qnaTempList.remove(index);
+						break;
+					}
+					index++;
+				}
+			}
+		} else {
+			for (int a = 0; a < qnaCount.length; a++) {
+				int index = 0;
+				for (StatisticVo qnaVo : qnaTempList) {
+					if (qnaVo.getQnaCount() == qnaCount[a] && qnaVo.getQnaCount() != 0) {
+						qnaVo.setQnaPercent(Math.round(qnaVo.getQnaCount() / (double) qnaTotal * 100));
+						qnaList.add(a, qnaVo);
+						qnaTempList.remove(index);
+						break;
+					}
+					index++;
 				}
 			}
 		}
+		
 		System.out.println(qnaList);
 
 		map.put("qnaList", qnaList);
