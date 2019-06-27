@@ -502,7 +502,7 @@
 													+ error);
 										}
 									});
-							var courseNo = 1
+							var courseNo = 10;
 
 							$
 									.ajax({
@@ -893,7 +893,7 @@
 														assignmentListForTeacherstr += "<td>";
 														for (var s = 0; s < list[i].fileList.length; s++) {
 															var sa = s + 1;
-															assignmentListForTeacherstr += "<a href="+list[i].fileList[s].filePath+" class='text-semibold text-main mar-no'>"
+															assignmentListForTeacherstr += "<a href="+list[i].fileList[s].filepath+" class='text-semibold text-main mar-no'>"
 																	+ sa
 																	+ "."
 																	+ list[i].fileList[s].fileName
